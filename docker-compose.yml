@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+    frontend:
+        container_name: frontend
+        build:
+            context: ./docker/runtimes/19
+            dockerfile: Dockerfile
+        ports:
+            - '4200:80'
+        volumes:
+            - .:/var/www/nydoz-angular
+           # - '../apps/backend/docker/runtimes/8.2/nginx/sites-enabled:/etc/nginx/sites-enabled'
+        tty: true
