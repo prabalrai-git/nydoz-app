@@ -3,10 +3,11 @@ import GoogleLogo from "../../../assets/media/svg/Google.svg";
 import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
 import Poster from "./Poster";
 
-const Register = () => {
+const LoginPage = () => {
     return (
         <div className='d-flex flex-column flex-root' id='kt_app_root'>
             <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
+                {/* first Side group */}
                 <div className='d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1 '>
                     <div className='d-flex flex-center flex-column flex-lg-row-fluid'>
                         <div className='w-lg-500px p-10'>
@@ -16,7 +17,7 @@ const Register = () => {
                                 data-kt-redirect-url='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
                                 action='#'>
                                 <div className=' mb-6'>
-                                    <div>
+                                    <div className='text-center'>
                                         <img
                                             className='mb-4'
                                             src={CompanyLogo}
@@ -24,11 +25,8 @@ const Register = () => {
                                         />
                                     </div>
                                     <h1 className='text-dark fw-bolder mb-2'>
-                                        Create Your Account First
+                                        Sign In
                                     </h1>
-                                    <p className='text-muted '>
-                                        Start your trial for 10 more days
-                                    </p>
                                 </div>
                                 <div className='row g-3 mb-9'>
                                     <div className='col-md-6'>
@@ -56,19 +54,12 @@ const Register = () => {
                                         </a>
                                     </div>
                                 </div>
-                                <div className='separator separator-content my-3'>
+                                <div className='separator separator-content my-6'>
                                     <span className='w-125px text-gray-500 fw-semibold fs-7'>
                                         Or with email
                                     </span>
                                 </div>
-                                <div className='fv-row mb-6'>
-                                    <input
-                                        type='text'
-                                        placeholder='Full Name'
-                                        name='fullName'
-                                        className='form-control bg-transparent'
-                                    />
-                                </div>
+
                                 <div className='fv-row mb-6'>
                                     <input
                                         type='text'
@@ -99,40 +90,23 @@ const Register = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='fv-row mb-6'>
-                                    <input
-                                        placeholder='Repeat Password'
-                                        name='confirm-password'
-                                        type='password'
-                                        autoComplete='off'
-                                        className='form-control bg-transparent'
-                                    />
+
+                                <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
+                                    <div></div>
+                                    <a
+                                        href='../../demo31/dist/authentication/layouts/corporate/reset-password.html'
+                                        className='link-primary'>
+                                        Forgot Password ?
+                                    </a>
                                 </div>
-                                <div className='fv-row mb-6'>
-                                    <label className='form-check form-check-inline'>
-                                        <input
-                                            className='form-check-input'
-                                            type='checkbox'
-                                            name='toc'
-                                            value='1'
-                                        />
-                                        <span className='form-check-label fw-semibold text-gray-700 fs-base ms-1'>
-                                            I Accept the
-                                            <a
-                                                href='#'
-                                                className='ms-1 link-primary'>
-                                                Terms
-                                            </a>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div className='d-grid mb-4'>
+
+                                <div className='d-grid mb-10'>
                                     <button
                                         type='submit'
-                                        id='kt_sign_up_submit'
-                                        className='btn btn-success'>
+                                        id='kt_sign_in_submit'
+                                        className='btn btn-primary'>
                                         <span className='indicator-label'>
-                                            Sign up
+                                            Sign In
                                         </span>
                                         <span className='indicator-progress'>
                                             Please wait...
@@ -140,12 +114,13 @@ const Register = () => {
                                         </span>
                                     </button>
                                 </div>
+
                                 <div className='text-gray-500 text-center fw-semibold fs-6'>
-                                    Already have an Account?
+                                    Don't have an account?
                                     <a
                                         href='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
                                         className='link-primary fw-semibold'>
-                                        Sign in
+                                        Sign Up
                                     </a>
                                 </div>
                             </form>
@@ -293,4 +268,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default LoginPage;
