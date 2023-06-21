@@ -1,10 +1,11 @@
 import "./App.css";
-import Header from "./UI/components/Header/Header2";
+import { Outlet } from "react-router-dom";
+import Register from "./UI/pages/auth/Register";
 
 function App() {
     return (
         <div>
-            <Header />
+            <Register />
         </div>
     );
 }
