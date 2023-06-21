@@ -1,6 +1,62 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+/* --bs-font-montserrat: 'Montserrat', sans-serif;
+  --bs-font-vollkorn: 'Vollkorn', serif;
+  --bs-font-poppins: 'Poppins', sans-serif;
+  --bs-font-sans-serif: Inter, Helvetica, "sans-serif";
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
+
+// admin Navbar
+
+#admin-navbar {
+    font-family: var(--bs-font-montserrat);
+    font-weight: 500;
+}
+
+.navbar-brand-img {
+    height: 25px;
+}
+
+#admin-navbar .nav-item {
+    position: relative;
+    margin: 0px 0.5rem;
+    font-weight: 700 !important;
+}
+
+.nav-link {
+    cursor: pointer;
+    padding: 0;
+    flex: 0 0 100%;
+    padding: 0.65rem 1rem;
+    transition: none;
+
+    outline: none !important;
+}
+
+.profile-avatar {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    object-fit: cover;
+}
+
+.menu-profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.menu-item-notification-container {
+    position: relative;
+    cursor: pointer;
+}
+.menu-item-notification-number {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ff858d;
+    color: #ffffff;
+    right: -9px;
+    top: -9px;
 }
