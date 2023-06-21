@@ -6,10 +6,8 @@ import "./index.css";
 
 import router from "./routes/Routes.js";
 
-import App from "./App.js";
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
-        <App />
+        <RouterProvider router={router} />
     </React.StrictMode>
 );
