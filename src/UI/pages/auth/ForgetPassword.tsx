@@ -6,15 +6,18 @@ const ForgetPassword = () => {
         <div className='d-flex flex-column flex-root' id='kt_app_root'>
             <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
                 {/* first Side group */}
-                <div className='d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1'>
+                <div className='card shadow m-1 m-md-3 d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1'>
                     <div className='d-flex flex-center flex-column flex-lg-row-fluid'>
-                        <div className='w-lg-500px p-10 card shadow-sm'>
+                        <div className='w-lg-500px p-10 '>
                             <form
                                 className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
-                                id='kt_password_reset_form'
-                                data-kt-redirect-url='../../demo31/dist/authentication/layouts/corporate/new-password.html'
-                                action='#'>
-                                <div className=' mb-6'>
+                                id='kt_password_reset_form'>
+                                <div className='text-center mb-6'>
+                                    <img
+                                        src={CompanyLogo}
+                                        alt='Company Logo'
+                                        className='mb-3'
+                                    />
                                     <h1 className='text-dark fw-bolder mb-3'>
                                         Forgot Password ?
                                     </h1>

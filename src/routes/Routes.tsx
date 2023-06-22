@@ -12,6 +12,7 @@ import ForgetPassword from "../UI/pages/auth/ForgetPassword";
 // public pages
 import MainLayout from "../UI/pages/home/MainLayout";
 import Home from "../UI/pages/home/Home";
+import ResetPassword from "../UI/pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
     {
@@ -41,8 +42,12 @@ const router = createBrowserRouter([
                         element: <LoginPage />,
                     },
                     {
-                        path: "forget-password",
+                        path: "forgot-password",
                         element: <ForgetPassword />,
+                    },
+                    {
+                        path: "reset-password",
+                        element: <ResetPassword />,
                     },
                 ],
             },

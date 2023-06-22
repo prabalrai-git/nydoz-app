@@ -2,20 +2,21 @@ import FacebookLogo from "../../../assets/media/svg/Facebook.svg";
 import GoogleLogo from "../../../assets/media/svg/Google.svg";
 import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
 import Poster from "./Poster";
+import { Link } from "react-router-dom";
 
 const Register = () => {
     return (
         <div className='d-flex flex-column flex-root' id='kt_app_root'>
             <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
-                <div className='d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1 '>
+                <div className='card shadow m-1 mt-md-3 d-flex flex-column flex-lg-row-fluid w-lg-50 p-6 order-2 order-lg-1 '>
                     <div className='d-flex flex-center flex-column flex-lg-row-fluid'>
-                        <div className='w-lg-500px p-10'>
+                        <div className='w-lg-500px p-6'>
                             <form
                                 className='form w-100'
                                 id='kt_sign_up_form'
                                 data-kt-redirect-url='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
                                 action='#'>
-                                <div className=' mb-6'>
+                                <div className=' mb-4'>
                                     <div>
                                         <img
                                             className='mb-4'
@@ -56,7 +57,7 @@ const Register = () => {
                                         </a>
                                     </div>
                                 </div>
-                                <div className='separator separator-content my-3'>
+                                <div className='separator separator-content m-6'>
                                     <span className='w-125px text-gray-500 fw-semibold fs-7'>
                                         Or with email
                                     </span>
@@ -141,12 +142,12 @@ const Register = () => {
                                     </button>
                                 </div>
                                 <div className='text-gray-500 text-center fw-semibold fs-6'>
-                                    Already have an Account?
-                                    <a
-                                        href='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
+                                    Already have an Account?&nbsp;
+                                    <Link
+                                        to='/auth/login'
                                         className='link-primary fw-semibold'>
                                         Sign in
-                                    </a>
+                                    </Link>
                                 </div>
                             </form>
                         </div>

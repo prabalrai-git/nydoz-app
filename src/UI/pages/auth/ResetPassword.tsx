@@ -1,11 +1,7 @@
-import { Link } from "react-router-dom";
-
-import FacebookLogo from "../../../assets/media/svg/Facebook.svg";
-import GoogleLogo from "../../../assets/media/svg/Google.svg";
 import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
 import Poster from "./Poster";
 
-const LoginPage = () => {
+const ResetPassword = () => {
     return (
         <div className='d-flex flex-column flex-root' id='kt_app_root'>
             <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
@@ -14,65 +10,20 @@ const LoginPage = () => {
                     <div className='d-flex flex-center flex-column flex-lg-row-fluid'>
                         <div className='w-lg-500px p-10'>
                             <form
-                                className='form w-100'
-                                id='kt_sign_up_form'
-                                data-kt-redirect-url='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
-                                action='#'>
-                                <div className=' mb-6'>
-                                    <div className='text-center'>
-                                        <img
-                                            className='mb-4'
-                                            src={CompanyLogo}
-                                            alt='Company Logo'
-                                        />
-                                    </div>
-                                    <h1 className='text-dark fw-bolder mb-2'>
-                                        Login
+                                className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
+                                id='kt_new_password_form'>
+                                <div className='text-center mb-10'>
+                                    <img
+                                        src={CompanyLogo}
+                                        alt='Company Logo'
+                                        className='mb-3'
+                                    />
+                                    <h1 className='text-dark fw-bolder mb-3'>
+                                        Setup New Password
                                     </h1>
                                 </div>
-                                <div className='row g-3 mb-9'>
-                                    <div className='col-md-6'>
-                                        <a
-                                            href='#'
-                                            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'>
-                                            <img
-                                                alt='Google Logo'
-                                                src={GoogleLogo}
-                                                className='h-15px me-3'
-                                            />
-                                            Sign in with Google
-                                        </a>
-                                    </div>
-                                    <div className='col-md-6'>
-                                        <a
-                                            href='#'
-                                            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'>
-                                            <img
-                                                alt='Facebook Logo'
-                                                src={FacebookLogo}
-                                                className='h-15px me-3'
-                                            />
-                                            Sign in with Facebook
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className='separator separator-content my-6'>
-                                    <span className='w-125px text-gray-500 fw-semibold fs-7'>
-                                        Or with email
-                                    </span>
-                                </div>
-
-                                <div className='fv-row mb-6'>
-                                    <input
-                                        type='text'
-                                        placeholder='Email'
-                                        name='email'
-                                        autoComplete='off'
-                                        className='form-control bg-transparent'
-                                    />
-                                </div>
                                 <div
-                                    className='fv-row mb-8'
+                                    className='fv-row mb-8 fv-plugins-icon-container'
                                     data-kt-password-meter='true'>
                                     <div className='mb-1'>
                                         <div className='position-relative mb-3'>
@@ -81,7 +32,6 @@ const LoginPage = () => {
                                                 type='password'
                                                 placeholder='Password'
                                                 name='password'
-                                                autoComplete='off'
                                             />
                                             <span
                                                 className='btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2'
@@ -90,22 +40,54 @@ const LoginPage = () => {
                                                 <i className='ki-outline ki-eye fs-2 d-none'></i>
                                             </span>
                                         </div>
+                                        <div
+                                            className='d-flex align-items-center mb-3'
+                                            data-kt-password-meter-control='highlight'>
+                                            <div className='flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2'></div>
+                                            <div className='flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2'></div>
+                                            <div className='flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2'></div>
+                                            <div className='flex-grow-1 bg-secondary bg-active-success rounded h-5px'></div>
+                                        </div>
                                     </div>
+                                    <div className='text-muted'>
+                                        Use 8 or more characters with a mix of
+                                        letters, numbers &amp; symbols.
+                                    </div>
+                                    <div className='fv-plugins-message-container invalid-feedback'></div>
                                 </div>
-
-                                <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
-                                    <div></div>
-                                    <Link
-                                        to={"/auth/forgot-password"}
-                                        className='link-primary'>
-                                        Forgot Password ?
-                                    </Link>
+                                <div className='fv-row mb-8 fv-plugins-icon-container'>
+                                    <input
+                                        type='password'
+                                        placeholder='Repeat Password'
+                                        name='confirm-password'
+                                        className='form-control bg-transparent'
+                                    />
+                                    <div className='fv-plugins-message-container invalid-feedback'></div>
                                 </div>
-
+                                <div className='fv-row mb-8 fv-plugins-icon-container'>
+                                    <label className='form-check form-check-inline'>
+                                        <input
+                                            className='form-check-input'
+                                            type='checkbox'
+                                            name='toc'
+                                            value='1'
+                                        />
+                                        <span className='form-check-label fw-semibold text-gray-700 fs-6 ms-1'>
+                                            I Agree &amp;
+                                            <a
+                                                href='#'
+                                                className='ms-1 link-primary'>
+                                                Terms and conditions
+                                            </a>
+                                            .
+                                        </span>
+                                    </label>
+                                    <div className='fv-plugins-message-container invalid-feedback'></div>
+                                </div>
                                 <div className='d-grid mb-10'>
                                     <button
-                                        type='submit'
-                                        id='kt_sign_in_submit'
+                                        type='button'
+                                        id='kt_new_password_submit'
                                         className='btn btn-primary'>
                                         <span className='indicator-label'>
                                             Submit
@@ -115,15 +97,6 @@ const LoginPage = () => {
                                             <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                                         </span>
                                     </button>
-                                </div>
-
-                                <div className='text-gray-500 text-center fw-semibold fs-6'>
-                                    Don't have an account?&nbsp;
-                                    <Link
-                                        to='/auth/signup'
-                                        className='link-primary fw-semibold'>
-                                        Sign Up
-                                    </Link>
                                 </div>
                             </form>
                         </div>
@@ -270,4 +243,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default ResetPassword;
