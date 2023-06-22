@@ -4,15 +4,15 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 
 //Auth Routes
-import AuthLayout from "../UI/pages/auth/Layout";
-import Register from "../UI/pages/auth/Register";
-import LoginPage from "../UI/pages/auth/Login";
-import ForgetPassword from "../UI/pages/auth/ForgetPassword";
+import AuthLayout from "../ui/features/auth/Layout";
+import Register from "../ui/features/auth/Register";
+import LoginPage from "../ui/features/auth/Login";
+import ForgetPassword from "../ui/features/auth/ForgetPassword";
+import ResetPassword from "../ui/features/auth/ResetPassword";
 
 // public pages
-import MainLayout from "../UI/pages/home/MainLayout";
-import Home from "../UI/pages/home/Home";
-import ResetPassword from "../UI/pages/auth/ResetPassword";
+import MainLayout from "../ui/features/home/MainLayout";
+import Home from "../ui/features/home/Home";
 
 const router = createBrowserRouter([
     {
