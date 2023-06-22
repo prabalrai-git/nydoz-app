@@ -1,11 +1,33 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useForm } from "react-hook-form";
+import { EyeSlash, Eye } from "react-bootstrap-icons";
+import { yupResolver } from "@hookform/resolvers/yup";
 import FacebookLogo from "../../../assets/media/svg/Facebook.svg";
 import GoogleLogo from "../../../assets/media/svg/Google.svg";
 import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
 import Poster from "./Poster";
 
+import { LoginSchema } from "../../../validations/auth.validators";
+
+interface FormData {
+    email: string;
+    password: string;
+}
+
 const LoginPage = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormData>({
+        resolver: yupResolver(LoginSchema),
+    });
+    const onFormSubmit = handleSubmit((data: FormData) => {
+        console.log(data);
+    });
+
     return (
         <div className='d-flex flex-column flex-root' id='kt_app_root'>
             <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
@@ -16,8 +38,7 @@ const LoginPage = () => {
                             <form
                                 className='form w-100'
                                 id='kt_sign_up_form'
-                                data-kt-redirect-url='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
-                                action='#'>
+                                onSubmit={onFormSubmit}>
                                 <div className=' mb-6'>
                                     <div className='text-center'>
                                         <img
@@ -66,10 +87,12 @@ const LoginPage = () => {
                                     <input
                                         type='text'
                                         placeholder='Email'
-                                        name='email'
-                                        autoComplete='off'
+                                        {...register("email")}
                                         className='form-control bg-transparent'
                                     />
+                                    <p className='text-danger mt-1'>
+                                        {errors.email?.message}
+                                    </p>
                                 </div>
                                 <div
                                     className='fv-row mb-8'
@@ -78,19 +101,32 @@ const LoginPage = () => {
                                         <div className='position-relative mb-3'>
                                             <input
                                                 className='form-control bg-transparent'
-                                                type='password'
+                                                type={
+                                                    showPassword
+                                                        ? "text"
+                                                        : "password"
+                                                }
                                                 placeholder='Password'
-                                                name='password'
-                                                autoComplete='off'
+                                                {...register("password")}
                                             />
                                             <span
-                                                className='btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2'
-                                                data-kt-password-meter-control='visibility'>
-                                                <i className='ki-outline ki-eye-slash fs-2'></i>
-                                                <i className='ki-outline ki-eye fs-2 d-none'></i>
+                                                onClick={() =>
+                                                    setShowPassword(
+                                                        (prev) => !prev
+                                                    )
+                                                }
+                                                className='btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2'>
+                                                {showPassword ? (
+                                                    <EyeSlash size={16} />
+                                                ) : (
+                                                    <Eye size={16} />
+                                                )}
                                             </span>
                                         </div>
                                     </div>
+                                    <p className='text-danger mt-1'>
+                                        {errors.password?.message}
+                                    </p>
                                 </div>
 
                                 <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
@@ -105,7 +141,6 @@ const LoginPage = () => {
                                 <div className='d-grid mb-10'>
                                     <button
                                         type='submit'
-                                        id='kt_sign_in_submit'
                                         className='btn btn-primary'>
                                         <span className='indicator-label'>
                                             Submit
