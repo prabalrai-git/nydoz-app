@@ -1,0 +1,10 @@
+{
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "FULL_NAME": "Full Name",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "SIGN_UP": "Sign Up",
+    "SIGN_IN": "Sign In"
+}

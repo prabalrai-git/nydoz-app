@@ -1,16 +1,30 @@
 import { useState } from "react";
 import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
+import CountryCode from "../../shared/atoms/CountryCode";
+import { ISelectProps } from "../../../types/react-select.type";
 import { UserRegisterSchema } from "../../../validations/auth.validators";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { PublicAxios } from "../../../service/AxiosInstance";
-import API_ROUTE from "../../../service/api";
-import { ToastContainer, toast } from "react-toastify";
-import { IResponse } from "../../../types/axios.type";
-import { IUserResponseResponse } from "../../../types/payload.type";
+
+//     {
+//   "first_name": "string",
+//   "last_name": "string",
+//   "mobile": "string",
+//   "email": "string",
+//   "password": "string",
+//   "password_confirmation": "string",
+//   "secondary_email": "string",
+//   "country_calling_code": "string",
+//   "country": "string",
+//   "state": "string",
+//   "city": "string",
+//   "street_address": "string",
+//   "profile_picture": "string",
+//   "postal_code": "string"
+// }
 
 interface FormData {
     first_name: string;
@@ -19,13 +33,24 @@ interface FormData {
     email: string;
     password: string;
     password_confirmation: string;
-    isTermAndConditionAccepted: boolean;
+    secondary_email: string;
+    state: string;
+    city: string;
+    street_address: string;
+    postal_code: string;
 }
 
 const Register = () => {
-    const navigate = useNavigate();
+    const { t } = useTranslation();
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [selectedCountryCode, setSelectedCountryCode] = useState<
+        ISelectProps | undefined
+    >();
+    const [selectedCountry, setSelectedCountry] = useState<
+        ISelectProps | undefined
+    >();
 
     // send request to server
     const {
@@ -35,27 +60,8 @@ const Register = () => {
     } = useForm<FormData>({
         resolver: yupResolver(UserRegisterSchema),
     });
-    const onFormSubmit = handleSubmit(async (data: FormData) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { isTermAndConditionAccepted, ...rest } = data;
-        try {
-            const response = await PublicAxios.post<
-                IResponse<IUserResponseResponse>
-            >(API_ROUTE.USER_REGISTER, rest);
-
-            console.log(response.data, "response.data");
-
-            if (response.data.status === "ok") {
-                navigate("/auth/login");
-            }
-        } catch (error) {
-            console.log(error?.response?.data?.message);
-            if (error?.response?.data?.message) {
-                toast.error(error?.response?.data?.message);
-            } else {
-                toast.error("Something went wrong");
-            }
-        }
+    const onFormSubmit = handleSubmit((data: FormData) => {
+        console.log(data);
     });
 
     return (
@@ -65,7 +71,7 @@ const Register = () => {
             <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
                 <div className=' d-flex flex-column flex-lg-row-fluid w-lg-50 p-6 order-2 order-lg-1 '>
                     <div className='d-flex flex-center flex-column flex-lg-row-fluid'>
-                        <div className='card shadow shadow-sm p-6'>
+                        <div className=' p-6'>
                             <form
                                 onSubmit={onFormSubmit}
                                 className='form w-100'
@@ -90,13 +96,46 @@ const Register = () => {
                                     </div>
                                 </div>
 
+                                {/* social login start */}
+                                {/* <div className='row g-3 mb-9'>
+                                    <div className='col-md-6'>
+                                        <a
+                                            href='#'
+                                            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'>
+                                            <img
+                                                alt='Google Logo'
+                                                src={GoogleLogo}
+                                                className='h-15px me-3'
+                                            />
+                                            Sign in with Google
+                                        </a>
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <a
+                                            href='#'
+                                            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'>
+                                            <img
+                                                alt='Facebook Logo'
+                                                src={FacebookLogo}
+                                                className='h-15px me-3'
+                                            />
+                                            Sign in with Facebook
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className='separator separator-content m-6'>
+                                    <span className='w-125px text-gray-500 fw-semibold fs-7'>
+                                        Or with email
+                                    </span>
+                                </div> */}
+
+                                {/* social login end */}
                                 <div className='row'>
                                     <div className='col-12 col-md-6'>
                                         <label
                                             className='form-label'
                                             htmlFor='first_name'>
                                             First Name
-                                            <span>*</span>
                                         </label>
                                         <div className='fv-row mb-6'>
                                             <input
@@ -115,7 +154,6 @@ const Register = () => {
                                             className='form-label'
                                             htmlFor='last_name'>
                                             Last Name
-                                            <span>*</span>
                                         </label>
                                         <div className='fv-row mb-6'>
                                             <input
@@ -125,7 +163,7 @@ const Register = () => {
                                                 {...register("last_name")}
                                             />
                                             <p className='text-danger mt-1'>
-                                                {errors.last_name?.message}
+                                                {errors.first_name?.message}
                                             </p>
                                         </div>
                                     </div>
@@ -134,7 +172,6 @@ const Register = () => {
                                             className='form-label'
                                             htmlFor='Email'>
                                             Email
-                                            <span>*</span>
                                         </label>
                                         <div className='fv-row mb-6'>
                                             <input
@@ -148,7 +185,38 @@ const Register = () => {
                                             </p>
                                         </div>
                                     </div>
-
+                                    <div className='col-12 col-md-6'>
+                                        <label
+                                            className='form-label'
+                                            htmlFor='Email'>
+                                            Secondary Email
+                                        </label>
+                                        <div className='fv-row mb-6'>
+                                            <input
+                                                type='text'
+                                                placeholder='Secondary Email'
+                                                className='form-control '
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-md-6'>
+                                        <label
+                                            className='form-label'
+                                            htmlFor='first_name'>
+                                            Country Calling Code
+                                        </label>
+                                        <div className='fv-row mb-6'>
+                                            <CountryCode
+                                                selectValue={
+                                                    selectedCountryCode
+                                                }
+                                                setSelectValue={
+                                                    setSelectedCountryCode
+                                                }
+                                                placeholder='Select Country Code'
+                                            />
+                                        </div>
+                                    </div>
                                     <div className='col-12 col-md-6'>
                                         <label
                                             className='form-label'
@@ -160,11 +228,7 @@ const Register = () => {
                                                 type='number'
                                                 placeholder='Enter your Mobile Number'
                                                 className='form-control'
-                                                {...register("mobile")}
                                             />
-                                            <p className='text-danger mt-1'>
-                                                {errors.mobile?.message}
-                                            </p>
                                         </div>
                                     </div>
                                     <div className='col-12 col-md-6'>
@@ -174,7 +238,7 @@ const Register = () => {
                                             <label
                                                 className='form-label'
                                                 htmlFor='password'>
-                                                Password<span>*</span>
+                                                Password
                                             </label>
                                             <div className='mb-1'>
                                                 <div className='position-relative mb-3'>
@@ -185,9 +249,6 @@ const Register = () => {
                                                                 ? "text"
                                                                 : "password"
                                                         }
-                                                        {...register(
-                                                            "password"
-                                                        )}
                                                         placeholder='Password'
                                                     />
                                                     <span
@@ -207,9 +268,9 @@ const Register = () => {
                                                     </span>
                                                 </div>
                                             </div>
-                                            <p className='text-danger mt-1'>
+                                            {/* <p className='text-danger mt-1'>
                                                 {errors.password?.message}
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                     <div className='col-12 col-md-6'>
@@ -219,7 +280,7 @@ const Register = () => {
                                             <label
                                                 className='form-label'
                                                 htmlFor='confrimPassword'>
-                                                Confirm Password<span>*</span>
+                                                Confirm Password
                                             </label>
                                             <div className='mb-1'>
                                                 <div className='position-relative mb-3'>
@@ -230,9 +291,6 @@ const Register = () => {
                                                                 ? "text"
                                                                 : "password"
                                                         }
-                                                        {...register(
-                                                            "password_confirmation"
-                                                        )}
                                                         placeholder='Enter your Password again'
                                                     />
                                                     <span
@@ -252,30 +310,95 @@ const Register = () => {
                                                     </span>
                                                 </div>
                                             </div>
-                                            <p className='text-danger mt-1'>
-                                                {
-                                                    errors.password_confirmation
-                                                        ?.message
-                                                }
-                                            </p>
+                                            {/* <p className='text-danger mt-1'>
+                                                {errors.password?.message}
+                                            </p> */}
                                         </div>
                                     </div>
 
+                                    <div className='col-12 col-md-6'>
+                                        <label
+                                            className='form-label'
+                                            htmlFor='first_name'>
+                                            Street Address
+                                        </label>
+                                        <div className='fv-row mb-6'>
+                                            <input
+                                                type='number'
+                                                placeholder='Enter your street address'
+                                                className='form-control'
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className='col-12 col-md-6'>
+                                        <label
+                                            className='form-label'
+                                            htmlFor='first_name'>
+                                            City
+                                        </label>
+                                        <div className='fv-row mb-6'>
+                                            <input
+                                                type='text'
+                                                placeholder='Enter your city name'
+                                                className='form-control'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-md-6'>
+                                        <label
+                                            className='form-label'
+                                            htmlFor='first_name'>
+                                            State
+                                        </label>
+                                        <div className='fv-row mb-6'>
+                                            <input
+                                                type='number'
+                                                placeholder='Enter your state'
+                                                className='form-control'
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className='col-12 col-md-6'>
+                                        <label
+                                            className='form-label'
+                                            htmlFor='first_name'>
+                                            Country
+                                        </label>
+                                        <div className='fv-row mb-6'>
+                                            <CountryCode
+                                                selectValue={selectedCountry}
+                                                setSelectValue={
+                                                    setSelectedCountry
+                                                }
+                                                forCountry={true}
+                                                placeholder='Select Country '
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-md-6'>
+                                        <label
+                                            className='form-label'
+                                            htmlFor='country'>
+                                            Postal Code
+                                        </label>
+                                        <div className='fv-row mb-6'>
+                                            <input
+                                                type='text'
+                                                placeholder='Enter your postal code'
+                                                className='form-control'
+                                            />
+                                        </div>
+                                    </div>
                                     <div className='col-12 col-md-6'>
                                         <div className='fv-row mb-6'>
                                             <label className='form-check form-check-inline'>
                                                 <input
                                                     className='form-check-input'
                                                     type='checkbox'
-                                                    value='true'
-                                                    {...register(
-                                                        "isTermAndConditionAccepted",
-                                                        {
-                                                            setValueAs: (
-                                                                value
-                                                            ) => value === true,
-                                                        }
-                                                    )}
+                                                    name='toc'
+                                                    value='1'
                                                 />
                                                 <span className='form-check-label fw-semibold text-gray-700 fs-base ms-1'>
                                                     I Accept the
@@ -284,47 +407,39 @@ const Register = () => {
                                                         className='ms-1 link-primary'>
                                                         Terms
                                                     </a>
-                                                    &
-                                                    <a
-                                                        href='#'
-                                                        className='ms-1 link-primary'>
-                                                        Conditions.
-                                                    </a>
                                                 </span>
                                             </label>
-                                            <p className='text-danger mt-1'>
-                                                {
-                                                    errors
-                                                        .isTermAndConditionAccepted
-                                                        ?.message
-                                                }
-                                            </p>
                                         </div>
-                                    </div>
-                                    <div className='col-12 col-md-6'>
-                                        <button
-                                            type='submit'
-                                            className='btn btn-success btn-lg float-end'>
-                                            Sign up
-                                        </button>
                                     </div>
                                     <div className='col-12'>
-                                        <div className='text-gray-500 mt-6 fw-semibold fs-6 float-end'>
-                                            Already have an Account?&nbsp;
-                                            <Link
-                                                to='/auth/login'
-                                                className='link-primary fw-semibold'>
-                                                Sign in
-                                            </Link>
-                                        </div>
+                                        <button
+                                            type='submit'
+                                            id='kt_sign_up_submit'
+                                            className='btn btn-success'>
+                                            <span className='indicator-label'>
+                                                Sign up
+                                            </span>
+                                            <span className='indicator-progress'>
+                                                Please wait...
+                                                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                                            </span>
+                                        </button>
                                     </div>
+                                </div>
+
+                                <div className='text-gray-500 text-center fw-semibold fs-6'>
+                                    Already have an Account?&nbsp;
+                                    <Link
+                                        to='/auth/login'
+                                        className='link-primary fw-semibold'>
+                                        Sign in
+                                    </Link>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 };
