@@ -11,6 +11,7 @@ import API_ROUTE from "../../../service/api";
 import { ToastContainer, toast } from "react-toastify";
 import { IResponse } from "../../../types/axios.type";
 import { IUserResponseResponse } from "../../../types/payload.type";
+import { AxiosError } from "axios";
 
 interface FormData {
     first_name: string;
@@ -49,6 +50,8 @@ const Register = () => {
                 navigate("/auth/login");
             }
         } catch (error) {
+            const err = error as AxiosError;
+
             console.log(error?.response?.data?.message);
             if (error?.response?.data?.message) {
                 toast.error(error?.response?.data?.message);
