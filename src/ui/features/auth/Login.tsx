@@ -12,6 +12,8 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
 import { ToastContainer, toast } from "react-toastify";
+import { AuthContext } from "../../../context/AuthContext";
+import { IUserState, ILoginResponse } from "../../../types/payload.type";
 
 interface FormData {
     email: string;
@@ -19,13 +21,16 @@ interface FormData {
 }
 
 const LoginPage = () => {
-    const { postData, data, isLoading, error } = useMutation(
+    const { loginFn } = useContext(AuthContext);
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [rememberMe, setRememberMe] = useState<boolean>(false);
+
+    const { postData, isLoading, error } = useMutation<ILoginResponse>(
         API_ROUTE.LOGIN,
         false
     );
     const navigate = useNavigate();
 
-    const [showPassword, setShowPassword] = useState(false);
     const {
         register,
         handleSubmit,
@@ -35,18 +40,16 @@ const LoginPage = () => {
     });
     const onFormSubmit = handleSubmit(async (data: FormData) => {
         const response = await postData(data);
-        console.log(response);
-        if (response && response?.data?.status === "ok") {
-            const msg =
-                (response?.data?.message as string) ||
-                "User logged In Successfully";
-            toast.success(msg);
-            const payload = response?.data?.payload;
-
-            navigate("/auth/login");
+        if (response?.data?.status === "ok") {
+            const { user, token } = response.data.payload;
+            toast.success(response?.data?.message || "Login Successful");
+            const responseFromStore = loginFn({ user, token }, rememberMe);
+            console.log(responseFromStore, "responseFromStore");
+            if (responseFromStore) {
+                navigate("/dashboard");
+            }
         } else {
-            console.log("login", error);
-            toast.error(error as unknown as string);
+            toast.error(error || "Login Failed");
         }
     });
 
@@ -147,13 +150,34 @@ const LoginPage = () => {
                                 </p>
                             </div>
 
-                            <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
-                                <div></div>
-                                <Link
-                                    to={"/auth/forgot-password"}
-                                    className='link-primary'>
-                                    Forgot Password ?
-                                </Link>
+                            <div className='row mb-4'>
+                                <div className='col-6'>
+                                    <Link
+                                        to={"/auth/forgot-password"}
+                                        className='link-primary'>
+                                        Forgot Password ?
+                                    </Link>
+                                </div>
+                                <div className='col-6'>
+                                    <div className='float-end'>
+                                        <label className='form-check form-check-inline'>
+                                            <input
+                                                className='form-check-input'
+                                                type='checkbox'
+                                                value='true'
+                                                checked={rememberMe}
+                                                onChange={() => {
+                                                    setRememberMe(
+                                                        (prev) => !prev
+                                                    );
+                                                }}
+                                            />
+                                            <span className='form-check-label fw-semibold text-gray-700 fs-base mx-1'>
+                                                Remember Me
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className='col-12 col-md-12 mb-3'>
