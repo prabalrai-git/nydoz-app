@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
@@ -10,7 +10,6 @@ import API_ROUTE from "../../../service/api";
 import { LoginSchema } from "../../../validations/auth.validators";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import Poster from "./Poster";
 import useMutation from "../../../hooks/useMutation";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -37,8 +36,13 @@ const LoginPage = () => {
     const onFormSubmit = handleSubmit(async (data: FormData) => {
         const response = await postData(data);
         console.log(response);
-        if (response) {
-            toast.success("Account Created Successfully");
+        if (response && response?.data?.status === "ok") {
+            const msg =
+                (response?.data?.message as string) ||
+                "User logged In Successfully";
+            toast.success(msg);
+            const payload = response?.data?.payload;
+
             navigate("/auth/login");
         } else {
             console.log("login", error);

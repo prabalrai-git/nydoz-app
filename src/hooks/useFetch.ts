@@ -6,7 +6,7 @@ type FetchDataResponse<T> = {
     data: T | undefined | [];
     loading: boolean;
     error: AxiosError | null;
-    fetchData: () => Promise<void>;
+    fetchData: () => Promise<AxiosResponse<T, unknown> | undefined>;
 };
 
 // Define the hook
@@ -29,10 +29,12 @@ function useFetch<T>(
             }
 
             setData(response.data);
+            return response;
         } catch (error: AxiosError | unknown) {
             const axiosError = error as AxiosError;
             console.log(axiosError, "axiosError");
             setError(axiosError || "Something Went Wrong.");
+            return undefined;
         } finally {
             setLoading(false);
         }
