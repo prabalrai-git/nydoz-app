@@ -1,34 +1,49 @@
 import { useState } from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { PublicAxios } from "../service/AxiosInstance";
+import { AxiosError, AxiosResponse } from "axios";
+import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
+
+type P = NonNullable<unknown>;
 
 type PostDataResponse<T> = {
     data: T | undefined;
-    loading: boolean;
+    isLoading: boolean;
     error: AxiosError | null;
+    postData: (payload: P) => Promise<AxiosResponse<T, unknown> | undefined>;
 };
 
-function useMutation<T>(url: string): PostDataResponse<T> {
-    const [loading, setLoading] = useState(false);
+function useMutation<T>(
+    url: string,
+    isRequestPrivate: boolean
+): PostDataResponse<T> {
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<AxiosError | null>(null);
     const [data, setData] = useState<T | undefined>();
 
-    const postData = async (payload: never) => {
-        setLoading(true);
+    const postData = async (payload: P) => {
+        setIsLoading(true);
         setError(null);
+        let response: AxiosResponse<T>;
+
         try {
-            const response: AxiosResponse<T> = await axios.post(url, payload);
+            if (isRequestPrivate === true) {
+                response = await PublicAxios.post(url, payload);
+            } else {
+                response = await PrivateAxios.post(url, payload);
+            }
             setData(response.data);
+            return response;
         } catch (error) {
             const axiosError = error as AxiosError;
             console.log(axiosError, "axiosError");
-            setError(axiosError);
+            setError(
+                axiosError?.response?.data?.message || "Something went wrong"
+            );
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
-    return { data, loading, error };
+    return { postData, data, isLoading, error };
 }
 
 export default useMutation;

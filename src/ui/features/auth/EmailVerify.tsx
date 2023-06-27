@@ -45,7 +45,7 @@ const EmailVerify = () => {
         } else {
             toast.error("Something went wrong!");
         }
-    }, [email, navigate, verification_code]);
+    }, [email, name, navigate, verification_code]);
 
     return (
         <div>

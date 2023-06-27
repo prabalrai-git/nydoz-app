@@ -1,17 +1,16 @@
 import { useState } from "react";
 import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
 import { UserRegisterSchema } from "../../../validations/auth.validators";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { PublicAxios } from "../../../service/AxiosInstance";
+import useMutation from "../../../hooks/useMutation";
 import API_ROUTE from "../../../service/api";
 import { ToastContainer, toast } from "react-toastify";
-import { IResponse } from "../../../types/axios.type";
 import { IUserResponseResponse } from "../../../types/payload.type";
-import { AxiosError } from "axios";
+import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 
 interface FormData {
     first_name: string;
@@ -25,6 +24,8 @@ interface FormData {
 
 const Register = () => {
     const navigate = useNavigate();
+    const { postData, data, error, isLoading } =
+        useMutation<IUserResponseResponse>(API_ROUTE.USER_REGISTER, false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -39,31 +40,21 @@ const Register = () => {
     const onFormSubmit = handleSubmit(async (data: FormData) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { isTermAndConditionAccepted, ...rest } = data;
-        try {
-            const response = await PublicAxios.post<
-                IResponse<IUserResponseResponse>
-            >(API_ROUTE.USER_REGISTER, rest);
+        const response = await postData(rest);
+        console.log(response);
 
-            console.log(response.data, "response.data");
-
-            if (response.data.status === "ok") {
-                navigate("/auth/login");
-            }
-        } catch (error) {
-            const err = error as AxiosError;
-
-            console.log(error?.response?.data?.message);
-            if (error?.response?.data?.message) {
-                toast.error(error?.response?.data?.message);
-            } else {
-                toast.error("Something went wrong");
-            }
+        if (response) {
+            toast.success("Account Created Successfully");
+            navigate("/auth/login");
+        } else {
+            console.log(error);
+            toast.error(error as unknown as string);
         }
     });
 
     return (
         <div
-            className='d-flex  align-items-center justify-content-center w-100 h-100 flex-column flex-root'
+            className='container d-flex  align-items-center justify-content-center w-100 h-100 flex-column flex-root p-4'
             id='kt_app_root'>
             <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
                 <div className=' d-flex flex-column flex-lg-row-fluid w-lg-50 p-6 order-2 order-lg-1 '>
@@ -71,7 +62,7 @@ const Register = () => {
                         <div className='card shadow shadow-sm p-6'>
                             <form
                                 onSubmit={onFormSubmit}
-                                className='form w-100'
+                                className='form w-100 p-4'
                                 id='kt_sign_up_form'
                                 data-kt-redirect-url='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
                                 action='#'>
@@ -222,7 +213,8 @@ const Register = () => {
                                             <label
                                                 className='form-label'
                                                 htmlFor='confrimPassword'>
-                                                Confirm Password<span>*</span>
+                                                Confirm Password
+                                                <span>*</span>
                                             </label>
                                             <div className='mb-1'>
                                                 <div className='position-relative mb-3'>
@@ -264,7 +256,7 @@ const Register = () => {
                                         </div>
                                     </div>
 
-                                    <div className='col-12 col-md-6'>
+                                    <div className='col-12 col-md-6 mb-3'>
                                         <div className='fv-row mb-6'>
                                             <label className='form-check form-check-inline'>
                                                 <input
@@ -304,12 +296,25 @@ const Register = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className='col-12 col-md-6'>
-                                        <button
+                                    <div className='col-12 col-md-6 mb-3'>
+                                        <Button
+                                            variant='primary'
                                             type='submit'
-                                            className='btn btn-success btn-lg float-end'>
-                                            Sign up
-                                        </button>
+                                            className='float-end'>
+                                            {isLoading ? (
+                                                <>
+                                                    <span className='ms-2'>
+                                                        Please Wait...
+                                                    </span>
+                                                    <Spinner
+                                                        size='sm'
+                                                        animation='border'
+                                                        role='status'></Spinner>
+                                                </>
+                                            ) : (
+                                                <span>Submit</span>
+                                            )}
+                                        </Button>
                                     </div>
                                     <div className='col-12'>
                                         <div className='text-gray-500 mt-6 fw-semibold fs-6 float-end'>
