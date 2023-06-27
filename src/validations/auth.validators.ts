@@ -13,8 +13,8 @@ const LoginSchema = yup.object({
 });
 
 const UserRegisterSchema = yup.object({
-    first_name: yup.string().required("First Name is a required field"),
-    last_name: yup.string().required("Last Name is a required field"),
+    first_name: yup.string().required("First Name is a required."),
+    last_name: yup.string().required("Last Name is a required."),
     mobile: yup.string(),
     email: yup
         .string()

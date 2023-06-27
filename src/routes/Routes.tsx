@@ -13,6 +13,7 @@ import ResetPassword from "../ui/features/auth/ResetPassword";
 // public pages
 import MainLayout from "../ui/features/home/MainLayout";
 import Home from "../ui/features/home/Home";
+import EmailVerify from "../ui/features/auth/EmailVerify";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
                     {
                         path: "reset-password",
                         element: <ResetPassword />,
+                    },
+                    {
+                        path: "email-verifications",
+                        element: <EmailVerify />,
                     },
                 ],
             },
