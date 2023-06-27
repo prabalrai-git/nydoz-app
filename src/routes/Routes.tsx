@@ -14,6 +14,7 @@ import ResetPassword from "../ui/features/auth/ResetPassword";
 import MainLayout from "../ui/features/home/MainLayout";
 import Home from "../ui/features/home/Home";
 import EmailVerify from "../ui/features/auth/EmailVerify";
+import ChangePassword from "../ui/features/auth/ChangePassword";
 
 const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
                     {
                         path: "reset-password",
                         element: <ResetPassword />,
+                    },
+                    {
+                        path: "change-password",
+                        element: <ChangePassword />,
                     },
                     {
                         path: "email-verifications",

@@ -48,7 +48,7 @@ const Register = () => {
             navigate("/auth/login");
         } else {
             console.log(error);
-            toast.error(error as unknown as string);
+            toast.error(error);
         }
     });
 

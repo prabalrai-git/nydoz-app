@@ -4,11 +4,26 @@ import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
 
 type P = NonNullable<unknown>;
 
+interface IData<T> {
+    debug: unknown;
+    message: string;
+    payload: T | undefined;
+    status: string;
+}
+
+interface IErrorData {
+    code: number;
+    message: string;
+    status: string;
+}
+
 type PostDataResponse<T> = {
     data: T | undefined;
     isLoading: boolean;
-    error: AxiosError | null;
-    postData: (payload: P) => Promise<AxiosResponse<T, unknown> | undefined>;
+    error: string | null;
+    postData: (
+        payload: P
+    ) => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
 };
 
 function useMutation<T>(
@@ -16,13 +31,13 @@ function useMutation<T>(
     isRequestPrivate: boolean
 ): PostDataResponse<T> {
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<AxiosError | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const [data, setData] = useState<T | undefined>();
 
     const postData = async (payload: P) => {
         setIsLoading(true);
         setError(null);
-        let response: AxiosResponse<T>;
+        let response: AxiosResponse<IData<T>>;
 
         try {
             if (isRequestPrivate === true) {
@@ -30,14 +45,16 @@ function useMutation<T>(
             } else {
                 response = await PrivateAxios.post(url, payload);
             }
-            setData(response.data);
+            setData(response?.data?.payload);
             return response;
         } catch (error) {
-            const axiosError = error as AxiosError;
+            const axiosError = error as AxiosError<IErrorData>;
+
             console.log(axiosError, "axiosError");
             setError(
                 axiosError?.response?.data?.message || "Something went wrong"
             );
+            return undefined;
         } finally {
             setIsLoading(false);
         }

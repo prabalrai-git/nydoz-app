@@ -2,11 +2,17 @@ import { useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
 
+interface IErrorData {
+    code: number;
+    message: string;
+    status: string;
+}
+
 type FetchDataResponse<T> = {
     data: T | undefined | [];
     loading: boolean;
-    error: AxiosError | null;
-    fetchData: () => Promise<void>;
+    error: string | null;
+    fetchData: () => Promise<AxiosResponse<T, unknown> | undefined>;
 };
 
 // Define the hook
@@ -16,7 +22,7 @@ function useFetch<T>(
 ): FetchDataResponse<T> {
     const [data, setData] = useState<T | undefined>();
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<AxiosError | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const fetchData = async () => {
         setLoading(true);
         setError(null);
@@ -29,10 +35,13 @@ function useFetch<T>(
             }
 
             setData(response.data);
+            return response;
         } catch (error: AxiosError | unknown) {
-            const axiosError = error as AxiosError;
-            console.log(axiosError, "axiosError");
-            setError(axiosError || "Something Went Wrong.");
+            const axiosError = error as AxiosError<IErrorData>;
+            setError(
+                axiosError?.response?.data?.message || "Something went wrong"
+            );
+            return undefined;
         } finally {
             setLoading(false);
         }
