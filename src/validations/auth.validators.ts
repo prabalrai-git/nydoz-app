@@ -31,4 +31,13 @@ const UserRegisterSchema = yup.object({
         .required("Please accept the terms and conditions."),
 });
 
-export { LoginSchema, UserRegisterSchema };
+const ChangePasswordSchema = yup.object({
+    current_password: yup.string().required("Current Password is required."),
+    password: yup.string().required("New Password is required."),
+    password_confirmation: yup
+        .string()
+        .required("Please enter your password is required.")
+        .oneOf([yup.ref("password")], "Passwords must match"),
+});
+
+export { LoginSchema, UserRegisterSchema, ChangePasswordSchema };
