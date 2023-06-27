@@ -1,111 +1,138 @@
-import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
-import Poster from "./Poster";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+// ------------------------------ import components
+import Images from "../../../constants/Images";
+import Spinner from "react-bootstrap/Spinner";
+import useMutation from "../../../hooks/useMutation";
+import API_ROUTE from "../../../service/api";
+import { ForgetPasswordSchema } from "../../../validations/auth.validators";
+import Card from "../../shared/components/Card";
+import { Check2Circle } from "react-bootstrap-icons";
 
-const ForgetPassword = () => {
+interface IChangePasswordFormData {
+    email: string;
+}
+
+const ChangePassword = () => {
+    const [isEmailSent, setIsEmailSent] = useState(false);
+    const navigate = useNavigate();
+    const { isLoading, error, postData } = useMutation(
+        API_ROUTE.FORGOT_PASSWORD,
+        false
+    );
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<IChangePasswordFormData>({
+        defaultValues: {
+            email: "",
+        },
+        resolver: yupResolver(ForgetPasswordSchema),
+    });
+
+    const onFormSubmit = handleSubmit(async (data: IChangePasswordFormData) => {
+        console.log(data);
+        const response = await postData(data);
+        if (response?.data?.message) {
+            toast.success(response?.data?.message);
+            setIsEmailSent(true);
+        } else {
+            toast.error(error);
+        }
+    });
+
     return (
-        <div className='d-flex flex-column flex-root' id='kt_app_root'>
-            <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
-                {/* first Side group */}
-                <div className='card shadow m-1 m-md-3 d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1'>
-                    <div className='d-flex flex-center flex-column flex-lg-row-fluid'>
-                        <div className='w-lg-500px p-10 '>
-                            <form
-                                className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
-                                id='kt_password_reset_form'>
-                                <div className='text-center mb-6'>
-                                    <img
-                                        src={CompanyLogo}
-                                        alt='Company Logo'
-                                        className='mb-3'
-                                    />
-                                    <h1 className='text-dark fw-bolder mb-3'>
-                                        Forgot Password ?
-                                    </h1>
+        <div className='bg-light h-100vh '>
+            <div className='container '>
+                <div className='row '>
+                    <div className='col-md-6 offset-md-3'>
+                        {isEmailSent ? (
+                            <div className='card mt-4'>
+                                <div className='card-body'>
+                                    <div className='text-center mb-3'>
+                                        <img
+                                            src={Images.CompanyLogo}
+                                            height='48'
+                                            className='mb-4'
+                                        />
+                                        <h5>Change Password</h5>
+                                    </div>
+                                    <form onSubmit={onFormSubmit}>
+                                        <div className='form-group mb-3'>
+                                            <label
+                                                className='mb-2'
+                                                htmlFor='email'>
+                                                Email<span>*</span>
+                                            </label>
+                                            <input
+                                                className='form-control'
+                                                type='text'
+                                                {...register("email")}
+                                                placeholder='Enter your email address'
+                                            />
+                                            <p className='text-danger mt-1'>
+                                                {errors.email?.message}
+                                            </p>
+                                            <p className='text-info mt-1'>
+                                                An email will be sent to you
+                                                with instructions on how to
+                                                reset your password.
+                                            </p>
+                                        </div>
 
-                                    <div className='text-gray-500 fw-semibold fs-6'>
-                                        Enter your email to reset your password.
+                                        <div className='form-group mb-3'>
+                                            <button
+                                                type='submit'
+                                                className='btn btn-primary btn-block w-100'>
+                                                {isLoading ? (
+                                                    <>
+                                                        <span className='ms-2'>
+                                                            Please Wait...
+                                                        </span>
+                                                        <Spinner
+                                                            size='sm'
+                                                            animation='border'
+                                                            role='status'></Spinner>
+                                                    </>
+                                                ) : (
+                                                    <span>Submit</span>
+                                                )}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className='m-4'>
+                                <div className='card text-center'>
+                                    <div className='card-body'>
+                                        <h5 className='card-title  mb-1 '>
+                                            <span className='text-success mx-2'>
+                                                Email Sent
+                                            </span>
+                                            <span className='text-success'>
+                                                <Check2Circle />
+                                            </span>
+                                        </h5>
+                                        <p className='card-text text-primary'>
+                                            An Email with link has been sent to
+                                            your email .
+                                        </p>
                                     </div>
                                 </div>
-
-                                <div className='fv-row mb-8 fv-plugins-icon-container'>
-                                    <input
-                                        type='text'
-                                        placeholder='Email'
-                                        name='email'
-                                        className='form-control bg-transparent'
-                                    />
-                                    <div className='d-flex flex-wrap justify-content-end mt-6 pb-lg-0'>
-                                        <a
-                                            href='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
-                                            className='btn btn-light me-4'>
-                                            Cancel
-                                        </a>
-                                        <button
-                                            type='button'
-                                            id='kt_password_reset_submit'
-                                            className='btn btn-primary '>
-                                            <span className='indicator-label'>
-                                                Submit
-                                            </span>
-                                            <span className='indicator-progress'>
-                                                Please wait...
-                                                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div className='w-lg-500px d-flex flex-stack px-10 mx-auto'>
-                        <div className='me-10'>
-                            <button
-                                className='btn btn-flex btn-link btn-color-gray-700 btn-active-color-primary rotate fs-base'
-                                data-kt-menu-trigger='click'
-                                data-kt-menu-placement='bottom-start'
-                                data-kt-menu-offset='0px, 0px'>
-                                <img
-                                    data-kt-element='current-lang-flag'
-                                    className='w-20px h-20px rounded me-3'
-                                    src='assets/media/flags/united-states.svg'
-                                    alt=''
-                                />
-                                <span
-                                    data-kt-element='current-lang-name'
-                                    className='me-1'>
-                                    English
-                                </span>
-                                <i className='ki-outline ki-down fs-5 text-muted rotate-180 m-0'></i>
-                            </button>
-                            <div
-                                className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-4 fs-7'
-                                data-kt-menu='true'
-                                id='kt_auth_lang_menu'></div>
-                        </div>
-                        <div className='d-flex fw-semibold text-primary fs-base gap-5'>
-                            <a
-                                href='../../demo31/dist/pages/team.html'
-                                target='_blank'>
-                                Terms
-                            </a>
-                            <a
-                                href='../../demo31/dist/pages/pricing/column.html'
-                                target='_blank'>
-                                Plans
-                            </a>
-                            <a
-                                href='../../demo31/dist/pages/contact.html'
-                                target='_blank'>
-                                Contact Us
-                            </a>
-                        </div>
+                            </div>
+                        )}
                     </div>
                 </div>
-                {/* second group */}
-                <Poster />
             </div>
+            <ToastContainer />
         </div>
     );
 };
 
-export default ForgetPassword;
+export default ChangePassword;

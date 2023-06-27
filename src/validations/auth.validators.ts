@@ -40,4 +40,25 @@ const ChangePasswordSchema = yup.object({
         .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
-export { LoginSchema, UserRegisterSchema, ChangePasswordSchema };
+const ResetPasswordSchema = yup.object({
+    password: yup.string().required("New Password is required."),
+    password_confirmation: yup
+        .string()
+        .required("Please enter your password is required.")
+        .oneOf([yup.ref("password")], "Passwords must match"),
+});
+
+const ForgetPasswordSchema = yup.object({
+    email: yup
+        .string()
+        .email("Email must be a valid Email.")
+        .required("Email Address is required."),
+});
+
+export {
+    LoginSchema,
+    UserRegisterSchema,
+    ChangePasswordSchema,
+    ResetPasswordSchema,
+    ForgetPasswordSchema,
+};
