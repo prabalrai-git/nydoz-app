@@ -1,56 +1,51 @@
-import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { PublicAxios } from "../../../service/AxiosInstance";
 import API_ROUTE from "../../../service/api";
-import { IResponse } from "../../../types/axios.type";
-import { IUserResponseResponse } from "../../../types/payload.type";
-import { AxiosError } from "axios";
+import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import useMutation from "../../../hooks/useMutation";
 
 const EmailVerify = () => {
-    const navigate = useNavigate();
+    const { error, data, isLoading, postData } = useMutation(
+        API_ROUTE.EMAIL_VERIFICATION,
+        false
+    );
     const [searchParams] = useSearchParams();
     const verification_code = searchParams.get("verification_code");
     const email = searchParams.get("email");
-    const name = searchParams.get("name");
 
-    useEffect(() => {
-        const verifyEmail = async () => {
-            const payload = {
-                email,
-                verification_code,
-                name,
-            };
-            try {
-                const response = await PublicAxios.post<
-                    IResponse<IUserResponseResponse>
-                >(API_ROUTE.EMAIL_VERIFICATION, payload);
-
-                console.log(response.data, "response.data");
-
-                if (response?.data?.status === "ok") {
-                    navigate("/auth/login");
-                }
-            } catch (error) {
-                const err = error as AxiosError;
-                if (err?.response?.data?.message) {
-                    toast.error(err?.response?.data?.message);
-                } else {
-                    toast.error("Something went wrong!");
-                }
-            }
-        };
-        if (verification_code && email) {
-            verifyEmail();
+    const handleEmailVerification = async () => {
+        if (!verification_code || !email)
+            return toast.error("Something went wrong");
+        const payload = { verification_code, email };
+        const response = await postData(payload);
+        if (response?.data?.status === "ok") {
+            toast.success(response?.data?.message);
         } else {
-            toast.error("Something went wrong!");
+            toast.error(error);
         }
-    }, [email, name, navigate, verification_code]);
+    };
 
     return (
-        <div>
+        <>
+            <Button
+                variant='primary'
+                onClick={handleEmailVerification}
+                className='float-end'>
+                {isLoading ? (
+                    <>
+                        <span className='ms-2'>Please Wait...</span>
+                        <Spinner
+                            size='sm'
+                            animation='border'
+                            role='status'></Spinner>
+                    </>
+                ) : (
+                    <span>Submit</span>
+                )}
+            </Button>
             <ToastContainer />
-        </div>
+        </>
     );
 };
 

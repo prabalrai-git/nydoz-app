@@ -41,16 +41,19 @@ function useMutation<T>(
 
         try {
             if (isRequestPrivate === true) {
-                response = await PublicAxios.post(url, payload);
-            } else {
                 response = await PrivateAxios.post(url, payload);
+            } else {
+                response = await PublicAxios.post(url, payload);
             }
             setData(response?.data?.payload);
             return response;
         } catch (error) {
             const axiosError = error as AxiosError<IErrorData>;
-
             console.log(axiosError, "axiosError");
+            if (axiosError?.response?.status === 500) {
+                setError("Something went wrong");
+                return undefined;
+            }
             setError(
                 axiosError?.response?.data?.message || "Something went wrong"
             );

@@ -29,15 +29,19 @@ function useFetch<T>(
         let response: AxiosResponse<T>;
         try {
             if (isRequestPrivate === true) {
-                response = await PublicAxios.get(url);
-            } else {
                 response = await PrivateAxios.get(url);
+            } else {
+                response = await PublicAxios.get(url);
             }
 
             setData(response.data);
             return response;
         } catch (error: AxiosError | unknown) {
             const axiosError = error as AxiosError<IErrorData>;
+            if (axiosError?.response?.status === 500) {
+                setError("Something went wrong");
+                return undefined;
+            }
             setError(
                 axiosError?.response?.data?.message || "Something went wrong"
             );
