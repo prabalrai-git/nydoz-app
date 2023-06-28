@@ -1,16 +1,20 @@
+import { useContext } from "react";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import { Bell, CaretDownFill } from "react-bootstrap-icons";
-import CompanyLogo from "../../../assets/media/nydoz_logo.png";
+import { AuthContext } from "../../../../context/AuthContext";
 
 const Header2 = () => {
+    const { userInfo } = useContext(AuthContext);
+    console.log(userInfo, "user");
     return (
         <nav
             id='admin-navbar'
-            className='navbar navbar-expand-lg bg-white min-h-80px'>
+            className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm'>
             <div className='container'>
                 <a className='navbar-brand' href='#'>
                     <img
                         className='navbar-brand-img '
-                        src={CompanyLogo}
+                        src=''
                         alt='Company Logo'
                     />
                 </a>
@@ -39,36 +43,21 @@ const Header2 = () => {
                                 Dashboard
                             </a>
                         </li>
-                        <li className='nav-item dropdown'>
-                            <a
-                                className='nav-link dropdown-toggle'
-                                href='#'
-                                role='button'
-                                data-bs-toggle='dropdown'
-                                aria-expanded='false'>
-                                App
-                            </a>
-                            <ul className='dropdown-menu'>
-                                <li>
-                                    <a className='dropdown-item' href='#'>
-                                        another
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className='dropdown-item' href='#'>
-                                        Another action
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr className='dropdown-divider' />
-                                </li>
-                                <li>
-                                    <a className='dropdown-item' href='#'>
-                                        Something else here
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <NavDropdown title='Dropdown' id='basic-nav-dropdown'>
+                            <NavDropdown.Item href='#action/3.1'>
+                                Action
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href='#action/3.2'>
+                                Another action
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href='#action/3.3'>
+                                Something
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href='#action/3.4'>
+                                Separated link
+                            </NavDropdown.Item>
+                        </NavDropdown>
                         <li className='nav-item'>
                             <a className='nav-link disabled'>Pages</a>
                         </li>

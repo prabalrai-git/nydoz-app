@@ -32,3 +32,9 @@
     font-size: 0.875rem;
     color: #6c757d;
 }
+
+.flex-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,4 +1,6 @@
 import React, { FC, useState, useEffect, useMemo } from "react";
+import Spinner from "react-bootstrap/Spinner";
+
 import {
     AuthContext,
     AuthContextProps,
@@ -8,11 +10,26 @@ import {
 import useFetch from "../hooks/useFetch";
 import API_ROUTE from "../service/api";
 
+interface IUseMeData {
+    city: string;
+    country: string;
+    country_calling_code: string;
+    email: string;
+    first_name: string;
+    id: string;
+    last_name: string;
+    mobile: string;
+    postal_code: string;
+    profile_picture: string;
+    secondary_email: string;
+    state: string;
+    status: null;
+    status_id: number;
+    street_address: string;
+}
+
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { fetchData } = useFetch<ILoginResponse>(
-        API_ROUTE.LOGGED_IN_USER,
-        true
-    );
+    const { fetchData } = useFetch<IUseMeData>(API_ROUTE.LOGGED_IN_USER, true);
 
     const userInitialState = useMemo<IUserState>(() => {
         return {
@@ -54,8 +71,22 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
     const handleAuthenticationFn = async () => {
         const response = await fetchData();
-        if (response?.data) {
-            const { user, token } = response.data;
+        console.log(response, "response");
+        if (response?.status === 200) {
+            const { id, email, first_name, last_name, mobile } =
+                response.data.payload;
+
+            const user: IUserState = {
+                id,
+                email,
+                email_verified_at: null,
+                first_name,
+                last_name,
+                mobile,
+                mobile_verified_at: null,
+                isAdmin: false,
+                permissions: [],
+            };
             setUserInfo(user);
             setToken(token);
         }
@@ -92,7 +123,11 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
     return (
         <AuthContext.Provider value={authContextValue}>
-            {children}
+            {token && userInfo?.id ? (
+                children
+            ) : (
+                <Spinner size='sm' animation='border' role='status'></Spinner>
+            )}
         </AuthContext.Provider>
     );
 };

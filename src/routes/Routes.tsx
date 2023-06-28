@@ -14,6 +14,7 @@ import ResetPassword from "../ui/features/auth/ResetPassword";
 import MainLayout from "../ui/features/home/MainLayout";
 import Home from "../ui/features/home/Home";
 import ChangePassword from "../ui/features/auth/ChangePassword";
+import UserLayout from "../ui/features/user/UserLayout";
 
 const router = createBrowserRouter([
     {
@@ -55,6 +56,20 @@ const router = createBrowserRouter([
                         element: <ChangePassword />,
                     },
                 ],
+            },
+            {
+                path: "user",
+                element: <UserLayout />,
+                children: [
+                    {
+                        path: "",
+                        element: <h1>dashboard</h1>,
+                    },
+                ],
+            },
+            {
+                path: "*",
+                element: <h1>Not Found</h1>,
             },
         ],
     },
