@@ -36,8 +36,8 @@ const ChangePassword = () => {
     });
 
     const onFormSubmit = handleSubmit(async (data: IChangePasswordFormData) => {
-        console.log(data);
         const response = await postData(data);
+        console.log(response, "response");
         if (response?.data?.message) {
             toast.success(response?.data?.message);
             setIsEmailSent(true);
@@ -51,7 +51,7 @@ const ChangePassword = () => {
             <div className='container '>
                 <div className='row '>
                     <div className='col-md-6 offset-md-3'>
-                        {isEmailSent ? (
+                        {!isEmailSent ? (
                             <div className='card mt-4'>
                                 <div className='card-body'>
                                     <div className='text-center mb-3'>

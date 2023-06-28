@@ -45,9 +45,9 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         localStorage.setItem("rememberMe", rememberMe.toString());
         setToken(token);
         if (rememberMe) {
-            localStorage.setItem("token", JSON.stringify(token));
+            localStorage.setItem("token", token);
         } else {
-            sessionStorage.setItem("token", JSON.stringify(token));
+            sessionStorage.setItem("token", token);
         }
         return true;
     };
