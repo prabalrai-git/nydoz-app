@@ -8,6 +8,10 @@
     height: 15px;
 }
 
+.h-25px {
+    height: 25px;
+}
+
 .h-100vh {
     height: 100vh;
 }
@@ -43,4 +47,36 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.btn {
+    color: #ffffff;
+    &:hover {
+        color: #ffffff;
+    }
+    &:focus {
+        color: #ffffff;
+    }
+    &:active {
+        color: #ffffff;
+    }
+    &:disabled {
+        color: #ffffff;
+    }
+    &:not(:disabled):not(.disabled):active {
+        color: #ffffff;
+    }
+    &:not(:disabled):not(.disabled).active {
+        color: #ffffff;
+    }
+    &:not(:disabled):not(.disabled):active:focus {
+        color: #ffffff;
+    }
+    &:not(:disabled):not(.disabled).active:focus {
+        color: #ffffff;
+    }
+}
+
+.text-dark {
+    color: #111213 !important;
 }

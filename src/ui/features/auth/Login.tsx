@@ -61,10 +61,10 @@ const LoginPage = () => {
     return (
         <div className='container pt-4' id='kt_app_root '>
             <div className='row h-100vh '>
-                <div className='col-12  col-md-4  offset-0 offset-md-4 '>
+                <div className='col-12  col-md-8 col-lg-4  offset-0 offset-md-2 offset-lg-4 '>
                     <div className='card shadow shadwo-sm p-3 mt-4'>
                         <div className='card-body'>
-                            <div className='row'>
+                            <div className='row mb-3'>
                                 <div className='col-12 text-center'>
                                     <img
                                         className='mb-2'
@@ -89,25 +89,30 @@ const LoginPage = () => {
                                     <div className='col-12'>
                                         <a
                                             href='#'
-                                            className='btn py-2 px-3 bg-light w-100 shadow shadow-sm'>
+                                            className='btn text-dark p-2  bg-light w-100 shadow shadow-sm w-100'>
                                             <img
-                                                alt='Google Logo'
-                                                src={GoogleLogo}
-                                                className='h-15px me-3'
+                                                alt='Facebook Logo'
+                                                src={FacebookLogo}
+                                                className='h-25px me-3 '
                                             />
-                                            Sign in with Google
+                                            <span className='text-dark'>
+                                                {" "}
+                                                Sign in with Facebook
+                                            </span>
                                         </a>
                                     </div>
                                     <div className='col-12'>
                                         <a
                                             href='#'
-                                            className='btn py-2 px-3 bg-light w-100 shadow shadow-sm'>
+                                            className='btn text-dark p-2  bg-light w-100 shadow shadow-sm w-100'>
                                             <img
-                                                alt='Facebook Logo'
-                                                src={FacebookLogo}
-                                                className='h-15px me-3'
+                                                alt='Google Logo'
+                                                src={GoogleLogo}
+                                                className='h-25px me-3'
                                             />
-                                            Sign in with Facebook
+                                            <span className='text-dark'>
+                                                Sign in with Google
+                                            </span>
                                         </a>
                                     </div>
                                 </div>
