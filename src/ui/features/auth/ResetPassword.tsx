@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
 import { ToastContainer, toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,14 +17,17 @@ interface IChangePasswordFormData {
 }
 
 const ResetPassword = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const reset_code = searchParams.get("reset_code");
+    const email = searchParams.get("email");
+
     const { isLoading, error, postData } = useMutation(
         API_ROUTE.RESET_PASSWORD,
         false
     );
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const {
         register,
@@ -40,7 +43,10 @@ const ResetPassword = () => {
 
     const onFormSubmit = handleSubmit(async (data: IChangePasswordFormData) => {
         console.log(data);
-        const response = await postData(data);
+        if (!reset_code || !email) return toast.error("Something went wrong");
+
+        const payload = { ...data, email, reset_code };
+        const response = await postData(payload);
         if (response?.data?.message) {
             toast.success(response?.data?.message);
             navigate("/login");
@@ -62,8 +68,9 @@ const ResetPassword = () => {
                                         height='48'
                                         className='mb-4'
                                     />
-                                    <h5>Change Password</h5>
+                                    <h5>Reset Password</h5>
                                 </div>
+
                                 <form onSubmit={onFormSubmit}>
                                     <div className='form-group mb-3'>
                                         <label

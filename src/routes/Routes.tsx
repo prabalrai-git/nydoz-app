@@ -55,10 +55,6 @@ const router = createBrowserRouter([
                         path: "change-password",
                         element: <ChangePassword />,
                     },
-                    {
-                        path: "email-verifications",
-                        element: <EmailVerify />,
-                    },
                 ],
             },
         ],

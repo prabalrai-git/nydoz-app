@@ -9,7 +9,6 @@ import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
 import API_ROUTE from "../../../service/api";
 import { ForgetPasswordSchema } from "../../../validations/auth.validators";
-import Card from "../../shared/components/Card";
 import { Check2Circle } from "react-bootstrap-icons";
 
 interface IChangePasswordFormData {
@@ -61,6 +60,10 @@ const ChangePassword = () => {
                                             className='mb-4'
                                         />
                                         <h5>Change Password</h5>
+                                        <p className='text-muted mt-1'>
+                                            Enter your registered email below to
+                                            recieve password reset instruction.
+                                        </p>
                                     </div>
                                     <form onSubmit={onFormSubmit}>
                                         <div className='form-group mb-3'>
@@ -77,11 +80,6 @@ const ChangePassword = () => {
                                             />
                                             <p className='text-danger mt-1'>
                                                 {errors.email?.message}
-                                            </p>
-                                            <p className='text-info mt-1'>
-                                                An email will be sent to you
-                                                with instructions on how to
-                                                reset your password.
                                             </p>
                                         </div>
 
@@ -120,8 +118,9 @@ const ChangePassword = () => {
                                             </span>
                                         </h5>
                                         <p className='card-text text-primary'>
-                                            An Email with link has been sent to
-                                            your email .
+                                            Please check your inbox and click in
+                                            the recieved link to reset a
+                                            password.
                                         </p>
                                     </div>
                                 </div>
