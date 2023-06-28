@@ -5,3 +5,30 @@
 .h-100vh {
     height: 100vh;
 }
+
+.w-125px {
+    width: 125px;
+}
+
+.text-gray-500 {
+    color: #6c757d !important;
+}
+
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.separator {
+    border-bottom: 1px solid #e3e6f0;
+    margin: 0 0 1.5rem 0;
+}
+
+.separator-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}

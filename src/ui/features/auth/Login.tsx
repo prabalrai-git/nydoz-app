@@ -40,24 +40,16 @@ const LoginPage = () => {
     });
     const onFormSubmit = handleSubmit(async (data: FormData) => {
         const response = await postData(data);
-        if ("ok" === "ok") {
-            // const { user, token } = response.data.payload;
-            const payload = {
-                user: {
-                    email: "rahul@sabkura.com",
-                    email_verified_at: null,
-                    first_name: "Rahul",
-                    id: "99823f98-8a1c-4e4e-bb2b-176ca103a262",
-                    last_name: "Prasad",
-                    mobile: "9819828300",
-                    mobile_verified_at: null,
-                    isAdmin: true,
-                    permissions: [],
-                },
-                token: "fdfdfsdfs343dsf32443",
+        if (response?.data?.status === "ok") {
+            const user = response?.data?.payload?.user;
+            const token = response?.data?.payload?.token;
+            const payload: ILoginResponse = {
+                user,
+                token,
             };
             toast.success(response?.data?.message || "Login Successful");
             loginFn(payload, rememberMe);
+            navigate("/");
         } else {
             toast.error(error || "Login Failed");
         }
@@ -72,10 +64,10 @@ const LoginPage = () => {
                             className='form w-100 '
                             id='kt_sign_up_form'
                             onSubmit={onFormSubmit}>
-                            <div className=' mb-6'>
+                            <div className=' mb-3'>
                                 <div className='text-center'>
                                     <img
-                                        className='mb-4'
+                                        className='mb-2'
                                         src={CompanyLogo}
                                         alt='Company Logo'
                                     />
@@ -84,11 +76,11 @@ const LoginPage = () => {
                                     Login
                                 </h1>
                             </div>
-                            <div className='row g-3 mb-9'>
+                            <div className='row g-3 my-4'>
                                 <div className='col-md-6'>
                                     <a
                                         href='#'
-                                        className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'>
+                                        className='btn py-2 px-3 bg-light w-100 shadow shadow-sm'>
                                         <img
                                             alt='Google Logo'
                                             src={GoogleLogo}
@@ -100,7 +92,7 @@ const LoginPage = () => {
                                 <div className='col-md-6'>
                                     <a
                                         href='#'
-                                        className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'>
+                                        className='btn py-2 px-3 bg-light w-100 shadow shadow-sm'>
                                         <img
                                             alt='Facebook Logo'
                                             src={FacebookLogo}
@@ -160,11 +152,11 @@ const LoginPage = () => {
                                 </p>
                             </div>
 
-                            <div className='row mb-4'>
+                            <div className='row mb-3'>
                                 <div className='col-6'>
                                     <Link
                                         to={"/auth/forgot-password"}
-                                        className='link-primary'>
+                                        className='btn text-info w-semibold'>
                                         Forgot Password ?
                                     </Link>
                                 </div>
@@ -212,10 +204,10 @@ const LoginPage = () => {
                             </div>
 
                             <div className='col-12 col-md-12'>
-                                Don't have an account?&nbsp;
+                                <span> Don't have an account?</span>
                                 <Link
                                     to='/auth/signup'
-                                    className='link-primary fw-semibold'>
+                                    className='btn text-info fw-semibold'>
                                     Sign Up
                                 </Link>
                             </div>
