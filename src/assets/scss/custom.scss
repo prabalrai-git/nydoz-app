@@ -1,0 +1,22 @@
+$button-text-color: #ffffff;
+$button-bg-color: #70b541;
+$pimary-color: #70b541;
+
+$theme-colors: (
+    "danger": tomato,
+    "info": teal,
+    "primary": $pimary-color,
+);
+
+.btn {
+    color: var(--bs-white);
+}
+
+$border-radius: 0.25rem !default;
+$border-radius-sm: 0.15rem !default;
+$border-radius-lg: 0.45rem !default;
+$border-radius-xl: 1rem !default;
+$border-radius-xxl: 2rem !default;
+$border-radius-pill: 50rem !default;
+
+@import "bootstrap/scss/bootstrap";

@@ -1,0 +1,87 @@
+// @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+@import "./assets/scss/custom.scss";
+
+.h-15px {
+    height: 15px;
+}
+
+.h-25px {
+    height: 25px;
+}
+
+.h-100vh {
+    height: 100vh;
+}
+
+.w-125px {
+    width: 125px;
+}
+
+.text-gray-500 {
+    color: #6c757d !important;
+}
+
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.separator {
+    border-bottom: 1px solid #e3e6f0;
+    margin: 0 0 1.5rem 0;
+}
+
+.separator-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    color: #ffffff;
+    &:hover {
+        color: #ffffff;
+    }
+    &:focus {
+        color: #ffffff;
+    }
+    &:active {
+        color: #ffffff;
+    }
+    &:disabled {
+        color: #ffffff;
+    }
+    &:not(:disabled):not(.disabled):active {
+        color: #ffffff;
+    }
+    &:not(:disabled):not(.disabled).active {
+        color: #ffffff;
+    }
+    &:not(:disabled):not(.disabled):active:focus {
+        color: #ffffff;
+    }
+    &:not(:disabled):not(.disabled).active:focus {
+        color: #ffffff;
+    }
+}
+
+.text-dark {
+    color: #111213 !important;
+}
+
+.form-check-input:checked {
+    background-color: #70b541;
+    border-color: #70b541;
+}

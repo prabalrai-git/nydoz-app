@@ -24,8 +24,10 @@ interface FormData {
 
 const Register = () => {
     const navigate = useNavigate();
-    const { postData, data, error, isLoading } =
-        useMutation<IUserResponseResponse>(API_ROUTE.USER_REGISTER, false);
+    const { postData, error, isLoading } = useMutation<IUserResponseResponse>(
+        API_ROUTE.USER_REGISTER,
+        false
+    );
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -54,7 +56,7 @@ const Register = () => {
 
     return (
         <div
-            className='container d-flex  align-items-center justify-content-center w-100 h-100 flex-column flex-root p-4'
+            className='container pt-4 d-flex  align-items-center justify-content-center w-100 h-100 flex-column flex-root p-4'
             id='kt_app_root'>
             <div className='d-flex flex-column flex-lg-row flex-column-fluid '>
                 <div className=' d-flex flex-column flex-lg-row-fluid w-lg-50 p-6 order-2 order-lg-1 '>
@@ -75,9 +77,9 @@ const Register = () => {
                                         />
                                     </div>
                                     <div className='col-12 col-md-10'>
-                                        <h1 className='text-dark fw-bolder mb-2'>
+                                        <h5 className='text-dark fw-bolder mb-2'>
                                             Create Your Account First
-                                        </h1>
+                                        </h5>
                                         <p className='text-muted '>
                                             Start your trial for 10 more days
                                         </p>
@@ -276,13 +278,13 @@ const Register = () => {
                                                     I Accept the
                                                     <a
                                                         href='#'
-                                                        className='ms-1 link-primary'>
+                                                        className='ms-1 link-primary text-decoration-none'>
                                                         Terms
                                                     </a>
                                                     &
                                                     <a
                                                         href='#'
-                                                        className='ms-1 link-primary'>
+                                                        className='ms-1 link-primary text-decoration-none'>
                                                         Conditions.
                                                     </a>
                                                 </span>
@@ -300,7 +302,7 @@ const Register = () => {
                                         <Button
                                             variant='primary'
                                             type='submit'
-                                            className='float-end'>
+                                            className='w-100'>
                                             {isLoading ? (
                                                 <>
                                                     <span className='ms-2'>
@@ -318,10 +320,10 @@ const Register = () => {
                                     </div>
                                     <div className='col-12'>
                                         <div className='text-gray-500 mt-6 fw-semibold fs-6 float-end'>
-                                            Already have an Account?&nbsp;
+                                            Already have an Account ?&nbsp;
                                             <Link
                                                 to='/auth/login'
-                                                className='link-primary fw-semibold'>
+                                                className='ms-1 link-primary text-decoration-none'>
                                                 Sign in
                                             </Link>
                                         </div>

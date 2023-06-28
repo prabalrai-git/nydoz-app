@@ -1,12 +1,12 @@
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import API_ROUTE from "../../../service/api";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
 
 const EmailVerify = () => {
-    const { error, data, isLoading, postData } = useMutation(
+    const { error, isLoading, postData } = useMutation(
         API_ROUTE.EMAIL_VERIFICATION,
         false
     );
