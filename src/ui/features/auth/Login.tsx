@@ -195,7 +195,7 @@ const LoginPage = () => {
                                     <Button
                                         variant='primary'
                                         type='submit'
-                                        className='float-end w-100'>
+                                        className=' float-end w-100'>
                                         {isLoading ? (
                                             <>
                                                 <span className='ms-2'>

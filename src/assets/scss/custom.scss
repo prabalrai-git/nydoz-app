@@ -1,0 +1,11 @@
+$button-text-color: #ffffff;
+$button-bg-color: #70b541;
+$pimary-color: #70b541;
+
+$theme-colors: (
+    "danger": tomato,
+    "info": teal,
+    "primary": $pimary-color,
+);
+
+@import "bootstrap/scss/bootstrap";
