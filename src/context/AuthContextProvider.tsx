@@ -123,11 +123,12 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
     return (
         <AuthContext.Provider value={authContextValue}>
-            {token && userInfo?.id ? (
+            {/* {token && userInfo?.id ? (
                 children
             ) : (
                 <Spinner size='sm' animation='border' role='status'></Spinner>
-            )}
+            )} */}
+            {children}
         </AuthContext.Provider>
     );
 };

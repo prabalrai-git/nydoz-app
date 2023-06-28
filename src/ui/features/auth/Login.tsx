@@ -52,7 +52,7 @@ const LoginPage = () => {
             };
             toast.success(response?.data?.message || "Login Successful");
             loginFn(payload, rememberMe);
-            navigate("/");
+            navigate("/", { replace: true });
         } else {
             toast.error(error || "Login Failed");
         }
@@ -85,7 +85,7 @@ const LoginPage = () => {
                                 className='form w-100 '
                                 id='kt_sign_up_form'
                                 onSubmit={onFormSubmit}>
-                                <div className='row g-3 mb-3'>
+                                {/* <div className='row g-3 mb-3'>
                                     <div className='col-12'>
                                         <a
                                             href='#'
@@ -120,7 +120,7 @@ const LoginPage = () => {
                                     <span className='w-125px text-gray-500 fw-semibold fs-7'>
                                         Or with email
                                     </span>
-                                </div>
+                                </div> */}
 
                                 <div className='fv-row mb-6'>
                                     <input
@@ -218,12 +218,14 @@ const LoginPage = () => {
                                 </div>
 
                                 <div className='col-12 col-md-12'>
-                                    <span> Don't have an account?</span>
-                                    <Link
-                                        to='/auth/signup'
-                                        className='btn text-info fw-semibold'>
-                                        Sign Up
-                                    </Link>
+                                    <div className='my-2 float-end'>
+                                        <span> Don't have an account?</span>
+                                        <Link
+                                            to='/auth/signup'
+                                            className='ms-1 link-primary text-decoration-none'>
+                                            Sign Up
+                                        </Link>
+                                    </div>
                                 </div>
                             </form>
                         </div>
