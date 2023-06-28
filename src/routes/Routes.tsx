@@ -13,7 +13,6 @@ import ResetPassword from "../ui/features/auth/ResetPassword";
 // public pages
 import MainLayout from "../ui/features/home/MainLayout";
 import Home from "../ui/features/home/Home";
-import EmailVerify from "../ui/features/auth/EmailVerify";
 import ChangePassword from "../ui/features/auth/ChangePassword";
 
 const router = createBrowserRouter([

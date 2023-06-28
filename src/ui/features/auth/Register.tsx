@@ -24,8 +24,10 @@ interface FormData {
 
 const Register = () => {
     const navigate = useNavigate();
-    const { postData, data, error, isLoading } =
-        useMutation<IUserResponseResponse>(API_ROUTE.USER_REGISTER, false);
+    const { postData, error, isLoading } = useMutation<IUserResponseResponse>(
+        API_ROUTE.USER_REGISTER,
+        false
+    );
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 

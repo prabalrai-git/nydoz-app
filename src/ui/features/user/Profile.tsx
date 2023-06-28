@@ -1,30 +1,12 @@
 import { useState } from "react";
 import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
 import CountryCode from "../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../types/react-select.type";
-import { UserRegisterSchema } from "../../../validations/auth.validators";
-import { yupResolver } from "@hookform/resolvers/yup";
+// import { UserRegisterSchema } from "../../../validations/auth.validators";
+// import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-
-//     {
-//   "first_name": "string",
-//   "last_name": "string",
-//   "mobile": "string",
-//   "email": "string",
-//   "password": "string",
-//   "password_confirmation": "string",
-//   "secondary_email": "string",
-//   "country_calling_code": "string",
-//   "country": "string",
-//   "state": "string",
-//   "city": "string",
-//   "street_address": "string",
-//   "profile_picture": "string",
-//   "postal_code": "string"
-// }
 
 interface FormData {
     first_name: string;
@@ -41,8 +23,6 @@ interface FormData {
 }
 
 const Register = () => {
-    const { t } = useTranslation();
-
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [selectedCountryCode, setSelectedCountryCode] = useState<
@@ -57,9 +37,7 @@ const Register = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<FormData>({
-        resolver: yupResolver(UserRegisterSchema),
-    });
+    } = useForm<FormData>();
     const onFormSubmit = handleSubmit((data: FormData) => {
         console.log(data);
     });

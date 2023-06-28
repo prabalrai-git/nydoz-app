@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -17,7 +16,6 @@ interface IChangePasswordFormData {
 
 const ChangePassword = () => {
     const [isEmailSent, setIsEmailSent] = useState(false);
-    const navigate = useNavigate();
     const { isLoading, error, postData } = useMutation(
         API_ROUTE.FORGOT_PASSWORD,
         false

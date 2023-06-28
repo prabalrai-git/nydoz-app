@@ -1,4 +1,4 @@
-import { Bell, CaretDownFill, ChevronDown } from "react-bootstrap-icons";
+import { Bell, CaretDownFill } from "react-bootstrap-icons";
 import CompanyLogo from "../../../assets/media/nydoz_logo.png";
 
 const Header2 = () => {

@@ -13,7 +13,7 @@ import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
-import { IUserState, ILoginResponse } from "../../../types/payload.type";
+import { ILoginResponse } from "../../../types/payload.type";
 
 interface FormData {
     email: string;
@@ -43,9 +43,12 @@ const LoginPage = () => {
         if (response?.data?.status === "ok") {
             const user = response?.data?.payload?.user;
             const token = response?.data?.payload?.token;
+
+            if (!user || !token) return toast.error("Login Failed");
+
             const payload: ILoginResponse = {
-                user,
-                token,
+                user: user,
+                token: token,
             };
             toast.success(response?.data?.message || "Login Successful");
             loginFn(payload, rememberMe);
