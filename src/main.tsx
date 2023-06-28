@@ -7,9 +7,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import router from "./routes/Routes.js";
 import "./i18n/Lang.tsx";
 import "react-toastify/dist/ReactToastify.css";
+import AuthProvider from "./context/AuthContextProvider";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <AuthProvider>
+            <RouterProvider router={router} />
+        </AuthProvider>
     </React.StrictMode>
 );

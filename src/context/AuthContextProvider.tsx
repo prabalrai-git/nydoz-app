@@ -1,58 +1,12 @@
-import React, { FC, createContext, useState, useEffect, useMemo } from "react";
+import React, { FC, useState, useEffect, useMemo } from "react";
+import {
+    AuthContext,
+    AuthContextProps,
+    ILoginResponse,
+    IUserState,
+} from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
 import API_ROUTE from "../service/api";
-
-// email: "rahul@sabkura.com";
-// email_verified_at: null;
-// first_name: "Rahul";
-// id: "99823f98-8a1c-4e4e-bb2b-176ca103a262";
-// last_name: "Prasad";
-// mobile: "9819828300";
-// mobile_verified_at: null;
-
-interface IUserState {
-    id: string | null;
-    email: string;
-    email_verified_at: unknown;
-    first_name: string;
-    last_name: string;
-    mobile: string;
-    mobile_verified_at: unknown;
-    isAdmin: boolean;
-    permissions: string[];
-}
-
-interface ILoginResponse {
-    user: IUserState;
-    token: string;
-}
-
-interface AuthContextProps {
-    userInfo: IUserState | undefined;
-    token: string | null;
-    loginFn: (
-        userDataFromLogin: ILoginResponse,
-        rememberMe: boolean
-    ) => boolean;
-    logoutFn: () => boolean;
-}
-
-export const AuthContext = createContext<AuthContextProps>({
-    userInfo: {
-        id: null,
-        email: "",
-        email_verified_at: null,
-        first_name: "",
-        last_name: "",
-        mobile: "",
-        mobile_verified_at: null,
-        isAdmin: false,
-        permissions: [],
-    },
-    token: null,
-    loginFn: () => false,
-    logoutFn: () => false,
-});
 
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     const { fetchData } = useFetch<ILoginResponse>(
@@ -98,22 +52,22 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         return true;
     };
 
-    useEffect(() => {
-        const isLoggedIn = async () => {
-            const response = await fetchData();
-            if (response) {
-                const { user, token } = response.data;
-                setUserInfo(user);
-                setToken(token);
-            }
-        };
-
-        if (token) {
-            isLoggedIn();
-        } else {
-            setUserInfo(userInitialState);
+    const handleAuthenticationFn = async () => {
+        const response = await fetchData();
+        if (response?.data) {
+            const { user, token } = response.data;
+            setUserInfo(user);
+            setToken(token);
         }
-    }, [fetchData, token, userInitialState]);
+        return true;
+    };
+
+    useEffect(() => {
+        if (token) {
+            handleAuthenticationFn();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const logoutFn = () => {
         const rememberMeFromLocal = localStorage.getItem("rememberMe");
@@ -133,6 +87,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         token,
         loginFn,
         logoutFn,
+        handleAuthenticationFn,
     };
 
     return (
