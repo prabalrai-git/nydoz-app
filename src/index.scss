@@ -95,3 +95,12 @@ $pimary-color: #70b541;
     outline: 0;
     box-shadow: 0 0 0 0.15rem rgba(134, 182, 102, 0.3);
 }
+
+.img-thumbnil-container {
+    height: 100px;
+    width: 100px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

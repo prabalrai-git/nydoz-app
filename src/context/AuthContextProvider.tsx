@@ -71,7 +71,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
     const handleAuthenticationFn = async () => {
         const response = await fetchData();
-        console.log(response, "response");
+        // console.log(response, "response");
         if (response?.status === 200) {
             const { id, email, first_name, last_name, mobile } =
                 response.data.payload;
