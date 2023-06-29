@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AxiosError, AxiosResponse, AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
 import { IData, IErrorData } from "../types/axios.type";
 
@@ -15,7 +15,7 @@ type PostDataResponse<T> = {
     ) => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
 };
 
-function useMutation<T>(
+function useFileUpload<T>(
     url: string,
     isRequestPrivate: boolean
 ): PostDataResponse<T> {
@@ -35,6 +35,7 @@ function useMutation<T>(
                 },
             };
         }
+
         try {
             if (isRequestPrivate === true) {
                 response = await PrivateAxios.post(url, payload, config);
@@ -62,4 +63,4 @@ function useMutation<T>(
     return { postData, data, isLoading, error };
 }
 
-export default useMutation;
+export default useFileUpload;
