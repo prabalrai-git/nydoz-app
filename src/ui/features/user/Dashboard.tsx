@@ -12,7 +12,7 @@ const Dashboard = () => {
             )}
             <UploadFile
                 title='Upload File'
-                fileUploadType={FILE_UPLOAD_TYPE.PDF}
+                fileUploadType={FILE_UPLOAD_TYPE.JSON}
                 isMultiple={true}
                 isRoutePrivate={true}
                 isUploadRequired={true}

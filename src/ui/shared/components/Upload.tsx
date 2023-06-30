@@ -90,14 +90,12 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
 
                 if (response?.data?.status === "ok") {
                     if (response?.data?.payload?.link) {
-                        console.log("link", response?.data?.payload?.link);
                         fileResponseList.push(response?.data?.payload?.link);
                     }
                 }
             })
         );
 
-        console.log(fileResponseList, "fileResponseList");
         setFileInfo(fileResponseList);
     };
 

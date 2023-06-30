@@ -1,10 +1,11 @@
 import { useContext } from "react";
+import Images from "../../../../constants/Images";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Bell, CaretDownFill } from "react-bootstrap-icons";
 import { AuthContext } from "../../../../context/AuthContext";
 
 const Header2 = () => {
-    const { userInfo } = useContext(AuthContext);
+    // const { userInfo } = useContext(AuthContext);
     // console.log(userInfo, "user");
     return (
         <nav
@@ -14,7 +15,7 @@ const Header2 = () => {
                 <a className='navbar-brand' href='#'>
                     <img
                         className='navbar-brand-img '
-                        src=''
+                        src={Images.CompanyLogo}
                         alt='Company Logo'
                     />
                 </a>
