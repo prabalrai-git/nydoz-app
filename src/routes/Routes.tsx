@@ -9,12 +9,15 @@ import Register from "../ui/features/auth/Register";
 import LoginPage from "../ui/features/auth/Login";
 import ForgetPassword from "../ui/features/auth/ForgetPassword";
 import ResetPassword from "../ui/features/auth/ResetPassword";
+import ChangePassword from "../ui/features/auth/ChangePassword";
 
 // public pages
 import MainLayout from "../ui/features/home/MainLayout";
 import Home from "../ui/features/home/Home";
-import ChangePassword from "../ui/features/auth/ChangePassword";
+
+// user pages
 import UserLayout from "../ui/features/user/UserLayout";
+import UserDashboard from "../ui/features/user/Dashboard";
 
 const router = createBrowserRouter([
     {
@@ -63,7 +66,7 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: "",
-                        element: <h1>dashboard</h1>,
+                        element: <UserDashboard />,
                     },
                 ],
             },

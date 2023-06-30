@@ -1,19 +1,7 @@
 import { useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
-
-interface IData<T> {
-    debug: unknown;
-    message: string;
-    payload: T | undefined;
-    status: string;
-}
-
-interface IErrorData {
-    code: number;
-    message: string;
-    status: string;
-}
+import { IData, IErrorData } from "../types/axios.type";
 
 type FetchDataResponse<T> = {
     data: T | undefined | [];
