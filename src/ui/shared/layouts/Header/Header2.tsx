@@ -10,7 +10,7 @@ const Header2 = () => {
     return (
         <nav
             id='admin-navbar'
-            className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm'>
+            className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm fw-bolder'>
             <div className='container'>
                 <a className='navbar-brand' href='#'>
                     <img
