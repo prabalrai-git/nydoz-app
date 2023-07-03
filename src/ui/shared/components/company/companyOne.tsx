@@ -3,7 +3,7 @@ import Avatar from "../../../../assets/media/avatars/300-1.jpg";
 
 const companyOne = () => {
     return (
-        <div className='card mb-5 mb-xxl-8 mt-5'>
+        <div className='card mb-5 mb-xxl-8 mt-1'>
             <div className='card-body pt-9 pb-0'>
                 <div className='d-flex flex-wrap flex-sm-nowrap'>
                     <div className='me-7 mb-4'>

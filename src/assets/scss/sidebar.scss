@@ -10,6 +10,41 @@
     border-radius: 0rem 1rem 0px 1rem;
 }
 
+.docs-aside .nav {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
 .doc-content {
     margin-left: 270px;
+}
+
+/* Styles for middle-sized screens */
+@media (max-width: 992px) {
+    .docs-aside {
+        width: 220px;
+    }
+}
+
+/* Styles for small-sized screens */
+@media (max-width: 576px) {
+    .docs-aside {
+        width: 100%;
+        border-radius: 0;
+        top: 90px;
+        bottom: 0;
+        height: calc(100vh - 90px);
+        transition: transform 0.3s ease-in-out;
+    }
+    .mobile-open {
+        transform: translateX(0);
+        left: 0px;
+    }
+
+    .mobile-close {
+        transform: translateX(0);
+        left: -220px;
+    }
 }

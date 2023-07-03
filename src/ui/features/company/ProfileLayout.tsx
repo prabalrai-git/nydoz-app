@@ -1,6 +1,32 @@
 import { Outlet } from "react-router-dom";
 import Avatar from "../../../assets/media/avatars/300-1.jpg";
 
+// {
+//   "status": "string",
+//   "message": "string",
+//   "payload": {
+//     "id": 0,
+//     "name": "string",
+//     "subdomain": "string",
+//     "owner_id": 0,
+//     "status_id": 0,
+//     "email": "string",
+//     "address": "string",
+//     "country": "string",
+//     "state": "string",
+//     "city": "string",
+//     "postal_code": "string",
+//     "country_calling_code": "string",
+//     "phone_number": "string",
+//     "contact_person": "string",
+//     "website": "string",
+//     "registration_type": "string",
+//     "registration_number": "string",
+//     "logo": "string",
+//     "cover_image": "string"
+//   }
+// }
+
 const ProfileLayout = () => {
     return (
         <div className='card-single-row'>
@@ -149,7 +175,7 @@ const ProfileLayout = () => {
                             <a
                                 className='nav-link text-active-primary ms-0 me-10 py-5'
                                 href='../../demo31/dist/pages/user-profile/projects.html'>
-                                Actitvity
+                                Activity
                             </a>
                         </li>
                     </ul>

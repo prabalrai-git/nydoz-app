@@ -23,6 +23,7 @@ import UserDashboard from "../ui/features/user/Dashboard";
 
 import Layout from "../ui/features/company/Layout";
 import ProfileLayout from "../ui/features/company/ProfileLayout";
+import AddCompany from "../ui/features/company/AddCompany";
 
 const router = createBrowserRouter([
     {
@@ -65,12 +66,13 @@ const router = createBrowserRouter([
                     },
                 ],
             },
+
             {
-                path: "company",
+                path: "account",
                 element: <UserLayout />,
                 children: [
                     {
-                        path: "",
+                        path: "dashboard",
                         element: <UserDashboard />,
                     },
                     {
@@ -78,8 +80,12 @@ const router = createBrowserRouter([
                         element: <Layout />,
                         children: [
                             {
-                                path: "details",
+                                path: "profile",
                                 element: <ProfileLayout />,
+                            },
+                            {
+                                path: "add",
+                                element: <AddCompany />,
                             },
                         ],
                     },
