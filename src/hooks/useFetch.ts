@@ -5,7 +5,7 @@ import { IData, IErrorData } from "../types/axios.type";
 
 type FetchDataResponse<T> = {
     data: T | undefined | [];
-    loading: boolean;
+    isloading: boolean;
     error: string | null;
     fetchData: () => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
 };
@@ -16,10 +16,10 @@ function useFetch<T>(
     isRequestPrivate: boolean
 ): FetchDataResponse<T> {
     const [data, setData] = useState<T | undefined>();
-    const [loading, setLoading] = useState<boolean>(false);
+    const [isloading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const fetchData = async () => {
-        setLoading(true);
+        setIsLoading(true);
         setError(null);
         let response: AxiosResponse<IData<T>>;
         try {
@@ -42,11 +42,11 @@ function useFetch<T>(
             );
             return undefined;
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
-    return { fetchData, data, loading, error };
+    return { fetchData, data, isloading, error };
 }
 
 export default useFetch;

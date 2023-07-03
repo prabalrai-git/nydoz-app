@@ -38,7 +38,7 @@ export interface ILoginPayload {
     password: string;
 }
 
-export interface IAddCompanyResponse {
+export interface ICompanyResponse {
     id: number;
     name: string;
     subdomain: string;

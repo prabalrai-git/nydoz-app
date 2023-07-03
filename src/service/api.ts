@@ -23,6 +23,7 @@ const API_ROUTE = {
 
     // compnanies
     POST_COMPANIES: "/api/v1/companies",
+    GET_COMPANIES: "/api/v1/companies",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

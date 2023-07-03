@@ -24,6 +24,7 @@ import UserDashboard from "../ui/features/user/Dashboard";
 import Layout from "../ui/features/company/Layout";
 import ProfileLayout from "../ui/features/company/ProfileLayout";
 import AddCompany from "../ui/features/company/AddCompany";
+import CompanyList from "../ui/features/company/CompanyList";
 
 const router = createBrowserRouter([
     {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
                             {
                                 path: "add",
                                 element: <AddCompany />,
+                            },
+                            {
+                                path: "list",
+                                element: <CompanyList />,
                             },
                         ],
                     },
