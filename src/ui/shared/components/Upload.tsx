@@ -7,7 +7,7 @@ import useMutation from "../../../hooks/useMutation";
 import { useEffect } from "react";
 
 interface IUploadProps {
-    title: string;
+    title?: string;
     isRoutePrivate: boolean;
     description?: string;
     fileUploadType: FileType;
@@ -34,7 +34,7 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
         fileUploadLimit,
     } = props;
 
-    console.log(API_ROUTE[fileUploadType], "fileUploadType", fileUploadType);
+    // console.log(API_ROUTE[fileUploadType], "fileUploadType", fileUploadType);
 
     const { postData, error, isLoading } = useMutation<IUploadFileResponse>(
         API_ROUTE[fileUploadType],
@@ -86,7 +86,7 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
                 };
 
                 const response = await postData(formData, config);
-                console.log(response, "response");
+                // console.log(response, "response");
 
                 if (response?.data?.status === "ok") {
                     if (response?.data?.payload?.link) {
@@ -102,7 +102,7 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
     return (
         <div>
             <label htmlFor='formFile' className='form-label'>
-                {title}
+                {title && <span className='text-primary'>{title}</span>}
                 {isUploadRequired && <span className='text-danger'>*</span>}
                 {isLoading && (
                     <Spinner animation='border' role='status'>
@@ -119,7 +119,9 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
                 type='file'
                 id='formFile'
             />
-            {description && <p className='text-muted'>{description}</p>}
+            {description && (
+                <div className='text-muted fs-7'>{description}</div>
+            )}
             <ToastContainer />
         </div>
     );

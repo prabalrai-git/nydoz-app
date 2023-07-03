@@ -11,7 +11,7 @@ type PostDataResponse<T> = {
     error: string | null;
     postData: (
         payload: P,
-        config: AxiosRequestConfig
+        config?: AxiosRequestConfig
     ) => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
 };
 

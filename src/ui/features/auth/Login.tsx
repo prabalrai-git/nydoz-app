@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FacebookLogo from "../../../assets/media/svg/Facebook.svg";
-import GoogleLogo from "../../../assets/media/svg/Google.svg";
 import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
 import API_ROUTE from "../../../service/api";
 import { LoginSchema } from "../../../validations/auth.validators";
