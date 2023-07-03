@@ -1,11 +1,17 @@
 import { Outlet } from "react-router-dom";
 import Header2 from "../../shared/layouts/Header/Header2";
+import Sidebar from "../../shared/layouts/sidebar/Sidebar";
 
 const UserLayout = () => {
     return (
         <div>
             <Header2 />
-            <Outlet />
+            <Sidebar />
+            <div className='doc-content bg-light'>
+                <div className='container  '>
+                    <Outlet />
+                </div>
+            </div>
         </div>
     );
 };

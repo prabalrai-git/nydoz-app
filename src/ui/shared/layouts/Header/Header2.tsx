@@ -3,16 +3,16 @@ import Images from "../../../../constants/Images";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Bell, CaretDownFill } from "react-bootstrap-icons";
 import { AuthContext } from "../../../../context/AuthContext";
+import Hamburger from "../../atoms/Hamburger";
 
 const Header2 = () => {
-    // const { userInfo } = useContext(AuthContext);
-    // console.log(userInfo, "user");
     return (
         <nav
             id='admin-navbar'
-            className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm'>
+            className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm fw-bolder'>
             <div className='container'>
                 <a className='navbar-brand' href='#'>
+                    <Hamburger />
                     <img
                         className='navbar-brand-img '
                         src={Images.CompanyLogo}
@@ -99,7 +99,7 @@ const Header2 = () => {
                                 <div className='text-success'>Admin</div>
                             </div>
                         </div>
-                        <button className='btn btn-success ms-3'>
+                        <button className='btn btn-primary ms-3'>
                             Create Company
                         </button>
                     </div>

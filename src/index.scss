@@ -4,6 +4,7 @@
 
 $pimary-color: #70b541;
 
+@import "./assets/scss/sidebar.scss";
 @import "./assets/scss/custom.scss";
 
 .h-15px {
@@ -103,4 +104,13 @@ $pimary-color: #70b541;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.page-outlet {
+    height: calc(100vh - 80px);
+    background: #ffffff;
+    margin-top: 1rem;
+    border-radius: 0.4rem;
+    box-shadow: 0 0 0.875rem rgb(0 0 0 / 10%);
+    padding: 1rem;
 }

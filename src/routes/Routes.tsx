@@ -19,6 +19,12 @@ import Home from "../ui/features/home/Home";
 import UserLayout from "../ui/features/user/UserLayout";
 import UserDashboard from "../ui/features/user/Dashboard";
 
+// company pages
+
+import Layout from "../ui/features/company/Layout";
+import ProfileLayout from "../ui/features/company/ProfileLayout";
+import AddCompany from "../ui/features/company/AddCompany";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -60,16 +66,32 @@ const router = createBrowserRouter([
                     },
                 ],
             },
+
             {
-                path: "user",
+                path: "account",
                 element: <UserLayout />,
                 children: [
                     {
-                        path: "",
+                        path: "dashboard",
                         element: <UserDashboard />,
+                    },
+                    {
+                        path: "company",
+                        element: <Layout />,
+                        children: [
+                            {
+                                path: "profile",
+                                element: <ProfileLayout />,
+                            },
+                            {
+                                path: "add",
+                                element: <AddCompany />,
+                            },
+                        ],
                     },
                 ],
             },
+
             {
                 path: "*",
                 element: <h1>Not Found</h1>,

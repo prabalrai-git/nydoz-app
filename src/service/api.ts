@@ -15,7 +15,7 @@ const API_ROUTE = {
     AUDIO: "/api/v1/uploads/audios",
     VIDEO: "/api/v1/uploads/videos",
     WORD_DOCS: "/api/v1/uploads/word-docs",
-    EXCEL: "/api/v1/uploads/excel-sheets",
+    EXCEL: "/api/v1/uploads/spread-sheets",
     CSV: "/api/v1/uploads/csvs",
     PDF: "/api/v1/uploads/pdfs",
     JSON: "/api/v1/uploads/jsons",
