@@ -107,7 +107,7 @@ $pimary-color: #70b541;
 }
 
 .page-outlet {
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     background: #ffffff;
     margin-top: 1rem;
     border-radius: 0.4rem;
