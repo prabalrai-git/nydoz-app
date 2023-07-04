@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import Heading from "../../shared/molecules/Heading";
 import API_ROUTE from "../../../service/api";
@@ -9,6 +9,7 @@ import BASE_URL from "../../../constants/AppSetting";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import CopyToClipboard from "../../shared/molecules/CopyToClipboard";
+import { Link } from "react-router-dom";
 
 const CompanyList = () => {
     const { data, fetchData, pagination, isloading, error } = useFetch<
@@ -23,12 +24,16 @@ const CompanyList = () => {
         {
             accessorKey: "sn",
             header: () => <div>S.N</div>,
-            cell: (info) => <div>{info.getValue<string>()}</div>,
-            footer: (info) => info.column.id,
+            cell: (info) => info.row.index + 1,
         },
         {
             accessorKey: "logo",
-            header: () => <div>Logo</div>,
+            header: () => (
+                <div>
+                    <i className='bi bi-card-image me-2'></i>
+                    <span> Logo</span>
+                </div>
+            ),
             cell: (info) => {
                 const URL = `${BASE_URL}${info.getValue<string>()}`;
                 return (
@@ -37,38 +42,61 @@ const CompanyList = () => {
                     </div>
                 );
             },
-            footer: (info) => info.column.id,
         },
 
         {
             accessorKey: "name",
-            header: () => <div>Company's Name</div>,
-            cell: (info) => <div>{info.getValue<string>()}</div>,
-            footer: (info) => info.column.id,
+            header: () => (
+                <div>
+                    <i className='bi bi-building-check me-2'></i>
+                    <span>Company's Name</span>
+                </div>
+            ),
+            cell: (info) => {
+                const id = info?.row?.original?.id;
+                return (
+                    <Link to={`/account/company/profile/${id}`}>
+                        {info.getValue<string>()}
+                    </Link>
+                );
+            },
         },
         {
             accessorKey: "website",
-            header: () => <div>Website</div>,
+            header: () => (
+                <div>
+                    <i className='bi bi-globe2 me-2'></i>
+                    <span>Website</span>
+                </div>
+            ),
             cell: (info) => (
                 <div>
                     <span>{info.getValue<string>()}</span>
                     <CopyToClipboard text={info.getValue<string>()} />
                 </div>
             ),
-            footer: (info) => info.column.id,
         },
         {
             accessorKey: "email",
-            header: () => <div>Email</div>,
+            header: () => (
+                <div>
+                    <i className='bi bi-envelope me-2'></i>
+                    <span>Email</span>
+                </div>
+            ),
             cell: (info) => <div>{info.getValue<string>()}</div>,
-            footer: (info) => info.column.id,
         },
 
         {
             accessorKey: "country",
-            header: () => <div>Country</div>,
+            header: () => (
+                <div>
+                    {" "}
+                    <i className='bi bi-flag me-2'></i>
+                    <span>Country</span>
+                </div>
+            ),
             cell: (info) => <div>{info.getValue<string>()}</div>,
-            footer: (info) => info.column.id,
         },
 
         {
@@ -112,7 +140,7 @@ const CompanyList = () => {
                     <div className='card-header border-0 pt-6'>
                         <div className='card-title'>
                             <div className='d-flex align-items-center position-relative my-1'>
-                                <i className='ki-outline ki-magnifier fs-3 position-absolute ms-5'></i>
+                                <i className='cursor-pointer ki-outline ki-magnifier fs-3 position-absolute ms-5'></i>
                                 <input
                                     type='text'
                                     className='form-control form-control-solid w-250px ps-13'

@@ -16,9 +16,9 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = ({ text }) => {
     return (
         <button className='btn' title='Copy' onClick={copyToClipboard}>
             {copied ? (
-                <ClipboardCheck title='Copied' color='#70b541' size={20} />
+                <ClipboardCheck title='Copied' color='#70b541' size={18} />
             ) : (
-                <Clipboard title='Copy' size={20} />
+                <Clipboard title='Copy' size={18} />
             )}
         </button>
     );

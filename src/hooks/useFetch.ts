@@ -4,7 +4,7 @@ import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
 import { IData, IErrorData, IPagination } from "../types/axios.type";
 
 type FetchDataResponse<T> = {
-    data: T | undefined | [];
+    data: T | undefined;
     isloading: boolean;
     error: string | null;
     pagination: IPagination | undefined;

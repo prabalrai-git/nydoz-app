@@ -52,7 +52,7 @@ function TanStackTable(props: ITableProps) {
                                 </tr>
                             ))}
                         </thead>
-                        <tbody className='fw-semibold text-gray-600 min-h-200px'>
+                        <tbody className='fw-semibold text-gray-600 min-h-50vh'>
                             {table.getRowModel().rows.map((row) => {
                                 return (
                                     <tr key={row.id}>
@@ -74,20 +74,17 @@ function TanStackTable(props: ITableProps) {
                     </table>
                     <div className='row'>
                         <div className='col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'>
-                            <div
-                                className='dataTables_length'
-                                id='kt_customers_table_length'>
-                                <label>
-                                    <select
-                                        name='kt_customers_table_length'
-                                        aria-controls='kt_customers_table'
-                                        className='form-select form-select-sm form-select-solid'>
-                                        <option value='10'>10</option>
-                                        <option value='25'>25</option>
-                                        <option value='50'>50</option>
-                                        <option value='100'>100</option>
-                                    </select>
-                                </label>
+                            <div id='kt_customers_table_length'>
+                                <label>Results</label>
+                                <select
+                                    name='kt_customers_table_length'
+                                    aria-controls='kt_customers_table'
+                                    className=' form-select form-select-sm form-select-solid'>
+                                    <option value='10'>10</option>
+                                    <option value='25'>25</option>
+                                    <option value='50'>50</option>
+                                    <option value='100'>100</option>
+                                </select>
                             </div>
                         </div>
                         <div className='col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'>

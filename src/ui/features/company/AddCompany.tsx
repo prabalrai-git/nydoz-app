@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Images from "../../../constants/Images";
 import UploadFile from "../../shared/components/Upload";
 import Heading from "../../shared/molecules/Heading";
@@ -14,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import CountryCode from "../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../types/react-select.type";
 import { ICompanyResponse } from "../../../types/payload.type";
+import Breadcrumb from "../../shared/molecules/Breadcrumb";
 
 interface IAddCompanyForm {
     name: string;
@@ -108,8 +108,13 @@ const AddCompany = () => {
             <Heading
                 title='Create Company'
                 btnText='Back'
-                showBreadcrumb={true}
-            />
+                showBreadcrumb={true}>
+                <Breadcrumb
+                    parent='Company'
+                    parentLink='/account/company/list'
+                    child='Add'
+                />
+            </Heading>
 
             <section>
                 <form className='form w-100 ' onSubmit={onFormSubmit}>
