@@ -2,7 +2,7 @@ import { useState } from "react";
 import Images from "../../../constants/Images";
 import UploadFile from "../../shared/components/Upload";
 import Heading from "../../shared/molecules/Heading";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import API_ROUTE from "../../../service/api";
@@ -50,6 +50,8 @@ interface IAddCompanyPayload {
 }
 
 const AddCompany = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const [thumbnilImg, setThumbnilImg] = useState<string[] | undefined>([]);
     const [coverImg, setCoverImg] = useState<string[] | undefined>([]);
     const [selectedCountry, setSelectedCountry] = useState<
@@ -64,15 +66,21 @@ const AddCompany = () => {
         API_ROUTE.POST_COMPANIES,
         true
     );
-    const navigate = useNavigate();
 
     const {
         register,
+        reset,
         handleSubmit,
         formState: { errors },
     } = useForm<IAddCompanyForm>({
         resolver: yupResolver(companySchema),
     });
+
+    if (location?.state?.data && location?.state?.data?.id) {
+        const editData = location?.state?.data;
+        reset(editData);
+        console.log("location.state?.data", location);
+    }
 
     const onFormSubmit = handleSubmit(async (data: IAddCompanyForm) => {
         console.log("data", data);

@@ -9,7 +9,7 @@ import BASE_URL from "../../../constants/AppSetting";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import CopyToClipboard from "../../shared/molecules/CopyToClipboard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import { SplitButton } from "react-bootstrap";
@@ -19,6 +19,7 @@ import Modal2 from "../../shared/components/Modal2";
 import { ToastContainer, toast } from "react-toastify";
 
 const CompanyList = () => {
+    const navigate = useNavigate();
     const [selectedData, setSelectedData] = useState<
         ICompanyResponse | undefined
     >();
@@ -42,6 +43,13 @@ const CompanyList = () => {
             setFetchAgain(false);
         }
     }, [fetchAgain]);
+
+    const handleEditData = (item: ICompanyResponse) => {
+        console.log(item);
+        navigate(`/account/company/add`, {
+            state: { data: item },
+        });
+    };
 
     const tableColumns: ColumnDef<ICompanyResponse>[] = [
         {
@@ -139,7 +147,11 @@ const CompanyList = () => {
                             </div>
                         </Dropdown.Item>
                         <Dropdown.Item>
-                            <div className='menu-link'>
+                            <div
+                                onClick={() =>
+                                    handleEditData(info?.row?.original)
+                                }
+                                className='menu-link'>
                                 <span className='mx-2'>Edit</span>
                                 <i className='bi bi-pencil-square text-info'></i>
                             </div>
