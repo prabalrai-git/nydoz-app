@@ -39,7 +39,7 @@ export interface ILoginPayload {
 }
 
 export interface ICompanyResponse {
-    id: number;
+    id: string;
     name: string;
     subdomain: string;
     owner_id: number;

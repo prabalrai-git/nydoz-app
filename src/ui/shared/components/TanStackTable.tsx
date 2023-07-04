@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
-
+import { IPagination } from "../../../types/axios.type";
+import { RESULT_PER_PAGE_LIST } from "../../../constants/AppSetting";
 import {
     flexRender,
     getCoreRowModel,
@@ -9,10 +10,11 @@ import {
 interface ITableProps<T> {
     columns: ColumnDef<T>[];
     data: T[];
+    pagination: IPagination;
 }
 
 function TanStackTable(props: ITableProps) {
-    const { columns, data } = props;
+    const { columns, data, pagination } = props;
     const table = useReactTable({
         data,
         columns,
@@ -20,7 +22,7 @@ function TanStackTable(props: ITableProps) {
     });
 
     return (
-        <div className='p-2'>
+        <div>
             {data && data?.length > 0 && (
                 <div className='p-2 block max-w-full overflow-x-scroll overflow-y-hidden'>
                     <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable  '>
@@ -75,16 +77,26 @@ function TanStackTable(props: ITableProps) {
                     <div className='row'>
                         <div className='col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'>
                             <div id='kt_customers_table_length'>
-                                <label>Results</label>
-                                <select
-                                    name='kt_customers_table_length'
-                                    aria-controls='kt_customers_table'
-                                    className=' form-select form-select-sm form-select-solid'>
-                                    <option value='10'>10</option>
-                                    <option value='25'>25</option>
-                                    <option value='50'>50</option>
-                                    <option value='100'>100</option>
-                                </select>
+                                <div className='d-flex  align-items-center'>
+                                    <label className='mx-2'>
+                                        Result Per page:
+                                    </label>
+                                    <select
+                                        value={pagination.per_page}
+                                        name='kt_customers_table_length'
+                                        aria-controls='kt_customers_table'
+                                        className=' form-select form-select-sm form-select-solid'>
+                                        {RESULT_PER_PAGE_LIST.map(
+                                            (item: number, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={item}>
+                                                    {item}
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div className='col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'>
