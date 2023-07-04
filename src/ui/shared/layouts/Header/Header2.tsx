@@ -4,6 +4,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Bell, CaretDownFill } from "react-bootstrap-icons";
 import { AuthContext } from "../../../../context/AuthContext";
 import Hamburger from "../../atoms/Hamburger";
+import { Link } from "react-router-dom";
 
 const Header2 = () => {
     return (
@@ -99,9 +100,11 @@ const Header2 = () => {
                                 <div className='text-success'>Admin</div>
                             </div>
                         </div>
-                        <button className='btn btn-primary ms-3'>
+                        <Link
+                            to='/account/company/add'
+                            className='btn btn-primary ms-3'>
                             Create Company
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

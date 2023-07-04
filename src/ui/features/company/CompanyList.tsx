@@ -65,8 +65,8 @@ const CompanyList = () => {
         },
 
         {
-            accessorKey: "email",
-            header: () => <div>Email</div>,
+            accessorKey: "country",
+            header: () => <div>Country</div>,
             cell: (info) => <div>{info.getValue<string>()}</div>,
             footer: (info) => info.column.id,
         },
