@@ -23,7 +23,7 @@ function TanStackTable(props: ITableProps) {
         <div className='p-2'>
             {data && data?.length > 0 && (
                 <div className='p-2 block max-w-full overflow-x-scroll overflow-y-hidden'>
-                    <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable '>
+                    <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable  '>
                         <thead>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <tr
@@ -52,7 +52,7 @@ function TanStackTable(props: ITableProps) {
                                 </tr>
                             ))}
                         </thead>
-                        <tbody className='fw-semibold text-gray-600'>
+                        <tbody className='fw-semibold text-gray-600 min-h-200px'>
                             {table.getRowModel().rows.map((row) => {
                                 return (
                                     <tr key={row.id}>

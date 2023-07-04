@@ -5,57 +5,56 @@ import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
 import TanStackTable from "../../shared/components/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
-
-interface ITestProps {
-    id: number;
-    name: string;
-    username: string;
-    email: string;
-    phone: string;
-    website: string;
-    company: {
-        name: string;
-    };
-}
+import BASE_URL from "../../../constants/AppSetting";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import CopyToClipboard from "../../shared/molecules/CopyToClipboard";
 
 const CompanyList = () => {
-    const testURL = "https://jsonplaceholder.typicode.com/users";
-    const [testData, setTestData] = useState<ITestProps[] | undefined>();
-    const { data, fetchData, pagination, loading, error } = useFetch<
+    const { data, fetchData, pagination, isloading, error } = useFetch<
         ICompanyResponse[]
     >(API_ROUTE.GET_COMPANIES, true);
 
-    const fetchDataTest = async () => {
-        const response = await fetch(testURL);
-        const data = await response.json();
-        console.log("testdata", data);
-        setTestData(data);
-    };
-
     useEffect(() => {
-        fetchDataTest();
+        fetchData();
     }, []);
 
-    const tableColumns: ColumnDef<ITestProps>[] = [
+    const tableColumns: ColumnDef<ICompanyResponse>[] = [
         {
-            accessorFn: (row) => row.id,
-            id: "Id",
-            cell: (info) => <i>{info.getValue<string>()}</i>,
-            header: () => <span>ID</span>,
+            accessorKey: "sn",
+            header: () => <div>S.N</div>,
+            cell: (info) => <div>{info.getValue<string>()}</div>,
+            footer: (info) => info.column.id,
+        },
+        {
+            accessorKey: "logo",
+            header: () => <div>Logo</div>,
+            cell: (info) => {
+                const URL = `${BASE_URL}${info.getValue<string>()}`;
+                return (
+                    <div className='symbol symbol-label'>
+                        <img className='img-fluid' src={URL} alt='Logo' />
+                    </div>
+                );
+            },
             footer: (info) => info.column.id,
         },
 
         {
             accessorKey: "name",
-            header: () => <div>Name</div>,
+            header: () => <div>Company's Name</div>,
             cell: (info) => <div>{info.getValue<string>()}</div>,
             footer: (info) => info.column.id,
         },
-
         {
-            accessorKey: "username",
-            header: () => <div>username</div>,
-            cell: (info) => <div>{info.getValue<string>()}</div>,
+            accessorKey: "website",
+            header: () => <div>Website</div>,
+            cell: (info) => (
+                <div>
+                    <span>{info.getValue<string>()}</span>
+                    <CopyToClipboard text={info.getValue<string>()} />
+                </div>
+            ),
             footer: (info) => info.column.id,
         },
         {
@@ -64,17 +63,37 @@ const CompanyList = () => {
             cell: (info) => <div>{info.getValue<string>()}</div>,
             footer: (info) => info.column.id,
         },
+
+        {
+            accessorKey: "email",
+            header: () => <div>Email</div>,
+            cell: (info) => <div>{info.getValue<string>()}</div>,
+            footer: (info) => info.column.id,
+        },
+
         {
             accessorKey: "action",
             header: () => <div className='text-center'>Actions</div>,
             cell: () => (
                 <div className='text-center'>
-                    <button className='btn text-info'>
-                        <i className='bi bi-pencil'></i>
-                    </button>
-                    <button className='btn text-danger'>
-                        <i className='bi bi-trash'></i>
-                    </button>
+                    <DropdownButton
+                        variant='secondary'
+                        size='sm'
+                        id='dropdown-basic-button'
+                        title='Action'>
+                        <Dropdown.Item>
+                            <span className='mx-2'>View</span>
+                            <i className='bi bi-box-arrow-up-right text-primary '></i>
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <span className='mx-2'>Edit</span>
+                            <i className='bi bi-pencil-square text-info'></i>
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <span className='mx-2'>Delete</span>
+                            <i className='bi bi-trash text-danger'></i>
+                        </Dropdown.Item>
+                    </DropdownButton>
                 </div>
             ),
             footer: (info) => info.column.id,
@@ -101,80 +120,10 @@ const CompanyList = () => {
                                 />
                             </div>
                         </div>
-
-                        <div className='card-toolbar'>
-                            <div className='d-flex justify-content-end'>
-                                <div className='w-150px me-3'>
-                                    <select className='form-select form-select-solid select2-hidden-accessible'>
-                                        <option data-select2-id='select2-data-9-ucks'></option>
-                                        <option value='all'>All</option>
-                                        <option value='active'>Active</option>
-                                        <option value='locked'>Locked</option>
-                                    </select>
-                                    <span
-                                        className='select2 select2-container select2-container--bootstrap5'
-                                        dir='ltr'
-                                        data-select2-id='select2-data-8-j8oi'>
-                                        <span className='selection'>
-                                            <span className='select2-selection select2-selection--single form-select form-select-solid'>
-                                                <span
-                                                    className='select2-selection__rendered'
-                                                    id='select2-42py-container'>
-                                                    <span className='select2-selection__placeholder'>
-                                                        Status
-                                                    </span>
-                                                </span>
-                                                <span
-                                                    className='select2-selection__arrow'
-                                                    role='presentation'>
-                                                    <b role='presentation'></b>
-                                                </span>
-                                            </span>
-                                        </span>
-                                        <span
-                                            className='dropdown-wrapper'
-                                            aria-hidden='true'></span>
-                                    </span>
-                                </div>
-
-                                <button
-                                    type='button'
-                                    className='btn btn-light-primary me-3'
-                                    data-bs-toggle='modal'
-                                    data-bs-target='#kt_customers_export_modal'>
-                                    <i className='ki-outline ki-exit-up fs-2'></i>
-                                    Export
-                                </button>
-
-                                <button
-                                    type='button'
-                                    className='btn btn-primary'
-                                    data-bs-toggle='modal'
-                                    data-bs-target='#kt_modal_add_customer'>
-                                    Add Customer
-                                </button>
-                            </div>
-
-                            <div
-                                className='d-flex justify-content-end align-items-center d-none'
-                                data-kt-customer-table-toolbar='selected'>
-                                <div className='fw-bold me-5'>
-                                    <span
-                                        className='me-2'
-                                        data-kt-customer-table-select='selected_count'></span>
-                                    Selected
-                                </div>
-                                <button
-                                    type='button'
-                                    className='btn btn-danger'
-                                    data-kt-customer-table-select='delete_selected'>
-                                    Delete Selected
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <TanStackTable columns={tableColumns} data={testData} />
+                <hr className='text-gray-400' />
+                <TanStackTable columns={tableColumns} data={data} />
             </section>
         </div>
     );

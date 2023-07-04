@@ -16,7 +16,15 @@ $pimary-color: #70b541;
 }
 
 .h-100vh {
-    height: 100vh;
+    min-height: 100vh;
+}
+
+.fs-15 {
+    font-size: 15rem;
+}
+
+.min-h-200px {
+    min-height: 200px;
 }
 
 .w-125px {
