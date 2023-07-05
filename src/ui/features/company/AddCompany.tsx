@@ -14,6 +14,10 @@ import CountryCode from "../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../types/react-select.type";
 import { ICompanyResponse } from "../../../types/payload.type";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
+import {
+    getSelectPropsFromCountry,
+    getSelectPropsFromCountryCallingCode,
+} from "../../../functions/country";
 
 interface IAddCompanyForm {
     name: string;
@@ -53,6 +57,7 @@ const AddCompany = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [oldThumbnil, setOldThumbnil] = useState<string | undefined>();
+    const [oldCoverImg, setOldCoverImg] = useState<string | undefined>();
     const [thumbnilImg, setThumbnilImg] = useState<string[] | undefined>([]);
     const [coverImg, setCoverImg] = useState<string[] | undefined>([]);
     const [selectedCountry, setSelectedCountry] = useState<
@@ -79,8 +84,24 @@ const AddCompany = () => {
 
     useEffect(() => {
         if (location?.state?.data && location?.state?.data?.id) {
+            console.log(
+                location?.state?.data && location?.state?.data,
+                "old data"
+            );
             reset(location?.state?.data);
             setOldThumbnil(location?.state?.data?.logo);
+            setOldCoverImg(location?.state?.data?.cover_image);
+            const countryCode = getSelectPropsFromCountryCallingCode(
+                location?.state?.data?.country_calling_code
+            );
+            console.log("countryCode", countryCode);
+            setSelectedCountryCode(countryCode);
+
+            const country = getSelectPropsFromCountry(
+                location?.state?.data?.country
+            );
+            console.log("country", country);
+            setSelectedCountry(country);
         }
     }, [location?.state?.data, reset]);
 
@@ -133,7 +154,9 @@ const AddCompany = () => {
                             <div className='card card-flush py-4'>
                                 <div className='card-header'>
                                     <div className='card-title'>
-                                        <h5>Upload Company's Logo</h5>
+                                        <h5 className='required'>
+                                            Upload Company's Logo
+                                        </h5>
                                     </div>
                                 </div>
 
@@ -218,7 +241,9 @@ const AddCompany = () => {
                             <div className='card card-flush py-4'>
                                 <div className='card-header'>
                                     <div className='card-title'>
-                                        <h5>Upload Company's Logo</h5>
+                                        <h5 className='required'>
+                                            Upload Company's cover photo
+                                        </h5>
                                     </div>
                                 </div>
 
@@ -226,26 +251,58 @@ const AddCompany = () => {
                                     <div
                                         className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
                                         data-kt-image-input='true'>
-                                        {coverImg && coverImg?.length > 0 ? (
-                                            <img
-                                                className='img-fluid rounded'
-                                                src={`${BASE_URL}${coverImg[0]}`}
-                                                alt='cover Image'
-                                            />
-                                        ) : (
-                                            <div
-                                                className='dropzone dz-clickable h-100px'
-                                                id='kt_ecommerce_add_product_media'>
-                                                <div className='dz-message needsclick'>
-                                                    <i className='ki-outline ki-file-up text-primary fs-3x'></i>
-                                                    <div className='ms-4'>
-                                                        <h3 className='fs-5 fw-bold text-gray-900 mb-1'>
-                                                            Upload cover Image
-                                                        </h3>
-                                                    </div>
+                                        <div className='d-flex align-items-center gap-6'>
+                                            {location?.state?.data && (
+                                                <div className='cover-image-wrapper  p-2'>
+                                                    {oldCoverImg ? (
+                                                        <img
+                                                            className={
+                                                                coverImg &&
+                                                                coverImg?.length >
+                                                                    0
+                                                                    ? "img-thumbnail  img-fluid img-thumbnil h-100px rounded opacity-20 "
+                                                                    : "img-thumbnail img-fluid rounded"
+                                                            }
+                                                            src={`${BASE_URL}${oldCoverImg}`}
+                                                            alt='Company"s logo'
+                                                        />
+                                                    ) : (
+                                                        <p className='text center text-muted'>
+                                                            No Company logo
+                                                            found.
+                                                        </p>
+                                                    )}
                                                 </div>
-                                            </div>
-                                        )}
+                                            )}
+
+                                            {coverImg &&
+                                                coverImg?.length > 0 && (
+                                                    <div className='cover-image-wrapper p2'>
+                                                        <img
+                                                            className='img-thumbnail img-fluid rounded'
+                                                            src={`${BASE_URL}${coverImg[0]}`}
+                                                            alt='cover Image'
+                                                        />
+                                                    </div>
+                                                )}
+
+                                            {!location?.state?.data &&
+                                                coverImg?.length === 0 && (
+                                                    <div
+                                                        className='dropzone dz-clickable h-100px'
+                                                        id='kt_ecommerce_add_product_media'>
+                                                        <div className='dz-message needsclick'>
+                                                            <i className='ki-outline ki-file-up text-primary fs-3x'></i>
+                                                            <div className='ms-4'>
+                                                                <h3 className='fs-5 fw-bold text-gray-900 mb-1'>
+                                                                    Upload cover
+                                                                    Image
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                        </div>
 
                                         <div className='text-center'>
                                             <UploadFile
@@ -517,7 +574,7 @@ const AddCompany = () => {
                         </div>
                         <div className='d-flex justify-content-end my-6 mb-6'>
                             <button className='btn btn-secondary btn-sm me-5 mb-6'>
-                                previous
+                                cancel
                             </button>
                             <button
                                 type='submit'
@@ -534,7 +591,11 @@ const AddCompany = () => {
                                             role='status'></Spinner>
                                     </>
                                 ) : (
-                                    <span>Submit</span>
+                                    <span>
+                                        {location?.state?.data?.id
+                                            ? "Update"
+                                            : "Save"}
+                                    </span>
                                 )}
                             </button>
                         </div>
