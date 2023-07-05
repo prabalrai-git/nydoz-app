@@ -10,7 +10,7 @@ const API_ROUTE = {
     LOGOUT: "/api/auth/logout",
 
     // File Upload Routes
-    ANY_FILE_UPLOAD: "/v1/uploads",
+    ANY_FILE_UPLOAD: "/api/v1/uploads",
     IMAGE: "/api/v1/uploads/images",
     AUDIO: "/api/v1/uploads/audios",
     VIDEO: "/api/v1/uploads/videos",
@@ -28,7 +28,8 @@ const API_ROUTE = {
     DELETE_COMPANY_BY_ID: "/api/v1/companies",
 
     // company documents
-    GET_DOCUMENTS: "/api/v1/companies",
+    GET_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
+    POST_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };
