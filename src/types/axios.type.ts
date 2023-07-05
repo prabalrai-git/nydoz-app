@@ -19,6 +19,7 @@ export interface IData<T> {
 
 export interface IErrorData {
     code: number;
+    errors?: Record<string, string[]>;
     message: string;
     status: string;
 }

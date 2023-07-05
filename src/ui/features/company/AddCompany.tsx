@@ -68,14 +68,13 @@ const AddCompany = () => {
     >(undefined);
 
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    const { postData, isLoading, error } = useMutation<ICompanyResponse>(
-        API_ROUTE.POST_COMPANIES,
-        true
-    );
+    const { postData, updateData, isLoading, error, errList } =
+        useMutation<ICompanyResponse>(API_ROUTE.POST_COMPANIES, true);
 
     const {
         register,
         reset,
+        setError,
         handleSubmit,
         formState: { errors },
     } = useForm<IAddCompanyForm>({
@@ -94,16 +93,40 @@ const AddCompany = () => {
             const countryCode = getSelectPropsFromCountryCallingCode(
                 location?.state?.data?.country_calling_code
             );
-            console.log("countryCode", countryCode);
             setSelectedCountryCode(countryCode);
 
             const country = getSelectPropsFromCountry(
                 location?.state?.data?.country
             );
-            console.log("country", country);
             setSelectedCountry(country);
         }
     }, [location?.state?.data, reset]);
+
+    useEffect(() => {
+        if (error) {
+            console.log("error", error);
+            toast.error(error);
+        }
+    }, [error]);
+
+    useEffect(() => {
+        console.log("errList", errList);
+        if (errList) {
+            Object.keys(errList).forEach((fieldName) => {
+                const errorMessages = errList[fieldName];
+                setError(fieldName, {
+                    type: "server",
+                    message: errorMessages[0],
+                });
+            });
+        }
+    }, [errList, setError]);
+
+    useEffect(() => {
+        if (errors) {
+            console.log("errors", errors);
+        }
+    }, [errors]);
 
     const onFormSubmit = handleSubmit(async (data: IAddCompanyForm) => {
         console.log("data", data);
@@ -116,21 +139,60 @@ const AddCompany = () => {
             toast.error("Please select country");
         }
 
-        const tempData: IAddCompanyPayload = {
-            ...data,
-            country: selectedCountry?.value ?? "",
-            country_calling_code: selectedCountryCode?.value ?? "",
-            logo: thumbnilImg?.[0] ?? "",
-            cover_image: coverImg?.[0] ?? "",
-        };
+        let response;
 
-        const response = await postData(tempData);
-        console.log("response", response);
-        if (response?.data?.status === "ok") {
-            toast.success("Company Added Successfully");
-            navigate("/account/company/list");
+        if (location?.state?.data?.id) {
+            const tempPostData: IAddCompanyPayload = {
+                ...data,
+                country: selectedCountry?.value ?? "",
+                country_calling_code: selectedCountryCode?.value ?? "",
+                logo: "",
+                cover_image: "",
+            };
+
+            if (oldThumbnil) {
+                tempPostData.logo = oldThumbnil;
+            } else {
+                tempPostData.logo = thumbnilImg?.[0] ?? "";
+            }
+
+            if (oldCoverImg) {
+                tempPostData.cover_image = oldCoverImg;
+            } else {
+                tempPostData.cover_image = coverImg?.[0] ?? "";
+            }
+
+            response = await updateData(
+                location?.state?.data?.id,
+                tempPostData
+            );
+            console.log("response", response);
+            if (response?.data?.status === "ok") {
+                toast.success("Company updated Successfully");
+                navigate("/account/company/list");
+            }
         } else {
-            toast.error(error ?? "Something went wrong");
+            if (thumbnilImg?.length === 0) {
+                toast.error("Please upload company logo");
+            }
+
+            if (coverImg?.length === 0) {
+                toast.error("Please upload company cover image");
+            }
+
+            const tempPostData: IAddCompanyPayload = {
+                ...data,
+                country: selectedCountry?.value ?? "",
+                country_calling_code: selectedCountryCode?.value ?? "",
+                logo: thumbnilImg?.[0] ?? "",
+                cover_image: coverImg?.[0] ?? "",
+            };
+            response = await postData(tempPostData);
+            console.log("response", response);
+            if (response?.data?.status === "ok") {
+                toast.success("Company Added Successfully");
+                navigate("/account/company/list");
+            }
         }
     });
 

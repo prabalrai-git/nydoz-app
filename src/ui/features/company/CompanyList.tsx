@@ -42,6 +42,7 @@ const CompanyList = () => {
             fetchData();
             setFetchAgain(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchAgain]);
 
     const handleEditData = (item: ICompanyResponse) => {
@@ -139,7 +140,9 @@ const CompanyList = () => {
                         variant='secondary'
                         size='sm'
                         id='dropdown-basic-button'
-                        title='Action'>
+                        title={
+                            <i className='ki-solid ki-dots-vertical fs-2x me-1'></i>
+                        }>
                         <Dropdown.Item>
                             <div className='menu-link'>
                                 <span className='mx-2'>View</span>

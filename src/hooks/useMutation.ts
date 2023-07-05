@@ -9,11 +9,13 @@ type PostDataResponse<T> = {
     data: T | undefined;
     isLoading: boolean;
     error: string | null;
+    errList: Record<string, string[]> | undefined;
     postData: (
         payload: P,
         config?: AxiosRequestConfig
     ) => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
     updateData: (
+        id: string,
         payload: P
     ) => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
     deleteData: (
@@ -27,6 +29,9 @@ function useMutation<T>(
 ): PostDataResponse<T> {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [errList, setErrList] = useState<
+        Record<string, string[]> | undefined
+    >();
     const [data, setData] = useState<T | undefined>();
 
     const postData = async (payload: P, config?: AxiosRequestConfig) => {
@@ -59,30 +64,33 @@ function useMutation<T>(
             setError(
                 axiosError?.response?.data?.message || "Something went wrong"
             );
+            setErrList(axiosError?.response?.data?.errors);
             return undefined;
         } finally {
             setIsLoading(false);
         }
     };
-    const updateData = async (payload: P) => {
+    const updateData = async (id: string, payload: P) => {
         setIsLoading(true);
         setError(null);
         let response: AxiosResponse<IData<T>>;
-
+        const updateUrl = `${url}/${id}`;
         try {
-            response = await PrivateAxios.post(url, payload);
+            response = await PrivateAxios.put(updateUrl, payload);
             setData(response?.data?.payload);
             return response;
         } catch (error) {
             const axiosError = error as AxiosError<IErrorData>;
-            console.log(axiosError, "axiosError");
             if (axiosError?.response?.status === 500) {
                 setError("Something went wrong");
                 return undefined;
             }
+            console.log(axiosError?.response);
+
             setError(
                 axiosError?.response?.data?.message || "Something went wrong"
             );
+            setErrList(axiosError?.response?.data?.errors);
             return undefined;
         } finally {
             setIsLoading(false);
@@ -94,8 +102,8 @@ function useMutation<T>(
         let response: AxiosResponse<IData<T>>;
 
         try {
-            const urlDel = `${url}/${payload}`;
-            response = await PrivateAxios.delete(urlDel);
+            const deleteUrl = `${url}/${payload}`;
+            response = await PrivateAxios.delete(deleteUrl);
             setData(response?.data?.payload);
             return response;
         } catch (error) {
@@ -107,13 +115,24 @@ function useMutation<T>(
             setError(
                 axiosError?.response?.data?.message || "Something went wrong"
             );
+
+            setErrList(axiosError?.response?.data?.errors);
+
             return undefined;
         } finally {
             setIsLoading(false);
         }
     };
 
-    return { postData, data, isLoading, updateData, deleteData, error };
+    return {
+        postData,
+        data,
+        isLoading,
+        updateData,
+        deleteData,
+        error,
+        errList,
+    };
 }
 
 export default useMutation;
