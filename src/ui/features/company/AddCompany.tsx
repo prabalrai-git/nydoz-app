@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Images from "../../../constants/Images";
 import UploadFile from "../../shared/components/Upload";
 import Heading from "../../shared/molecules/Heading";
@@ -52,6 +52,7 @@ interface IAddCompanyPayload {
 const AddCompany = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [oldThumbnil, setOldThumbnil] = useState<string | undefined>();
     const [thumbnilImg, setThumbnilImg] = useState<string[] | undefined>([]);
     const [coverImg, setCoverImg] = useState<string[] | undefined>([]);
     const [selectedCountry, setSelectedCountry] = useState<
@@ -76,11 +77,12 @@ const AddCompany = () => {
         resolver: yupResolver(companySchema),
     });
 
-    if (location?.state?.data && location?.state?.data?.id) {
-        const editData = location?.state?.data;
-        reset(editData);
-        console.log("location.state?.data", location);
-    }
+    useEffect(() => {
+        if (location?.state?.data && location?.state?.data?.id) {
+            reset(location?.state?.data);
+            setOldThumbnil(location?.state?.data?.logo);
+        }
+    }, [location?.state?.data, reset]);
 
     const onFormSubmit = handleSubmit(async (data: IAddCompanyForm) => {
         console.log("data", data);
@@ -136,38 +138,74 @@ const AddCompany = () => {
                                 </div>
 
                                 <div className='card-body  pt-0'>
-                                    <div
-                                        className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
-                                        data-kt-image-input='true'>
-                                        <div className='image-input-wrapper w-100px h-100px'>
-                                            {thumbnilImg &&
-                                            thumbnilImg?.length > 0 ? (
-                                                <img
-                                                    className='img-fluid rounded'
-                                                    src={`${BASE_URL}${thumbnilImg[0]}`}
-                                                    alt='company logo'
-                                                />
-                                            ) : (
-                                                <img
-                                                    className='img-fluid rounded'
-                                                    src={Images.BlackImg}
-                                                    alt='blank'
-                                                />
-                                            )}
-                                        </div>
+                                    <div>
+                                        <div
+                                            className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
+                                            data-kt-image-input='true'>
+                                            <div className='d-flex justify-content-around align-items-center'>
+                                                {location?.state?.data && (
+                                                    <div className='image-input-wrapper w-100px h-100px p-2'>
+                                                        {oldThumbnil ? (
+                                                            <img
+                                                                className={
+                                                                    thumbnilImg &&
+                                                                    thumbnilImg?.length >
+                                                                        0
+                                                                        ? "img-fluid rounded opacity-20 "
+                                                                        : "img-fluid rounded"
+                                                                }
+                                                                src={`${BASE_URL}${oldThumbnil}`}
+                                                                alt='Company"s logo'
+                                                            />
+                                                        ) : (
+                                                            <p className='text center text-muted'>
+                                                                No Company logo
+                                                                found.
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                )}
 
-                                        <div className='text-center'>
-                                            <UploadFile
-                                                fileUploadLimit={1}
-                                                fileUploadType='IMAGE'
-                                                isUploadRequired={true}
-                                                isRoutePrivate={true}
-                                                isMultiple={false}
-                                                setFileInfo={setThumbnilImg}
-                                                fileInfo={thumbnilImg}
-                                            />
+                                                {thumbnilImg &&
+                                                    thumbnilImg?.length > 0 && (
+                                                        <div className='image-input-wrapper w-100px h-100px p-2'>
+                                                            <img
+                                                                className='img-fluid rounded'
+                                                                src={`${BASE_URL}${thumbnilImg[0]}`}
+                                                                alt='company logo'
+                                                            />
+                                                        </div>
+                                                    )}
+
+                                                {!location?.state?.data &&
+                                                    thumbnilImg?.length ===
+                                                        0 && (
+                                                        <div className='image-input-wrapper w-100px h-100px p-2'>
+                                                            <img
+                                                                className='img-fluid rounded'
+                                                                src={
+                                                                    Images.BlackImg
+                                                                }
+                                                                alt='blank'
+                                                            />
+                                                        </div>
+                                                    )}
+                                            </div>
+
+                                            <div className='text-center'>
+                                                <UploadFile
+                                                    fileUploadLimit={1}
+                                                    fileUploadType='IMAGE'
+                                                    isUploadRequired={false}
+                                                    isRoutePrivate={true}
+                                                    isMultiple={false}
+                                                    setFileInfo={setThumbnilImg}
+                                                    fileInfo={thumbnilImg}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div className='text-muted fs-7'>
                                         Set the product thumbnail image. Only
                                         *.png, *.jpg and *.jpeg image files are

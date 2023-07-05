@@ -102,7 +102,7 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
     return (
         <div>
             <label htmlFor='formFile' className='form-label'>
-                {title && <span className='text-primary'>{title}</span>}
+                {title && <span className='text-primary '>{title}</span>}
                 {isUploadRequired && <span className='text-danger'>*</span>}
                 {isLoading && (
                     <Spinner animation='border' role='status'>
