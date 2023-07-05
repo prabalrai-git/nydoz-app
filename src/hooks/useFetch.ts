@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
-import { IData, IErrorData } from "../types/axios.type";
+import { IData, IErrorData, IPagination } from "../types/axios.type";
 
 type FetchDataResponse<T> = {
-    data: T | undefined | [];
-    loading: boolean;
+    data: T | undefined;
+    isloading: boolean;
     error: string | null;
+    pagination: IPagination | undefined;
     fetchData: () => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
 };
 
@@ -15,11 +16,19 @@ function useFetch<T>(
     url: string,
     isRequestPrivate: boolean
 ): FetchDataResponse<T> {
+    const [pagination, setPagination] = useState<IPagination | undefined>({
+        total: 0,
+        per_page: 0,
+        last_page: 0,
+        current_page: 0,
+        from: 0,
+        to: 0,
+    });
     const [data, setData] = useState<T | undefined>();
-    const [loading, setLoading] = useState<boolean>(false);
+    const [isloading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const fetchData = async () => {
-        setLoading(true);
+        setIsLoading(true);
         setError(null);
         let response: AxiosResponse<IData<T>>;
         try {
@@ -30,6 +39,7 @@ function useFetch<T>(
             }
 
             setData(response.data?.payload);
+            setPagination(response.data?.meta_data?.pagination);
             return response;
         } catch (error: AxiosError | unknown) {
             const axiosError = error as AxiosError<IErrorData>;
@@ -42,11 +52,11 @@ function useFetch<T>(
             );
             return undefined;
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
-    return { fetchData, data, loading, error };
+    return { fetchData, data, isloading, error, pagination };
 }
 
 export default useFetch;

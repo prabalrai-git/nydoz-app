@@ -8,6 +8,7 @@ import WordIcon from "../assets/media/icons/word.png";
 import XlsIcon from "../assets/media/icons/xls.png";
 import XmlIcon from "../assets/media/icons/xml.png";
 
+import BlackImg from "../assets/media/svg/blank-image.svg";
 const Images = {
     CompanyLogo,
     Facebook,
@@ -17,6 +18,7 @@ const Images = {
     WordIcon,
     XlsIcon,
     XmlIcon,
+    BlackImg,
 };
 
 export default Images;

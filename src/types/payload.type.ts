@@ -32,3 +32,30 @@ export interface ILoginResponse {
     user: IUserState;
     token: string;
 }
+
+export interface ILoginPayload {
+    email: string;
+    password: string;
+}
+
+export interface ICompanyResponse {
+    id: string;
+    name: string;
+    subdomain: string;
+    owner_id: number;
+    status_id: number;
+    email: string;
+    address: string;
+    country: string;
+    state: string;
+    city: string;
+    postal_code: string;
+    country_calling_code: string;
+    phone_number: string;
+    contact_person: string;
+    website: string;
+    registration_type: string;
+    registration_number: string;
+    logo: string;
+    cover_image: string;
+}

@@ -20,6 +20,12 @@ const API_ROUTE = {
     PDF: "/api/v1/uploads/pdfs",
     JSON: "/api/v1/uploads/jsons",
     XML: "/api/v1/uploads/xmls",
+
+    // compnanies
+    POST_COMPANIES: "/api/v1/companies",
+    GET_COMPANIES: "/api/v1/companies",
+    GET_COMPANY_BY_ID: "/api/v1/companies",
+    DELETE_COMPANY_BY_ID: "/api/v1/companies",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };
