@@ -26,6 +26,9 @@ const API_ROUTE = {
     GET_COMPANIES: "/api/v1/companies",
     GET_COMPANY_BY_ID: "/api/v1/companies",
     DELETE_COMPANY_BY_ID: "/api/v1/companies",
+
+    // company documents
+    GET_DOCUMENTS: "/api/v1/companies",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

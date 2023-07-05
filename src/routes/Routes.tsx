@@ -25,6 +25,7 @@ import Layout from "../ui/features/company/Layout";
 import ProfileLayout from "../ui/features/company/ProfileLayout";
 import AddCompany from "../ui/features/company/AddCompany";
 import CompanyList from "../ui/features/company/CompanyList";
+import DocumentsList from "../ui/features/documents/DocumentsList";
 
 const router = createBrowserRouter([
     {
@@ -83,9 +84,19 @@ const router = createBrowserRouter([
                             {
                                 path: "profile/:id",
                                 element: <ProfileLayout />,
+                                children: [
+                                    {
+                                        path: "documents",
+                                        element: <DocumentsList />,
+                                    },
+                                ],
                             },
                             {
                                 path: "add",
+                                element: <AddCompany />,
+                            },
+                            {
+                                path: "edit",
                                 element: <AddCompany />,
                             },
                             {

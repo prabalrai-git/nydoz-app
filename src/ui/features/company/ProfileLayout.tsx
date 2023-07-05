@@ -8,41 +8,12 @@ import BASE_URL from "../../../constants/AppSetting";
 import Heading from "../../shared/molecules/Heading";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
-
-// {
-//   "status": "string",
-
-//   "message": "string",
-//   "payload": {
-//     "id": 0,
-//     "name": "string",
-//     "subdomain": "string",
-//     "owner_id": 0,
-//     "status_id": 0,
-//     "email": "string",
-//     "address": "string",
-//     "country": "string",
-//     "state": "string",
-//     "city": "string",
-//     "postal_code": "string",
-//     "country_calling_code": "string",
-//     "phone_number": "string",
-//     "contact_person": "string",
-//     "website": "string",
-//     "registration_type": "string",
-//     "registration_number": "string",
-//     "logo": "string",
-//     "cover_image": "string"
-//   }
-// }
+import { Link } from "react-router-dom";
 
 const ProfileLayout = () => {
     const { id } = useParams<{ id: string }>();
     const url = `${API_ROUTE.GET_COMPANY_BY_ID}/${id}`;
-    const { data, error, fetchData, isLoading } = useFetch<ICompanyResponse>(
-        url,
-        true
-    );
+    const { data, fetchData } = useFetch<ICompanyResponse>(url, true);
 
     useEffect(() => {
         fetchData();
@@ -77,7 +48,11 @@ const ProfileLayout = () => {
                                     <div className='me-7 mb-4'>
                                         <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative shadow shadow-sm p-3'>
                                             <img
-                                                src={BASE_URL + data?.logo}
+                                                src={
+                                                    data?.logo
+                                                        ? BASE_URL + data?.logo
+                                                        : Avatar
+                                                }
                                                 alt='image'
                                             />
                                             <div className='position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px'></div>
@@ -231,10 +206,19 @@ const ProfileLayout = () => {
                                             Activity
                                         </a>
                                     </li>
+                                    <li className='nav-item mt-2'>
+                                        <Link
+                                            to={`/account/company/profile/${id}/documents`}
+                                            className='nav-link text-active-primary ms-0 me-10 py-5'>
+                                            Documents
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <Outlet />
+                        <div className='container'>
+                            <Outlet />
+                        </div>
                     </div>
                 )}
             </div>

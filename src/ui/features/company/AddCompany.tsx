@@ -635,7 +635,10 @@ const AddCompany = () => {
                             </div>
                         </div>
                         <div className='d-flex justify-content-end my-6 mb-6'>
-                            <button className='btn btn-secondary btn-sm me-5 mb-6'>
+                            <button
+                                type='button'
+                                onClick={() => navigate(-1)}
+                                className='btn btn-secondary btn-sm me-5 mb-6'>
                                 cancel
                             </button>
                             <button

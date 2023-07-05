@@ -1,3 +1,12 @@
+export interface IDocumentResponse {
+    id: 0;
+    title: "string";
+    file_link: "string";
+    uploaded_by: 0;
+    is_restricted: true;
+    visible_to: unknown;
+}
+
 export interface IUserResponseResponse {
     id: string;
     first_name: string;
