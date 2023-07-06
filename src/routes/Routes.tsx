@@ -73,11 +73,11 @@ const router = createBrowserRouter([
             },
 
             {
-                path: "account",
+                path: "home",
                 element: <UserLayout />,
                 children: [
                     {
-                        path: "dashboard",
+                        path: "",
                         element: <UserDashboard />,
                     },
                     {

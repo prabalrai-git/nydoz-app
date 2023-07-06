@@ -171,7 +171,7 @@ const AddCompany = () => {
             console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company updated Successfully");
-                navigate("/account/company/list");
+                navigate("home");
             }
         } else {
             if (thumbnilImg?.length === 0) {

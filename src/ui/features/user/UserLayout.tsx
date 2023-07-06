@@ -8,8 +8,8 @@ const UserLayout = () => {
         <div>
             <Header2 />
             {/* <UserHeader /> */}
-            <Sidebar />
-            <div className='doc-content bg-light'>
+            {/* <Sidebar /> */}
+            <div className='doc-content'>
                 <div className='container  '>
                     <Outlet />
                 </div>
