@@ -37,11 +37,12 @@ const DocumentList = () => {
     const [openAddDocument, setOpenAddDocument] = useState(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
 
-    const getDocumentUrl = `${API_ROUTE.GET_DOCUMENTS}/${companyId}/documents`;
+    const getDocumentUrl = `${API_ROUTE.GET_DOCUMENTS_BY_COMPANY_ID}/${companyId}/documents`;
 
-    const { data, fetchData, pagination, isloading, error } = useFetch<
-        IDocumentResponse[]
-    >(getDocumentUrl, true);
+    const { data, fetchData, pagination } = useFetch<IDocumentResponse[]>(
+        getDocumentUrl,
+        true
+    );
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -292,7 +293,6 @@ const DocumentList = () => {
             <AddDocuments
                 companyId={companyId || ""}
                 handleClose={handleAddDocumentClose}
-                handleConfirm={handleAddDocumentOpen}
                 show={openAddDocument}
             />
             <ToastContainer />

@@ -30,6 +30,9 @@ const API_ROUTE = {
     // company documents
     GET_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
     POST_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
+
+    // products
+    products: "/api/v1/products",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

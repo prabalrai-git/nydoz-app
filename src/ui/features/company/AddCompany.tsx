@@ -133,10 +133,12 @@ const AddCompany = () => {
 
         if (!selectedCountryCode) {
             toast.error("Please select country code");
+            return;
         }
 
         if (!selectedCountry) {
             toast.error("Please select country");
+            return;
         }
 
         let response;
