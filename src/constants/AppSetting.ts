@@ -6,3 +6,4 @@ export const RESULT_PER_PAGE = 15;
 export const RESULT_PER_PAGE_LIST: number[] = [10, 15, 20, 50, 100];
 
 export default BASE_URL;
+export const DOCUMENT_UPLOAD_LIMIT = 5;

@@ -1,3 +1,5 @@
+//  state passed const [fileInfo, setfileInfo] = useState<string[] | undefined>();
+
 import { FileType } from "../../../types/fileUpload.type";
 import API_ROUTE from "../../../service/api";
 import { ToastContainer, toast } from "react-toastify";
@@ -5,7 +7,6 @@ import Spinner from "react-bootstrap/Spinner";
 import { FILE_ACCEPT_TYPE } from "../../../constants/FileUpload";
 import useMutation from "../../../hooks/useMutation";
 import { useEffect } from "react";
-
 interface IUploadProps {
     title?: string;
     isRoutePrivate: boolean;
@@ -102,8 +103,16 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
     return (
         <div>
             <label htmlFor='formFile' className='form-label'>
-                {title && <span className='text-primary '>{title}</span>}
-                {isUploadRequired && <span className='text-danger'>*</span>}
+                {title && (
+                    <span
+                        className={
+                            isUploadRequired
+                                ? "required text-primary "
+                                : "text-primary "
+                        }>
+                        {title}
+                    </span>
+                )}
                 {isLoading && (
                     <Spinner animation='border' role='status'>
                         <span className='visually-hidden'>uploading...</span>
