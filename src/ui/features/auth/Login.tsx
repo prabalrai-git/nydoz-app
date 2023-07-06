@@ -22,12 +22,12 @@ const LoginPage = () => {
     const { loginFn } = useContext(AuthContext);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const { postData, isLoading, error } = useMutation<ILoginResponse>(
         API_ROUTE.LOGIN,
         false
     );
-    const navigate = useNavigate();
 
     const {
         register,
@@ -50,7 +50,7 @@ const LoginPage = () => {
             };
             toast.success(response?.data?.message || "Login Successful");
             loginFn(payload, rememberMe);
-            navigate("/", { replace: true });
+            navigate("/home", { replace: true });
         } else {
             toast.error(error || "Login Failed");
         }

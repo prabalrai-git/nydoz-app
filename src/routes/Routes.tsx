@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 
 //Auth Routes
+import Protected from "../ui/features/auth/ProtectedRoute";
 import AuthLayout from "../ui/features/auth/Layout";
 import Register from "../ui/features/auth/Register";
 import LoginPage from "../ui/features/auth/Login";
@@ -27,7 +28,6 @@ import AddCompany from "../ui/features/company/AddCompany";
 import CompanyList from "../ui/features/company/CompanyList";
 import DocumentsList from "../ui/features/documents/DocumentsList";
 import ProductLayout from "../ui/features/products/ProductLayout";
-import AddProducts from "../ui/features/products/AddProducts";
 import ProductList from "../ui/features/products/ProductList";
 
 const router = createBrowserRouter([
@@ -65,16 +65,16 @@ const router = createBrowserRouter([
                         path: "reset-password",
                         element: <ResetPassword />,
                     },
-                    {
-                        path: "change-password",
-                        element: <ChangePassword />,
-                    },
                 ],
             },
 
             {
                 path: "home",
-                element: <UserLayout />,
+                element: (
+                    <Protected>
+                        <UserLayout />
+                    </Protected>
+                ),
                 children: [
                     {
                         path: "",
@@ -102,6 +102,10 @@ const router = createBrowserRouter([
                                             },
                                         ],
                                     },
+                                    {
+                                        path: "change-password",
+                                        element: <ChangePassword />,
+                                    },
                                 ],
                             },
                             {
@@ -123,7 +127,7 @@ const router = createBrowserRouter([
 
             {
                 path: "*",
-                element: <h1>Not Found</h1>,
+                element: <h1>Page Not Found</h1>,
             },
         ],
     },

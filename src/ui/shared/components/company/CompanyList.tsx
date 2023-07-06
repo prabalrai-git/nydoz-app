@@ -12,6 +12,8 @@ const CompanyListCard = () => {
 
     useEffect(() => {
         fetchData();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
