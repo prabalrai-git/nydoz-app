@@ -1,3 +1,12 @@
+export interface IProductResponse {
+    id: string;
+    name: string;
+    slug: string;
+    logo: string;
+    description: string;
+    is_for_self_use: boolean;
+}
+
 export interface IDocumentResponse {
     id: 0;
     title: "string";
