@@ -9,11 +9,11 @@ export interface IProductResponse {
 
 export interface IDocumentResponse {
     id: 0;
-    title: "string";
-    file_link: "string";
+    title: string;
+    file_link: string;
     uploaded_by: 0;
     is_restricted: true;
-    visible_to: unknown;
+    visible_to?: string[];
 }
 
 export interface IUserResponseResponse {

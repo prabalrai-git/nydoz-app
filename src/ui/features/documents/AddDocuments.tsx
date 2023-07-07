@@ -9,6 +9,7 @@ import FILE_UPLOAD_TYPE from "../../../constants/FileUpload";
 import { DOCUMENT_UPLOAD_LIMIT } from "../../../constants/AppSetting";
 import API_ROUTE from "../../../service/api";
 import useMutation from "../../../hooks/useMutation";
+import Spinner from "react-bootstrap/Spinner";
 
 interface IUploadResponse {
     id: string;
@@ -20,7 +21,6 @@ interface IUploadResponse {
 }
 
 interface IUploadPayload {
-    id: string;
     title: string;
     file_link: string;
     is_restricted: boolean;
@@ -31,13 +31,14 @@ interface IModalProps {
     show: boolean;
     handleClose: () => void;
     companyId: string;
+    setFetchAgain: (value: boolean) => void;
 }
 
 const AddDocuments = (props: IModalProps) => {
-    const { show, handleClose, companyId } = props;
+    const { show, handleClose, companyId, setFetchAgain } = props;
     const [fileInfo, setfileInfo] = useState<string[] | undefined>();
     const [title, setTitle] = useState<string>("");
-    const { postData, error } = useMutation<IUploadResponse>(
+    const { postData, error, isLoading } = useMutation<IUploadResponse>(
         `${API_ROUTE.POST_DOCUMENTS_BY_COMPANY_ID}/${companyId}/documents`,
         true
     );
@@ -61,6 +62,7 @@ const AddDocuments = (props: IModalProps) => {
         const response = await postData(payload);
         if (response?.status === 201) {
             toast.success("Document uploaded successfully");
+            setFetchAgain(true);
             handleClose();
         } else {
             toast.error(error ?? "Error in uploading document");
@@ -123,10 +125,21 @@ const AddDocuments = (props: IModalProps) => {
                     variant='primary'
                     className='fw-bold'
                     onClick={handleSubmit}>
-                    <span className='mx-2'>Upload</span>
+                    {isLoading ? (
+                        <>
+                            <span className='ms-2'>uploading...</span>
+                            <Spinner
+                                size='sm'
+                                animation='border'
+                                role='status'></Spinner>
+                        </>
+                    ) : (
+                        <span className='me-3'>Submit</span>
+                    )}
                     <CloudArrowUpFill />
                 </Button>
             </Modal.Footer>
+            <ToastContainer />
         </Modal>
     );
 };

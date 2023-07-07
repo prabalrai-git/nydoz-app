@@ -274,6 +274,7 @@ const CompanyList = () => {
                         pagination={pagination}
                         columns={tableColumns}
                         data={data}
+                        showPagination={false}
                     />
                 </div>
             </section>
