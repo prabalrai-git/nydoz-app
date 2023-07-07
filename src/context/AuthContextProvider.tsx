@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect, useMemo } from "react";
-import Spinner from "react-bootstrap/Spinner";
 
 import {
     AuthContext,
@@ -9,6 +8,7 @@ import {
 } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
 import API_ROUTE from "../service/api";
+import LoadingPage from "../ui/features/utils/LoadingPage";
 
 interface IUseMeData {
     city: string;
@@ -103,7 +103,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     };
 
     useEffect(() => {
-        console.log(token, "Effect token");
         if (token) {
             handleAuthenticationFn();
         } else {
@@ -136,11 +135,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
     return (
         <AuthContext.Provider value={authContextValue}>
-            {!showSplashScreen ? (
-                children
-            ) : (
-                <Spinner size='sm' animation='border' role='status'></Spinner>
-            )}
+            {!showSplashScreen ? children : <LoadingPage />}
         </AuthContext.Provider>
     );
 };

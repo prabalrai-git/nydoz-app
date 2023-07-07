@@ -34,8 +34,9 @@ const CompanyListCard = () => {
                 </div>
             </div>
             <div className='card-body pt6'>
-                {data?.map((item: ICompanyResponse) => (
+                {data?.map((item: ICompanyResponse, index: number) => (
                     <Link
+                        key={index}
                         to={`company/profile/${item.id}`}
                         className='d-flex flex-stack'>
                         <div className='symbol symbol-40px me-4'>

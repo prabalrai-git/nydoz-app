@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 
 //Auth Routes
+import ProtectAuth from "../ui/features/auth/ProtectAuth";
 import Protected from "../ui/features/auth/ProtectedRoute";
 import AuthLayout from "../ui/features/auth/Layout";
 import Register from "../ui/features/auth/Register";
@@ -29,6 +30,7 @@ import CompanyList from "../ui/features/company/CompanyList";
 import DocumentsList from "../ui/features/documents/DocumentsList";
 import ProductLayout from "../ui/features/products/ProductLayout";
 import ProductList from "../ui/features/products/ProductList";
+import PageNotFound from "../ui/features/utils/PageNotFound";
 
 const router = createBrowserRouter([
     {
@@ -47,7 +49,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "auth",
-                element: <AuthLayout />,
+                element: (
+                    <ProtectAuth>
+                        <AuthLayout />
+                    </ProtectAuth>
+                ),
                 children: [
                     {
                         path: "signup",
@@ -127,7 +133,7 @@ const router = createBrowserRouter([
 
             {
                 path: "*",
-                element: <h1>Page Not Found</h1>,
+                element: <PageNotFound />,
             },
         ],
     },
