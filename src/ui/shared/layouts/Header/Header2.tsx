@@ -5,6 +5,7 @@ import { Bell } from "react-bootstrap-icons";
 import { AuthContext } from "../../../../context/AuthContext";
 import Hamburger from "../../atoms/Hamburger";
 import { Link } from "react-router-dom";
+import { BoxArrowRight } from "react-bootstrap-icons";
 
 const Header2 = () => {
     const { user, logoutFn } = useContext(AuthContext);
@@ -145,16 +146,26 @@ const Header2 = () => {
                                 <NavDropdown.Item href='#action/3.2'>
                                     Another action
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href='#action/3.3'>
-                                    Something
+                                <NavDropdown.Item>
+                                    <Link
+                                        className=''
+                                        to='/auth/forget-password'>
+                                        Change Password
+                                    </Link>
                                 </NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item>
-                                    <button
+                                    <div
                                         className='btn btn-sm btn-secondary'
                                         onClick={() => logoutFn()}>
-                                        Logout
-                                    </button>
+                                        <span className='me-3'>Logout</span>
+                                        <span>
+                                            <BoxArrowRight
+                                                size={16}
+                                                color='#0b0b0b'
+                                            />
+                                        </span>
+                                    </div>
                                 </NavDropdown.Item>
                             </NavDropdown>
                         </div>

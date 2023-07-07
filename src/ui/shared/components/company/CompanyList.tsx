@@ -38,7 +38,7 @@ const CompanyListCard = () => {
                     <Link
                         key={index}
                         to={`company/profile/${item.id}`}
-                        className='d-flex flex-stack'>
+                        className='d-flex flex-stack mb-3'>
                         <div className='symbol symbol-40px me-4'>
                             <div className='symbol-label fs-2 fw-semibold bg-danger text-inverse-danger'>
                                 M

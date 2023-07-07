@@ -208,7 +208,7 @@ const ProfileLayout = () => {
                                     </li>
                                     <li className='nav-item mt-2'>
                                         <Link
-                                            to={`/account/company/profile/${id}/documents`}
+                                            to={`documents`}
                                             className='nav-link text-active-primary ms-0 me-10 py-5'>
                                             Documents
                                         </Link>

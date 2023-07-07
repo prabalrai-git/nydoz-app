@@ -103,13 +103,6 @@ const AddCompany = () => {
     }, [location?.state?.data, reset]);
 
     useEffect(() => {
-        if (error) {
-            console.log("error", error);
-            toast.error(error);
-        }
-    }, [error]);
-
-    useEffect(() => {
         console.log("errList", errList);
         if (errList) {
             Object.keys(errList).forEach((fieldName) => {
@@ -123,10 +116,10 @@ const AddCompany = () => {
     }, [errList, setError]);
 
     useEffect(() => {
-        if (errors) {
-            console.log("errors", errors);
+        if (error) {
+            toast.error(error || "Something went wrong");
         }
-    }, [errors]);
+    }, [error]);
 
     const onFormSubmit = handleSubmit(async (data: IAddCompanyForm) => {
         console.log("data", data);
