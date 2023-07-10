@@ -9,9 +9,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import CopyToClipboard from "../../shared/molecules/CopyToClipboard";
 import { Link, useNavigate } from "react-router-dom";
-import InputGroup from "react-bootstrap/InputGroup";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
@@ -19,7 +16,9 @@ import { ToastContainer, toast } from "react-toastify";
 import DataListTable from "../../shared/components/DataListTable";
 
 const CompanyList = () => {
+    const [fetchUrl, setFetchUrl] = useState<string>(API_ROUTE.GET_COMPANIES);
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState<string>("");
     const [selectedData, setSelectedData] = useState<
         ICompanyResponse | undefined
     >();
@@ -27,7 +26,7 @@ const CompanyList = () => {
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
     const { data, fetchData, pagination, isloading, error } = useFetch<
         ICompanyResponse[]
-    >(API_ROUTE.GET_COMPANIES, true);
+    >(fetchUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -39,6 +38,9 @@ const CompanyList = () => {
 
     useEffect(() => {
         if (fetchAgain) {
+            if (searchTerm.length > 0) {
+                setFetchUrl(`${API_ROUTE.GET_COMPANIES}?search=${searchTerm}`);
+            }
             fetchData();
             setFetchAgain(false);
         }
@@ -216,7 +218,7 @@ const CompanyList = () => {
             </Heading>
             <section>
                 <div className='card'>
-                    <div className='card-header border-0 pt-6'>
+                    {/* <div className='card-header border-0 pt-6'>
                         <div className='card-title'>
                             <div className='flex-1'>
                                 <InputGroup className='mb-3'>
@@ -243,14 +245,17 @@ const CompanyList = () => {
                                 </h6>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <section>
                         <DataListTable
-                            showSearchBar={false}
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                            showSearchBar={true}
                             pagination={pagination}
                             columns={tableColumns}
                             data={data ?? []}
                             showPagination={true}
+                            setFetchAgain={setFetchAgain}
                         />
                     </section>
                 </div>
