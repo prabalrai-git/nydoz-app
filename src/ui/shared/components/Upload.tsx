@@ -1,12 +1,13 @@
 //  state passed const [fileInfo, setfileInfo] = useState<string[] | undefined>();
-
+import { useState, useEffect } from "react";
 import { FileType } from "../../../types/fileUpload.type";
 import API_ROUTE from "../../../service/api";
 import { ToastContainer, toast } from "react-toastify";
 import Spinner from "react-bootstrap/Spinner";
 import { FILE_ACCEPT_TYPE } from "../../../constants/FileUpload";
 import useMutation from "../../../hooks/useMutation";
-import { useEffect } from "react";
+import InputGroup from "react-bootstrap/InputGroup";
+
 interface IUploadProps {
     title?: string;
     isRoutePrivate: boolean;
@@ -34,6 +35,8 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
         setFileInfo,
         fileUploadLimit,
     } = props;
+
+    const [uploadSuccess, setUploadSuccess] = useState(false);
 
     // console.log(API_ROUTE[fileUploadType], "fileUploadType", fileUploadType);
 
@@ -90,6 +93,7 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
                 // console.log(response, "response");
 
                 if (response?.data?.status === "ok") {
+                    setUploadSuccess(true);
                     if (response?.data?.payload?.link) {
                         fileResponseList.push(response?.data?.payload?.link);
                     }
@@ -113,21 +117,48 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
                         {title}
                     </span>
                 )}
-                {isLoading && (
-                    <Spinner animation='border' role='status'>
-                        <span className='visually-hidden'>uploading...</span>
-                    </Spinner>
-                )}
             </label>
-            <input
-                className='form-control'
-                multiple={isMultiple}
-                accept={FILE_ACCEPT_TYPE[fileUploadType]}
-                capture
-                onChange={(event) => handleFileUpload(event)}
-                type='file'
-                id='formFile'
-            />
+
+            <InputGroup className='mb-3'>
+                <input
+                    className='form-control'
+                    multiple={isMultiple}
+                    accept={FILE_ACCEPT_TYPE[fileUploadType]}
+                    capture
+                    onChange={(event) => handleFileUpload(event)}
+                    type='file'
+                    id='formFile'
+                />
+                <InputGroup.Text id='basic-addon2'>
+                    {isLoading && (
+                        <Spinner
+                            size='sm'
+                            variant='primary'
+                            animation='border'
+                            role='status'
+                        />
+                    )}
+                    {!isLoading && !uploadSuccess && (
+                        <span>
+                            <i
+                                style={{
+                                    fontSize: "1.3rem",
+                                }}
+                                className='bi bi-cloud-upload'></i>
+                        </span>
+                    )}
+                    {!isLoading && uploadSuccess && (
+                        <span>
+                            <i
+                                style={{
+                                    fontSize: "1.3rem",
+                                }}
+                                className='bi bi-check-circle'></i>
+                        </span>
+                    )}
+                </InputGroup.Text>
+            </InputGroup>
+
             {description && (
                 <div className='text-muted fs-7'>{description}</div>
             )}

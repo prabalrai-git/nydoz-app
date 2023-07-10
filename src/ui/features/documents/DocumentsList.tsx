@@ -4,13 +4,9 @@ import API_ROUTE from "../../../service/api";
 import { IDocumentResponse } from "../../../types/payload.type";
 import TanStackTable from "../../shared/components/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
-import BASE_URL from "../../../constants/AppSetting";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import InputGroup from "react-bootstrap/InputGroup";
-import Form from "react-bootstrap/Form";
-import { SplitButton } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,7 +14,6 @@ import AddDocuments from "./AddDocuments";
 import Images from "../../../constants/Images";
 
 const DocumentList = () => {
-    const navigate = useNavigate();
     const { id: companyId } = useParams<string>();
 
     const [selectedData, setSelectedData] = useState<
@@ -52,10 +47,8 @@ const DocumentList = () => {
     }, [fetchAgain]);
 
     const handleEditData = (item: IDocumentResponse) => {
-        console.log(item);
-        navigate(`/account/company/add`, {
-            state: { data: item },
-        });
+        setSelectedData(item);
+        handleAddDocumentOpen();
     };
 
     const tableColumns: ColumnDef<IDocumentResponse>[] = [
@@ -130,9 +123,7 @@ const DocumentList = () => {
                         variant='secondary'
                         size='sm'
                         id='dropdown-basic-button'
-                        title={
-                            <i className='ki-solid ki-dots-vertical fs-2x me-1'></i>
-                        }>
+                        title='Action'>
                         <Dropdown.Item>
                             <div className='menu-link'>
                                 <span className='mx-2'>View</span>
@@ -174,13 +165,14 @@ const DocumentList = () => {
 
     const handleDeleteItem = async () => {
         const id = selectedData?.id;
+        const payload = `${companyId}/documents/${id}}`;
         if (id) {
             try {
-                const response = await deleteData(id);
+                const response = await deleteData(payload);
                 console.log(response);
                 if (response) {
                     setFetchAgain(true);
-                    toast.success("Company deleted successfully");
+                    toast.success("Documents deleted successfully");
                 } else {
                     toast.error("Something went wrong");
                 }
@@ -233,6 +225,8 @@ const DocumentList = () => {
                 companyId={companyId || ""}
                 handleClose={handleAddDocumentClose}
                 show={openAddDocument}
+                selectedData={selectedData}
+                setSelectedData={setSelectedData}
             />
             <ToastContainer />
         </div>
