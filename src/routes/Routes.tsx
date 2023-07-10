@@ -30,7 +30,12 @@ import CompanyList from "../ui/features/company/CompanyList";
 import DocumentsList from "../ui/features/documents/DocumentsList";
 import ProductLayout from "../ui/features/products/ProductLayout";
 import ProductList from "../ui/features/products/ProductList";
+
+// Company Roles
+// import RoleLayout from "../ui/features/roles/RoleLayout";
+
 import PageNotFound from "../ui/features/utils/PageNotFound";
+import RoleList from "../ui/features/roles/RoleList";
 
 const router = createBrowserRouter([
     {
@@ -97,6 +102,10 @@ const router = createBrowserRouter([
                                     {
                                         path: "documents",
                                         element: <DocumentsList />,
+                                    },
+                                    {
+                                        path: "roles",
+                                        element: <RoleList />,
                                     },
                                     {
                                         path: "products",

@@ -200,11 +200,11 @@ const ProfileLayout = () => {
                                     </li>
 
                                     <li className='nav-item mt-2'>
-                                        <a
-                                            className='nav-link text-active-primary ms-0 me-10 py-5'
-                                            href='../../demo31/dist/pages/user-profile/projects.html'>
-                                            Activity
-                                        </a>
+                                        <Link
+                                            to={`roles`}
+                                            className='nav-link text-active-primary ms-0 me-10 py-5'>
+                                            Roles
+                                        </Link>
                                     </li>
                                     <li className='nav-item mt-2'>
                                         <Link

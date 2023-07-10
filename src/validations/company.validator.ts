@@ -17,3 +17,8 @@ export const companySchema = yup.object().shape({
     registration_type: yup.string().required(),
     registration_number: yup.string().required(),
 });
+
+export const companyRolesSchema = yup.object().shape({
+    // name: yup.string().required(),
+    // description: yup.string(),
+});
