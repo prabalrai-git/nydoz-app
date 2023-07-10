@@ -1,49 +1,57 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import Heading from "../../shared/molecules/Heading";
 import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
-import TanStackTable from "../../shared/components/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
 import BASE_URL from "../../../constants/AppSetting";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import CopyToClipboard from "../../shared/molecules/CopyToClipboard";
 import { Link, useNavigate } from "react-router-dom";
-import InputGroup from "react-bootstrap/InputGroup";
-import Form from "react-bootstrap/Form";
-import { SplitButton } from "react-bootstrap";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { ToastContainer, toast } from "react-toastify";
+import DataListTable from "../../shared/components/DataListTable";
+import { useSearchParams } from "react-router-dom";
+
+// "pagination": {
+//             "total": 3,
+//             "per_page": 15,
+//             "last_page": 1,
+//             "current_page": 1,
+//             "from": 1,
+//             "to": 3
+//         }
+
+interface IPaginationState {
+    currentPage: number;
+    perPage: number;
+    searchTerm: string;
+}
 
 const CompanyList = () => {
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState<string>("");
+
+    const [paginationState, setPaginationState] = useState({
+        currentPage: 1,
+        perPage: 5,
+    });
+    const initialURL = `${API_ROUTE.GET_COMPANIES}?page=${paginationState.currentPage}&per_page=${paginationState.perPage}&name=${searchTerm}`;
+    const [fetchUrl, setFetchUrl] = useState<string>(initialURL);
+    const { data, fetchData, pagination } = useFetch<ICompanyResponse[]>(
+        fetchUrl,
+        true
+    );
     const [selectedData, setSelectedData] = useState<
         ICompanyResponse | undefined
     >();
     const [show, setShow] = useState<boolean>(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
-    const { data, fetchData, pagination, isloading, error } = useFetch<
-        ICompanyResponse[]
-    >(API_ROUTE.GET_COMPANIES, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
-
-    useEffect(() => {
-        fetchData();
-        setFetchAgain(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (fetchAgain) {
-            fetchData();
-            setFetchAgain(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchAgain]);
 
     const handleEditData = (item: ICompanyResponse) => {
         console.log(item);
@@ -51,6 +59,33 @@ const CompanyList = () => {
             state: { data: item },
         });
     };
+
+    useEffect(() => {
+        fetchData();
+        setFetchAgain(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchUrl]);
+
+    useEffect(() => {
+        if (fetchAgain) {
+            fetchData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchAgain]);
+
+    const initialRender = useRef(true);
+
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false;
+            console.log("initial render");
+        } else {
+            const tempURL = `${API_ROUTE.GET_COMPANIES}?page=${paginationState.currentPage}&per_page=${paginationState.perPage}&name=${searchTerm}`;
+            window.scrollTo(0, 0);
+            setFetchUrl(tempURL);
+            console.log("next render");
+        }
+    }, [paginationState.currentPage, paginationState.perPage, searchTerm]);
 
     const tableColumns: ColumnDef<ICompanyResponse>[] = [
         {
@@ -205,6 +240,22 @@ const CompanyList = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleNext = () => {
+        if (paginationState.currentPage === pagination?.last_page) return;
+        setPaginationState((prevState) => ({
+            ...prevState,
+            currentPage: prevState.currentPage + 1,
+        }));
+    };
+
+    const handlePrevious = () => {
+        if (paginationState.currentPage === 1) return;
+        setPaginationState((prevState) => ({
+            ...prevState,
+            currentPage: prevState.currentPage - 1,
+        }));
+    };
+
     return (
         <div>
             <Heading title='Company List' btnText='Back' showBreadcrumb={true}>
@@ -216,29 +267,20 @@ const CompanyList = () => {
             </Heading>
             <section>
                 <div className='card'>
-                    <div className='card-header border-0 pt-6'>
+                    {/* <div className='card-header border-0 pt-6'>
                         <div className='card-title'>
                             <div className='flex-1'>
                                 <InputGroup className='mb-3'>
-                                    <Form.Control aria-label='Text input with dropdown button' />
-                                    <SplitButton
+                                    <Form.Control
+                                        placeholder="search by company's name"
+                                        aria-label="Recipient's username"
+                                        aria-describedby='basic-addon2'
+                                    />
+                                    <Button
                                         variant='secondary'
-                                        title='Search'
-                                        id='segmented-button-dropdown-2'>
-                                        <Dropdown.Item href='#'>
-                                            Search
-                                        </Dropdown.Item>
-                                        <Dropdown.Item href='#'>
-                                            Another action
-                                        </Dropdown.Item>
-                                        <Dropdown.Item href='#'>
-                                            Something else here
-                                        </Dropdown.Item>
-                                        <Dropdown.Divider />
-                                        <Dropdown.Item href='#'>
-                                            Separated link
-                                        </Dropdown.Item>
-                                    </SplitButton>
+                                        id='button-addon2'>
+                                        Search
+                                    </Button>
                                 </InputGroup>
                             </div>
                         </div>
@@ -251,30 +293,22 @@ const CompanyList = () => {
                                     Total :{pagination?.total}
                                 </h6>
                             </div>
-
-                            <div
-                                className='d-flex justify-content-end align-items-center d-none'
-                                data-kt-customer-table-toolbar='selected'>
-                                <div className='fw-bold me-5'>
-                                    <span
-                                        className='me-2'
-                                        data-kt-customer-table-select='selected_count'></span>
-                                    Selected
-                                </div>
-                                <button
-                                    type='button'
-                                    className='btn btn-danger'
-                                    data-kt-customer-table-select='delete_selected'>
-                                    Delete Selected
-                                </button>
-                            </div>
                         </div>
-                    </div>
-                    <TanStackTable
-                        pagination={pagination}
-                        columns={tableColumns}
-                        data={data}
-                    />
+                    </div> */}
+                    <section>
+                        <DataListTable
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                            showSearchBar={true}
+                            pagination={pagination}
+                            columns={tableColumns}
+                            data={data ?? []}
+                            showPagination={true}
+                            setFetchAgain={setFetchAgain}
+                            handlePrevious={handlePrevious}
+                            handleNext={handleNext}
+                        />
+                    </section>
                 </div>
             </section>
             <Modal2
@@ -295,12 +329,3 @@ const CompanyList = () => {
 };
 
 export default CompanyList;
-
-// "pagination": {
-//             "total": 2,
-//             "per_page": 15,
-//             "last_page": 1,
-//             "current_page": 1,
-//             "from": 1,
-//             "to": 2
-//         }

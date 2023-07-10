@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect, useMemo } from "react";
-import Spinner from "react-bootstrap/Spinner";
 
 import {
     AuthContext,
@@ -9,6 +8,7 @@ import {
 } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
 import API_ROUTE from "../service/api";
+import LoadingPage from "../ui/features/utils/LoadingPage";
 
 interface IUseMeData {
     city: string;
@@ -49,6 +49,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         localStorage.getItem("token") ||
         sessionStorage.getItem("token") ||
         null;
+    const [showSplashScreen, setShowSplashScreen] = useState(true);
 
     const [token, setToken] = useState<string | null>(tokenFromLocal);
     const [userInfo, setUserInfo] = useState<IUserState | undefined>();
@@ -66,36 +67,47 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         } else {
             sessionStorage.setItem("token", token);
         }
+        console.log(token, "saved token");
+
         return true;
     };
 
     const handleAuthenticationFn = async () => {
         const response = await fetchData();
         // console.log(response, "response");
-        if (response?.status === 200) {
-            const { id, email, first_name, last_name, mobile } =
-                response.data.payload;
 
-            const user: IUserState = {
-                id,
-                email,
-                email_verified_at: null,
-                first_name,
-                last_name,
-                mobile,
-                mobile_verified_at: null,
-                isAdmin: false,
-                permissions: [],
-            };
-            setUserInfo(user);
-            setToken(token);
+        try {
+            if (response?.status === 200) {
+                const { id, email, first_name, last_name, mobile } =
+                    response.data.payload;
+
+                const user: IUserState = {
+                    id,
+                    email,
+                    email_verified_at: null,
+                    first_name,
+                    last_name,
+                    mobile,
+                    mobile_verified_at: null,
+                    isAdmin: false,
+                    permissions: [],
+                };
+                setUserInfo(user);
+                setToken(token);
+            }
+        } catch (error) {
+            logoutFn();
+        } finally {
+            setShowSplashScreen(false);
         }
-        return true;
     };
 
     useEffect(() => {
         if (token) {
             handleAuthenticationFn();
+        } else {
+            logoutFn();
+            setShowSplashScreen(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -123,12 +135,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
     return (
         <AuthContext.Provider value={authContextValue}>
-            {/* {token && userInfo?.id ? (
-                children
-            ) : (
-                <Spinner size='sm' animation='border' role='status'></Spinner>
-            )} */}
-            {children}
+            {!showSplashScreen ? children : <LoadingPage />}
         </AuthContext.Provider>
     );
 };

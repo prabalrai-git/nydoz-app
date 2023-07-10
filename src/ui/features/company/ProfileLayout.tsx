@@ -139,7 +139,7 @@ const ProfileLayout = () => {
                                                         </div>
 
                                                         <div className='fw-semibold fs-6 text-gray-400'>
-                                                            Projects
+                                                            Products
                                                         </div>
                                                     </div>
 
@@ -176,11 +176,11 @@ const ProfileLayout = () => {
                                     </li>
 
                                     <li className='nav-item mt-2'>
-                                        <a
+                                        <Link
                                             className='nav-link text-active-primary ms-0 me-10 py-5'
-                                            href='../../demo31/dist/pages/user-profile/clients.html'>
-                                            Project
-                                        </a>
+                                            to={"products"}>
+                                            Products
+                                        </Link>
                                     </li>
 
                                     <li className='nav-item mt-2'>
@@ -208,7 +208,7 @@ const ProfileLayout = () => {
                                     </li>
                                     <li className='nav-item mt-2'>
                                         <Link
-                                            to={`/account/company/profile/${id}/documents`}
+                                            to={`documents`}
                                             className='nav-link text-active-primary ms-0 me-10 py-5'>
                                             Documents
                                         </Link>

@@ -31,6 +31,10 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    if (error) {
+        toast.error(error || "Something went wrong");
+    }
+
     // send request to server
     const {
         register,
@@ -45,12 +49,9 @@ const Register = () => {
         const response = await postData(rest);
         console.log(response);
 
-        if (response) {
+        if (response?.status === 201) {
             toast.success("Account Created Successfully");
             navigate("/auth/login");
-        } else {
-            console.log(error);
-            toast.error(error);
         }
     });
 

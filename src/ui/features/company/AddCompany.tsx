@@ -103,13 +103,6 @@ const AddCompany = () => {
     }, [location?.state?.data, reset]);
 
     useEffect(() => {
-        if (error) {
-            console.log("error", error);
-            toast.error(error);
-        }
-    }, [error]);
-
-    useEffect(() => {
         console.log("errList", errList);
         if (errList) {
             Object.keys(errList).forEach((fieldName) => {
@@ -123,20 +116,22 @@ const AddCompany = () => {
     }, [errList, setError]);
 
     useEffect(() => {
-        if (errors) {
-            console.log("errors", errors);
+        if (error) {
+            toast.error(error || "Something went wrong");
         }
-    }, [errors]);
+    }, [error]);
 
     const onFormSubmit = handleSubmit(async (data: IAddCompanyForm) => {
         console.log("data", data);
 
         if (!selectedCountryCode) {
             toast.error("Please select country code");
+            return;
         }
 
         if (!selectedCountry) {
             toast.error("Please select country");
+            return;
         }
 
         let response;
@@ -169,7 +164,7 @@ const AddCompany = () => {
             console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company updated Successfully");
-                navigate("/account/company/list");
+                navigate("home");
             }
         } else {
             if (thumbnilImg?.length === 0) {
@@ -191,7 +186,7 @@ const AddCompany = () => {
             console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company Added Successfully");
-                navigate("/account/company/list");
+                navigate("/home/company/list");
             }
         }
     });

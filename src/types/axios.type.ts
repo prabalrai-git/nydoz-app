@@ -1,3 +1,5 @@
+import { ColumnDef } from "@tanstack/react-table";
+
 export interface IResponse<T> {
     message: string;
     payload: T;
@@ -31,4 +33,9 @@ export interface IPagination {
     current_page: number;
     from: number;
     to: number;
+}
+
+export interface ITableProps<T> {
+    columns: ColumnDef<T>[];
+    data: T[];
 }

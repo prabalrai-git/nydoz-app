@@ -2,32 +2,18 @@ import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { IDocumentResponse } from "../../../types/payload.type";
-import TanStackTable from "../../shared/components/TanStackTable";
+import TanStackTable from "../../shared/molecules/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
-import BASE_URL from "../../../constants/AppSetting";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import CopyToClipboard from "../../shared/molecules/CopyToClipboard";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import InputGroup from "react-bootstrap/InputGroup";
-import Form from "react-bootstrap/Form";
-import { SplitButton } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { ToastContainer, toast } from "react-toastify";
 import AddDocuments from "./AddDocuments";
-
-// {
-//       "id": 0,
-//       "title": "string",
-//       "file_link": "string",
-//       "uploaded_by": 0,
-//       "is_restricted": true,
-//       "visible_to": {}
-//     }
+import Images from "../../../constants/Images";
 
 const DocumentList = () => {
-    const navigate = useNavigate();
     const { id: companyId } = useParams<string>();
 
     const [selectedData, setSelectedData] = useState<
@@ -37,11 +23,12 @@ const DocumentList = () => {
     const [openAddDocument, setOpenAddDocument] = useState(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
 
-    const getDocumentUrl = `${API_ROUTE.GET_DOCUMENTS}/${companyId}/documents`;
+    const getDocumentUrl = `${API_ROUTE.GET_DOCUMENTS_BY_COMPANY_ID}/${companyId}/documents`;
 
-    const { data, fetchData, pagination, isloading, error } = useFetch<
-        IDocumentResponse[]
-    >(getDocumentUrl, true);
+    const { data, fetchData, pagination } = useFetch<IDocumentResponse[]>(
+        getDocumentUrl,
+        true
+    );
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -60,10 +47,8 @@ const DocumentList = () => {
     }, [fetchAgain]);
 
     const handleEditData = (item: IDocumentResponse) => {
-        console.log(item);
-        navigate(`/account/company/add`, {
-            state: { data: item },
-        });
+        setSelectedData(item);
+        handleAddDocumentOpen();
     };
 
     const tableColumns: ColumnDef<IDocumentResponse>[] = [
@@ -73,76 +58,60 @@ const DocumentList = () => {
             cell: (info) => info.row.index + 1,
         },
         {
-            accessorKey: "logo",
+            accessorKey: "File",
             header: () => (
                 <div>
-                    <i className='bi bi-card-image me-2'></i>
-                    <span> Logo</span>
+                    <i className='bi bi-folder me-2'></i>
+                    <span> File</span>
                 </div>
             ),
-            cell: (info) => {
-                const URL = `${BASE_URL}${info.getValue<string>()}`;
+            cell: () => {
                 return (
-                    <div className='symbol symbol-label'>
-                        <img className='img-fluid' src={URL} alt='Logo' />
+                    <div className='symbol symbol-label '>
+                        <img
+                            className='img-fluid'
+                            src={Images.Folder}
+                            alt='Logo'
+                        />
                     </div>
                 );
             },
         },
 
         {
-            accessorKey: "name",
+            accessorKey: "title",
             header: () => (
                 <div>
-                    <i className='bi bi-building-check me-2'></i>
-                    <span>Company's Name</span>
+                    <span>File Name</span>
                 </div>
             ),
             cell: (info) => {
-                const id = info?.row?.original?.id;
-                return (
-                    <Link to={`/account/company/profile/${id}`}>
-                        {info.getValue<string>()}
-                    </Link>
-                );
+                return <div>{info.getValue<string>()}</div>;
             },
-        },
-        {
-            accessorKey: "website",
-            header: () => (
-                <div>
-                    <i className='bi bi-globe2 me-2'></i>
-                    <span>Website</span>
-                </div>
-            ),
-            cell: (info) => (
-                <div>
-                    <span>{info.getValue<string>()}</span>
-                    <CopyToClipboard text={info.getValue<string>()} />
-                </div>
-            ),
-        },
-        {
-            accessorKey: "email",
-            header: () => (
-                <div>
-                    <i className='bi bi-envelope me-2'></i>
-                    <span>Email</span>
-                </div>
-            ),
-            cell: (info) => <div>{info.getValue<string>()}</div>,
         },
 
         {
-            accessorKey: "country",
+            accessorKey: "is_restricted",
             header: () => (
                 <div>
-                    {" "}
-                    <i className='bi bi-flag me-2'></i>
-                    <span>Country</span>
+                    <span>Type</span>
                 </div>
             ),
-            cell: (info) => <div>{info.getValue<string>()}</div>,
+            cell: (info) => {
+                return (
+                    <div>
+                        {info?.row?.original?.is_restricted ? (
+                            <span className='badge text-bg-primary'>
+                                Not Restricted
+                            </span>
+                        ) : (
+                            <span className='badge text-bg-danger'>
+                                Restricted
+                            </span>
+                        )}
+                    </div>
+                );
+            },
         },
 
         {
@@ -154,9 +123,7 @@ const DocumentList = () => {
                         variant='secondary'
                         size='sm'
                         id='dropdown-basic-button'
-                        title={
-                            <i className='ki-solid ki-dots-vertical fs-2x me-1'></i>
-                        }>
+                        title='Action'>
                         <Dropdown.Item>
                             <div className='menu-link'>
                                 <span className='mx-2'>View</span>
@@ -198,13 +165,14 @@ const DocumentList = () => {
 
     const handleDeleteItem = async () => {
         const id = selectedData?.id;
+        const payload = `${companyId}/documents/${id}}`;
         if (id) {
             try {
-                const response = await deleteData(id);
+                const response = await deleteData(payload);
                 console.log(response);
                 if (response) {
                     setFetchAgain(true);
-                    toast.success("Company deleted successfully");
+                    toast.success("Documents deleted successfully");
                 } else {
                     toast.error("Something went wrong");
                 }
@@ -223,7 +191,7 @@ const DocumentList = () => {
 
     return (
         <div>
-            <div className='d-flex justify-content-between align-items-center'>
+            <div className='d-flex justify-content-between align-items-center mb-6'>
                 <h4>Documents List</h4>
                 <button
                     onClick={handleAddDocumentOpen}
@@ -233,43 +201,6 @@ const DocumentList = () => {
             </div>
             <section>
                 <div className='card'>
-                    <div className='card-header border-0 pt-6'>
-                        <div className='card-title'>
-                            <div className='flex-1'>
-                                <InputGroup className='mb-3'>
-                                    <Form.Control aria-label='Text input with dropdown button' />
-                                    <SplitButton
-                                        variant='secondary'
-                                        title='Search'
-                                        id='segmented-button-dropdown-2'>
-                                        <Dropdown.Item href='#'>
-                                            Search
-                                        </Dropdown.Item>
-                                        <Dropdown.Item href='#'>
-                                            Another action
-                                        </Dropdown.Item>
-                                        <Dropdown.Item href='#'>
-                                            Something else here
-                                        </Dropdown.Item>
-                                        <Dropdown.Divider />
-                                        <Dropdown.Item href='#'>
-                                            Separated link
-                                        </Dropdown.Item>
-                                    </SplitButton>
-                                </InputGroup>
-                            </div>
-                        </div>
-
-                        <div className='card-toolbar'>
-                            <div
-                                className='d-flex justify-content-end'
-                                data-kt-customer-table-toolbar='base'>
-                                <h6 className='bg-light text-info  p-3'>
-                                    Total :{pagination?.total}
-                                </h6>
-                            </div>
-                        </div>
-                    </div>
                     <TanStackTable
                         pagination={pagination}
                         columns={tableColumns}
@@ -290,10 +221,12 @@ const DocumentList = () => {
                 </div>
             </Modal2>
             <AddDocuments
+                setFetchAgain={setFetchAgain}
                 companyId={companyId || ""}
                 handleClose={handleAddDocumentClose}
-                handleConfirm={handleAddDocumentOpen}
                 show={openAddDocument}
+                selectedData={selectedData}
+                setSelectedData={setSelectedData}
             />
             <ToastContainer />
         </div>

@@ -8,8 +8,14 @@ import * as yup from "yup";
 //   "password_confirmation": "string",
 
 const LoginSchema = yup.object({
-    email: yup.string().email().required("Email must be a valid Email."),
-    password: yup.string().required(),
+    email: yup
+        .string()
+        .email("Email must be a valid Email.")
+        .required("Email is required."),
+    password: yup
+        .string()
+        .min(6, "Password must be atleast 6 character long.")
+        .required("Password is required."),
 });
 
 const UserRegisterSchema = yup.object({

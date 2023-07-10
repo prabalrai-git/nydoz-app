@@ -1,26 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-
-import { CloudArrowUpFill } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
+import { IDocumentResponse } from "../../../types/payload.type";
+
 import Modal from "react-bootstrap/Modal";
 import UploadFile from "../../shared/components/Upload";
 import FILE_UPLOAD_TYPE from "../../../constants/FileUpload";
 import { DOCUMENT_UPLOAD_LIMIT } from "../../../constants/AppSetting";
 import API_ROUTE from "../../../service/api";
 import useMutation from "../../../hooks/useMutation";
-
-interface IUploadResponse {
-    id: string;
-    title: string;
-    file_link: string;
-    uploaded_by: string;
-    is_restricted: boolean;
-    visible_to?: string[];
-}
+import Spinner from "react-bootstrap/Spinner";
 
 interface IUploadPayload {
-    id: string;
     title: string;
     file_link: string;
     is_restricted: boolean;
@@ -31,16 +22,26 @@ interface IModalProps {
     show: boolean;
     handleClose: () => void;
     companyId: string;
+    setFetchAgain: (value: boolean) => void;
+    selectedData?: IDocumentResponse;
+    setSelectedData?: (value: IDocumentResponse) => void;
 }
 
 const AddDocuments = (props: IModalProps) => {
-    const { show, handleClose, companyId } = props;
+    const { show, handleClose, companyId, setFetchAgain, selectedData } = props;
     const [fileInfo, setfileInfo] = useState<string[] | undefined>();
     const [title, setTitle] = useState<string>("");
-    const { postData, error } = useMutation<IUploadResponse>(
+    const { postData, error, isLoading } = useMutation<IDocumentResponse>(
         `${API_ROUTE.POST_DOCUMENTS_BY_COMPANY_ID}/${companyId}/documents`,
         true
     );
+
+    useEffect(() => {
+        console.log(selectedData, "selectedData");
+        if (selectedData) {
+            setTitle(selectedData.title);
+        }
+    }, [selectedData]);
 
     const handleSubmit = async () => {
         if (!fileInfo || fileInfo.length === 0) {
@@ -61,6 +62,7 @@ const AddDocuments = (props: IModalProps) => {
         const response = await postData(payload);
         if (response?.status === 201) {
             toast.success("Document uploaded successfully");
+            setFetchAgain(true);
             handleClose();
         } else {
             toast.error(error ?? "Error in uploading document");
@@ -86,6 +88,7 @@ const AddDocuments = (props: IModalProps) => {
                                         Document Name:
                                     </label>
                                     <input
+                                        value={title}
                                         className='form-control'
                                         placeholder='Enter document Name'
                                         type='text'
@@ -123,10 +126,22 @@ const AddDocuments = (props: IModalProps) => {
                     variant='primary'
                     className='fw-bold'
                     onClick={handleSubmit}>
-                    <span className='mx-2'>Upload</span>
-                    <CloudArrowUpFill />
+                    {isLoading ? (
+                        <>
+                            <span className='ms-2'>uploading...</span>
+                            <Spinner
+                                size='sm'
+                                animation='border'
+                                role='status'></Spinner>
+                        </>
+                    ) : (
+                        <span className='mx-3'>
+                            {selectedData ? "Update" : "Upload"}
+                        </span>
+                    )}
                 </Button>
             </Modal.Footer>
+            <ToastContainer />
         </Modal>
     );
 };

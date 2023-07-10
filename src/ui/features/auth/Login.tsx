@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
@@ -22,12 +22,12 @@ const LoginPage = () => {
     const { loginFn } = useContext(AuthContext);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const { postData, isLoading, error } = useMutation<ILoginResponse>(
         API_ROUTE.LOGIN,
         false
     );
-    const navigate = useNavigate();
 
     const {
         register,
@@ -36,6 +36,11 @@ const LoginPage = () => {
     } = useForm<FormData>({
         resolver: yupResolver(LoginSchema),
     });
+
+    useEffect(() => {
+        if (error) toast.error(error);
+    }, [error]);
+
     const onFormSubmit = handleSubmit(async (data: FormData) => {
         const response = await postData(data);
         if (response?.data?.status === "ok") {
@@ -50,9 +55,7 @@ const LoginPage = () => {
             };
             toast.success(response?.data?.message || "Login Successful");
             loginFn(payload, rememberMe);
-            navigate("/", { replace: true });
-        } else {
-            toast.error(error || "Login Failed");
+            navigate("/home", { replace: true });
         }
     });
 
