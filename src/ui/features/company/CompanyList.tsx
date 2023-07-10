@@ -3,7 +3,6 @@ import useFetch from "../../../hooks/useFetch";
 import Heading from "../../shared/molecules/Heading";
 import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
-import TanStackTable from "../../shared/molecules/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
 import BASE_URL from "../../../constants/AppSetting";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -12,11 +11,12 @@ import CopyToClipboard from "../../shared/molecules/CopyToClipboard";
 import { Link, useNavigate } from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import { SplitButton } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { ToastContainer, toast } from "react-toastify";
+import DataListTable from "../../shared/components/DataListTable";
 
 const CompanyList = () => {
     const navigate = useNavigate();
@@ -220,25 +220,16 @@ const CompanyList = () => {
                         <div className='card-title'>
                             <div className='flex-1'>
                                 <InputGroup className='mb-3'>
-                                    <Form.Control aria-label='Text input with dropdown button' />
-                                    <SplitButton
+                                    <Form.Control
+                                        placeholder="search by company's name"
+                                        aria-label="Recipient's username"
+                                        aria-describedby='basic-addon2'
+                                    />
+                                    <Button
                                         variant='secondary'
-                                        title='Search'
-                                        id='segmented-button-dropdown-2'>
-                                        <Dropdown.Item href='#'>
-                                            Search
-                                        </Dropdown.Item>
-                                        <Dropdown.Item href='#'>
-                                            Another action
-                                        </Dropdown.Item>
-                                        <Dropdown.Item href='#'>
-                                            Something else here
-                                        </Dropdown.Item>
-                                        <Dropdown.Divider />
-                                        <Dropdown.Item href='#'>
-                                            Separated link
-                                        </Dropdown.Item>
-                                    </SplitButton>
+                                        id='button-addon2'>
+                                        Search
+                                    </Button>
                                 </InputGroup>
                             </div>
                         </div>
@@ -251,31 +242,17 @@ const CompanyList = () => {
                                     Total :{pagination?.total}
                                 </h6>
                             </div>
-
-                            <div
-                                className='d-flex justify-content-end align-items-center d-none'
-                                data-kt-customer-table-toolbar='selected'>
-                                <div className='fw-bold me-5'>
-                                    <span
-                                        className='me-2'
-                                        data-kt-customer-table-select='selected_count'></span>
-                                    Selected
-                                </div>
-                                <button
-                                    type='button'
-                                    className='btn btn-danger'
-                                    data-kt-customer-table-select='delete_selected'>
-                                    Delete Selected
-                                </button>
-                            </div>
                         </div>
                     </div>
-                    <TanStackTable
-                        pagination={pagination}
-                        columns={tableColumns}
-                        data={data}
-                        showPagination={false}
-                    />
+                    <section>
+                        <DataListTable
+                            showSearchBar={false}
+                            pagination={pagination}
+                            columns={tableColumns}
+                            data={data ?? []}
+                            showPagination={true}
+                        />
+                    </section>
                 </div>
             </section>
             <Modal2
@@ -296,12 +273,3 @@ const CompanyList = () => {
 };
 
 export default CompanyList;
-
-// "pagination": {
-//             "total": 2,
-//             "per_page": 15,
-//             "last_page": 1,
-//             "current_page": 1,
-//             "from": 1,
-//             "to": 2
-//         }

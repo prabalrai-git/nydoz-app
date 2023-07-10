@@ -1,10 +1,11 @@
 import TanStackTable from "../molecules/TanStackTable";
 import SearchBar from "../molecules/SearchBar";
 import { ITableProps, IPagination } from "../../../types/axios.type";
+import Pagination from "../molecules/Pagination";
 
 interface IDataListProps<T> extends ITableProps<T> {
     showSearchBar: boolean;
-    pagination: IPagination;
+    pagination: IPagination | undefined;
     showPagination: boolean;
 }
 
@@ -13,12 +14,10 @@ function DataListTable<T>(props: IDataListProps<T>) {
     return (
         <div>
             {showSearchBar && <SearchBar />}
-            <TanStackTable
-                columns={columns}
-                data={data}
-                pagination={pagination}
-                showPagination={showPagination}
-            />
+            <TanStackTable columns={columns} data={data} />
+            {showPagination && pagination && (
+                <Pagination pagination={pagination} />
+            )}
         </div>
     );
 }

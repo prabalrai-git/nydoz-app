@@ -8,26 +8,24 @@ interface IPaginationProps {
 const Pagination = (props: IPaginationProps) => {
     const { pagination } = props;
     return (
-        <div className='row'>
-            <div className='col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'>
-                <div id='kt_customers_table_length'>
-                    <div className='d-flex  align-items-center'>
-                        <label className='mx-2'>Result Per page:</label>
-                        <select
-                            value={pagination?.per_page || 20}
-                            name='kt_customers_table_length'
-                            aria-controls='kt_customers_table'
-                            className=' form-select form-select-sm form-select-solid'>
-                            {RESULT_PER_PAGE_LIST.map((item: number, index) => (
-                                <option key={index} value={item}>
-                                    {item}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+        <div className='row my-3'>
+            <div className='col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-start'>
+                <label className=' me-3'>Result Per page</label>
+                <div className='d-flex justify-content-between  align-items-center'>
+                    <select
+                        value={pagination?.per_page || 20}
+                        name='kt_customers_table_length'
+                        aria-controls='kt_customers_table'
+                        className=' form-select form-select-sm form-select-solid'>
+                        {RESULT_PER_PAGE_LIST.map((item: number, index) => (
+                            <option key={index} value={item}>
+                                {item}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
-            <div className='col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'>
+            <div className='col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-end'>
                 <div
                     className='dataTables_paginate paging_simple_numbers'
                     id='kt_customers_table_paginate'>
