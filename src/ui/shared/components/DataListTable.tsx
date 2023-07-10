@@ -10,6 +10,8 @@ interface IDataListProps<T> extends ITableProps<T> {
     pagination: IPagination | undefined;
     showPagination: boolean;
     setFetchAgain: (fetchAgain: boolean) => void;
+    handlePrevious: () => void;
+    handleNext: () => void;
 }
 
 function DataListTable<T>(props: IDataListProps<T>) {
@@ -22,6 +24,8 @@ function DataListTable<T>(props: IDataListProps<T>) {
         searchTerm,
         setSearchTerm,
         setFetchAgain,
+        handleNext,
+        handlePrevious,
     } = props;
     return (
         <div>
@@ -54,7 +58,11 @@ function DataListTable<T>(props: IDataListProps<T>) {
 
             <TanStackTable columns={columns} data={data} />
             {showPagination && pagination && (
-                <Pagination pagination={pagination} />
+                <Pagination
+                    handlePrevious={handlePrevious}
+                    handleNext={handleNext}
+                    pagination={pagination}
+                />
             )}
         </div>
     );

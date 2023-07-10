@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import Heading from "../../shared/molecules/Heading";
 import API_ROUTE from "../../../service/api";
@@ -14,38 +14,44 @@ import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { ToastContainer, toast } from "react-toastify";
 import DataListTable from "../../shared/components/DataListTable";
+import { useSearchParams } from "react-router-dom";
+
+// "pagination": {
+//             "total": 3,
+//             "per_page": 15,
+//             "last_page": 1,
+//             "current_page": 1,
+//             "from": 1,
+//             "to": 3
+//         }
+
+interface IPaginationState {
+    currentPage: number;
+    perPage: number;
+    searchTerm: string;
+}
 
 const CompanyList = () => {
-    const [fetchUrl, setFetchUrl] = useState<string>(API_ROUTE.GET_COMPANIES);
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState<string>("");
+
+    const [paginationState, setPaginationState] = useState({
+        currentPage: 1,
+        perPage: 5,
+    });
+    const initialURL = `${API_ROUTE.GET_COMPANIES}?page=${paginationState.currentPage}&per_page=${paginationState.perPage}&name=${searchTerm}`;
+    const [fetchUrl, setFetchUrl] = useState<string>(initialURL);
+    const { data, fetchData, pagination } = useFetch<ICompanyResponse[]>(
+        fetchUrl,
+        true
+    );
     const [selectedData, setSelectedData] = useState<
         ICompanyResponse | undefined
     >();
     const [show, setShow] = useState<boolean>(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
-    const { data, fetchData, pagination, isloading, error } = useFetch<
-        ICompanyResponse[]
-    >(fetchUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
-
-    useEffect(() => {
-        fetchData();
-        setFetchAgain(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (fetchAgain) {
-            if (searchTerm.length > 0) {
-                setFetchUrl(`${API_ROUTE.GET_COMPANIES}?search=${searchTerm}`);
-            }
-            fetchData();
-            setFetchAgain(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchAgain]);
 
     const handleEditData = (item: ICompanyResponse) => {
         console.log(item);
@@ -53,6 +59,33 @@ const CompanyList = () => {
             state: { data: item },
         });
     };
+
+    useEffect(() => {
+        fetchData();
+        setFetchAgain(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchUrl]);
+
+    useEffect(() => {
+        if (fetchAgain) {
+            fetchData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchAgain]);
+
+    const initialRender = useRef(true);
+
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false;
+            console.log("initial render");
+        } else {
+            const tempURL = `${API_ROUTE.GET_COMPANIES}?page=${paginationState.currentPage}&per_page=${paginationState.perPage}&name=${searchTerm}`;
+            window.scrollTo(0, 0);
+            setFetchUrl(tempURL);
+            console.log("next render");
+        }
+    }, [paginationState.currentPage, paginationState.perPage, searchTerm]);
 
     const tableColumns: ColumnDef<ICompanyResponse>[] = [
         {
@@ -207,6 +240,22 @@ const CompanyList = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleNext = () => {
+        if (paginationState.currentPage === pagination?.last_page) return;
+        setPaginationState((prevState) => ({
+            ...prevState,
+            currentPage: prevState.currentPage + 1,
+        }));
+    };
+
+    const handlePrevious = () => {
+        if (paginationState.currentPage === 1) return;
+        setPaginationState((prevState) => ({
+            ...prevState,
+            currentPage: prevState.currentPage - 1,
+        }));
+    };
+
     return (
         <div>
             <Heading title='Company List' btnText='Back' showBreadcrumb={true}>
@@ -256,6 +305,8 @@ const CompanyList = () => {
                             data={data ?? []}
                             showPagination={true}
                             setFetchAgain={setFetchAgain}
+                            handlePrevious={handlePrevious}
+                            handleNext={handleNext}
                         />
                     </section>
                 </div>

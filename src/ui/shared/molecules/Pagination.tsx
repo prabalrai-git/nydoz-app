@@ -3,10 +3,12 @@ import { RESULT_PER_PAGE_LIST } from "../../../constants/AppSetting";
 
 interface IPaginationProps {
     pagination: IPagination;
+    handlePrevious: () => void;
+    handleNext: () => void;
 }
 
 const Pagination = (props: IPaginationProps) => {
-    const { pagination } = props;
+    const { pagination, handlePrevious, handleNext } = props;
     return (
         <div className='row my-3'>
             <div className='col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-start'>
@@ -31,7 +33,12 @@ const Pagination = (props: IPaginationProps) => {
                     id='kt_customers_table_paginate'>
                     <ul className='pagination'>
                         <li
-                            className='paginate_button page-item previous disabled'
+                            onClick={handlePrevious}
+                            className={
+                                pagination.current_page === 1
+                                    ? "paginate_button page-item disabled"
+                                    : "paginate_button page-item"
+                            }
                             id='kt_customers_table_previous'>
                             <a
                                 href='#'
@@ -39,6 +46,7 @@ const Pagination = (props: IPaginationProps) => {
                                 data-dt-idx='0'
                                 className='page-link'>
                                 <i className='previous'></i>
+                                <span className='ms-3'>Prev</span>
                             </a>
                         </li>
                         <li className='paginate_button page-item active'>
@@ -78,13 +86,15 @@ const Pagination = (props: IPaginationProps) => {
                             </a>
                         </li>
                         <li
+                            onClick={handleNext}
                             className='paginate_button page-item next'
                             id='kt_customers_table_next'>
                             <a
                                 href='#'
                                 aria-controls='kt_customers_table'
                                 data-dt-idx='5'
-                                className='page-link'>
+                                className='page-link me-3'>
+                                Next
                                 <i className='next'></i>
                             </a>
                         </li>

@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { Search } from "react-bootstrap-icons";
 
 interface ISearchBarProps {
     placeholder: string;
@@ -10,39 +9,34 @@ interface ISearchBarProps {
 }
 
 const SearchBar = (props: ISearchBarProps) => {
-    const { placeholder, searchTerm, setSearchTerm, setFetchAgain } = props;
-
-    const handleFetchData = useCallback(() => {
-        setFetchAgain(true);
-    }, [setFetchAgain]);
+    const { placeholder, searchTerm, setSearchTerm } = props;
+    const [value, setValue] = useState<string>("");
 
     useEffect(() => {
-        const delay = 300; // Debounce delay in milliseconds
-        if (searchTerm.length >= 3) {
-            const debounceTimer = setTimeout(() => {
-                handleFetchData();
-            }, delay);
-
-            return () => clearTimeout(debounceTimer);
+        if (value.length <= 3) {
+            return;
+        } else {
+            const timer = setTimeout(() => setSearchTerm(value), 500);
+            return () => {
+                clearTimeout(timer);
+            };
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchTerm]);
+    }, [value]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
+        setValue(event.target.value);
     };
 
     const resetSearchTerm = () => {
+        setValue("");
         setSearchTerm("");
-        handleFetchData();
     };
 
     return (
         <InputGroup size='sm' className='mb-3'>
             <Form.Control
                 type='text'
-                value={searchTerm}
+                value={value}
                 onChange={handleInputChange}
                 placeholder={placeholder}
             />
