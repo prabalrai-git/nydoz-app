@@ -37,6 +37,9 @@ const API_ROUTE = {
     //roles
     GET_ROLES: "/api/v1/roles",
     POST_ROLES: "/api/v1/roles",
+
+    //  Client Management agents routes
+    GET_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

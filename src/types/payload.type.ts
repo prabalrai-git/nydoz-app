@@ -96,3 +96,35 @@ export interface ICompanyResponse {
     logo: string;
     cover_image: string;
 }
+
+// {
+//   "first_name": "string",
+//   "last_name": "string",
+//   "email": "string",
+//   "mobile": "string",
+//   "country": "string",
+//   "state": "string",
+//   "city": "string",
+//   "street_address": "string",
+//   "profile_picture": "string",
+//   "postal_code": "string"
+// }
+
+// Agent
+
+export interface IAgentPayload {
+    first_name: string;
+    last_name: string;
+    email: string;
+    mobile: string;
+    country: string;
+    state: string;
+    city: string;
+    street_address: string;
+    profile_picture: string;
+    postal_code: string;
+}
+
+export interface IAgentResponse extends IAgentPayload {
+    id: string;
+}

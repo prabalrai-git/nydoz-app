@@ -34,8 +34,13 @@ import ProductList from "../ui/features/products/ProductList";
 // Company Roles
 // import RoleLayout from "../ui/features/roles/RoleLayout";
 
+// Agent
+import AgentList from "../ui/features/agent/AgentList";
+
 import PageNotFound from "../ui/features/utils/PageNotFound";
 import RoleList from "../ui/features/roles/RoleList";
+import AgentLayout from "../ui/features/agent/AgentLayout";
+import AddAgent from "../ui/features/agent/AddAgent";
 
 const router = createBrowserRouter([
     {
@@ -52,6 +57,7 @@ const router = createBrowserRouter([
                     },
                 ],
             },
+
             {
                 path: "auth",
                 element: (
@@ -92,6 +98,20 @@ const router = createBrowserRouter([
                         element: <UserDashboard />,
                     },
                     {
+                        path: "agents",
+                        element: <AgentLayout />,
+                        children: [
+                            {
+                                path: "",
+                                element: <AgentList />,
+                            },
+                            {
+                                path: "add",
+                                element: <AddAgent />,
+                            },
+                        ],
+                    },
+                    {
                         path: "change-password",
                         element: <ChangePassword />,
                     },
@@ -111,6 +131,7 @@ const router = createBrowserRouter([
                                         path: "roles",
                                         element: <RoleList />,
                                     },
+
                                     {
                                         path: "products",
                                         element: <ProductLayout />,

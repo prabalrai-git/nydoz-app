@@ -22,3 +22,15 @@ export const companyRolesSchema = yup.object().shape({
     name: yup.string().required(),
     description: yup.string(),
 });
+
+export const agentSchema = yup.object().shape({
+    first_name: yup.string().required(),
+    last_name: yup.string().required(),
+    email: yup.string().email().required(),
+    mobile: yup.string().required(),
+    country: yup.string().required(),
+    state: yup.string().required(),
+    city: yup.string().required(),
+    street_address: yup.string().required(),
+    postal_code: yup.string().required(),
+});

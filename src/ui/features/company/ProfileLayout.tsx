@@ -171,21 +171,12 @@ const ProfileLayout = () => {
                                             Products
                                         </Link>
                                     </li>
-
                                     <li className='nav-item mt-2'>
-                                        <a
+                                        <Link
                                             className='nav-link text-active-primary ms-0 me-10 py-5'
-                                            href='../../demo31/dist/pages/user-profile/clients.html'>
-                                            Clients
-                                        </a>
-                                    </li>
-
-                                    <li className='nav-item mt-2'>
-                                        <a
-                                            className='nav-link text-active-primary ms-0 me-10 py-5'
-                                            href='../../demo31/dist/pages/user-profile/projects.html'>
-                                            Investment
-                                        </a>
+                                            to={"agents"}>
+                                            Agents
+                                        </Link>
                                     </li>
 
                                     <li className='nav-item mt-2'>
