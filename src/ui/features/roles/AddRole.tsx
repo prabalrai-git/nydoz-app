@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import Modal from "react-bootstrap/Modal";
@@ -26,39 +26,60 @@ interface IModalProps {
 }
 
 const AddDocuments = (props: IModalProps) => {
-    const { show, handleClose, companyId, setFetchAgain, selectedData } = props;
-    const { postData, updateData, error, isLoading } =
+    const { show, handleClose, setFetchAgain, selectedData } = props;
+    const { postData, updateData, errList, error, isLoading } =
         useMutation<IRoleResponse>(API_ROUTE.POST_ROLES, true);
 
     const {
         register,
-        handleSubmit,
         reset,
+        setError,
+        handleSubmit,
         formState: { errors },
     } = useForm<FormData>({
         resolver: yupResolver(companyRolesSchema),
     });
+    // for Error Message
     useEffect(() => {
         if (error) {
             toast.error(error);
         }
     }, [error]);
 
+    // for Edit Data
     useEffect(() => {
         if (selectedData) {
-            reset(selectedData);
+            reset({
+                name: selectedData.name,
+                description: selectedData.description,
+            });
         }
     }, [reset, selectedData]);
 
+    useEffect(() => {
+        console.log(errList);
+        if (errList?.name) {
+            setError("name", {
+                type: "manual",
+                message: errList?.name[0],
+            });
+        }
+        if (errList?.description) {
+            setError("description", {
+                type: "manual",
+                message: errList?.description[0],
+            });
+        }
+    }, [errList, setError]);
+
     const onFormSubmit = handleSubmit(async (data: FormData) => {
-        const payload: IRolePayload = {
-            name: "string",
-            description: "string",
-        };
         console.log(data, "data");
 
         if (selectedData) {
-            const response = await updateData(payload);
+            const response = await updateData(
+                selectedData.id,
+                data as IRolePayload
+            );
             if (response?.status === 201) {
                 toast.success("Role updated successfully");
                 reset({
@@ -69,9 +90,9 @@ const AddDocuments = (props: IModalProps) => {
                 handleClose();
             }
         } else {
-            const response = await postData(payload);
+            const response = await postData(data as IRolePayload);
             if (response?.status === 201) {
-                toast.success("Document uploaded successfully");
+                toast.success("Role Added successfully");
                 reset({
                     name: "",
                     description: "",
@@ -152,12 +173,11 @@ const AddDocuments = (props: IModalProps) => {
                         </>
                     ) : (
                         <span className='mx-3'>
-                            {selectedData ? "Update" : "Upload"}
+                            {selectedData ? "Update" : "Add"}
                         </span>
                     )}
                 </Button>
             </Modal.Footer>
-            <ToastContainer />
         </Modal>
     );
 };

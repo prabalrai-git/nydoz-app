@@ -16,7 +16,7 @@ function TanStackTable<T>(props: ITableProps<T>) {
     return (
         <div className='border '>
             {data && data?.length > 0 && (
-                <div className='p-2 block max-w-full overflow-x-scroll overflow-y-hidden'>
+                <div className='p-2 min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden'>
                     <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable  '>
                         <thead>
                             {table.getHeaderGroups().map((headerGroup) => (

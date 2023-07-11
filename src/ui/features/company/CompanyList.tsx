@@ -39,7 +39,7 @@ const CompanyList = () => {
 
     const handleEditData = (item: ICompanyResponse) => {
         console.log(item);
-        navigate(`/account/company/add`, {
+        navigate(`/home/company/add`, {
             state: { data: item },
         });
     };

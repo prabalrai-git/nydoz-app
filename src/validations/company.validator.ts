@@ -19,6 +19,6 @@ export const companySchema = yup.object().shape({
 });
 
 export const companyRolesSchema = yup.object().shape({
-    // name: yup.string().required(),
-    // description: yup.string(),
+    name: yup.string().required(),
+    description: yup.string(),
 });
