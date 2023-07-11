@@ -30,7 +30,6 @@ interface IUseMeData {
 
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     const { fetchData } = useFetch<IUseMeData>(API_ROUTE.LOGGED_IN_USER, true);
-
     const userInitialState = useMemo<IUserState>(() => {
         return {
             id: null,
@@ -59,16 +58,17 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         rememberMe: boolean
     ) => {
         const { user, token } = userDataFromLogin;
-        setUserInfo(user);
+
+        // console.log(rememberMe, "rememberMe");
+        // console.log(token, "saved token");
         localStorage.setItem("rememberMe", rememberMe.toString());
-        setToken(token);
         if (rememberMe) {
             localStorage.setItem("token", token);
         } else {
             sessionStorage.setItem("token", token);
         }
-        console.log(token, "saved token");
-
+        setUserInfo(user);
+        setToken(token);
         return true;
     };
 
@@ -80,7 +80,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
             if (response?.status === 200) {
                 const { id, email, first_name, last_name, mobile } =
                     response.data.payload;
-
                 const user: IUserState = {
                     id,
                     email,

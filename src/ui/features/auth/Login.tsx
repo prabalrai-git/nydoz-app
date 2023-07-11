@@ -48,12 +48,12 @@ const LoginPage = () => {
             const token = response?.data?.payload?.token;
 
             if (!user || !token) return toast.error("Login Failed");
+            toast.success(response?.data?.message || "Login Successful");
 
             const payload: ILoginResponse = {
                 user: user,
                 token: token,
             };
-            toast.success(response?.data?.message || "Login Successful");
             loginFn(payload, rememberMe);
             navigate("/home", { replace: true });
         }
