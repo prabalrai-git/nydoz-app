@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Header from "../../shared/layouts/Header/Header";
+import Header2 from "../../shared/layouts/Header/Header2";
 
 const MainLayout = () => {
     return (
         <div>
-            <Header />
+            <Header2 />
             <Outlet />
         </div>
     );
