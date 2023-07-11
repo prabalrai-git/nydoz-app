@@ -80,7 +80,7 @@ const AddDocuments = (props: IModalProps) => {
                 selectedData.id,
                 data as IRolePayload
             );
-            if (response?.status === 201) {
+            if (response?.status === 200) {
                 toast.success("Role updated successfully");
                 reset({
                     name: "",

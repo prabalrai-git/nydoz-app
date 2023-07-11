@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
-import { IRoleResponse, IRolePayload } from "../../../types/payload.type";
+import { IRoleResponse } from "../../../types/payload.type";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -57,48 +57,35 @@ const DocumentList = () => {
             header: () => <div>S.N</div>,
             cell: (info) => info.row.index + 1,
         },
+
         {
-            accessorKey: "File",
+            accessorKey: "name",
             header: () => (
                 <div>
-                    <i className='bi bi-folder me-2'></i>
-                    <span> File</span>
+                    <span>Role Name</span>
                 </div>
             ),
-            cell: () => {
+            cell: (info) => {
                 return (
-                    <div className='symbol symbol-label '>
-                        <img
-                            className='img-fluid'
-                            src={Images.Folder}
-                            alt='Logo'
-                        />
+                    <div className='text-capitalize'>
+                        {info.getValue<string>()}
                     </div>
                 );
             },
         },
-
         {
-            accessorKey: "title",
+            accessorKey: "description",
             header: () => (
                 <div>
-                    <span>File Name</span>
+                    <span>Description</span>
                 </div>
             ),
             cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
-            },
-        },
-
-        {
-            accessorKey: "company_id",
-            header: () => (
-                <div>
-                    <span>Type</span>
-                </div>
-            ),
-            cell: (info) => {
-                return <div>{info?.row?.original?.company_id}</div>;
+                return (
+                    <div className='text-capitalize'>
+                        <p className='truncate'> {info.getValue<string>()}</p>
+                    </div>
+                );
             },
         },
 
