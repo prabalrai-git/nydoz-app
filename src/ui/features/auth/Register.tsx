@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import useMutation from "../../../hooks/useMutation";
 import API_ROUTE from "../../../service/api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { IUserResponseResponse } from "../../../types/payload.type";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
@@ -78,9 +78,9 @@ const Register = () => {
                                         />
                                     </div>
                                     <div className='col-12 col-md-10'>
-                                        <h5 className='text-dark fw-bolder mb-2'>
+                                        <h3 className='text-dark fw-bolder mb-2'>
                                             Create Your Account First
-                                        </h5>
+                                        </h3>
                                         <p className='text-muted '>
                                             Start your trial for 10 more days
                                         </p>
@@ -90,10 +90,9 @@ const Register = () => {
                                 <div className='row'>
                                     <div className='col-12 col-md-6'>
                                         <label
-                                            className='form-label'
+                                            className='form-label required'
                                             htmlFor='first_name'>
                                             First Name
-                                            <span>*</span>
                                         </label>
                                         <div className='fv-row mb-6'>
                                             <input
@@ -109,10 +108,9 @@ const Register = () => {
                                     </div>
                                     <div className='col-12 col-md-6'>
                                         <label
-                                            className='form-label'
+                                            className='form-label required'
                                             htmlFor='last_name'>
                                             Last Name
-                                            <span>*</span>
                                         </label>
                                         <div className='fv-row mb-6'>
                                             <input
@@ -128,10 +126,9 @@ const Register = () => {
                                     </div>
                                     <div className='col-12 col-md-6'>
                                         <label
-                                            className='form-label'
+                                            className='form-label required'
                                             htmlFor='Email'>
                                             Email
-                                            <span>*</span>
                                         </label>
                                         <div className='fv-row mb-6'>
                                             <input
@@ -148,8 +145,8 @@ const Register = () => {
 
                                     <div className='col-12 col-md-6'>
                                         <label
-                                            className='form-label'
-                                            htmlFor='first_name'>
+                                            className='form-label required'
+                                            htmlFor='mobile_number'>
                                             Mobile Number
                                         </label>
                                         <div className='fv-row mb-6'>
@@ -169,9 +166,9 @@ const Register = () => {
                                             className='fv-row mb-8'
                                             data-kt-password-meter='true'>
                                             <label
-                                                className='form-label'
+                                                className='form-label required'
                                                 htmlFor='password'>
-                                                Password<span>*</span>
+                                                Password
                                             </label>
                                             <div className='mb-1'>
                                                 <div className='position-relative mb-3'>
@@ -214,10 +211,9 @@ const Register = () => {
                                             className='fv-row mb-8'
                                             data-kt-password-meter='true'>
                                             <label
-                                                className='form-label'
+                                                className='form-label required'
                                                 htmlFor='confrimPassword'>
                                                 Confirm Password
-                                                <span>*</span>
                                             </label>
                                             <div className='mb-1'>
                                                 <div className='position-relative mb-3'>
@@ -335,7 +331,6 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 };

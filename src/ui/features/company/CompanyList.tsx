@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, ChangeEvent } from "react";
 import useFetch from "../../../hooks/useFetch";
 import Heading from "../../shared/molecules/Heading";
 import API_ROUTE from "../../../service/api";
@@ -14,22 +14,6 @@ import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { ToastContainer, toast } from "react-toastify";
 import DataListTable from "../../shared/components/DataListTable";
-import { useSearchParams } from "react-router-dom";
-
-// "pagination": {
-//             "total": 3,
-//             "per_page": 15,
-//             "last_page": 1,
-//             "current_page": 1,
-//             "from": 1,
-//             "to": 3
-//         }
-
-interface IPaginationState {
-    currentPage: number;
-    perPage: number;
-    searchTerm: string;
-}
 
 const CompanyList = () => {
     const navigate = useNavigate();
@@ -253,6 +237,13 @@ const CompanyList = () => {
         setPaginationState((prevState) => ({
             ...prevState,
             currentPage: prevState.currentPage - 1,
+        }));
+    };
+
+    const handlePerPageChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        setPaginationState((prevState) => ({
+            ...prevState,
+            perPage: e.target.value as unknown as number,
         }));
     };
 

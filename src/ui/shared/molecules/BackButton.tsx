@@ -7,7 +7,7 @@ const BackButton = () => {
     return (
         <Button
             onClick={() => navigate(-1)}
-            className='btn btn-secondary btn-sm mb-3'>
+            className='btn btn-secondary fs-7 fw-bold btn-sm mb-3'>
             {/* <CaretLeft size={14} /> */}
             <span>Back</span>
         </Button>

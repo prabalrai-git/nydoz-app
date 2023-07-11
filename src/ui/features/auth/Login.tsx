@@ -9,7 +9,7 @@ import { LoginSchema } from "../../../validations/auth.validators";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
 import { ILoginResponse } from "../../../types/payload.type";
 
@@ -243,7 +243,6 @@ const LoginPage = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 };

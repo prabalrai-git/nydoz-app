@@ -22,7 +22,7 @@ const Heading = (props: IHeadingProps) => {
             <div className='d-flex align-items-center gap-2 gap-lg-3'>
                 <button
                     onClick={() => navigate(-1)}
-                    className='btn btn-flex btn-secondary  h-40px fs-7 fw-bold'>
+                    className='btn btn-flex btn-secondary   fs-7 fw-bold btn-sm'>
                     {btnText}
                 </button>
             </div>

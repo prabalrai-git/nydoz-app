@@ -92,6 +92,10 @@ const router = createBrowserRouter([
                         element: <UserDashboard />,
                     },
                     {
+                        path: "change-password",
+                        element: <ChangePassword />,
+                    },
+                    {
                         path: "company",
                         element: <Layout />,
                         children: [
@@ -116,10 +120,6 @@ const router = createBrowserRouter([
                                                 element: <ProductList />,
                                             },
                                         ],
-                                    },
-                                    {
-                                        path: "change-password",
-                                        element: <ChangePassword />,
                                     },
                                 ],
                             },

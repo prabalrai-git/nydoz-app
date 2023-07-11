@@ -152,9 +152,7 @@ const Header2 = () => {
                                         Another action
                                     </NavDropdown.Item>
                                     <NavDropdown.Item>
-                                        <Link
-                                            className=''
-                                            to='/auth/forget-password'>
+                                        <Link className='' to='change-password'>
                                             Change Password
                                         </Link>
                                     </NavDropdown.Item>
