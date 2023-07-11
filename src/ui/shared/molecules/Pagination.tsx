@@ -5,12 +5,12 @@ interface IPaginationProps {
     pagination: IPagination;
     handlePrevious: () => void;
     handleNext: () => void;
+    handlePerPageChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Pagination = (props: IPaginationProps) => {
-    const { pagination, handlePrevious, handleNext } = props;
-
-    const handlePerPageChange = () => {};
+    const { pagination, handlePrevious, handleNext, handlePerPageChange } =
+        props;
 
     return (
         <div className='row my-3'>

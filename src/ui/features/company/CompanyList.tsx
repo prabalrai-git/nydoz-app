@@ -298,6 +298,7 @@ const CompanyList = () => {
                             setFetchAgain={setFetchAgain}
                             handlePrevious={handlePrevious}
                             handleNext={handleNext}
+                            handlePerPageChange={handlePerPageChange}
                         />
                     </section>
                 </div>
