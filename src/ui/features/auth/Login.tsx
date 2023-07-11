@@ -9,7 +9,7 @@ import { LoginSchema } from "../../../validations/auth.validators";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
 import { ILoginResponse } from "../../../types/payload.type";
 
@@ -48,12 +48,12 @@ const LoginPage = () => {
             const token = response?.data?.payload?.token;
 
             if (!user || !token) return toast.error("Login Failed");
+            toast.success(response?.data?.message || "Login Successful");
 
             const payload: ILoginResponse = {
                 user: user,
                 token: token,
             };
-            toast.success(response?.data?.message || "Login Successful");
             loginFn(payload, rememberMe);
             navigate("/home", { replace: true });
         }
@@ -61,7 +61,7 @@ const LoginPage = () => {
 
     return (
         <div className='container pt-4' id='kt_app_root '>
-            <div className='row h-100vh '>
+            <div className='row '>
                 <div className='col-12  col-md-8 col-lg-4  offset-0 offset-md-2 offset-lg-4 '>
                     <div className='card shadow shadwo-sm p-3 mt-4'>
                         <div className='card-body'>
@@ -124,6 +124,11 @@ const LoginPage = () => {
                                 </div> */}
 
                                 <div className='fv-row mb-6'>
+                                    <label
+                                        className='required mb-2'
+                                        htmlFor='email'>
+                                        Email
+                                    </label>
                                     <input
                                         type='text'
                                         placeholder='Email'
@@ -135,9 +140,14 @@ const LoginPage = () => {
                                     </p>
                                 </div>
                                 <div
-                                    className='fv-row mb-8'
+                                    className='fv-row mb-6'
                                     data-kt-password-meter='true'>
                                     <div className='mb-1'>
+                                        <label
+                                            className='required mb-2'
+                                            htmlFor='password'>
+                                            Password
+                                        </label>
                                         <div className='position-relative mb-3'>
                                             <input
                                                 className='form-control bg-transparent'
@@ -169,11 +179,11 @@ const LoginPage = () => {
                                     </p>
                                 </div>
 
-                                <div className='flex-center mb-3'>
+                                <div className='flex-center justify-content-between mb-1'>
                                     <div>
                                         <Link
                                             to={"/auth/forgot-password"}
-                                            className='btn text-info w-semibold'>
+                                            className='btn text-info w-semibold px-2'>
                                             Forgot Password ?
                                         </Link>
                                     </div>
@@ -233,7 +243,6 @@ const LoginPage = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSearchParams } from "react-router-dom";
 import API_ROUTE from "../../../service/api";
 import Button from "react-bootstrap/Button";
@@ -27,25 +27,22 @@ const EmailVerify = () => {
     };
 
     return (
-        <>
-            <Button
-                variant='primary'
-                onClick={handleEmailVerification}
-                className='float-end'>
-                {isLoading ? (
-                    <>
-                        <span className='ms-2'>Please Wait...</span>
-                        <Spinner
-                            size='sm'
-                            animation='border'
-                            role='status'></Spinner>
-                    </>
-                ) : (
-                    <span>Submit</span>
-                )}
-            </Button>
-            <ToastContainer />
-        </>
+        <Button
+            variant='primary'
+            onClick={handleEmailVerification}
+            className='float-end'>
+            {isLoading ? (
+                <>
+                    <span className='ms-2'>Please Wait...</span>
+                    <Spinner
+                        size='sm'
+                        animation='border'
+                        role='status'></Spinner>
+                </>
+            ) : (
+                <span>Submit</span>
+            )}
+        </Button>
     );
 };
 

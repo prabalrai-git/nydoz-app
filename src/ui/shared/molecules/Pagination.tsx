@@ -5,10 +5,13 @@ interface IPaginationProps {
     pagination: IPagination;
     handlePrevious: () => void;
     handleNext: () => void;
+    handlePerPageChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Pagination = (props: IPaginationProps) => {
-    const { pagination, handlePrevious, handleNext } = props;
+    const { pagination, handlePrevious, handleNext, handlePerPageChange } =
+        props;
+
     return (
         <div className='row my-3'>
             <div className='col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-start'>
@@ -16,6 +19,7 @@ const Pagination = (props: IPaginationProps) => {
                 <div className='d-flex justify-content-between  align-items-center'>
                     <select
                         value={pagination?.per_page || 20}
+                        onChange={handlePerPageChange}
                         name='kt_customers_table_length'
                         aria-controls='kt_customers_table'
                         className=' form-select form-select-sm form-select-solid'>

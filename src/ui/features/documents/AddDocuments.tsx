@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import { IDocumentResponse } from "../../../types/payload.type";
+import Images from "../../../constants/Images";
 
 import Modal from "react-bootstrap/Modal";
 import UploadFile from "../../shared/components/Upload";
@@ -9,7 +11,6 @@ import FILE_UPLOAD_TYPE from "../../../constants/FileUpload";
 import { DOCUMENT_UPLOAD_LIMIT } from "../../../constants/AppSetting";
 import API_ROUTE from "../../../service/api";
 import useMutation from "../../../hooks/useMutation";
-import Spinner from "react-bootstrap/Spinner";
 
 interface IUploadPayload {
     title: string;
@@ -37,7 +38,6 @@ const AddDocuments = (props: IModalProps) => {
     );
 
     useEffect(() => {
-        console.log(selectedData, "selectedData");
         if (selectedData) {
             setTitle(selectedData.title);
         }
@@ -63,11 +63,19 @@ const AddDocuments = (props: IModalProps) => {
         if (response?.status === 201) {
             toast.success("Document uploaded successfully");
             setFetchAgain(true);
+            setTitle("");
+            setfileInfo(undefined);
             handleClose();
-        } else {
-            toast.error(error ?? "Error in uploading document");
         }
     };
+
+    useEffect(() => {
+        if (error) {
+            toast.error(
+                error ?? "Error in uploading document. Please try again later."
+            );
+        }
+    }, [error]);
 
     return (
         <Modal show={show} onHide={handleClose}>
@@ -100,18 +108,44 @@ const AddDocuments = (props: IModalProps) => {
                                 </div>
                             </div>
                             <div className='col-12'>
-                                <UploadFile
-                                    fileUploadType={
-                                        FILE_UPLOAD_TYPE.ANY_FILE_UPLOAD
-                                    }
-                                    isMultiple={true}
-                                    fileUploadLimit={DOCUMENT_UPLOAD_LIMIT}
-                                    isUploadRequired={true}
-                                    isRoutePrivate={true}
-                                    setFileInfo={setfileInfo}
-                                    fileInfo={fileInfo}
-                                    title='Click to select files'
-                                />
+                                {selectedData ? (
+                                    <div className='d-flex justify-content-between align-items-center'>
+                                        <div className='symbol symbol-label '>
+                                            <img
+                                                className='img-fluid'
+                                                src={Images.Folder}
+                                                alt='Logo'
+                                            />
+                                            <p className='text-warning text-muted fs-7'>
+                                                File Cannot be updated.
+                                            </p>
+                                        </div>
+                                        <div>
+                                            {selectedData?.is_restricted ? (
+                                                <span className='badge text-bg-primary'>
+                                                    Not Restricted
+                                                </span>
+                                            ) : (
+                                                <span className='badge text-bg-danger'>
+                                                    Restricted
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <UploadFile
+                                        fileUploadType={
+                                            FILE_UPLOAD_TYPE.ANY_FILE_UPLOAD
+                                        }
+                                        isMultiple={true}
+                                        fileUploadLimit={DOCUMENT_UPLOAD_LIMIT}
+                                        isUploadRequired={true}
+                                        isRoutePrivate={true}
+                                        setFileInfo={setfileInfo}
+                                        fileInfo={fileInfo}
+                                        title='Click to select files'
+                                    />
+                                )}
                             </div>
                         </div>
                     </form>
@@ -141,7 +175,6 @@ const AddDocuments = (props: IModalProps) => {
                     )}
                 </Button>
             </Modal.Footer>
-            <ToastContainer />
         </Modal>
     );
 };

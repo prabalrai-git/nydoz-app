@@ -7,6 +7,25 @@ export interface IProductResponse {
     is_for_self_use: boolean;
 }
 
+// {
+//       "id": 0,
+//       "name": "string",
+//       "company_id": 0,
+//       "description": "string"
+//     }
+
+export interface IRoleResponse {
+    id: string;
+    name: string;
+    company_id: number;
+    description: string;
+}
+
+export interface IRolePayload {
+    name: string;
+    description: string;
+}
+
 export interface IDocumentResponse {
     id: 0;
     title: string;

@@ -48,6 +48,11 @@ $pimary-color: #70b541;
     margin: 0 0 1.5rem 0;
 }
 
+.truncate {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .separator-content {
     position: relative;
     display: flex;

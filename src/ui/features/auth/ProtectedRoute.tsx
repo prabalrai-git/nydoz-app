@@ -7,10 +7,10 @@ type Props = {
 };
 
 const Protected: React.FC<Props> = ({ children }) => {
-    const { userInfo } = useContext(AuthContext);
+    const { userInfo, token } = useContext(AuthContext);
     const location = useLocation().pathname;
 
-    return userInfo?.id ? (
+    return userInfo?.id && token ? (
         children
     ) : (
         <Navigate to={"/auth/login"} state={{ from: location }} replace />

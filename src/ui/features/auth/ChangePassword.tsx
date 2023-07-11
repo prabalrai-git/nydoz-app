@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 // ------------------------------ import components
@@ -23,14 +23,19 @@ const ChangePassword = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const navigate = useNavigate();
-    const { isLoading, error, postData } = useMutation(
+    const { isLoading, error, postData, errList } = useMutation(
         API_ROUTE.CHANGE_PASSWORD,
         true
     );
 
+    useEffect(() => {
+        if (error) toast.error(error);
+    }, [error]);
+
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors },
     } = useForm<IChangePasswordFormData>({
         defaultValues: {
@@ -41,14 +46,25 @@ const ChangePassword = () => {
         resolver: yupResolver(ChangePasswordSchema),
     });
 
+    useEffect(() => {
+        console.log(errList);
+        if (errList?.current_password) {
+            setError("current_password", {
+                type: "manual",
+                message: errList?.current_password[0],
+            });
+        }
+    }, [errList, setError]);
+
     const onFormSubmit = handleSubmit(async (data: IChangePasswordFormData) => {
         console.log(data);
         const response = await postData(data);
         if (response?.data?.message) {
-            toast.success(response?.data?.message);
-            navigate("/auth/login", { replace: true });
-        } else {
-            toast.error(error);
+            toast.success(
+                response?.data?.message || "Password Changed Successfully"
+            );
+
+            navigate("/home", { replace: true });
         }
     });
 
@@ -70,9 +86,9 @@ const ChangePassword = () => {
                                 <form onSubmit={onFormSubmit}>
                                     <div className='form-group mb-3'>
                                         <label
-                                            className='mb-2'
+                                            className=' required mb-2'
                                             htmlFor='password'>
-                                            Current Password<span>*</span>
+                                            Current Password
                                         </label>
                                         <div className='position-relative'>
                                             <input
@@ -107,9 +123,9 @@ const ChangePassword = () => {
                                     </div>
                                     <div className='form-group mb-3'>
                                         <label
-                                            className='mb-2'
+                                            className='required mb-2'
                                             htmlFor='password'>
-                                            New Password<span>*</span>
+                                            New Password
                                         </label>
                                         <div className='position-relative'>
                                             <input
@@ -143,9 +159,9 @@ const ChangePassword = () => {
 
                                     <div className='form-group mb-3'>
                                         <label
-                                            className='mb-2'
+                                            className='required mb-2'
                                             htmlFor='password'>
-                                            Confirm Password<span>*</span>
+                                            Confirm Password
                                         </label>
                                         <div className='position-relative'>
                                             <input
@@ -206,7 +222,6 @@ const ChangePassword = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 };

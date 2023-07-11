@@ -9,7 +9,7 @@ import useMutation from "../../../hooks/useMutation";
 import API_ROUTE from "../../../service/api";
 import { ForgetPasswordSchema } from "../../../validations/auth.validators";
 import { Check2Circle } from "react-bootstrap-icons";
-
+import BackButton from "../../shared/molecules/BackButton";
 interface IChangePasswordFormData {
     email: string;
 }
@@ -50,25 +50,31 @@ const ChangePassword = () => {
                     <div className='col-md-6 offset-md-3'>
                         {!isEmailSent ? (
                             <div className='card mt-4'>
-                                <div className='card-body'>
-                                    <div className='text-center mb-3'>
-                                        <img
-                                            src={Images.CompanyLogo}
-                                            height='48'
-                                            className='mb-4'
-                                        />
-                                        <h5>Change Password</h5>
-                                        <p className='text-muted mt-1'>
-                                            Enter your registered email below to
-                                            recieve password reset instruction.
-                                        </p>
+                                <div className='card-body '>
+                                    <div>
+                                        <div className='text-center  '>
+                                            <img
+                                                src={Images.CompanyLogo}
+                                                height='48'
+                                                className='mb-4'
+                                            />
+                                            <h5>Change Password</h5>
+                                            <p className='text-muted mt-1'>
+                                                Enter your registered email
+                                                below to recieve password reset
+                                                instruction.
+                                            </p>
+                                        </div>
+                                        <div className='d-flex float-end '>
+                                            <BackButton />
+                                        </div>
                                     </div>
                                     <form onSubmit={onFormSubmit}>
                                         <div className='form-group mb-3'>
                                             <label
-                                                className='mb-2'
+                                                className='required mb-2'
                                                 htmlFor='email'>
-                                                Email<span>*</span>
+                                                Email
                                             </label>
                                             <input
                                                 className='form-control'

@@ -12,6 +12,7 @@ interface IDataListProps<T> extends ITableProps<T> {
     setFetchAgain: (fetchAgain: boolean) => void;
     handlePrevious: () => void;
     handleNext: () => void;
+    handlePerPageChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 function DataListTable<T>(props: IDataListProps<T>) {
@@ -26,6 +27,7 @@ function DataListTable<T>(props: IDataListProps<T>) {
         setFetchAgain,
         handleNext,
         handlePrevious,
+        handlePerPageChange,
     } = props;
     return (
         <div>
@@ -62,6 +64,7 @@ function DataListTable<T>(props: IDataListProps<T>) {
                     handlePrevious={handlePrevious}
                     handleNext={handleNext}
                     pagination={pagination}
+                    handlePerPageChange={handlePerPageChange}
                 />
             )}
         </div>

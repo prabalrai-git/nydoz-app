@@ -1,14 +1,18 @@
 import { useContext } from "react";
-import Images from "../../../../constants/Images";
+import { LinkContainer } from "react-router-bootstrap";
+import Nav from "react-bootstrap/Nav";
+
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Bell } from "react-bootstrap-icons";
 import { AuthContext } from "../../../../context/AuthContext";
 import Hamburger from "../../atoms/Hamburger";
+import Images from "../../../../constants/Images";
+
 import { Link } from "react-router-dom";
 import { BoxArrowRight } from "react-bootstrap-icons";
 
 const Header2 = () => {
-    const { user, logoutFn } = useContext(AuthContext);
+    const { userInfo, token, logoutFn } = useContext(AuthContext);
     return (
         <nav
             id='admin-navbar'
@@ -111,65 +115,73 @@ const Header2 = () => {
                             <a className='nav-link disabled'>Support</a>
                         </li>
                     </ul>
-                    <div className='d-flex align-items-center'>
-                        <form role='search'>
-                            <input
-                                className='form-control me-2'
-                                type='search'
-                                placeholder='Search'
-                                aria-label='Search'
-                            />
-                        </form>
-                        <div className='menu-item mx-3'>
-                            <div className='menu-item-notification-container'>
-                                <span className='menu-item-notification-number'>
-                                    05
-                                </span>
-                                <Bell size={20} color='#626060' />
-                            </div>
-                        </div>
-                        <div className='menu-profile-container '>
-                            <div className='menu-profile-img-container '>
-                                <img
-                                    className='profile-avatar'
-                                    src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
-                                    alt='profile img'
+                    {userInfo && token ? (
+                        <div className='d-flex align-items-center'>
+                            <form role='search'>
+                                <input
+                                    className='form-control me-2'
+                                    type='search'
+                                    placeholder='Search'
+                                    aria-label='Search'
                                 />
+                            </form>
+                            <div className='menu-item mx-3'>
+                                <div className='menu-item-notification-container'>
+                                    <span className='menu-item-notification-number'>
+                                        05
+                                    </span>
+                                    <Bell size={20} color='#626060' />
+                                </div>
                             </div>
+                            <div className='menu-profile-container '>
+                                <div className='menu-profile-img-container '>
+                                    <img
+                                        className='profile-avatar'
+                                        src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+                                        alt='profile img'
+                                    />
+                                </div>
 
-                            <NavDropdown
-                                title='Account'
-                                id='basic-nav-dropdown'>
-                                <NavDropdown.Item href='#action/3.1'>
-                                    Action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href='#action/3.2'>
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item>
-                                    <Link
-                                        className=''
-                                        to='/auth/forget-password'>
-                                        Change Password
-                                    </Link>
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item>
-                                    <div
-                                        className='btn btn-sm btn-secondary'
-                                        onClick={() => logoutFn()}>
-                                        <span className='me-3'>Logout</span>
-                                        <span>
-                                            <BoxArrowRight
-                                                size={16}
-                                                color='#0b0b0b'
-                                            />
-                                        </span>
-                                    </div>
-                                </NavDropdown.Item>
-                            </NavDropdown>
+                                <NavDropdown
+                                    title='Account'
+                                    id='basic-nav-dropdown'>
+                                    <NavDropdown.Item href='#action/3.1'>
+                                        Action
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href='#action/3.2'>
+                                        Another action
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <Link className='' to='change-password'>
+                                            Change Password
+                                        </Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item>
+                                        <div
+                                            className='btn btn-sm btn-secondary'
+                                            onClick={() => logoutFn()}>
+                                            <span className='me-3'>Logout</span>
+                                            <span>
+                                                <BoxArrowRight
+                                                    size={16}
+                                                    color='#0b0b0b'
+                                                />
+                                            </span>
+                                        </div>
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className='d-flex align-items-center'>
+                            <LinkContainer
+                                className='btn btn-primary'
+                                to='/auth/login'>
+                                <Nav.Link>Login</Nav.Link>
+                            </LinkContainer>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>

@@ -33,6 +33,10 @@ const API_ROUTE = {
 
     // products
     products: "/api/v1/products",
+
+    //roles
+    GET_ROLES: "/api/v1/roles",
+    POST_ROLES: "/api/v1/roles",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };
