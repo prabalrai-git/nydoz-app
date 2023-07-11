@@ -20,7 +20,6 @@ const ProductList = () => {
 
     return (
         <div className='py-6'>
-            <h1>Product List</h1>
             {isloading && <LoadingSpinner title='loading...' />}
             {data && data.length > 0 && (
                 <div>

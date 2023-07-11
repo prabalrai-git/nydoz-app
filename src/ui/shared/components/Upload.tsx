@@ -152,6 +152,7 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
                             <i
                                 style={{
                                     fontSize: "1.3rem",
+                                    color: "green",
                                 }}
                                 className='bi bi-check-circle'></i>
                         </span>

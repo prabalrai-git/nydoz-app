@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import { IDocumentResponse } from "../../../types/payload.type";
 
 import Modal from "react-bootstrap/Modal";
@@ -9,7 +10,6 @@ import FILE_UPLOAD_TYPE from "../../../constants/FileUpload";
 import { DOCUMENT_UPLOAD_LIMIT } from "../../../constants/AppSetting";
 import API_ROUTE from "../../../service/api";
 import useMutation from "../../../hooks/useMutation";
-import Spinner from "react-bootstrap/Spinner";
 
 interface IUploadPayload {
     title: string;
@@ -63,11 +63,19 @@ const AddDocuments = (props: IModalProps) => {
         if (response?.status === 201) {
             toast.success("Document uploaded successfully");
             setFetchAgain(true);
+            setTitle("");
+            setfileInfo(undefined);
             handleClose();
-        } else {
-            toast.error(error ?? "Error in uploading document");
         }
     };
+
+    useEffect(() => {
+        if (error) {
+            toast.error(
+                error ?? "Error in uploading document. Please try again later."
+            );
+        }
+    }, [error]);
 
     return (
         <Modal show={show} onHide={handleClose}>
@@ -141,7 +149,6 @@ const AddDocuments = (props: IModalProps) => {
                     )}
                 </Button>
             </Modal.Footer>
-            <ToastContainer />
         </Modal>
     );
 };

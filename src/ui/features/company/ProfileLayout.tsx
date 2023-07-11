@@ -9,6 +9,7 @@ import Heading from "../../shared/molecules/Heading";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
 import { Link } from "react-router-dom";
+import { App, People } from "react-bootstrap-icons";
 
 const ProfileLayout = () => {
     const { id } = useParams<{ id: string }>();
@@ -110,25 +111,31 @@ const ProfileLayout = () => {
                                                 <div className='d-flex flex-wrap'>
                                                     <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                                                         <div className='d-flex align-items-center'>
-                                                            <i className='ki-outline ki-arrow-up fs-3 text-success me-2'></i>
+                                                            <People
+                                                                size={20}
+                                                                className='text-info me-2 '
+                                                            />
                                                             <div
                                                                 className='fs-2 fw-bold counted'
                                                                 data-kt-countup='true'
                                                                 data-kt-countup-value='4500'
                                                                 data-kt-countup-prefix='$'
                                                                 data-kt-initialized='1'>
-                                                                $4,500
+                                                                4,50
                                                             </div>
                                                         </div>
 
                                                         <div className='fw-semibold fs-6 text-gray-400'>
-                                                            Earnings
+                                                            Users
                                                         </div>
                                                     </div>
 
                                                     <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                                                         <div className='d-flex align-items-center'>
-                                                            <i className='ki-outline ki-arrow-down fs-3 text-danger me-2'></i>
+                                                            <App
+                                                                size={20}
+                                                                className='text-warning me-2 '
+                                                            />
                                                             <div
                                                                 className='fs-2 fw-bold counted'
                                                                 data-kt-countup='true'
@@ -140,24 +147,6 @@ const ProfileLayout = () => {
 
                                                         <div className='fw-semibold fs-6 text-gray-400'>
                                                             Products
-                                                        </div>
-                                                    </div>
-
-                                                    <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
-                                                        <div className='d-flex align-items-center'>
-                                                            <i className='ki-outline ki-arrow-up fs-3 text-success me-2'></i>
-                                                            <div
-                                                                className='fs-2 fw-bold counted'
-                                                                data-kt-countup='true'
-                                                                data-kt-countup-value='60'
-                                                                data-kt-countup-prefix='%'
-                                                                data-kt-initialized='1'>
-                                                                %60
-                                                            </div>
-                                                        </div>
-
-                                                        <div className='fw-semibold fs-6 text-gray-400'>
-                                                            Success Rate
                                                         </div>
                                                     </div>
                                                 </div>
