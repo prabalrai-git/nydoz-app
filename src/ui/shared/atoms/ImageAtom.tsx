@@ -5,10 +5,11 @@ interface ImageAtomProps {
 }
 
 const ImageAtom = (props: ImageAtomProps) => {
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
-
     const { src, alt, className } = props;
-    return <img src={`${BASE_URL}/${src}`} alt={alt} className={className} />;
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+    const imageURL = `${BASE_URL}/${src}`;
+
+    return <img src={imageURL} alt={alt} className={className} />;
 };
 
 export default ImageAtom;

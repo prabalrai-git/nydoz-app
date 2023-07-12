@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
-import ProductItem from "./ProductItem";
+import ProductItem2 from "./ProductItem2";
 import { IProductResponse } from "../../../../types/payload.type";
 
 const ProductList = () => {
@@ -18,11 +18,11 @@ const ProductList = () => {
 
     return (
         <div className='row'>
-            <div className='col-12 col-md-4  col-lg-3 '>
-                {data?.map((product: IProductResponse) => (
-                    <ProductItem product={product} />
-                ))}
-            </div>
+            {data?.map((product: IProductResponse) => (
+                <div className='col-12 col-md-4   '>
+                    <ProductItem2 product={product} />
+                </div>
+            ))}
         </div>
     );
 };

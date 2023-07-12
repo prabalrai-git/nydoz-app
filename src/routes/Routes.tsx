@@ -24,6 +24,8 @@ import UserDashboard from "../ui/features/user/Dashboard";
 // company pages
 
 import Layout from "../ui/features/company/Layout";
+import CompanyDashboard from "../ui/features/company/CompanyDashboard";
+
 import ProfileLayout from "../ui/features/company/ProfileLayout";
 import AddCompany from "../ui/features/company/AddCompany";
 import CompanyList from "../ui/features/company/CompanyList";
@@ -98,22 +100,32 @@ const router = createBrowserRouter([
                         element: <UserDashboard />,
                     },
                     {
-                        path: "agents",
-                        element: <AgentLayout />,
+                        path: ":companyId",
+                        element: <CompanyDashboard />,
                         children: [
                             {
-                                path: "",
-                                element: <AgentList />,
-                            },
-                            {
-                                path: "add",
-                                element: <AddAgent />,
-                            },
-                            {
-                                path: "edit",
-                                element: <AddAgent />,
+                                path: "agents",
+                                element: <AgentLayout />,
+                                children: [
+                                    {
+                                        path: "",
+                                        element: <AgentList />,
+                                    },
+                                    {
+                                        path: "add",
+                                        element: <AddAgent />,
+                                    },
+                                    {
+                                        path: "edit",
+                                        element: <AddAgent />,
+                                    },
+                                ],
                             },
                         ],
+                    },
+                    {
+                        path: "products",
+                        element: <ProductLayout />,
                     },
                     {
                         path: "change-password",

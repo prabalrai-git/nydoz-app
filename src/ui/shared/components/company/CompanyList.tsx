@@ -3,6 +3,7 @@ import API_ROUTE from "../../../../service/api";
 import useFetch from "../../../../hooks/useFetch";
 import { ICompanyResponse } from "../../../../types/payload.type";
 import { Link } from "react-router-dom";
+import ImageAtom from "../../atoms/ImageAtom";
 
 const CompanyListCard = () => {
     const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
@@ -21,11 +22,11 @@ const CompanyListCard = () => {
             <div className='card-header border-0 pt-5'>
                 <h3 className='card-title align-items-start flex-column'>
                     <span className='card-label fw-bold text-dark'>
-                        Company Created
+                        Company Details
                     </span>
 
                     <span className='text-muted mt-1 fw-semibold fs-7'>
-                        3 company in total
+                        {data?.length ?? "NA"} company in total
                     </span>
                 </h3>
 
@@ -37,12 +38,15 @@ const CompanyListCard = () => {
                 {data?.map((item: ICompanyResponse, index: number) => (
                     <Link
                         key={index}
-                        to={`company/profile/${item.id}`}
+                        // to={`company/profile/${item.id}`}
+                        to={item.subdomain}
                         className='d-flex flex-stack mb-3'>
                         <div className='symbol symbol-40px me-4'>
-                            <div className='symbol-label fs-2 fw-semibold bg-danger text-inverse-danger'>
-                                M
-                            </div>
+                            <ImageAtom
+                                src={item.logo}
+                                className='h-50px w-50px'
+                                alt={item.name}
+                            />
                         </div>
 
                         <div className='d-flex align-items-center flex-row-fluid flex-wrap'>

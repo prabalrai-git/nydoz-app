@@ -14,14 +14,14 @@ const PageNotFound = () => {
                     The page you’re looking for doesn’t exist.
                 </p>
                 <div>
-                    <button
-                        onClick={() => navigate(-1)}
-                        className=' btn btn-primary mx-3'>
-                        Back
-                    </button>
-                    <Link to='/' className='btn btn-secondary  mx-3'>
+                    <Link to='/' className='btn btn-secondary   mx-3'>
                         Go Home
                     </Link>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className=' btn btn-primary   mx-3'>
+                        Back
+                    </button>
                 </div>
             </div>
         </div>

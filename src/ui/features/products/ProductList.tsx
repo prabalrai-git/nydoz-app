@@ -43,6 +43,7 @@ const ProductList = () => {
                     ))}
                 </div>
             )}
+            {data && data?.length === 0 && <div>No Products Found</div>}
         </div>
     );
 };
