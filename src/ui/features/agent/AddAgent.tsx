@@ -14,17 +14,15 @@ import CountryCode from "../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../types/react-select.type";
 import { IAgentPayload, IAgentResponse } from "../../../types/payload.type";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
-import {
-    getSelectPropsFromCountry,
-    getSelectPropsFromCountryCallingCode,
-} from "../../../functions/country";
+import { getSelectPropsFromCountry } from "../../../functions/country";
+import Modal2 from "../../shared/components/Modal2";
+import AgentViewModal from "../../shared/components/agent/AgentViewModal";
 
-interface IAddCompanyForm {
+interface IAddAgentForm {
     first_name: string;
     last_name: string;
     email: string;
     mobile: string;
-    country: string;
     state: string;
     city: string;
     street_address: string;
@@ -39,13 +37,10 @@ const AddCompany = () => {
     const [selectedCountry, setSelectedCountry] = useState<
         ISelectProps | undefined
     >(undefined);
-    const [selectedCountryCode, setSelectedCountryCode] = useState<
-        ISelectProps | undefined
-    >(undefined);
 
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     const { postData, updateData, isLoading, error, errList } =
-        useMutation<IAgentResponse>(API_ROUTE.POST_COMPANIES, true);
+        useMutation<IAgentResponse>(API_ROUTE.CLIENT_MANAGEMENT_AGENTS, true);
 
     const {
         register,
@@ -53,22 +48,14 @@ const AddCompany = () => {
         setError,
         handleSubmit,
         formState: { errors },
-    } = useForm<IAddCompanyForm>({
+    } = useForm<IAddAgentForm>({
         resolver: yupResolver(agentSchema),
     });
 
     useEffect(() => {
         if (location?.state?.data && location?.state?.data?.id) {
-            console.log(
-                location?.state?.data && location?.state?.data,
-                "old data"
-            );
             reset(location?.state?.data);
-            setOldThumbnil(location?.state?.data?.logo);
-            const countryCode = getSelectPropsFromCountryCallingCode(
-                location?.state?.data?.country_calling_code
-            );
-            setSelectedCountryCode(countryCode);
+            setOldThumbnil(location?.state?.data?.profile_picture);
 
             const country = getSelectPropsFromCountry(
                 location?.state?.data?.country
@@ -82,9 +69,8 @@ const AddCompany = () => {
         if (errList) {
             Object.keys(errList).forEach((fieldName) => {
                 const errorMessages = errList[fieldName];
-
-                setError(fieldName, {
-                    type: "server",
+                setError(fieldName as string as "root", {
+                    type: "manual",
                     message: errorMessages[0],
                 });
             });
@@ -97,13 +83,8 @@ const AddCompany = () => {
         }
     }, [error]);
 
-    const onFormSubmit = handleSubmit(async (data: IAddCompanyForm) => {
+    const onFormSubmit = handleSubmit(async (data: IAddAgentForm) => {
         console.log("data", data);
-
-        if (!selectedCountryCode) {
-            toast.error("Please select country code");
-            return;
-        }
 
         if (!selectedCountry) {
             toast.error("Please select country");
@@ -154,7 +135,7 @@ const AddCompany = () => {
     });
 
     return (
-        <div className='text-white my-6'>
+        <div className=' my-6'>
             <div className='my-3 p-3'>
                 <Heading title='Add Agent' btnText='Back' showBreadcrumb={true}>
                     <Breadcrumb
@@ -167,8 +148,8 @@ const AddCompany = () => {
             <section>
                 <form className='form w-100 px-6' onSubmit={onFormSubmit}>
                     <div>
-                        <div className='row'>
-                            <div className='col-6'>
+                        <div className='row my-6'>
+                            <div className='col-12'>
                                 <div className='card card-flush'>
                                     <div className='card-header'>
                                         <div className='card-title'>
@@ -258,129 +239,115 @@ const AddCompany = () => {
                             </div>
                         </div>
 
-                        <div className='row'>
-                            <div className='row'>
-                                <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
-                                    <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                        <label className='required form-label'>
-                                            First Name
-                                        </label>
-                                        <input
-                                            className='form-control'
-                                            placeholder='Company name'
-                                            {...register("first_name")}
-                                        />
-                                        <div className='fv-plugins-message-container invalid-feedback'>
-                                            {errors.first_name?.message}
-                                        </div>
+                        <div className='row my-6'>
+                            <div className='col-12 my-3'>
+                                <h4>Agent Details</h4>
+                            </div>
+                            <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                                <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                    <label className='required form-label'>
+                                        First Name
+                                    </label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        placeholder='Enter your first name'
+                                        {...register("first_name")}
+                                    />
+                                    <div className='fv-plugins-message-container invalid-feedback px-3'>
+                                        {errors.first_name?.message}
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
-                                    <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                        <label className='required form-label'>
-                                            Last Name
-                                        </label>
-                                        <input
-                                            className='form-control'
-                                            placeholder='Company name'
-                                            {...register("last_name")}
-                                        />
-                                        <div className='fv-plugins-message-container invalid-feedback'>
-                                            {errors.first_name?.message}
-                                        </div>
+                            </div>
+                            <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                                <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                    <label className='required form-label'>
+                                        Last Name
+                                    </label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        placeholder='Enter your last name'
+                                        {...register("last_name")}
+                                    />
+                                    <div className='fv-plugins-message-container invalid-feedback'>
+                                        {errors.last_name?.message}
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6 mb-6'>
-                                    <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                        <label className='required form-label'>
-                                            Email
-                                        </label>
-                                        <input
-                                            className='form-control'
-                                            {...register("email")}
-                                            placeholder='Email Address'
-                                        />
-                                        <div className='fv-plugins-message-container invalid-feedback'>
-                                            {errors.email?.message}
-                                        </div>
+                            </div>
+                            <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                                <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                    <label className='required form-label'>
+                                        Email
+                                    </label>
+                                    <input
+                                        className='form-control'
+                                        type='text'
+                                        {...register("email")}
+                                        placeholder='Enter Email Address'
+                                    />
+                                    <div className='fv-plugins-message-container invalid-feedback'>
+                                        {errors.email?.message}
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6  mb-6'>
-                                    <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                        <label className='required form-label'>
-                                            Contact Person
-                                        </label>
-                                        <input
-                                            className='form-control'
-                                            placeholder='Enter contact person name'
-                                            {...register("mobile")}
-                                        />
-                                        <div className='fv-plugins-message-container invalid-feedback'>
-                                            {errors.mobile?.message}
-                                        </div>
+                            </div>
+                            <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                                <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                    <label className='required form-label'>
+                                        Mobile Number
+                                    </label>
+                                    <input
+                                        className='form-control'
+                                        type='text'
+                                        placeholder='Enter mobile number'
+                                        {...register("mobile")}
+                                    />
+                                    <div className='fv-plugins-message-container invalid-feedback'>
+                                        {errors.mobile?.message}
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div className='row'>
+                            <div className='col-12 my-3'>
+                                <h4>Agent Address</h4>
+                            </div>
+
                             <div className='col-12 mb-6'>
                                 <div className=' flex-row-fluid'>
                                     <label className='required form-label'>
-                                        Address Line
+                                        Street Address
                                     </label>
                                     <input
                                         className='form-control'
+                                        type='text'
                                         placeholder='Enter your full address'
-                                        {...register("address")}
+                                        {...register("street_address")}
                                     />
-                                    <div className=' invalid-feedback'>
-                                        {errors.address?.message}
+                                    <div className='fv-plugins-message-container invalid-feedback'>
+                                        {errors.street_address?.message}
                                     </div>
                                 </div>
                             </div>
-                            <div className='col-3 col-md-4 mb-6'>
-                                <div className=' flex-row-fluid'>
-                                    <label className='required form-label'>
-                                        Country Calling Code
-                                    </label>
-                                    <CountryCode
-                                        placeholder='Select Country Code'
-                                        forCountry={false}
-                                        selectValue={selectedCountryCode}
-                                        setSelectValue={setSelectedCountryCode}
-                                    />
-                                </div>
-                            </div>
-                            <div className='col-9 col-md-8 mb-6'>
-                                <div className=' flex-row-fluid'>
-                                    <label className='required form-label'>
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        className='form-control'
-                                        placeholder='Enter your phone number'
-                                        {...register("phone_number")}
-                                    />
-                                    <div className=' invalid-feedback'>
-                                        {errors.phone_number?.message}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='col-12 col-md-6  mb-6'>
+
+                            <div className='col-12 col-md-6 mb-6'>
                                 <div className=' flex-row-fluid'>
                                     <label className='required form-label'>
                                         City
                                     </label>
                                     <input
+                                        type='text'
                                         className='form-control'
-                                        placeholder='Enter your city address'
+                                        placeholder='Enter your city'
                                         {...register("city")}
                                     />
-                                    <div className=' invalid-feedback'>
+                                    <div className='fv-plugins-message-container invalid-feedback'>
                                         {errors.city?.message}
                                     </div>
                                 </div>
                             </div>
+
                             <div className='col-12 col-md-6  mb-6'>
                                 <div className=' flex-row-fluid'>
                                     <label className='required form-label'>
@@ -388,10 +355,11 @@ const AddCompany = () => {
                                     </label>
                                     <input
                                         className='form-control'
+                                        type='text'
                                         placeholder='Enter your state'
                                         {...register("state")}
                                     />
-                                    <div className=' invalid-feedback'>
+                                    <div className='fv-plugins-message-container invalid-feedback'>
                                         {errors.state?.message}
                                     </div>
                                 </div>
@@ -403,10 +371,11 @@ const AddCompany = () => {
                                     </label>
                                     <input
                                         className='form-control'
+                                        type='text'
                                         placeholder='Enter your postal code'
                                         {...register("postal_code")}
                                     />
-                                    <div className=' invalid-feedback'>
+                                    <div className='fv-plugins-message-container invalid-feedback'>
                                         {errors.postal_code?.message}
                                     </div>
                                 </div>

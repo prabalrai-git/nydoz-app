@@ -32,14 +32,17 @@ const API_ROUTE = {
     POST_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
 
     // products
-    products: "/api/v1/products",
+    GET_PRODUCTS_LIST: "/api/v1/products",
 
     //roles
     GET_ROLES: "/api/v1/roles",
     POST_ROLES: "/api/v1/roles",
 
     //  Client Management agents routes
+    CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
     GET_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
+    POST_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
+    UPDATE_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

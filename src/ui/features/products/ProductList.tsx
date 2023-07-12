@@ -1,3 +1,5 @@
+// @ desc Products list brought by company
+
 import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";

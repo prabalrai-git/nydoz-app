@@ -109,6 +109,10 @@ const router = createBrowserRouter([
                                 path: "add",
                                 element: <AddAgent />,
                             },
+                            {
+                                path: "edit",
+                                element: <AddAgent />,
+                            },
                         ],
                     },
                     {

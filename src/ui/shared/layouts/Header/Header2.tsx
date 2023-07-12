@@ -39,17 +39,9 @@ const Header2 = () => {
                 <div className='collapse navbar-collapse' id='navbarScroll'>
                     <ul className='navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll'>
                         <li className='nav-item'>
-                            <a
-                                className='nav-link active'
-                                aria-current='page'
-                                href='#'>
-                                Home
-                            </a>
-                        </li>
-                        <li className='nav-item'>
-                            <a className='nav-link' href='#'>
+                            <Link to={"/home"} className='nav-link fs-7'>
                                 Dashboard
-                            </a>
+                            </Link>
                         </li>
 
                         <NavDropdown title='Products' id='basic-nav-dropdown'>
