@@ -9,6 +9,9 @@ type FetchDataResponse<T> = {
     error: string | null;
     pagination: IPagination | undefined;
     fetchData: () => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
+    fetchDataById: (
+        url: string
+    ) => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
 };
 
 // Define the hook
@@ -55,8 +58,37 @@ function useFetch<T>(
             setIsLoading(false);
         }
     };
+    const fetchDataById = async (url: string) => {
+        setIsLoading(true);
+        setError(null);
+        const newUrl = url;
+        let response: AxiosResponse<IData<T>>;
+        try {
+            if (isRequestPrivate === true) {
+                response = await PrivateAxios.get(newUrl);
+            } else {
+                response = await PublicAxios.get(newUrl);
+            }
 
-    return { fetchData, data, isloading, error, pagination };
+            setData(response.data?.payload);
+            setPagination(response.data?.meta_data?.pagination);
+            return response;
+        } catch (error: AxiosError | unknown) {
+            const axiosError = error as AxiosError<IErrorData>;
+            if (axiosError?.response?.status === 500) {
+                setError("Something went wrong");
+                return undefined;
+            }
+            setError(
+                axiosError?.response?.data?.message || "Something went wrong"
+            );
+            return undefined;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return { fetchData, data, isloading, error, pagination, fetchDataById };
 }
 
 export default useFetch;

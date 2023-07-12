@@ -1,23 +1,31 @@
 import { createContext } from "react";
 
-interface ICompanyContext {
-    company: {
-        id: string | undefined;
-        name: string;
-        subdomain: string;
-        owner_id: string;
-        status_id: string;
-    };
-
-    setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+export interface ICompanyInfo {
+    id: string | undefined;
+    name: string;
+    subdomain: string;
+    owner_id: string;
+    status_id: string;
 }
 
-export const CompanyContext = createContext({
-    company: {
-        id: undefined,
-        name: "",
-        subdomain: "",
-        owner_id: "",
-        status_id: "",
-    },
-});
+const initialCompanyInfo: ICompanyInfo = {
+    id: undefined,
+    subdomain: "",
+    name: "",
+    owner_id: "",
+    status_id: "",
+};
+
+export interface ICompanyContextProps {
+    companyInfo: ICompanyInfo;
+    handleCompanyInfo: (value: ICompanyInfo) => void;
+}
+
+const companyContextDefaults: ICompanyContextProps = {
+    companyInfo: initialCompanyInfo,
+    handleCompanyInfo: () => null,
+};
+
+export const CompanyContext = createContext<ICompanyContextProps>(
+    companyContextDefaults
+);

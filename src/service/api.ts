@@ -25,7 +25,10 @@ const API_ROUTE = {
     POST_COMPANIES: "/api/v1/companies",
     GET_COMPANIES: "/api/v1/companies",
     GET_COMPANY_BY_ID: "/api/v1/companies",
+    GET_COMPANY_BY_SUBDOMAIN: "/api/v1/companies",
+    GET_COMPANY_BY_SUBDOMAIN_TEST: "/api/v1/companies?subdomain=sabkura",
     DELETE_COMPANY_BY_ID: "/api/v1/companies",
+    UPDATE_COMPANY_BY_ID: "/api/v1/companies",
 
     // company documents
     GET_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
