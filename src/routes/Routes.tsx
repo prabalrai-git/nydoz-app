@@ -31,7 +31,8 @@ import AddCompany from "../ui/features/company/AddCompany";
 import CompanyList from "../ui/features/company/CompanyList";
 import DocumentsList from "../ui/features/documents/DocumentsList";
 import ProductLayout from "../ui/features/products/ProductLayout";
-import ProductList from "../ui/features/products/ProductList";
+import CompanyProductList from "../ui/features/products/ProductList";
+import AllProductList from "../ui/shared/components/products/ProductList";
 
 // Company Roles
 // import RoleLayout from "../ui/features/roles/RoleLayout";
@@ -121,12 +122,20 @@ const router = createBrowserRouter([
                                     },
                                 ],
                             },
+
+                            {
+                                path: "products",
+                                element: <ProductLayout />,
+                                children: [
+                                    {
+                                        path: "all",
+                                        element: <AllProductList />,
+                                    },
+                                ],
+                            },
                         ],
                     },
-                    {
-                        path: "products",
-                        element: <ProductLayout />,
-                    },
+
                     {
                         path: "change-password",
                         element: <ChangePassword />,
@@ -146,17 +155,6 @@ const router = createBrowserRouter([
                                     {
                                         path: "roles",
                                         element: <RoleList />,
-                                    },
-
-                                    {
-                                        path: "products",
-                                        element: <ProductLayout />,
-                                        children: [
-                                            {
-                                                path: "",
-                                                element: <ProductList />,
-                                            },
-                                        ],
                                     },
                                 ],
                             },

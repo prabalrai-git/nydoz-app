@@ -2,6 +2,7 @@ import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import Heading from "../../shared/molecules/Heading";
 import { useParams } from "react-router-dom";
 import ProductList from "../products/ProductList";
+import { Link } from "react-router-dom";
 
 const CompanyDashboard = () => {
     const { companyId } = useParams<{ companyId: string }>();
@@ -23,9 +24,9 @@ const CompanyDashboard = () => {
             <section className='bg-white py-6'>
                 <div className='d-flex align-item-center justify-content-between mb-6 px-3'>
                     <h4 className='fs-20'>Products</h4>
-                    <button className='btn btn-primary'>
+                    <Link to='products/all' className='btn btn-primary'>
                         View All Products
-                    </button>
+                    </Link>
                 </div>
                 <ProductList />
             </section>
