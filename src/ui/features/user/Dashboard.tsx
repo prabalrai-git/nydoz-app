@@ -1,4 +1,5 @@
 import CompanyListCard from "../../shared/components/company/CompanyList";
+import ProductList from "../../shared/components/products/ProductList";
 import Breadcrumb from "../../shared/components/user/Breadcrumb";
 
 const Dashboard = () => {
@@ -9,6 +10,12 @@ const Dashboard = () => {
                     <Breadcrumb />
                 </div>
                 <div className='row'>
+                    <div className='col-12 '>
+                        <div className='mb-6'>
+                            <ProductList />
+                        </div>
+                    </div>
+
                     <div className='col-12 col-md-4 col-lg-4'>
                         <div className='mb-6'>
                             <CompanyListCard />
