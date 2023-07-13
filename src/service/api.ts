@@ -30,6 +30,9 @@ const API_ROUTE = {
     DELETE_COMPANY_BY_ID: "/api/v1/companies",
     UPDATE_COMPANY_BY_ID: "/api/v1/companies",
 
+    // company product
+    BUY_COMPANY_PRODUCT_BY_ID: "/api/v1/companies",
+
     // company documents
     GET_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
     POST_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",

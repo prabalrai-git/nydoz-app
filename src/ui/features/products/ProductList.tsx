@@ -8,11 +8,12 @@ import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
 import { CompanyContext } from "../../../context/CompanyContext";
 import { toast } from "react-toastify";
 import NotFound from "../../shared/molecules/NotFound";
+import ImageAtom from "../../shared/atoms/ImageAtom";
 
 const ProductList = () => {
     const { companyInfo } = useContext(CompanyContext);
     const companyId = companyInfo?.id;
-    const proudctListUrl = `${API_ROUTE.GET_DOCUMENTS_BY_COMPANY_ID}/${companyId}/products`;
+    const proudctListUrl = `${API_ROUTE.GET_COMPANIES}/${companyId}/products`;
     const { data, fetchData, isloading } = useFetch<IProductResponse[]>(
         proudctListUrl,
         true
@@ -34,12 +35,14 @@ const ProductList = () => {
                 <div>
                     {data.map((product) => (
                         <div key={product.id} className='col-6 col-md-3 m-5'>
-                            <div className='card card-flush h-md-50  mb-xl-10 '>
-                                <img
-                                    src={product?.logo}
-                                    className='card-img-top'
-                                    alt='logo'
-                                />
+                            <div className='card card-flush h-md-50  mb-xl-10 border shadow-sm'>
+                                <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative bg-light'>
+                                    <ImageAtom
+                                        src={product.logo}
+                                        alt={product.name}
+                                        className='img-fluid card-img-top'
+                                    />
+                                </div>
                                 <div className='card-body'>
                                     <h5 className='card-title'>
                                         {product.name}

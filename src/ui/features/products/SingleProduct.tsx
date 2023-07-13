@@ -6,11 +6,13 @@ import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
 import { CompanyContext } from "../../../context/CompanyContext";
 import { toast } from "react-toastify";
 import NotFound from "../../shared/molecules/NotFound";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ImageAtom from "../../shared/atoms/ImageAtom";
+import useMutation from "../../../hooks/useMutation";
 
 const SingleProduct = () => {
-    const { company } = useContext(CompanyContext);
+    const navigate = useNavigate();
+    const { companyInfo, isCompanyAdmin } = useContext(CompanyContext);
     const { productId } = useParams<{ productId: string }>();
     console.log(productId, "productId");
     const getProductByItem = `${API_ROUTE.GET_PRODUCTS_BY_ID}/${productId}`;
@@ -21,11 +23,25 @@ const SingleProduct = () => {
         isloading,
     } = useFetch<IProductResponse>(getProductByItem, true);
 
+    const buyProductForCOmpany = `${API_ROUTE.BUY_COMPANY_PRODUCT_BY_ID}/${companyInfo.id}/products`;
+
+    const {
+        postData,
+        error: postError,
+        isLoading,
+    } = useMutation<IProductResponse>(buyProductForCOmpany, true);
+
     useEffect(() => {
         if (error) {
             toast.error(error);
         }
     }, [error]);
+
+    useEffect(() => {
+        if (postError) {
+            toast.error(postError);
+        }
+    }, [postError]);
 
     useEffect(() => {
         if (productId) {
@@ -34,8 +50,18 @@ const SingleProduct = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productId]);
 
-    const handleBuyProduct = () => {
-        console.log("buy product");
+    const handleBuyProduct = async () => {
+        if (!isCompanyAdmin || !companyInfo) return;
+        const payload = {
+            product_ids: [productId],
+        };
+        const response = await postData(payload);
+        if (response?.status === 201) {
+            toast.success("Product bought successfully");
+            navigate(`/home/${companyInfo.subdomain}`);
+        } else {
+            toast.error("Something went wrong");
+        }
     };
 
     return (
@@ -67,11 +93,16 @@ const SingleProduct = () => {
                                         <p>{product.description}</p>
                                     </div>
                                     <div className='col-4'>
-                                        <div className='float-end'>
-                                            <button className='btn btn-primary my-6'>
-                                                Buy Product for Company
-                                            </button>
-                                        </div>
+                                        {isCompanyAdmin && (
+                                            <div className='float-end'>
+                                                <button
+                                                    onClick={handleBuyProduct}
+                                                    disabled={isLoading}
+                                                    className='btn btn-primary my-6'>
+                                                    Buy Product for Company
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
