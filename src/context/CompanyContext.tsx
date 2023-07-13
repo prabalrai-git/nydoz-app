@@ -4,7 +4,7 @@ export interface ICompanyInfo {
     id: string | undefined;
     name: string;
     subdomain: string;
-    owner_id: string;
+    company_owner_id: string;
     status_id: string;
 }
 
@@ -12,7 +12,7 @@ const initialCompanyInfo: ICompanyInfo = {
     id: undefined,
     subdomain: "",
     name: "",
-    owner_id: "",
+    company_owner_id: "",
     status_id: "",
 };
 

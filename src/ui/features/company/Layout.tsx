@@ -1,12 +1,11 @@
 import { Outlet } from "react-router-dom";
+import ProtectCompany from "../ProtectRoutes/ProtectCompany";
 
 const Layout = () => {
     return (
-        <div className=' bg-light'>
-            <div className='container page-outlet'>
-                <Outlet />
-            </div>
-        </div>
+        <ProtectCompany>
+            <Outlet />
+        </ProtectCompany>
     );
 };
 

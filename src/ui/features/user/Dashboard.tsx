@@ -1,8 +1,16 @@
+import { useContext, useEffect } from "react";
 import CompanyListCard from "../../shared/components/company/CompanyList";
 import ProductList from "../../shared/components/products/ProductList";
 import Breadcrumb from "../../shared/components/user/Breadcrumb";
+import { CompanyContext } from "../../../context/CompanyContext";
 
 const Dashboard = () => {
+    const companyInfo = useContext(CompanyContext);
+
+    useEffect(() => {
+        console.log(companyInfo);
+    }, [companyInfo]);
+
     return (
         <div className=' h-100vh py-3'>
             <div className='container'>

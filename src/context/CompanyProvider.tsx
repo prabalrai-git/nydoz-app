@@ -1,37 +1,36 @@
-import React, { FC, useState, useEffect, useMemo } from "react";
+import React, { FC, useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import API_ROUTE from "../service/api";
-import LoadingPage from "../ui/features/utils/LoadingPage";
 import { ICompanyResponse } from "../types/payload.type";
 import {
     CompanyContext,
     ICompanyContextProps,
     ICompanyInfo,
 } from "../context/CompanyContext";
+import CompanyLoader from "../ui/shared/components/company/CompanyLoader";
 
 const CompanyProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     const [showSplashScreen, setShowSplashScreen] = useState(true);
 
-    const [companyInfo, setCompanyInfo] = useState<ICompanyInfo>({
+    const [companyInfoState, setCompanyInfoState] = useState<ICompanyInfo>({
         id: undefined,
         subdomain: "",
         name: "",
-        owner_id: "",
+        company_owner_id: "",
         status_id: "",
     });
 
-    const { fetchDataById, error } = useFetch<ICompanyResponse>(
+    const { fetchDataById, error } = useFetch<ICompanyResponse[]>(
         API_ROUTE.GET_COMPANY_BY_SUBDOMAIN,
         true
     );
 
-    // useEffect(() => {
-    //    if(error){
-    //    toast.error()
-    //    }
-    // }, [error]);
+    useEffect(() => {
+        console.log("company provider state", companyInfoState);
+    }, [companyInfoState]);
 
     useEffect(() => {
+        console.log("company provider");
         const fetchCompanyInfo = async () => {
             try {
                 setShowSplashScreen(true);
@@ -42,12 +41,13 @@ const CompanyProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
                 const response = await fetchDataById(testUrl);
                 if (response?.data?.payload) {
                     const { payload } = response.data;
-                    setCompanyInfo({
-                        id: payload.id,
-                        name: payload.name,
-                        subdomain: payload.subdomain,
-                        owner_id: payload.owner_id,
-                        status_id: payload.status_id,
+                    console.log(payload, "payload");
+                    setCompanyInfoState({
+                        id: payload[0].id,
+                        name: payload[0].name,
+                        subdomain: payload[0].subdomain,
+                        company_owner_id: payload[0].owner_id,
+                        status_id: payload[0].status_id,
                     });
                 }
             } catch (error) {
@@ -61,12 +61,12 @@ const CompanyProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     }, []);
 
     const companyContextValue: ICompanyContextProps = {
-        companyInfo,
-        handleCompanyInfo: (value: ICompanyInfo) => setCompanyInfo(value),
+        companyInfo: companyInfoState,
+        handleCompanyInfo: (value: ICompanyInfo) => setCompanyInfoState(value),
     };
     return (
         <CompanyContext.Provider value={companyContextValue}>
-            {!showSplashScreen ? children : <LoadingPage />}
+            {showSplashScreen ? <CompanyLoader /> : children}
         </CompanyContext.Provider>
     );
 };

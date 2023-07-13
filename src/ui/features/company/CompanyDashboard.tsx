@@ -5,6 +5,8 @@ import ProductList from "../products/ProductList";
 import { Link } from "react-router-dom";
 
 const CompanyDashboard = () => {
+    console.log("company layout");
+
     const { companyId } = useParams<{ companyId: string }>();
 
     return (
