@@ -3,9 +3,12 @@ import { createBrowserRouter } from "react-router-dom";
 // public Routes
 import App from "../App";
 
-//Auth Routes
+//Protection
 import ProtectAuth from "../ui/features/auth/ProtectAuth";
 import Protected from "../ui/features/auth/ProtectedRoute";
+// import ProtectCompany from "../ui/features/ProtectRoutes/ProtectCompany";
+
+//Auth Routes
 import AuthLayout from "../ui/features/auth/Layout";
 import Register from "../ui/features/auth/Register";
 import LoginPage from "../ui/features/auth/Login";
@@ -23,19 +26,29 @@ import UserDashboard from "../ui/features/user/Dashboard";
 
 // company pages
 
-import Layout from "../ui/features/company/Layout";
+import CompanyLayout from "../ui/features/company/Layout";
+import CompanyDashboard from "../ui/features/company/CompanyDashboard";
+
 import ProfileLayout from "../ui/features/company/ProfileLayout";
 import AddCompany from "../ui/features/company/AddCompany";
 import CompanyList from "../ui/features/company/CompanyList";
 import DocumentsList from "../ui/features/documents/DocumentsList";
 import ProductLayout from "../ui/features/products/ProductLayout";
-import ProductList from "../ui/features/products/ProductList";
+// import CompanyProductList from "../ui/features/products/ProductList";
+import AllProductList from "../ui/shared/components/products/ProductList";
 
 // Company Roles
 // import RoleLayout from "../ui/features/roles/RoleLayout";
 
+// Agent
+import AgentList from "../ui/features/agent/AgentList";
+
 import PageNotFound from "../ui/features/utils/PageNotFound";
 import RoleList from "../ui/features/roles/RoleList";
+import AgentLayout from "../ui/features/agent/AgentLayout";
+import AddAgent from "../ui/features/agent/AddAgent";
+import CompanyProvider from "../context/CompanyProvider";
+import SingleProduct from "../ui/features/products/SingleProduct";
 
 const router = createBrowserRouter([
     {
@@ -52,6 +65,7 @@ const router = createBrowserRouter([
                     },
                 ],
             },
+
             {
                 path: "auth",
                 element: (
@@ -92,12 +106,63 @@ const router = createBrowserRouter([
                         element: <UserDashboard />,
                     },
                     {
+                        path: ":companyId",
+                        element: (
+                            <CompanyProvider>
+                                <CompanyLayout />
+                            </CompanyProvider>
+                        ),
+                        // element: <CompanyLayout />,
+
+                        children: [
+                            {
+                                path: "",
+                                element: <CompanyDashboard />,
+                            },
+
+                            {
+                                path: "agents",
+                                element: <AgentLayout />,
+                                children: [
+                                    {
+                                        path: "",
+                                        element: <AgentList />,
+                                    },
+                                    {
+                                        path: "add",
+                                        element: <AddAgent />,
+                                    },
+                                    {
+                                        path: "edit",
+                                        element: <AddAgent />,
+                                    },
+                                ],
+                            },
+
+                            {
+                                path: "products",
+                                element: <ProductLayout />,
+                                children: [
+                                    {
+                                        path: "buy",
+                                        element: <AllProductList />,
+                                    },
+                                    {
+                                        path: ":productId",
+                                        element: <SingleProduct />,
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+
+                    {
                         path: "change-password",
                         element: <ChangePassword />,
                     },
                     {
                         path: "company",
-                        element: <Layout />,
+                        element: <CompanyLayout />,
                         children: [
                             {
                                 path: "profile/:id",
@@ -110,16 +175,6 @@ const router = createBrowserRouter([
                                     {
                                         path: "roles",
                                         element: <RoleList />,
-                                    },
-                                    {
-                                        path: "products",
-                                        element: <ProductLayout />,
-                                        children: [
-                                            {
-                                                path: "",
-                                                element: <ProductList />,
-                                            },
-                                        ],
                                     },
                                 ],
                             },

@@ -107,7 +107,7 @@ const AddCompany = () => {
         if (errList) {
             Object.keys(errList).forEach((fieldName) => {
                 const errorMessages = errList[fieldName];
-                setError(fieldName, {
+                setError(fieldName as string as "root", {
                     type: "server",
                     message: errorMessages[0],
                 });
@@ -529,7 +529,8 @@ const AddCompany = () => {
                                                 placeholder='Enter your full address'
                                                 {...register("address")}
                                             />
-                                            <div className=' invalid-feedback'>
+
+                                            <div className='fv-plugins-message-container invalid-feedback'>
                                                 {errors.address?.message}
                                             </div>
                                         </div>
@@ -561,7 +562,7 @@ const AddCompany = () => {
                                                 placeholder='Enter your phone number'
                                                 {...register("phone_number")}
                                             />
-                                            <div className=' invalid-feedback'>
+                                            <div className='fv-plugins-message-container invalid-feedback'>
                                                 {errors.phone_number?.message}
                                             </div>
                                         </div>
@@ -576,7 +577,7 @@ const AddCompany = () => {
                                                 placeholder='Enter your city address'
                                                 {...register("city")}
                                             />
-                                            <div className=' invalid-feedback'>
+                                            <div className='fv-plugins-message-container invalid-feedback'>
                                                 {errors.city?.message}
                                             </div>
                                         </div>
@@ -591,7 +592,7 @@ const AddCompany = () => {
                                                 placeholder='Enter your state'
                                                 {...register("state")}
                                             />
-                                            <div className=' invalid-feedback'>
+                                            <div className='fv-plugins-message-container invalid-feedback'>
                                                 {errors.state?.message}
                                             </div>
                                         </div>
@@ -606,7 +607,7 @@ const AddCompany = () => {
                                                 placeholder='Enter your postal code'
                                                 {...register("postal_code")}
                                             />
-                                            <div className=' invalid-feedback'>
+                                            <div className='fv-plugins-message-container invalid-feedback'>
                                                 {errors.postal_code?.message}
                                             </div>
                                         </div>

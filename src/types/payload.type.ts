@@ -79,8 +79,8 @@ export interface ICompanyResponse {
     id: string;
     name: string;
     subdomain: string;
-    owner_id: number;
-    status_id: number;
+    company_owner_id: string;
+    status_id: string;
     email: string;
     address: string;
     country: string;
@@ -95,4 +95,36 @@ export interface ICompanyResponse {
     registration_number: string;
     logo: string;
     cover_image: string;
+}
+
+// {
+//   "first_name": "string",
+//   "last_name": "string",
+//   "email": "string",
+//   "mobile": "string",
+//   "country": "string",
+//   "state": "string",
+//   "city": "string",
+//   "street_address": "string",
+//   "profile_picture": "string",
+//   "postal_code": "string"
+// }
+
+// Agent
+
+export interface IAgentPayload {
+    first_name: string;
+    last_name: string;
+    email: string;
+    mobile: string;
+    country: string;
+    state: string;
+    city: string;
+    street_address: string;
+    profile_picture: string;
+    postal_code: string;
+}
+
+export interface IAgentResponse extends IAgentPayload {
+    id: string;
 }

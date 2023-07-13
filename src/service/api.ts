@@ -25,18 +25,31 @@ const API_ROUTE = {
     POST_COMPANIES: "/api/v1/companies",
     GET_COMPANIES: "/api/v1/companies",
     GET_COMPANY_BY_ID: "/api/v1/companies",
+    GET_COMPANY_BY_SUBDOMAIN: "/api/v1/companies",
+    GET_COMPANY_BY_SUBDOMAIN_TEST: "/api/v1/companies/sabkura",
     DELETE_COMPANY_BY_ID: "/api/v1/companies",
+    UPDATE_COMPANY_BY_ID: "/api/v1/companies",
+
+    // company product
+    BUY_COMPANY_PRODUCT_BY_ID: "/api/v1/companies",
 
     // company documents
     GET_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
     POST_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
 
     // products
-    products: "/api/v1/products",
+    GET_PRODUCTS_LIST: "/api/v1/products",
+    GET_PRODUCTS_BY_ID: "/api/v1/products",
 
     //roles
     GET_ROLES: "/api/v1/roles",
     POST_ROLES: "/api/v1/roles",
+
+    //  Client Management agents routes
+    CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
+    GET_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
+    POST_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
+    UPDATE_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

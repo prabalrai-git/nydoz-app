@@ -1,13 +1,5 @@
 import { createContext } from "react";
 
-// email: "rahul@sabkura.com";
-// email_verified_at: null;
-// first_name: "Rahul";
-// id: "99823f98-8a1c-4e4e-bb2b-176ca103a262";
-// last_name: "Prasad";
-// mobile: "9819828300";
-// mobile_verified_at: null;
-
 export interface IUserState {
     id: string | null;
     email: string;

@@ -1,5 +1,15 @@
+// home page no login
+
+import ProductList from "../../shared/components/products/ProductList";
+
 const Home = () => {
-    return <div>Home</div>;
+    return (
+        <div>
+            <section className='container-fluid my-3'>
+                <ProductList />
+            </section>
+        </div>
+    );
 };
 
 export default Home;
