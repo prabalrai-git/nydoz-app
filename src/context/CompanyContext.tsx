@@ -18,12 +18,12 @@ const initialCompanyInfo: ICompanyInfo = {
 
 export interface ICompanyContextProps {
     companyInfo: ICompanyInfo;
-    handleCompanyInfo: (value: ICompanyInfo) => void;
+    isCompanyAdmin: boolean;
 }
 
 const companyContextDefaults: ICompanyContextProps = {
     companyInfo: initialCompanyInfo,
-    handleCompanyInfo: () => null,
+    isCompanyAdmin: false,
 };
 
 export const CompanyContext = createContext<ICompanyContextProps>(

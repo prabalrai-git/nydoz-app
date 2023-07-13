@@ -13,6 +13,7 @@ const CompanyProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     const subdomainFromUrl = window.location.hostname.split(".")[0];
     const [subdomain, setSubdomain] = useState<string | undefined>(undefined);
     const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
+    const [isCompanyAdmin, setIsCompanyAdmin] = useState(false);
 
     useEffect(() => {
         setSubdomain(subdomainFromUrl);
@@ -64,7 +65,7 @@ const CompanyProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
     const companyContextValue: ICompanyContextProps = {
         companyInfo: companyInfoState,
-        handleCompanyInfo: (value: ICompanyInfo) => setCompanyInfoState(value),
+        isCompanyAdmin: isCompanyAdmin,
     };
     return (
         <CompanyContext.Provider value={companyContextValue}>
