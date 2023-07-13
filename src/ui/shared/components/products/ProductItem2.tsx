@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 
 interface IProductItemProps {
     product: IProductResponse;
+    link?: string;
 }
 
 const ProductItem2 = (props: IProductItemProps) => {
-    const { product } = props;
+    const { product, link } = props;
     const { id, name, logo, description } = product;
     return (
         <Link
-            to='products'
+            to={link ? `${link}/${id}` : `product/${id}`}
             key={id}
+            title="Click to view product's details"
             className='nav-link nav-link-border-solid  border '>
             <div className='card card-flush flex-row-fluid p-41 mw-100'>
                 <div className='card-body text-center'>

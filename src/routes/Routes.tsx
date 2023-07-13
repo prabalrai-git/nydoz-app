@@ -6,7 +6,7 @@ import App from "../App";
 //Protection
 import ProtectAuth from "../ui/features/auth/ProtectAuth";
 import Protected from "../ui/features/auth/ProtectedRoute";
-import ProtectCompany from "../ui/features/ProtectRoutes/ProtectCompany";
+// import ProtectCompany from "../ui/features/ProtectRoutes/ProtectCompany";
 
 //Auth Routes
 import AuthLayout from "../ui/features/auth/Layout";
@@ -34,7 +34,7 @@ import AddCompany from "../ui/features/company/AddCompany";
 import CompanyList from "../ui/features/company/CompanyList";
 import DocumentsList from "../ui/features/documents/DocumentsList";
 import ProductLayout from "../ui/features/products/ProductLayout";
-import CompanyProductList from "../ui/features/products/ProductList";
+// import CompanyProductList from "../ui/features/products/ProductList";
 import AllProductList from "../ui/shared/components/products/ProductList";
 
 // Company Roles
@@ -48,6 +48,7 @@ import RoleList from "../ui/features/roles/RoleList";
 import AgentLayout from "../ui/features/agent/AgentLayout";
 import AddAgent from "../ui/features/agent/AddAgent";
 import CompanyProvider from "../context/CompanyProvider";
+import SingleProduct from "../ui/features/products/SingleProduct";
 
 const router = createBrowserRouter([
     {
@@ -143,8 +144,12 @@ const router = createBrowserRouter([
                                 element: <ProductLayout />,
                                 children: [
                                     {
-                                        path: "all",
+                                        path: "buy",
                                         element: <AllProductList />,
+                                    },
+                                    {
+                                        path: ":productId",
+                                        element: <SingleProduct />,
                                     },
                                 ],
                             },

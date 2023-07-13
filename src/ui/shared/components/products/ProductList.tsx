@@ -4,9 +4,10 @@ import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
 import ProductItem2 from "./ProductItem2";
 import { IProductResponse } from "../../../../types/payload.type";
+import LoadingPage from "../../../features/utils/LoadingPage";
 
 const ProductList = () => {
-    const { data, error, loading, fetchData } = useFetch<IProductResponse[]>(
+    const { data, error, isloading, fetchData } = useFetch<IProductResponse[]>(
         API_ROUTE.GET_PRODUCTS_LIST,
         true
     );
@@ -18,9 +19,13 @@ const ProductList = () => {
 
     return (
         <div className='row'>
+            {isloading && <LoadingPage />}
             {data?.map((product: IProductResponse) => (
                 <div className='col-12 col-md-4   '>
-                    <ProductItem2 product={product} />
+                    <ProductItem2
+                        link='/home/sabkura/products'
+                        product={product}
+                    />
                 </div>
             ))}
         </div>

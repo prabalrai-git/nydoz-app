@@ -26,7 +26,7 @@ const API_ROUTE = {
     GET_COMPANIES: "/api/v1/companies",
     GET_COMPANY_BY_ID: "/api/v1/companies",
     GET_COMPANY_BY_SUBDOMAIN: "/api/v1/companies",
-    GET_COMPANY_BY_SUBDOMAIN_TEST: "/api/v1/companies?subdomain=sabkura",
+    GET_COMPANY_BY_SUBDOMAIN_TEST: "/api/v1/companies/sabkura",
     DELETE_COMPANY_BY_ID: "/api/v1/companies",
     UPDATE_COMPANY_BY_ID: "/api/v1/companies",
 
@@ -36,6 +36,7 @@ const API_ROUTE = {
 
     // products
     GET_PRODUCTS_LIST: "/api/v1/products",
+    GET_PRODUCTS_BY_ID: "/api/v1/products",
 
     //roles
     GET_ROLES: "/api/v1/roles",

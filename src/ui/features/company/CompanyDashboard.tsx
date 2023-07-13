@@ -5,8 +5,6 @@ import ProductList from "../products/ProductList";
 import { Link } from "react-router-dom";
 
 const CompanyDashboard = () => {
-    console.log("company layout");
-
     const { companyId } = useParams<{ companyId: string }>();
 
     return (
@@ -26,8 +24,9 @@ const CompanyDashboard = () => {
             <section className='bg-white py-6'>
                 <div className='d-flex align-item-center justify-content-between mb-6 px-3'>
                     <h4 className='fs-20'>Products</h4>
-                    <Link to='products/all' className='btn btn-primary'>
-                        View All Products
+
+                    <Link to='products/buy' className='btn btn-primary'>
+                        Buy Products
                     </Link>
                 </div>
                 <ProductList />

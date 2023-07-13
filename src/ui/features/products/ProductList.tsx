@@ -1,14 +1,17 @@
 // @ desc Products list brought by company
 
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { IProductResponse } from "../../../types/payload.type";
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
-import { useParams } from "react-router-dom";
+import { CompanyContext } from "../../../context/CompanyContext";
+import { toast } from "react-toastify";
+import NotFound from "../../shared/molecules/NotFound";
 
 const ProductList = () => {
-    const { id: companyId } = useParams<string>();
+    const { companyInfo } = useContext(CompanyContext);
+    const companyId = companyInfo?.id;
     const proudctListUrl = `${API_ROUTE.GET_DOCUMENTS_BY_COMPANY_ID}/${companyId}/products`;
     const { data, fetchData, isloading } = useFetch<IProductResponse[]>(
         proudctListUrl,
@@ -16,12 +19,16 @@ const ProductList = () => {
     );
 
     useEffect(() => {
-        fetchData();
+        if (companyId) {
+            fetchData();
+        } else {
+            toast.error("Company Id not found");
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [companyId]);
 
     return (
-        <div className='py-6'>
+        <div className='py-6 px-3'>
             {isloading && <LoadingSpinner title='loading...' />}
             {data && data.length > 0 && (
                 <div>
@@ -43,7 +50,7 @@ const ProductList = () => {
                     ))}
                 </div>
             )}
-            {data && data?.length === 0 && <div>No Products Found</div>}
+            {data && data?.length === 0 && <NotFound title='Product' />}
         </div>
     );
 };

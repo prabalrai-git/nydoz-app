@@ -25,7 +25,9 @@ const Breadcrumb = () => {
                 </ul>
             </div>
 
-            <Link to='company/add' className='btn btn-primary btn-sm ms-3'>
+            <Link
+                to='/home/company/add'
+                className='btn btn-primary btn-sm ms-3'>
                 Create Company
             </Link>
         </div>
