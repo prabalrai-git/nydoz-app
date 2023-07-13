@@ -18,13 +18,13 @@ const Dashboard = () => {
                     <Breadcrumb />
                 </div>
                 <div className='row'>
-                    <div className='col-12 col-md-8 bg-white '>
+                    <div className='col-12  bg-white '>
                         <div className='mb-6'>
                             <ProductList />
                         </div>
                     </div>
 
-                    <div className='col-12 col-md-4 col-lg-4'>
+                    <div className='col-12 '>
                         <div className='mb-6'>
                             <CompanyListCard />
                         </div>

@@ -20,7 +20,7 @@ const ProductList = () => {
     }, []);
 
     return (
-        <div className=' bg-white h-100vh p-6'>
+        <div className=' bg-white  p-6'>
             <Heading title='Buy Products' btnText='Back' showBreadcrumb={true}>
                 <Breadcrumb
                     parent='products'
@@ -34,32 +34,24 @@ const ProductList = () => {
                     <thead>
                         <tr className='text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0'>
                             <th className='w-10px pe-2 sorting_disabled'>
-                                <div className='form-check form-check-sm form-check-custom form-check-solid me-3'>
-                                    <input
-                                        className='form-check-input'
-                                        type='checkbox'
-                                        data-kt-check='true'
-                                        data-kt-check-target='#kt_ecommerce_category_table .form-check-input'
-                                        value='1'
-                                    />
-                                </div>
+                                S.N
                             </th>
                             <th className='min-w-250px sorting'>Products</th>
                             <th
                                 className='min-w-150px sorting'
                                 aria-controls='kt_ecommerce_category_table'
                                 aria-label='Category Type: activate to sort column ascending'>
-                                Product Type
+                                Price
                             </th>
                             <th className='text-end min-w-70px sorting_disabled'>
-                                Price
+                                Action
                             </th>
                         </tr>
                     </thead>
 
                     <tbody className='fw-semibold text-gray-600'>
                         {data?.map((product: IProductResponse) => (
-                            <tr className='odd'>
+                            <tr key={product.id} className='odd'>
                                 <td>
                                     <div className='form-check form-check-sm form-check-custom form-check-solid'>
                                         <input
@@ -96,14 +88,9 @@ const ProductList = () => {
                                     </div>
                                 </td>
                                 <td className='text-end'>
-                                    <a
-                                        href='#'
-                                        className='btn btn-sm btn-light btn-active-light-primary btn-flex btn-center'
-                                        data-kt-menu-trigger='click'
-                                        data-kt-menu-placement='bottom-end'>
-                                        Actions
-                                        <i className='ki-outline ki-down fs-5 ms-1'></i>
-                                    </a>
+                                    <button className='btn btn-success btn-sm'>
+                                        ADD
+                                    </button>
                                 </td>
                             </tr>
                         ))}
