@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import API_ROUTE from "../service/api";
 import { ICompanyResponse } from "../types/payload.type";
@@ -7,9 +7,11 @@ import {
     ICompanyContextProps,
     ICompanyInfo,
 } from "../context/CompanyContext";
+import { AuthContext } from "./AuthContext";
 import CompanyLoader from "../ui/shared/components/company/CompanyLoader";
 
 const CompanyProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { userInfo } = useContext(AuthContext);
     const subdomainFromUrl = window.location.hostname.split(".")[0];
     const [subdomain, setSubdomain] = useState<string | undefined>(undefined);
     const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
@@ -49,9 +51,12 @@ const CompanyProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
                         id: payload.id,
                         name: payload.name,
                         subdomain: payload.subdomain,
-                        company_owner_id: payload.owner_id,
+                        company_owner_id: payload.company_owner_id,
                         status_id: payload.status_id,
                     });
+                    if (userInfo?.id === payload.company_owner_id) {
+                        setIsCompanyAdmin(true);
+                    }
                 }
             } catch (error) {
                 console.log(error);

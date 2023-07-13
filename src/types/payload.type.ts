@@ -79,7 +79,7 @@ export interface ICompanyResponse {
     id: string;
     name: string;
     subdomain: string;
-    owner_id: string;
+    company_owner_id: string;
     status_id: string;
     email: string;
     address: string;
