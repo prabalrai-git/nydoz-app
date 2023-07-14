@@ -97,18 +97,20 @@ export interface ICompanyResponse {
     cover_image: string;
 }
 
-// {
-//   "first_name": "string",
-//   "last_name": "string",
-//   "email": "string",
-//   "mobile": "string",
-//   "country": "string",
-//   "state": "string",
-//   "city": "string",
-//   "street_address": "string",
-//   "profile_picture": "string",
-//   "postal_code": "string"
-// }
+export interface IMyCompanyPayload {
+    id: string;
+    name: string;
+    subdomain: string;
+    status_id: string;
+    email: string;
+    logo: string;
+    cover_image: string;
+    products: IProductResponse[];
+}
+export interface IUserCompanyProductsResponse {
+    companies: [IMyCompanyPayload];
+    saas_core_products: IProductResponse[];
+}
 
 // Agent
 

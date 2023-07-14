@@ -43,66 +43,14 @@ const Header2 = () => {
                                 Dashboard
                             </Link>
                         </li>
+                        <li className='nav-item'>
+                            <Link
+                                to={"/home/products"}
+                                className='nav-link fs-7'>
+                                Products
+                            </Link>
+                        </li>
 
-                        <NavDropdown title='Products' id='basic-nav-dropdown'>
-                            <NavDropdown.Item>
-                                <div className='card'>
-                                    <div className='card-header'>
-                                        <div className='card-title'>
-                                            My Apps
-                                        </div>
-                                        <div className='card-body '>
-                                            <div className='mh-450px scroll-y me-n5 pe-5'>
-                                                <div className='row g-2'>
-                                                    <div className='col-4'>
-                                                        <Link
-                                                            to='/metronic8/demo1/custom/apps/chat/chat-2'
-                                                            className='d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3'>
-                                                            <img
-                                                                src='/metronic8/demo1/assets/media/svg/brand-logos/amazon.svg'
-                                                                className='w-25px h-25px mb-2'
-                                                                alt='logo'
-                                                            />
-                                                            <span className='fw-semibold'>
-                                                                AWS
-                                                            </span>
-                                                        </Link>
-                                                    </div>
-                                                    <div className='col-4'>
-                                                        <Link
-                                                            to='/metronic8/demo1/custom/apps/chat/chat-2'
-                                                            className='d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3'>
-                                                            <img
-                                                                src='/metronic8/demo1/assets/media/svg/brand-logos/amazon.svg'
-                                                                className='w-25px h-25px mb-2'
-                                                                alt='logo'
-                                                            />
-                                                            <span className='fw-semibold'>
-                                                                AWS
-                                                            </span>
-                                                        </Link>
-                                                    </div>
-                                                    <div className='col-4'>
-                                                        <Link
-                                                            to='/metronic8/demo1/custom/apps/chat/chat-2'
-                                                            className='d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3'>
-                                                            <img
-                                                                src='/metronic8/demo1/assets/media/svg/brand-logos/amazon.svg'
-                                                                className='w-25px h-25px mb-2'
-                                                                alt='logo'
-                                                            />
-                                                            <span className='fw-semibold'>
-                                                                AWS
-                                                            </span>
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </NavDropdown.Item>
-                        </NavDropdown>
                         <li className='nav-item'>
                             <a className='nav-link disabled'>Support</a>
                         </li>
@@ -137,19 +85,24 @@ const Header2 = () => {
                                 <NavDropdown
                                     title='Account'
                                     id='basic-nav-dropdown'>
-                                    <NavDropdown.Item href='#action/3.1'>
-                                        Action
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href='#action/3.2'>
-                                        Another action
+                                    <NavDropdown.Item>
+                                        {" "}
+                                        <LinkContainer
+                                            className='py-1'
+                                            to='/auth/login'>
+                                            <Nav.Link>My Account</Nav.Link>
+                                        </LinkContainer>
                                     </NavDropdown.Item>
                                     <NavDropdown.Item>
-                                        <Link className='' to='change-password'>
-                                            Change Password
-                                        </Link>
+                                        <LinkContainer
+                                            className='py-1'
+                                            to='change-password'>
+                                            <Nav.Link>Change Password</Nav.Link>
+                                        </LinkContainer>
                                     </NavDropdown.Item>
+
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item>
+                                    <NavDropdown.Item className='text-center'>
                                         <div
                                             className='btn btn-sm btn-secondary'
                                             onClick={() => logoutFn()}>

@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import CompanyListCard from "../../shared/components/company/CompanyList";
-import ProductList from "../../shared/components/products/ProductList";
 import Breadcrumb from "../../shared/components/user/Breadcrumb";
 import { CompanyContext } from "../../../context/CompanyContext";
+import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
 
 const Dashboard = () => {
     const companyInfo = useContext(CompanyContext);
@@ -18,16 +18,12 @@ const Dashboard = () => {
                     <Breadcrumb />
                 </div>
                 <div className='row'>
-                    <div className='col-12  bg-white '>
-                        <div className='mb-6'>
-                            <ProductList />
-                        </div>
+                    <div className='col-12 mb-6  bg-white '>
+                        <AuthCompanyProduct />
                     </div>
 
-                    <div className='col-12 '>
-                        <div className='mb-6'>
-                            <CompanyListCard />
-                        </div>
+                    <div className='col-6 mb-6'>
+                        <CompanyListCard />
                     </div>
                 </div>
             </div>

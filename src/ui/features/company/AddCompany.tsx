@@ -210,7 +210,7 @@ const AddCompany = () => {
                 <form className='form w-100 ' onSubmit={onFormSubmit}>
                     <div className='row align-items-stretch mb-6'>
                         <div className='col-12 col-md-4 col-lg-4'>
-                            <div className='card card-flush py-1'>
+                            <div className='card card-flush py-4'>
                                 <div className='card-header'>
                                     <div className='card-title'>
                                         <h5 className='required'>
@@ -286,9 +286,8 @@ const AddCompany = () => {
                                     </div>
 
                                     <div className='text-muted fs-7'>
-                                        Set the product thumbnail image. Only
-                                        *.png, *.jpg and *.jpeg image files are
-                                        accepted
+                                        Only *.png, *.jpg and *.jpeg image files
+                                        are accepted
                                     </div>
                                 </div>
                             </div>
@@ -309,7 +308,7 @@ const AddCompany = () => {
                                         data-kt-image-input='true'>
                                         <div className='d-flex align-items-center gap-6'>
                                             {location?.state?.data && (
-                                                <div className='cover-image-wrapper  p-2'>
+                                                <div className='cover-image-wrapper  h-100px  m-2'>
                                                     {oldCoverImg ? (
                                                         <img
                                                             className={
@@ -333,7 +332,7 @@ const AddCompany = () => {
 
                                             {coverImg &&
                                                 coverImg?.length > 0 && (
-                                                    <div className='cover-image-wrapper p2'>
+                                                    <div className='cover-image-wrapper h-100px m-2'>
                                                         <img
                                                             className='img-thumbnail img-fluid rounded'
                                                             src={`${BASE_URL}${coverImg[0]}`}
@@ -381,7 +380,7 @@ const AddCompany = () => {
                         </div>
                     </div>
 
-                    <div className='row'>
+                    <div className='row mb-6'>
                         <div className='card card-flush'>
                             <div className='card-header'>
                                 <div className='card-title'>
@@ -509,7 +508,7 @@ const AddCompany = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='row'>
+                    <div className='row mb-6'>
                         <div className='card card-flush'>
                             <div className='card-header'>
                                 <div className='card-title'>
@@ -639,7 +638,7 @@ const AddCompany = () => {
                             <button
                                 type='submit'
                                 disabled={isLoading}
-                                className='btn btn-primary btn-sm mb-6'>
+                                className='btn btn-primary  mb-6'>
                                 {isLoading ? (
                                     <>
                                         <span className='ms-2'>
@@ -654,7 +653,7 @@ const AddCompany = () => {
                                     <span>
                                         {location?.state?.data?.id
                                             ? "Update"
-                                            : "Save"}
+                                            : "Submit"}
                                     </span>
                                 )}
                             </button>
@@ -662,8 +661,6 @@ const AddCompany = () => {
                     </div>
                 </form>
             </section>
-
-            <ToastContainer />
         </div>
     );
 };
