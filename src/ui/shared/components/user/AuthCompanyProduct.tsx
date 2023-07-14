@@ -20,21 +20,33 @@ const ProductList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        console.log(data, "data");
-    }, [data]);
+    const handleProductClick = (iproductId: string, subdomain: string) => {
+        // prod url window.location.href = `http://${subdomain}.api.nydoz.app/home/${subdomain}/products/${iproductId}`;
+
+        window.location.href = `http://localhost:5173/home/${subdomain}/products/${iproductId}`;
+    };
 
     return (
         <div className='py-6 px-3'>
+            <h3 className='my-3'>Products</h3>
             {isloading && <LoadingSpinner title='loading...' />}
             {data && (
                 <div className='row'>
-                    {data.companies.map((companyItem) => (
-                        <div key={companyItem.id}>
-                            <div>
+                    {data.companies.map((companyItem) => {
+                        if (companyItem.products.length === 0) return null;
+                        return (
+                            <>
                                 {companyItem.products.map((productItem) => (
-                                    <div key={productItem.id}>
-                                        <div>
+                                    <div
+                                        onClick={() => {
+                                            handleProductClick(
+                                                productItem.id,
+                                                companyItem.subdomain
+                                            );
+                                        }}
+                                        className='col-6 col-md-2 cursor-pointer'
+                                        key={productItem.id}>
+                                        <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center'>
                                             <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light'>
                                                 <ImageAtom
                                                     src={productItem.logo}
@@ -43,39 +55,24 @@ const ProductList = () => {
                                                 />
                                             </div>
                                             <div className='card-body'>
-                                                <h5 className='card-title'>
+                                                <h5 className='card-title my-3'>
                                                     {productItem.name}
                                                 </h5>
+                                                <p className='mb-3'>
+                                                    {companyItem.name}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
-                            </div>
-                            <p>{companyItem.name}</p>
-                        </div>
-                    ))}
+                            </>
+                        );
+                    })}
                 </div>
             )}
-            {data && <NotFound title='Products' />}
+            {!data && <NotFound title='Products' />}
         </div>
     );
 };
 
 export default ProductList;
-
-{
-    /* <div key={product.id} className='col-6 col-md-3 m-5'>
-    <div className='card card-flush h-md-50  mb-xl-10 border shadow-sm'>
-        <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative bg-light'>
-            <ImageAtom
-                src={product.logo}
-                alt={product.name}
-                className='img-fluid card-img-top'
-            />
-        </div>
-        <div className='card-body'>
-            <h5 className='card-title'>{product.name}</h5>
-        </div>
-    </div>
-</div>; */
-}

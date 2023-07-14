@@ -34,9 +34,11 @@ const ProductList = () => {
             {data && data.length > 0 && (
                 <div>
                     {data.map((product) => (
-                        <div key={product.id} className='col-6 col-md-3 m-5'>
-                            <div className='card card-flush h-md-50  mb-xl-10 border shadow-sm'>
-                                <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative bg-light'>
+                        <div
+                            key={product.id}
+                            className='col-6 col-md-2 m-5 cursor-pointer'>
+                            <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center'>
+                                <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light'>
                                     <ImageAtom
                                         src={product.logo}
                                         alt={product.name}
@@ -44,7 +46,7 @@ const ProductList = () => {
                                     />
                                 </div>
                                 <div className='card-body'>
-                                    <h5 className='card-title'>
+                                    <h5 className='card-title mt-6 mb-4'>
                                         {product.name}
                                     </h5>
                                 </div>

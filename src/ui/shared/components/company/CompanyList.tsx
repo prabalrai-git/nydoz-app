@@ -17,6 +17,11 @@ const CompanyListCard = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const handleNavigate = (subdomain: string) => () => {
+        // window.location.href = `http://${subdomain}.api.nydoz.app/home/${subdomain}`;
+        window.location.href = `http://localhost:5173/home/${subdomain}`;
+    };
+
     return (
         <div className='card h-xl-100'>
             <div className='card-header border-0 pt-5'>
@@ -35,12 +40,11 @@ const CompanyListCard = () => {
                 </div>
             </div>
             <div className='card-body pt6'>
-                {data?.map((item: ICompanyResponse, index: number) => (
-                    <Link
-                        key={index}
-                        // to={`company/profile/${item.id}`}
-                        to={item.subdomain}
-                        className='d-flex flex-stack mb-3'>
+                {data?.map((item: ICompanyResponse) => (
+                    <div
+                        key={item.id}
+                        onClick={handleNavigate(item.subdomain)}
+                        className='d-flex flex-stack mb-3 cursor-pointer'>
                         <div className='symbol symbol-40px me-4'>
                             <ImageAtom
                                 src={item.logo}
@@ -51,9 +55,7 @@ const CompanyListCard = () => {
 
                         <div className='d-flex align-items-center flex-row-fluid flex-wrap'>
                             <div className='flex-grow-1 me-2'>
-                                <a
-                                    href='/metronic8/demo1/../demo1/pages/user-profile/overview.html'
-                                    className='text-gray-800 text-hover-primary fs-6 fw-bold'>
+                                <a className='text-gray-800 text-hover-primary fs-6 fw-bold'>
                                     {item.name}
                                 </a>
 
@@ -71,7 +73,7 @@ const CompanyListCard = () => {
                                 </i>{" "}
                             </a>
                         </div>
-                    </Link>
+                    </div>
                 ))}
 
                 {!isloading && data?.length === 0 && (
