@@ -193,22 +193,24 @@ const AddCompany = () => {
 
     return (
         <div>
-            <Heading
-                title='Create Company'
-                btnText='Back'
-                showBreadcrumb={true}>
-                <Breadcrumb
-                    parent='Company'
-                    parentLink='/account/company/list'
-                    child='Add'
-                />
-            </Heading>
+            <div className='py-6 px-3'>
+                <Heading
+                    title='Create Company'
+                    btnText='Back'
+                    showBreadcrumb={true}>
+                    <Breadcrumb
+                        parent='Company'
+                        parentLink='/account/company/list'
+                        child='Add'
+                    />
+                </Heading>
+            </div>
 
             <section>
                 <form className='form w-100 ' onSubmit={onFormSubmit}>
-                    <div className='row'>
+                    <div className='row align-items-stretch mb-6'>
                         <div className='col-12 col-md-4 col-lg-4'>
-                            <div className='card card-flush py-4'>
+                            <div className='card card-flush py-1'>
                                 <div className='card-header'>
                                     <div className='card-title'>
                                         <h5 className='required'>
@@ -218,71 +220,68 @@ const AddCompany = () => {
                                 </div>
 
                                 <div className='card-body  pt-0'>
-                                    <div>
-                                        <div
-                                            className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
-                                            data-kt-image-input='true'>
-                                            <div className='d-flex justify-content-around align-items-center'>
-                                                {location?.state?.data && (
+                                    <div
+                                        className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
+                                        data-kt-image-input='true'>
+                                        <div className='d-flex justify-content-around align-items-center'>
+                                            {location?.state?.data && (
+                                                <div className='image-input-wrapper w-100px h-100px p-2'>
+                                                    {oldThumbnil ? (
+                                                        <img
+                                                            className={
+                                                                thumbnilImg &&
+                                                                thumbnilImg?.length >
+                                                                    0
+                                                                    ? "img-fluid rounded opacity-20 "
+                                                                    : "img-fluid rounded"
+                                                            }
+                                                            src={`${BASE_URL}${oldThumbnil}`}
+                                                            alt='Company"s logo'
+                                                        />
+                                                    ) : (
+                                                        <p className='text center text-muted'>
+                                                            No Company logo
+                                                            found.
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {thumbnilImg &&
+                                                thumbnilImg?.length > 0 && (
                                                     <div className='image-input-wrapper w-100px h-100px p-2'>
-                                                        {oldThumbnil ? (
-                                                            <img
-                                                                className={
-                                                                    thumbnilImg &&
-                                                                    thumbnilImg?.length >
-                                                                        0
-                                                                        ? "img-fluid rounded opacity-20 "
-                                                                        : "img-fluid rounded"
-                                                                }
-                                                                src={`${BASE_URL}${oldThumbnil}`}
-                                                                alt='Company"s logo'
-                                                            />
-                                                        ) : (
-                                                            <p className='text center text-muted'>
-                                                                No Company logo
-                                                                found.
-                                                            </p>
-                                                        )}
+                                                        <img
+                                                            className='img-fluid rounded'
+                                                            src={`${BASE_URL}${thumbnilImg[0]}`}
+                                                            alt='company logo'
+                                                        />
                                                     </div>
                                                 )}
 
-                                                {thumbnilImg &&
-                                                    thumbnilImg?.length > 0 && (
-                                                        <div className='image-input-wrapper w-100px h-100px p-2'>
-                                                            <img
-                                                                className='img-fluid rounded'
-                                                                src={`${BASE_URL}${thumbnilImg[0]}`}
-                                                                alt='company logo'
-                                                            />
-                                                        </div>
-                                                    )}
+                                            {!location?.state?.data &&
+                                                thumbnilImg?.length === 0 && (
+                                                    <div className='image-input-wrapper w-100px h-100px p-2'>
+                                                        <img
+                                                            className='img-fluid rounded'
+                                                            src={
+                                                                Images.BlackImg
+                                                            }
+                                                            alt='blank'
+                                                        />
+                                                    </div>
+                                                )}
+                                        </div>
 
-                                                {!location?.state?.data &&
-                                                    thumbnilImg?.length ===
-                                                        0 && (
-                                                        <div className='image-input-wrapper w-100px h-100px p-2'>
-                                                            <img
-                                                                className='img-fluid rounded'
-                                                                src={
-                                                                    Images.BlackImg
-                                                                }
-                                                                alt='blank'
-                                                            />
-                                                        </div>
-                                                    )}
-                                            </div>
-
-                                            <div className='text-center'>
-                                                <UploadFile
-                                                    fileUploadLimit={1}
-                                                    fileUploadType='IMAGE'
-                                                    isUploadRequired={false}
-                                                    isRoutePrivate={true}
-                                                    isMultiple={false}
-                                                    setFileInfo={setThumbnilImg}
-                                                    fileInfo={thumbnilImg}
-                                                />
-                                            </div>
+                                        <div className='text-center'>
+                                            <UploadFile
+                                                fileUploadLimit={1}
+                                                fileUploadType='IMAGE'
+                                                isUploadRequired={false}
+                                                isRoutePrivate={true}
+                                                isMultiple={false}
+                                                setFileInfo={setThumbnilImg}
+                                                fileInfo={thumbnilImg}
+                                            />
                                         </div>
                                     </div>
 
@@ -294,7 +293,7 @@ const AddCompany = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-12 col-md-8 col-lg-8'>
+                        <div className='col-12 col-md-8 col-lg-8  '>
                             <div className='card card-flush py-4'>
                                 <div className='card-header'>
                                     <div className='card-title'>

@@ -151,7 +151,7 @@ const Register = () => {
                                         </label>
                                         <div className='fv-row mb-6'>
                                             <input
-                                                type='number'
+                                                type='text'
                                                 placeholder='Enter your Mobile Number'
                                                 className='form-control'
                                                 {...register("mobile")}

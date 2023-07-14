@@ -106,6 +106,10 @@ const router = createBrowserRouter([
                         element: <UserDashboard />,
                     },
                     {
+                        path: "create-company",
+                        element: <AddCompany />,
+                    },
+                    {
                         path: ":companyId",
                         element: (
                             <CompanyProvider>
