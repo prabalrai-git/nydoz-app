@@ -14,7 +14,7 @@ const LoginSchema = yup.object({
         .required("Email is required."),
     password: yup
         .string()
-        .min(6, "Password must be atleast 6 character long.")
+        .min(6, "Password is required and must be atleast 6 character long.")
         .required("Password is required."),
 });
 

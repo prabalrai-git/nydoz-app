@@ -15,8 +15,6 @@ import { ISelectProps } from "../../../types/react-select.type";
 import { IAgentPayload, IAgentResponse } from "../../../types/payload.type";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import { getSelectPropsFromCountry } from "../../../functions/country";
-import Modal2 from "../../shared/components/Modal2";
-import AgentViewModal from "../../shared/components/agent/AgentViewModal";
 
 interface IAddAgentForm {
     first_name: string;

@@ -7,13 +7,6 @@ export interface IProductResponse {
     is_for_self_use: boolean;
 }
 
-// {
-//       "id": 0,
-//       "name": "string",
-//       "company_id": 0,
-//       "description": "string"
-//     }
-
 export interface IRoleResponse {
     id: string;
     name: string;
@@ -108,7 +101,7 @@ export interface IMyCompanyPayload {
     products: IProductResponse[];
 }
 export interface IUserCompanyProductsResponse {
-    companies: [IMyCompanyPayload];
+    companies: IMyCompanyPayload[];
     saas_core_products: IProductResponse[];
 }
 

@@ -32,45 +32,53 @@ const ProductList = () => {
             {isloading && <LoadingSpinner title='loading...' />}
             {data && (
                 <div className='row'>
-                    {data.companies.map((companyItem) => {
-                        if (companyItem.products.length === 0) return null;
+                    {data?.companies?.map((companyItem) => {
+                        if (companyItem?.products?.length === 0) return null;
                         return (
-                            <>
-                                {companyItem.products.map((productItem) => (
-                                    <div
-                                        onClick={() => {
-                                            handleProductClick(
-                                                productItem.id,
-                                                companyItem.subdomain
-                                            );
-                                        }}
-                                        className='col-6 col-md-2 cursor-pointer'
-                                        key={productItem.id}>
-                                        <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center'>
-                                            <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light'>
-                                                <ImageAtom
-                                                    src={productItem.logo}
-                                                    alt={productItem.name}
-                                                    className='img-fluid card-img-top'
-                                                />
+                            <div className='col-12 border-secondary  border-bottom  py-3 my-3'>
+                                <h4 className='fs-14 fw-bolder my-3'>
+                                    {companyItem.name}
+                                </h4>
+                                <div className='row'>
+                                    {companyItem?.products?.map(
+                                        (productItem) => (
+                                            <div
+                                                onClick={() => {
+                                                    handleProductClick(
+                                                        productItem.id,
+                                                        companyItem.subdomain
+                                                    );
+                                                }}
+                                                className='col-6 col-md-2 cursor-pointer'
+                                                key={productItem.id}>
+                                                <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center'>
+                                                    <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light'>
+                                                        <ImageAtom
+                                                            src={
+                                                                productItem.logo
+                                                            }
+                                                            alt={
+                                                                productItem.name
+                                                            }
+                                                            className='img-fluid card-img-top'
+                                                        />
+                                                    </div>
+                                                    <div className='card-body'>
+                                                        <h5 className='card-title my-3'>
+                                                            {productItem.name}
+                                                        </h5>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className='card-body'>
-                                                <h5 className='card-title my-3'>
-                                                    {productItem.name}
-                                                </h5>
-                                                <p className='mb-3'>
-                                                    {companyItem.name}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </>
+                                        )
+                                    )}
+                                </div>
+                            </div>
                         );
                     })}
                 </div>
             )}
-            {!data && <NotFound title='Products' />}
+            {data?.companies?.length === 0 && <NotFound title='Products' />}
         </div>
     );
 };
