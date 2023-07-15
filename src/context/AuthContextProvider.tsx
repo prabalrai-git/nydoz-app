@@ -51,6 +51,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     const [showSplashScreen, setShowSplashScreen] = useState(true);
 
     const [token, setToken] = useState<string | null>(tokenFromLocal);
+
     const [userInfo, setUserInfo] = useState<IUserState | undefined>();
 
     const loginFn = (
@@ -92,7 +93,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
                     permissions: [],
                 };
                 setUserInfo(user);
-                setToken(token);
             }
         } catch (error) {
             logoutFn();

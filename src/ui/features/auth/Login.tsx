@@ -10,16 +10,16 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../../context/AuthContext";
+// import { AuthContext } from "../../../context/AuthContext";
 import { ILoginResponse } from "../../../types/payload.type";
-
+import AuthContext from "../../../context/auth/AuthContext";
 interface FormData {
     email: string;
     password: string;
 }
 
 const LoginPage = () => {
-    const { loginFn } = useContext(AuthContext);
+    const { dispatch } = useContext(AuthContext);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -49,12 +49,21 @@ const LoginPage = () => {
 
             if (!user || !token) return toast.error("Login Failed");
             toast.success(response?.data?.message || "Login Successful");
-
+            localStorage.setItem("rememberMe", rememberMe.toString());
+            if (rememberMe) {
+                localStorage.setItem("token", token);
+            } else {
+                sessionStorage.setItem("token", token);
+            }
             const payload: ILoginResponse = {
                 user: user,
                 token: token,
             };
-            loginFn(payload, rememberMe);
+            // loginFn(payload, rememberMe);
+            dispatch({
+                type: "LOGIN",
+                payload: { userInfo: payload.user, token: payload.token },
+            });
             navigate("/home", { replace: true });
         }
     });

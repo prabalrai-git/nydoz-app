@@ -1,22 +1,31 @@
-import { useContext } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/Nav";
-
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Bell, BuildingAdd, GearWide, PersonGear } from "react-bootstrap-icons";
-import { AuthContext } from "../../../../context/AuthContext";
 import Hamburger from "../../atoms/Hamburger";
 import Images from "../../../../constants/Images";
 
 import { Link, useNavigate } from "react-router-dom";
 import { BoxArrowRight } from "react-bootstrap-icons";
+import useAuthContext from "../../../../context/auth/useAuthContext";
 
 const Header2 = () => {
-    const { userInfo, token, logoutFn } = useContext(AuthContext);
-
+    const { isLoggedIn, dispatch } = useAuthContext();
     const navigate = useNavigate();
     const handleNavigateCreateCompany = () => {
         navigate("/home/create-company");
+    };
+
+    const logoutFn = () => {
+        dispatch({ type: "LOGOUT" });
+        const rememberMeFromLocal = localStorage.getItem("rememberMe");
+        if (rememberMeFromLocal) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("rememberMe");
+        } else {
+            sessionStorage.removeItem("token");
+        }
+        navigate("/auth/login");
     };
 
     return (
@@ -61,7 +70,7 @@ const Header2 = () => {
                             <a className='nav-link disabled'>Support</a>
                         </li>
                     </ul>
-                    {userInfo && token ? (
+                    {isLoggedIn ? (
                         <div className='d-flex align-items-center'>
                             <form role='search'>
                                 <input
