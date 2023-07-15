@@ -3,16 +3,22 @@ import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/Nav";
 
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Bell } from "react-bootstrap-icons";
+import { Bell, BuildingAdd, GearWide, PersonGear } from "react-bootstrap-icons";
 import { AuthContext } from "../../../../context/AuthContext";
 import Hamburger from "../../atoms/Hamburger";
 import Images from "../../../../constants/Images";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BoxArrowRight } from "react-bootstrap-icons";
 
 const Header2 = () => {
     const { userInfo, token, logoutFn } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+    const handleNavigateCreateCompany = () => {
+        navigate("/home/create-company");
+    };
+
     return (
         <nav
             id='admin-navbar'
@@ -86,18 +92,55 @@ const Header2 = () => {
                                     title='Account'
                                     id='basic-nav-dropdown'>
                                     <NavDropdown.Item>
+                                        <div
+                                            className='btn btn-sm btn-primary'
+                                            onClick={
+                                                handleNavigateCreateCompany
+                                            }>
+                                            <span>
+                                                <BuildingAdd
+                                                    size={16}
+                                                    color='#ffffff'
+                                                />
+                                            </span>
+                                            <span className='ms-3'>
+                                                Create Company
+                                            </span>
+                                        </div>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
                                         {" "}
                                         <LinkContainer
                                             className='py-1'
                                             to='/auth/login'>
-                                            <Nav.Link>My Account</Nav.Link>
+                                            <Nav.Link>
+                                                <div>
+                                                    <span className='me-3'>
+                                                        <PersonGear
+                                                            size={16}
+                                                            color='#000000'
+                                                        />
+                                                    </span>
+                                                    <span>My Account</span>
+                                                </div>
+                                            </Nav.Link>
                                         </LinkContainer>
                                     </NavDropdown.Item>
                                     <NavDropdown.Item>
                                         <LinkContainer
                                             className='py-1'
                                             to='change-password'>
-                                            <Nav.Link>Change Password</Nav.Link>
+                                            <Nav.Link>
+                                                <div>
+                                                    <span className='me-3'>
+                                                        <GearWide
+                                                            size={16}
+                                                            color='#000000'
+                                                        />
+                                                    </span>
+                                                    <span>My Account</span>
+                                                </div>
+                                            </Nav.Link>
                                         </LinkContainer>
                                     </NavDropdown.Item>
 

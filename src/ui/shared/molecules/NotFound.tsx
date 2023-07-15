@@ -6,7 +6,7 @@ const NotFound = (props: Iprops) => {
     const title = props.title;
     return (
         <div>
-            <h4>{title} Not Found</h4>
+            <h5 className='text-info'>{title ?? "Not Found"} </h5>
         </div>
     );
 };

@@ -78,7 +78,15 @@ const ProductList = () => {
                     })}
                 </div>
             )}
-            {data?.companies?.length === 0 && <NotFound title='Products' />}
+            {data?.companies?.length === 0 && (
+                <NotFound title='Products Not Found. Please refresh the page.' />
+            )}
+            {!isloading &&
+                data?.companies &&
+                data?.companies?.length > 0 &&
+                data?.companies[0]?.products?.length === 0 && (
+                    <NotFound title='you are not subscribed to any products . ' />
+                )}
         </div>
     );
 };

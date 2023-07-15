@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
 import useFetch from "../../../../hooks/useFetch";
 import { ICompanyResponse } from "../../../../types/payload.type";
-import { Link } from "react-router-dom";
 import ImageAtom from "../../atoms/ImageAtom";
 
 const CompanyListCard = () => {

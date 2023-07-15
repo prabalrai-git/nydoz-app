@@ -5,11 +5,12 @@ import Heading from "../../shared/molecules/Heading";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { IAddCompanyPayload } from "../../../types/payload.type";
 import API_ROUTE from "../../../service/api";
 import { companySchema } from "../../../validations/company.validator";
 import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import CountryCode from "../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../types/react-select.type";
 import { ICompanyResponse } from "../../../types/payload.type";
@@ -32,25 +33,6 @@ interface IAddCompanyForm {
     website: string;
     registration_type: string;
     registration_number: string;
-}
-
-interface IAddCompanyPayload {
-    name: string;
-    subdomain: string;
-    email: string;
-    address: string;
-    state: string;
-    city: string;
-    postal_code: string;
-    phone_number: string;
-    contact_person: string;
-    website: string;
-    registration_type: string;
-    registration_number: string;
-    country_calling_code: string;
-    country: string;
-    logo: string;
-    cover_image: string;
 }
 
 const AddCompany = () => {
@@ -122,8 +104,6 @@ const AddCompany = () => {
     }, [error]);
 
     const onFormSubmit = handleSubmit(async (data: IAddCompanyForm) => {
-        console.log("data", data);
-
         if (!selectedCountryCode) {
             toast.error("Please select country code");
             return;
@@ -209,11 +189,11 @@ const AddCompany = () => {
             <section>
                 <form className='form w-100 ' onSubmit={onFormSubmit}>
                     <div className='row align-items-stretch mb-6'>
-                        <div className='col-12 col-md-4 col-lg-4'>
+                        <div className='col-12 col-md-6 col-lg-4'>
                             <div className='card card-flush py-4'>
                                 <div className='card-header'>
-                                    <div className='card-title'>
-                                        <h5 className='required'>
+                                    <div className='card-title mx-auto'>
+                                        <h5 className=' required'>
                                             Upload Company's Logo
                                         </h5>
                                     </div>
@@ -223,7 +203,7 @@ const AddCompany = () => {
                                     <div
                                         className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
                                         data-kt-image-input='true'>
-                                        <div className='d-flex justify-content-around align-items-center'>
+                                        <div className='d-flex justify-content-around align-items-center mb-6'>
                                             {location?.state?.data && (
                                                 <div className='image-input-wrapper w-100px h-100px p-2'>
                                                     {oldThumbnil ? (
@@ -272,7 +252,7 @@ const AddCompany = () => {
                                                 )}
                                         </div>
 
-                                        <div className='text-center'>
+                                        <div>
                                             <UploadFile
                                                 fileUploadLimit={1}
                                                 fileUploadType='IMAGE'
@@ -292,7 +272,7 @@ const AddCompany = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-12 col-md-8 col-lg-8  '>
+                        <div className='col-12 col-md-6 col-lg-8  '>
                             <div className='card card-flush py-4'>
                                 <div className='card-header'>
                                     <div className='card-title'>
@@ -306,7 +286,7 @@ const AddCompany = () => {
                                     <div
                                         className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
                                         data-kt-image-input='true'>
-                                        <div className='d-flex align-items-center gap-6'>
+                                        <div className='d-flex justify-content-around align-items-center gap-6 mb-6'>
                                             {location?.state?.data && (
                                                 <div className='cover-image-wrapper  h-100px  m-2'>
                                                     {oldCoverImg ? (
@@ -359,7 +339,7 @@ const AddCompany = () => {
                                                 )}
                                         </div>
 
-                                        <div className='text-center'>
+                                        <div>
                                             <UploadFile
                                                 fileUploadLimit={1}
                                                 fileUploadType='IMAGE'
