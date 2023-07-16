@@ -1,14 +1,11 @@
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import Heading from "../../shared/molecules/Heading";
-import { useParams } from "react-router-dom";
-import ProductList from "../products/ProductList";
+import CompanyProductList from "../products/CompanyProductList";
 import { Link } from "react-router-dom";
 import useAuthContext from "../../../context/auth/useAuthContext";
 
 const CompanyDashboard = () => {
-    const { companyId } = useParams<{ companyId: string }>();
-
-    const { isCompanyOwner } = useAuthContext();
+    const { isCompanyOwner, subdomain } = useAuthContext();
     return (
         <div>
             <div className='my-6 border shadow shadow-sm py-6 p-3'>
@@ -16,7 +13,7 @@ const CompanyDashboard = () => {
                     <Breadcrumb
                         parent='Home'
                         parentLink='/home'
-                        child={companyId ?? "Dashboard"}
+                        child={subdomain ?? "Dashboard"}
                     />
                 </Heading>
             </div>
@@ -29,7 +26,7 @@ const CompanyDashboard = () => {
                         </Link>
                     )}
                 </div>
-                <ProductList />
+                <CompanyProductList />
             </section>
         </div>
     );

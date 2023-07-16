@@ -38,4 +38,5 @@ export type TAction =
               token: string | null;
           };
       }
+    | { type: "SET_COMPANY_INFO"; payload: { companyInfo: ICompanyInfo } }
     | { type: "LOGOUT" };

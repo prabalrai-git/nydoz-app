@@ -5,7 +5,7 @@ import { IState } from "./types";
 import useFetch from "../../hooks/useFetch";
 import API_ROUTE from "../../service/api";
 import LoadingPage from "../../ui/features/utils/LoadingPage";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const intialState: IState = {
     isLoggedIn: false,

@@ -47,7 +47,6 @@ import PageNotFound from "../ui/features/utils/PageNotFound";
 import RoleList from "../ui/features/roles/RoleList";
 import AgentLayout from "../ui/features/agent/AgentLayout";
 import AddAgent from "../ui/features/agent/AddAgent";
-import CompanyProvider from "../context/CompanyProvider";
 import SingleProduct from "../ui/features/products/SingleProduct";
 
 const router = createBrowserRouter([
@@ -110,7 +109,7 @@ const router = createBrowserRouter([
                         element: <AddCompany />,
                     },
                     {
-                        path: "company",
+                        path: ":companySubdomian",
                         element: <CompanyLayout />,
 
                         children: [
