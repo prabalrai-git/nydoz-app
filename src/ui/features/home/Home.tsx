@@ -6,7 +6,8 @@ const Home = () => {
     return (
         <div>
             <section className='container-fluid my-3'>
-                <ProductList />
+                {/* <ProductList /> */}
+                <h3>Home Page</h3>
             </section>
         </div>
     );

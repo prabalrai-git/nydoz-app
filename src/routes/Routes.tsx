@@ -110,13 +110,8 @@ const router = createBrowserRouter([
                         element: <AddCompany />,
                     },
                     {
-                        path: ":companyId",
-                        element: (
-                            <CompanyProvider>
-                                <CompanyLayout />
-                            </CompanyProvider>
-                        ),
-                        // element: <CompanyLayout />,
+                        path: "company",
+                        element: <CompanyLayout />,
 
                         children: [
                             {

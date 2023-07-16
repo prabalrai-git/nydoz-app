@@ -5,6 +5,7 @@ import { IState } from "./types";
 import useFetch from "../../hooks/useFetch";
 import API_ROUTE from "../../service/api";
 import LoadingPage from "../../ui/features/utils/LoadingPage";
+import { toast, ToastContainer } from "react-toastify";
 
 const intialState: IState = {
     isLoggedIn: false,
@@ -69,7 +70,11 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
                 });
             }
         } catch (error) {
-            console.log(error, "error");
+            console.log(error, "error in auth provider");
+            toast.error("Something went wrong");
+            dispatch({
+                type: "LOGOUT",
+            });
         } finally {
             setShowSplashScreen(false);
         }

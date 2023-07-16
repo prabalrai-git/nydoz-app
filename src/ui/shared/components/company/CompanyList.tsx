@@ -3,6 +3,7 @@ import API_ROUTE from "../../../../service/api";
 import useFetch from "../../../../hooks/useFetch";
 import { ICompanyResponse } from "../../../../types/payload.type";
 import ImageAtom from "../../atoms/ImageAtom";
+import { Link } from "react-router-dom";
 
 const CompanyListCard = () => {
     const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
@@ -15,11 +16,6 @@ const CompanyListCard = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const handleNavigate = (subdomain: string) => () => {
-        // window.location.href = `http://${subdomain}.api.nydoz.app/home/${subdomain}`;
-        window.location.href = `http://localhost:5173/home/${subdomain}`;
-    };
 
     return (
         <div className='card h-xl-100'>
@@ -40,9 +36,9 @@ const CompanyListCard = () => {
             </div>
             <div className='card-body pt6'>
                 {data?.map((item: ICompanyResponse) => (
-                    <div
+                    <Link
                         key={item.id}
-                        onClick={handleNavigate(item.subdomain)}
+                        to='company'
                         className='d-flex flex-stack mb-3 cursor-pointer'>
                         <div className='symbol symbol-40px me-4'>
                             <ImageAtom
@@ -72,7 +68,7 @@ const CompanyListCard = () => {
                                 </i>{" "}
                             </a>
                         </div>
-                    </div>
+                    </Link>
                 ))}
 
                 {!isloading && data?.length === 0 && (
