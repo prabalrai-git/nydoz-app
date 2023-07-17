@@ -32,12 +32,12 @@ const ProductList = () => {
         <div className='py-6 px-3'>
             {isloading && <LoadingSpinner title='loading...' />}
             {data && data.length > 0 && (
-                <div>
+                <div className='d-flex'>
                     {data.map((product) => (
                         <div
                             key={product.id}
-                            className='col-6 col-md-2 m-5 cursor-pointer'>
-                            <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box'>
+                            className='flex-wrap cursor-pointer'>
+                            <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box mx-3'>
                                 <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light'>
                                     <ImageAtom
                                         src={product.logo}

@@ -120,6 +120,21 @@ const router = createBrowserRouter([
                             },
 
                             {
+                                path: "profile/:id",
+                                element: <ProfileLayout />,
+                                children: [
+                                    {
+                                        path: "documents",
+                                        element: <DocumentsList />,
+                                    },
+                                    {
+                                        path: "roles",
+                                        element: <RoleList />,
+                                    },
+                                ],
+                            },
+
+                            {
                                 path: "agents",
                                 element: <AgentLayout />,
                                 children: [

@@ -33,14 +33,14 @@ const Header2 = () => {
             id='admin-navbar'
             className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm fw-bolder'>
             <div className='container'>
-                <a className='navbar-brand' href='#'>
-                    <Hamburger />
+                <Hamburger />
+                <Link to='/' className='navbar-brand'>
                     <img
                         className='navbar-brand-img '
                         src={Images.CompanyLogo}
                         alt='Company Logo'
                     />
-                </a>
+                </Link>
                 <button
                     className='navbar-toggler'
                     type='button'
@@ -53,11 +53,14 @@ const Header2 = () => {
                 </button>
                 <div className='collapse navbar-collapse' id='navbarScroll'>
                     <ul className='navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll'>
-                        <li className='nav-item'>
-                            <Link to={"/home"} className='nav-link fs-7'>
-                                Dashboard
-                            </Link>
-                        </li>
+                        {isLoggedIn && (
+                            <li className='nav-item'>
+                                <Link to={"/home"} className='nav-link fs-7'>
+                                    Dashboard
+                                </Link>
+                            </li>
+                        )}
+
                         <li className='nav-item'>
                             <Link
                                 to={"/home/products"}
@@ -147,7 +150,7 @@ const Header2 = () => {
                                                             color='#000000'
                                                         />
                                                     </span>
-                                                    <span>My Account</span>
+                                                    <span>Change Password</span>
                                                 </div>
                                             </Nav.Link>
                                         </LinkContainer>

@@ -102,14 +102,14 @@ const BuyProduct = () => {
             return;
         }
 
-        const haveSameElements =
-            allProducts.length === oldProductListArray.length &&
-            allProducts.every((item) => oldProductListArray.includes(item));
+        // const haveSameElements =
+        //     allProducts.length === oldProductListArray.length &&
+        //     allProducts.every((item) => oldProductListArray.includes(item));
 
-        if (haveSameElements) {
-            toast.error("No change in products. Please select new products");
-            return;
-        }
+        // if (haveSameElements) {
+        //     toast.error("No change in products. Please select new products");
+        //     return;
+        // }
 
         const payload = {
             product_ids: allProducts,
