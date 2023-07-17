@@ -38,5 +38,8 @@ export type TAction =
               token: string | null;
           };
       }
-    | { type: "SET_COMPANY_INFO"; payload: { companyInfo: ICompanyInfo } }
+    | {
+          type: "SET_COMPANY_INFO";
+          payload: { companyInfo: ICompanyInfo; isCompanyOwner: boolean };
+      }
     | { type: "LOGOUT" };

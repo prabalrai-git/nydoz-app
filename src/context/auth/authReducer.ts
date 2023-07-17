@@ -5,6 +5,13 @@ const authReducer = (state: IState, action: TAction): IState => {
         console.log("logout");
         localStorage.removeItem("token");
     };
+    const handleuserInfo = () => {
+        console.log("set user info", state);
+    };
+    const handleCompanyInfo = () => {
+        console.log("set companyinfo", state);
+    };
+
     switch (action.type) {
         case "LOGIN":
             return {
@@ -14,6 +21,8 @@ const authReducer = (state: IState, action: TAction): IState => {
                 isLoggedIn: true,
             };
         case "SET_USER_INFO":
+            handleuserInfo();
+
             return {
                 ...state,
                 userInfo: action.payload.userInfo,
@@ -22,8 +31,10 @@ const authReducer = (state: IState, action: TAction): IState => {
             };
 
         case "SET_COMPANY_INFO":
+            handleCompanyInfo();
             return {
                 ...state,
+                userInfo: state.userInfo,
                 companyInfo: action.payload.companyInfo,
             };
         case "LOGOUT":

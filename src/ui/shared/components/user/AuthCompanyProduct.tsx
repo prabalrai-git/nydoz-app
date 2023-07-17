@@ -35,7 +35,9 @@ const ProductList = () => {
                     {data?.companies?.map((companyItem) => {
                         if (companyItem?.products?.length === 0) return null;
                         return (
-                            <div className='col-12 border-secondary  border-bottom  py-3 my-3'>
+                            <div
+                                key={companyItem.id}
+                                className='col-12 border-secondary  border-bottom  py-3 my-3'>
                                 <h4 className='fs-14 fw-bolder my-3'>
                                     {companyItem.name}
                                 </h4>

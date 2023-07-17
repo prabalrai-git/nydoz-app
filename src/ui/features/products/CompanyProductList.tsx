@@ -1,17 +1,17 @@
 // @ desc Products list brought by company
 
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { IProductResponse } from "../../../types/payload.type";
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
-import { CompanyContext } from "../../../context/CompanyContext";
 import { toast } from "react-toastify";
 import NotFound from "../../shared/molecules/NotFound";
 import ImageAtom from "../../shared/atoms/ImageAtom";
+import useAuthContext from "../../../context/auth/useAuthContext";
 
 const ProductList = () => {
-    const { companyInfo } = useContext(CompanyContext);
+    const { companyInfo } = useAuthContext();
     const companyId = companyInfo?.id;
     const proudctListUrl = `${API_ROUTE.GET_COMPANIES}/${companyId}/products`;
     const { data, fetchData, isloading } = useFetch<IProductResponse[]>(
