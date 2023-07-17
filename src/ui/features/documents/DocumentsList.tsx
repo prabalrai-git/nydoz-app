@@ -204,7 +204,7 @@ const DocumentList = () => {
                     <TanStackTable
                         pagination={pagination}
                         columns={tableColumns}
-                        data={data}
+                        data={data ?? []}
                     />
                 </div>
             </section>
@@ -228,7 +228,6 @@ const DocumentList = () => {
                 selectedData={selectedData}
                 setSelectedData={setSelectedData}
             />
-            <ToastContainer />
         </div>
     );
 };

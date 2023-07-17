@@ -9,20 +9,19 @@ import Heading from "../../shared/molecules/Heading";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
 import { Link } from "react-router-dom";
-import { App, People } from "react-bootstrap-icons";
+import { App, Flag, People } from "react-bootstrap-icons";
+import useAuthContext from "../../../context/auth/useAuthContext";
 
 const ProfileLayout = () => {
+    const { isCompanyOwner } = useAuthContext();
     const { id } = useParams<{ id: string }>();
     const url = `${API_ROUTE.GET_COMPANY_BY_ID}/${id}`;
     const { data, fetchData } = useFetch<ICompanyResponse>(url, true);
 
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        console.log(data, "data");
-    }, [data]);
 
     return (
         <div>
@@ -47,7 +46,7 @@ const ProfileLayout = () => {
                             <div className='card-body pt-9 pb-0'>
                                 <div className='d-flex flex-wrap flex-sm-nowrap'>
                                     <div className='me-7 mb-4'>
-                                        <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative shadow shadow-sm p-3'>
+                                        <div className='symbol symbol-75px symbol-lg-100px symbol-fixed position-relative shadow shadow-sm p-3'>
                                             <img
                                                 src={
                                                     data?.logo
@@ -99,14 +98,17 @@ const ProfileLayout = () => {
                                                         {data?.state}
                                                     </div>
                                                     <div className='d-flex align-items-center text-gray-600 text-hover-primary mb-2'>
-                                                        <i className='ki-outline ki-phone fs-2'></i>
+                                                        <Flag
+                                                            size={14}
+                                                            className='text-info me-2 '
+                                                        />
                                                         {data?.country}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className='d-flex flex-wrap flex-stack'>
+                                        {/* <div className='d-flex flex-wrap flex-stack'>
                                             <div className='d-flex flex-column flex-grow-1 pe-8'>
                                                 <div className='d-flex flex-wrap'>
                                                     <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
@@ -151,49 +153,50 @@ const ProfileLayout = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
+                                {isCompanyOwner && (
+                                    <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold'>
+                                        <li className='nav-item mt-2'>
+                                            <Link
+                                                className='nav-link  ms-0 me-10 py-5 '
+                                                to={`${id}`}>
+                                                Overview
+                                            </Link>
+                                        </li>
 
-                                <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold'>
-                                    <li className='nav-item mt-2'>
-                                        <a
-                                            className='nav-link text-active-primary ms-0 me-10 py-5 active'
-                                            href='../../demo31/dist/pages/user-profile/overview.html'>
-                                            Overview
-                                        </a>
-                                    </li>
+                                        <li className='nav-item mt-2'>
+                                            <Link
+                                                className='nav-link  ms-0 me-10 py-5'
+                                                to='/home/sabkura/products/buy'>
+                                                Buy Products
+                                            </Link>
+                                        </li>
+                                        <li className='nav-item mt-2'>
+                                            <Link
+                                                className='nav-link  ms-0 me-10 py-5'
+                                                to={"agents"}>
+                                                Agents
+                                            </Link>
+                                        </li>
 
-                                    <li className='nav-item mt-2'>
-                                        <Link
-                                            className='nav-link text-active-primary ms-0 me-10 py-5'
-                                            to={"products"}>
-                                            Products
-                                        </Link>
-                                    </li>
-                                    <li className='nav-item mt-2'>
-                                        <Link
-                                            className='nav-link text-active-primary ms-0 me-10 py-5'
-                                            to={"agents"}>
-                                            Agents
-                                        </Link>
-                                    </li>
-
-                                    <li className='nav-item mt-2'>
-                                        <Link
-                                            to={`roles`}
-                                            className='nav-link text-active-primary ms-0 me-10 py-5'>
-                                            Roles
-                                        </Link>
-                                    </li>
-                                    <li className='nav-item mt-2'>
-                                        <Link
-                                            to={`documents`}
-                                            className='nav-link text-active-primary ms-0 me-10 py-5'>
-                                            Documents
-                                        </Link>
-                                    </li>
-                                </ul>
+                                        <li className='nav-item mt-2'>
+                                            <Link
+                                                to={`roles`}
+                                                className='nav-link  ms-0 me-10 py-5'>
+                                                Roles
+                                            </Link>
+                                        </li>
+                                        <li className='nav-item mt-2'>
+                                            <Link
+                                                to={`documents`}
+                                                className='nav-link  ms-0 me-10 py-5'>
+                                                Documents
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                )}
                             </div>
                         </div>
                         <div className='container'>

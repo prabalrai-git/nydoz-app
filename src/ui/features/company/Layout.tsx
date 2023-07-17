@@ -120,12 +120,13 @@ const CompanyLayout = () => {
                                 <Link
                                     className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green'
                                     data-bs-toggle='pill'
-                                    to={`profile/${companyInfo?.id}`}
+                                    to='home/sabkura/products/buy'
                                     aria-selected='true'
                                     role='tab'>
                                     <div className='nav-icon'>
                                         <Folder size='30' color='#70b541' />
                                     </div>
+
                                     <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
                                         Products
                                     </span>

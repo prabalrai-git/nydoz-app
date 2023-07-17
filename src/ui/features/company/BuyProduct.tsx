@@ -136,7 +136,7 @@ const BuyProduct = () => {
     }, [error]);
 
     return (
-        <div className=' bg-white mt-3 p-6'>
+        <div className=' mt-3 p-6'>
             <Heading title='Buy Products' btnText='Back' showBreadcrumb={true}>
                 <Breadcrumb
                     parent='products'
@@ -145,7 +145,7 @@ const BuyProduct = () => {
                 />
             </Heading>
             {isloading && <LoadingPage />}
-            <section className=''>
+            <section className='p-6 bg-white my-6'>
                 <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer border-bottom  '>
                     <thead>
                         <tr className='text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0'>
