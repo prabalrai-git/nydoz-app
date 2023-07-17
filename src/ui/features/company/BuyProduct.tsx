@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { useNavigate } from "react-router-dom";
-
+import Modal2 from "../../shared/components/Modal2";
 import { IProductResponse } from "../../../types/payload.type";
 import LoadingPage from "../../features/utils/LoadingPage";
 import ImageAtom from "../../shared/atoms/ImageAtom";
@@ -17,11 +17,11 @@ import { Spinner } from "react-bootstrap";
 const BuyProduct = () => {
     const { companyInfo } = useAuthContext();
     const companyId = companyInfo?.id;
-
+    const [show, setShow] = useState(false);
     const buyProductForCompany = `${API_ROUTE.BUY_COMPANY_PRODUCT_BY_ID}/${companyInfo?.id}/products`;
     const proudctListUrl = `${API_ROUTE.GET_COMPANIES}/${companyId}/products`;
     const navigate = useNavigate();
-
+    const [selectedProduct, setSelectedProduct] = useState<IProductResponse>();
     const {
         postData,
         error: postError,
@@ -73,11 +73,17 @@ const BuyProduct = () => {
         setNewProductListArray(newProductList);
     };
 
+    const handleSelectOldProduct = (product: IProductResponse) => {
+        setShow(true);
+        setSelectedProduct(product);
+    };
+
     const handleRemoveOldProduct = (productId: string) => {
         const oldProductList = [...oldProductListArray];
         const index = oldProductList.indexOf(productId);
         oldProductList.splice(index, 1);
         setOldProductListArray(oldProductList);
+        setShow(false);
     };
 
     const handleAddOldProduct = (productId: string) => {
@@ -222,8 +228,8 @@ const BuyProduct = () => {
                                                         ) ? (
                                                             <button
                                                                 onClick={() =>
-                                                                    handleRemoveOldProduct(
-                                                                        product.id
+                                                                    handleSelectOldProduct(
+                                                                        product
                                                                     )
                                                                 }
                                                                 title='Remove from cart'
@@ -315,6 +321,27 @@ const BuyProduct = () => {
                     </div>
                 </div>
             </section>
+            <Modal2
+                handleConfirm={() =>
+                    handleRemoveOldProduct(selectedProduct?.id ?? "")
+                }
+                showChildren={true}
+                show={show}
+                title='Are you sure ?'
+                cancelText='Cancel'
+                confirmText='Yes'
+                handleClose={() => setShow(false)}>
+                <div className='text-center'>
+                    <p>
+                        Are you sure you want to remove{" "}
+                        <span className='fw-bold'>{selectedProduct?.name}</span>{" "}
+                        from cart ?
+                    </p>
+                    <p className='text-danger'>
+                        Product once removed must be purchased again for use.
+                    </p>
+                </div>
+            </Modal2>
         </div>
     );
 };
