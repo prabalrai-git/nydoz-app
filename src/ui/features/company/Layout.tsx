@@ -7,8 +7,8 @@ import { ICompanyResponse } from "../../../types/payload.type";
 import CompanyLoader from "../../shared/components/company/CompanyLoader";
 import useAuthContext from "../../../context/auth/useAuthContext";
 
-const Layout = () => {
-    const { dispatch, companyInfo } = useAuthContext();
+const CompanyLayout = () => {
+    const { dispatch, companyInfo, userInfo } = useAuthContext();
     const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
     const { companySubdomian } = useParams<string>();
     const { fetchDataById, error } = useFetch<ICompanyResponse>(
@@ -34,9 +34,15 @@ const Layout = () => {
                     company_owner_id: payload.company_owner_id,
                     status_id: payload.status_id,
                 };
+
+                const isCompanyAdmin =
+                    userInfo?.id === payload.company_owner_id;
                 dispatch({
                     type: "SET_COMPANY_INFO",
-                    payload: { companyInfo },
+                    payload: {
+                        companyInfo,
+                        isCompanyOwner: isCompanyAdmin,
+                    },
                 });
             }
         } catch (error) {
@@ -44,7 +50,7 @@ const Layout = () => {
         } finally {
             setShowSplashScreen(false);
         }
-    }, [companySubdomian, fetchDataById, dispatch]);
+    }, [companySubdomian, fetchDataById, dispatch, userInfo?.id]);
 
     useEffect(() => {
         console.log(
@@ -62,4 +68,4 @@ const Layout = () => {
     return <div>{showSplashScreen ? <CompanyLoader /> : <Outlet />}</div>;
 };
 
-export default Layout;
+export default CompanyLayout;

@@ -25,10 +25,11 @@ const authReducer = (state: IState, action: TAction): IState => {
             };
 
         case "SET_COMPANY_INFO":
-            console.log("SET_COMPANY_INFO", state);
+            console.log("SET_COMPANY_INFO", action.payload);
             return {
                 ...state,
                 companyInfo: action.payload.companyInfo,
+                isCompanyOwner: action.payload.isCompanyOwner,
             };
         case "LOGOUT":
             handleLogout();

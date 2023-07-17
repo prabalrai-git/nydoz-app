@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import Heading from "../../shared/molecules/Heading";
 import CompanyProductList from "../products/CompanyProductList";
@@ -6,6 +7,10 @@ import useAuthContext from "../../../context/auth/useAuthContext";
 
 const CompanyDashboard = () => {
     const { isCompanyOwner, subdomain } = useAuthContext();
+    useEffect(() => {
+        console.log(isCompanyOwner, "dashboar company owner");
+    }, [isCompanyOwner]);
+
     return (
         <div>
             <div className='my-6 border shadow shadow-sm py-6 p-3'>
