@@ -21,8 +21,8 @@ export interface ICompanyInfo {
 export interface IState {
     isLoggedIn: boolean;
     token: string | null;
-    userInfo: IUserInfo | undefined;
-    companyInfo: ICompanyInfo | undefined;
+    userInfo: undefined | IUserInfo;
+    companyInfo: undefined | ICompanyInfo;
     isAdmin: boolean;
     isCompanyOwner: boolean;
     subdomain: string | undefined;

@@ -53,7 +53,7 @@ const ProductList = () => {
                                                 }}
                                                 className='col-6 col-md-2 cursor-pointer'
                                                 key={productItem.id}>
-                                                <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center'>
+                                                <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box'>
                                                     <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light'>
                                                         <ImageAtom
                                                             src={

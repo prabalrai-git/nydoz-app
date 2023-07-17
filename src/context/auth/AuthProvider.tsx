@@ -47,18 +47,20 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         setShowSplashScreen(true);
         try {
             const response = await fetchData();
+            console.log(response?.data, "response in auth provider");
 
-            if (response?.data) {
+            if (response?.data?.payload) {
+                const userResponseObj = response?.data?.payload;
                 const userInfo = {
-                    id: data?.id,
-                    email: data?.email,
-                    email_verified_at: data?.email_verified_at,
-                    first_name: data?.first_name,
-                    last_name: data?.last_name,
-                    mobile: data?.mobile,
-                    mobile_verified_at: data?.mobile_verified_at,
-                    isAdmin: data?.isAdmin,
-                    permissions: data?.permissions,
+                    id: userResponseObj?.id,
+                    email: userResponseObj?.email,
+                    email_verified_at: userResponseObj?.email_verified_at,
+                    first_name: userResponseObj?.first_name,
+                    last_name: userResponseObj?.last_name,
+                    mobile: userResponseObj?.mobile,
+                    mobile_verified_at: userResponseObj?.mobile_verified_at,
+                    isAdmin: userResponseObj?.isAdmin,
+                    permissions: userResponseObj?.permissions,
                 } as IUseMeData;
                 dispatch({
                     type: "SET_USER_INFO",
