@@ -48,6 +48,7 @@ import RoleList from "../ui/features/roles/RoleList";
 import AgentLayout from "../ui/features/agent/AgentLayout";
 import AddAgent from "../ui/features/agent/AddAgent";
 import SingleProduct from "../ui/features/products/SingleProduct";
+import BuyProduct from "../ui/features/company/BuyProduct";
 
 const router = createBrowserRouter([
     {
@@ -143,7 +144,7 @@ const router = createBrowserRouter([
                                 children: [
                                     {
                                         path: "buy",
-                                        element: <AllProductList />,
+                                        element: <BuyProduct />,
                                     },
                                     {
                                         path: ":productId",
