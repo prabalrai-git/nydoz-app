@@ -38,10 +38,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
     const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
     const [state, dispatch] = useReducer(authReducer, intialState);
-    const { fetchData, data } = useFetch<IUseMeData>(
-        API_ROUTE.LOGGED_IN_USER,
-        true
-    );
+    const { fetchData } = useFetch<IUseMeData>(API_ROUTE.LOGGED_IN_USER, true);
 
     const handleAuthenticationFn = useCallback(async () => {
         setShowSplashScreen(true);

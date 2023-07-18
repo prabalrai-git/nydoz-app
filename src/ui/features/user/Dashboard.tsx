@@ -1,15 +1,7 @@
-import { useContext, useEffect } from "react";
 import CompanyListCard from "../../shared/components/company/CompanyList";
-import { CompanyContext } from "../../../context/CompanyContext";
 import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
 
 const Dashboard = () => {
-    const companyInfo = useContext(CompanyContext);
-
-    useEffect(() => {
-        console.log(companyInfo);
-    }, [companyInfo]);
-
     return (
         <div className=' h-100vh py-3'>
             <div className='container'>
