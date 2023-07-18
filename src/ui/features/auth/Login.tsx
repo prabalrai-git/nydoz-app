@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 // import { AuthContext } from "../../../context/AuthContext";
 import { ILoginResponse } from "../../../types/payload.type";
 import AuthContext from "../../../context/auth/AuthContext";
+import useSubdomain from "../../../hooks/useSubdomain";
 interface FormData {
     email: string;
     password: string;
@@ -20,6 +21,7 @@ interface FormData {
 
 const LoginPage = () => {
     const { dispatch } = useContext(AuthContext);
+    const subdomain = useSubdomain();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -64,7 +66,12 @@ const LoginPage = () => {
                 type: "LOGIN",
                 payload: { userInfo: payload.user, token: payload.token },
             });
-            navigate("/home", { replace: true });
+
+            if (subdomain && subdomain !== "localhost") {
+                navigate(`/home/${subdomain}/dashboard`, { replace: true });
+            } else {
+                navigate("/home", { replace: true });
+            }
         }
     });
 
