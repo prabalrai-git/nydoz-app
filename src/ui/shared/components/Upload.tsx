@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { FileType } from "../../../types/fileUpload.type";
 import API_ROUTE from "../../../service/api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Spinner from "react-bootstrap/Spinner";
 import { FILE_ACCEPT_TYPE } from "../../../constants/FileUpload";
 import useMutation from "../../../hooks/useMutation";
@@ -163,7 +163,6 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
             {description && (
                 <div className='text-muted fs-7'>{description}</div>
             )}
-            <ToastContainer />
         </div>
     );
 };

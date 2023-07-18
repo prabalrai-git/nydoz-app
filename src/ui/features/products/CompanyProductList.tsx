@@ -55,7 +55,11 @@ const ProductList = () => {
                     ))}
                 </div>
             )}
-            {data && data?.length === 0 && <NotFound title='Product' />}
+            {data && data?.length === 0 && (
+                <div>
+                    <NotFound title='This company is not subscribed to any products .  ' />
+                </div>
+            )}
         </div>
     );
 };

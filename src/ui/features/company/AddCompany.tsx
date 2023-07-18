@@ -166,7 +166,7 @@ const AddCompany = () => {
             console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company Added Successfully");
-                navigate("/home/company/list");
+                navigate("/home");
             }
         }
     });

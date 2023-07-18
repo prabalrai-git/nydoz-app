@@ -35,7 +35,6 @@ import CompanyList from "../ui/features/company/CompanyList";
 import DocumentsList from "../ui/features/documents/DocumentsList";
 import ProductLayout from "../ui/features/products/ProductLayout";
 // import CompanyProductList from "../ui/features/products/ProductList";
-import AllProductList from "../ui/shared/components/products/ProductList";
 
 // Company Roles
 // import RoleLayout from "../ui/features/roles/RoleLayout";

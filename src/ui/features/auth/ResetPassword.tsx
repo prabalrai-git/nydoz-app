@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 // ------------------------------ import components
@@ -173,7 +173,6 @@ const ResetPassword = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 };

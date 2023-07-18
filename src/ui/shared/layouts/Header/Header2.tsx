@@ -1,3 +1,4 @@
+import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -17,7 +18,6 @@ const Header2 = () => {
     };
 
     const logoutFn = () => {
-        dispatch({ type: "LOGOUT" });
         const rememberMeFromLocal = localStorage.getItem("rememberMe");
         if (rememberMeFromLocal) {
             localStorage.removeItem("token");
@@ -26,10 +26,11 @@ const Header2 = () => {
             sessionStorage.removeItem("token");
         }
         navigate("/auth/login");
+        dispatch({ type: "LOGOUT" });
     };
 
     return (
-        <nav
+        <Navbar
             id='admin-navbar'
             className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm fw-bolder'>
             <div className='container'>
@@ -61,13 +62,13 @@ const Header2 = () => {
                             </li>
                         )}
 
-                        <li className='nav-item'>
+                        {/* <li className='nav-item'>
                             <Link
                                 to={"/home/products"}
                                 className='nav-link fs-7'>
                                 Products
                             </Link>
-                        </li>
+                        </li> */}
 
                         <li className='nav-item'>
                             <a className='nav-link disabled'>Support</a>
@@ -75,7 +76,7 @@ const Header2 = () => {
                     </ul>
                     {isLoggedIn ? (
                         <div className='d-flex align-items-center'>
-                            <form role='search'>
+                            {/* <form role='search'>
                                 <input
                                     className='form-control me-2'
                                     type='search'
@@ -90,15 +91,15 @@ const Header2 = () => {
                                     </span>
                                     <Bell size={20} color='#626060' />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='menu-profile-container '>
-                                <div className='menu-profile-img-container '>
+                                {/* <div className='menu-profile-img-container '>
                                     <img
                                         className='profile-avatar'
                                         src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
                                         alt='profile img'
                                     />
-                                </div>
+                                </div> */}
 
                                 <NavDropdown
                                     title='Account'
@@ -184,7 +185,7 @@ const Header2 = () => {
                     )}
                 </div>
             </div>
-        </nav>
+        </Navbar>
     );
 };
 

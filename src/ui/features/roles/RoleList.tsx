@@ -8,9 +8,8 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import AddRoles from "./AddRole";
-import Images from "../../../constants/Images";
 import DataListTable from "../../shared/components/DataListTable";
 
 const DocumentList = () => {
@@ -206,7 +205,6 @@ const DocumentList = () => {
                 selectedData={selectedData}
                 setSelectedData={setSelectedData}
             />
-            <ToastContainer />
         </div>
     );
 };

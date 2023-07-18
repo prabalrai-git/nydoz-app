@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 // ------------------------------ import components
@@ -133,7 +133,6 @@ const ChangePassword = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 };

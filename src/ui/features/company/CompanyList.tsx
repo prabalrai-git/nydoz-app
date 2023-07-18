@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import DataListTable from "../../shared/components/DataListTable";
 
 const CompanyList = () => {
@@ -315,7 +315,6 @@ const CompanyList = () => {
                     <h3>{selectedData?.name}</h3>
                 </div>
             </Modal2>
-            <ToastContainer />
         </div>
     );
 };

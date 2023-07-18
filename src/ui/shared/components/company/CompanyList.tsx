@@ -72,8 +72,14 @@ const CompanyListCard = () => {
                 ))}
 
                 {!isloading && data?.length === 0 && (
-                    <div>
-                        <h3> Not Avaible</h3>
+                    <div className='row'>
+                        <div>
+                            <h4>
+                                No Company Found . Please create company to buy
+                                products.
+                            </h4>
+                            <Link to='create-company'>Create Company</Link>
+                        </div>
                     </div>
                 )}
             </div>
