@@ -7,6 +7,7 @@ import App from "../App";
 import ProtectAuth from "../ui/features/auth/ProtectAuth";
 import Protected from "../ui/features/auth/ProtectedRoute";
 // import ProtectCompany from "../ui/features/ProtectRoutes/ProtectCompany";
+import ProtectCompanyOwner from "../ui/features/company/protectRoute/OnlyCompanyOwnerRoute";
 
 //Auth Routes
 import AuthLayout from "../ui/features/auth/Layout";
@@ -117,37 +118,58 @@ const router = createBrowserRouter([
                                 path: "",
                                 element: <CompanyDashboard />,
                             },
+                            // products for all company users
 
+                            {
+                                path: "edit",
+                                element: (
+                                    <ProtectCompanyOwner>
+                                        <AddCompany />
+                                    </ProtectCompanyOwner>
+                                ),
+                            },
                             {
                                 path: "profile/:id",
                                 element: <ProfileLayout />,
                                 children: [
                                     {
                                         path: "documents",
-                                        element: <DocumentsList />,
+                                        element: (
+                                            <ProtectCompanyOwner>
+                                                <DocumentsList />
+                                            </ProtectCompanyOwner>
+                                        ),
                                     },
                                     {
                                         path: "roles",
-                                        element: <RoleList />,
-                                    },
-                                ],
-                            },
-
-                            {
-                                path: "agents",
-                                element: <AgentLayout />,
-                                children: [
-                                    {
-                                        path: "",
-                                        element: <AgentList />,
+                                        // element: <RoleList />,
+                                        element: (
+                                            <ProtectCompanyOwner>
+                                                <RoleList />
+                                            </ProtectCompanyOwner>
+                                        ),
                                     },
                                     {
-                                        path: "add",
-                                        element: <AddAgent />,
-                                    },
-                                    {
-                                        path: "edit",
-                                        element: <AddAgent />,
+                                        path: "agents",
+                                        element: (
+                                            <ProtectCompanyOwner>
+                                                <AgentLayout />
+                                            </ProtectCompanyOwner>
+                                        ),
+                                        children: [
+                                            {
+                                                path: "",
+                                                element: <AgentList />,
+                                            },
+                                            {
+                                                path: "add",
+                                                element: <AddAgent />,
+                                            },
+                                            {
+                                                path: "edit",
+                                                element: <AddAgent />,
+                                            },
+                                        ],
                                     },
                                 ],
                             },
@@ -178,30 +200,12 @@ const router = createBrowserRouter([
                         element: <CompanyLayout />,
                         children: [
                             {
-                                path: "profile/:id",
-                                element: <ProfileLayout />,
-                                children: [
-                                    {
-                                        path: "documents",
-                                        element: <DocumentsList />,
-                                    },
-                                    {
-                                        path: "roles",
-                                        element: <RoleList />,
-                                    },
-                                ],
-                            },
-                            {
-                                path: "add",
-                                element: <AddCompany />,
-                            },
-                            {
-                                path: "edit",
-                                element: <AddCompany />,
-                            },
-                            {
                                 path: "list",
-                                element: <CompanyList />,
+                                element: (
+                                    <ProtectCompanyOwner>
+                                        <CompanyList />
+                                    </ProtectCompanyOwner>
+                                ),
                             },
                         ],
                     },

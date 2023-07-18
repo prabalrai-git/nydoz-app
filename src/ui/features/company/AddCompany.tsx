@@ -65,27 +65,21 @@ const AddCompany = () => {
 
     useEffect(() => {
         if (location?.state?.data && location?.state?.data?.id) {
-            console.log(
-                location?.state?.data && location?.state?.data,
-                "old data"
-            );
-            reset(location?.state?.data);
-            setOldThumbnil(location?.state?.data?.logo);
-            setOldCoverImg(location?.state?.data?.cover_image);
+            const companyDetails: ICompanyResponse = location?.state?.data;
+            reset(companyDetails);
+            setOldThumbnil(companyDetails?.logo);
+            setOldCoverImg(companyDetails?.cover_image);
             const countryCode = getSelectPropsFromCountryCallingCode(
-                location?.state?.data?.country_calling_code
+                companyDetails?.country_calling_code
             );
             setSelectedCountryCode(countryCode);
 
-            const country = getSelectPropsFromCountry(
-                location?.state?.data?.country
-            );
+            const country = getSelectPropsFromCountry(companyDetails?.country);
             setSelectedCountry(country);
         }
-    }, [location?.state?.data, reset]);
+    }, [location?.state, reset]);
 
     useEffect(() => {
-        console.log("errList", errList);
         if (errList) {
             Object.keys(errList).forEach((fieldName) => {
                 const errorMessages = errList[fieldName];
@@ -141,10 +135,9 @@ const AddCompany = () => {
                 location?.state?.data?.id,
                 tempPostData
             );
-            console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company updated Successfully");
-                navigate("home");
+                navigate(-1);
             }
         } else {
             if (thumbnilImg?.length === 0) {
@@ -175,13 +168,21 @@ const AddCompany = () => {
         <div>
             <div className='py-6 px-3'>
                 <Heading
-                    title='Create Company'
+                    title={
+                        location?.state?.data?.id
+                            ? "Edit Company Details"
+                            : "Create Company"
+                    }
                     btnText='Back'
                     showBreadcrumb={true}>
                     <Breadcrumb
-                        parent='Company'
+                        parent={
+                            location?.state?.data?.id
+                                ? `${location?.state?.data?.subdomain}`
+                                : "company"
+                        }
                         parentLink='/account/company/list'
-                        child='Add'
+                        child={location?.state?.data?.id ? "Edit" : "Add"}
                     />
                 </Heading>
             </div>

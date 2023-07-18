@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Avatar from "../../../assets/media/avatars/300-1.jpg";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
@@ -9,10 +9,11 @@ import Heading from "../../shared/molecules/Heading";
 import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
 import { Link } from "react-router-dom";
-import { App, Flag, People } from "react-bootstrap-icons";
+import { Flag } from "react-bootstrap-icons";
 import useAuthContext from "../../../context/auth/useAuthContext";
 
 const ProfileLayout = () => {
+    const navigate = useNavigate();
     const { isCompanyOwner } = useAuthContext();
     const { id } = useParams<{ id: string }>();
     const url = `${API_ROUTE.GET_COMPANY_BY_ID}/${id}`;
@@ -22,6 +23,10 @@ const ProfileLayout = () => {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handleEditCompany = () => {
+        navigate(`/home/${data?.subdomain}/edit`, { state: { data } });
+    };
 
     return (
         <div>
@@ -60,6 +65,16 @@ const ProfileLayout = () => {
                                     </div>
 
                                     <div className='flex-grow-1'>
+                                        {isCompanyOwner && (
+                                            <div>
+                                                <button
+                                                    onClick={handleEditCompany}
+                                                    className='btn btn-info btn-sm float-end'>
+                                                    Edit
+                                                </button>
+                                            </div>
+                                        )}
+
                                         <div className='d-flex justify-content-between align-items-start flex-wrap mb-2'>
                                             <div className='d-flex flex-column'>
                                                 <div className='d-flex align-items-center mb-2'>
@@ -107,53 +122,6 @@ const ProfileLayout = () => {
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/* <div className='d-flex flex-wrap flex-stack'>
-                                            <div className='d-flex flex-column flex-grow-1 pe-8'>
-                                                <div className='d-flex flex-wrap'>
-                                                    <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
-                                                        <div className='d-flex align-items-center'>
-                                                            <People
-                                                                size={20}
-                                                                className='text-info me-2 '
-                                                            />
-                                                            <div
-                                                                className='fs-2 fw-bold counted'
-                                                                data-kt-countup='true'
-                                                                data-kt-countup-value='4500'
-                                                                data-kt-countup-prefix='$'
-                                                                data-kt-initialized='1'>
-                                                                4,50
-                                                            </div>
-                                                        </div>
-
-                                                        <div className='fw-semibold fs-6 text-gray-400'>
-                                                            Users
-                                                        </div>
-                                                    </div>
-
-                                                    <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
-                                                        <div className='d-flex align-items-center'>
-                                                            <App
-                                                                size={20}
-                                                                className='text-warning me-2 '
-                                                            />
-                                                            <div
-                                                                className='fs-2 fw-bold counted'
-                                                                data-kt-countup='true'
-                                                                data-kt-countup-value='80'
-                                                                data-kt-initialized='1'>
-                                                                80
-                                                            </div>
-                                                        </div>
-
-                                                        <div className='fw-semibold fs-6 text-gray-400'>
-                                                            Products
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> */}
                                     </div>
                                 </div>
                                 {isCompanyOwner && (
@@ -161,7 +129,7 @@ const ProfileLayout = () => {
                                         <li className='nav-item mt-2'>
                                             <Link
                                                 className='nav-link  ms-0 me-10 py-5 '
-                                                to={`${id}`}>
+                                                to={""}>
                                                 Overview
                                             </Link>
                                         </li>
