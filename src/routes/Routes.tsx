@@ -49,6 +49,7 @@ import AgentLayout from "../ui/features/agent/AgentLayout";
 import AddAgent from "../ui/features/agent/AddAgent";
 import SingleProduct from "../ui/features/products/SingleProduct";
 import BuyProduct from "../ui/features/company/BuyProduct";
+import CompanyProductList from "../ui/features/products/CompanyProductList";
 
 const router = createBrowserRouter([
     {
@@ -115,7 +116,7 @@ const router = createBrowserRouter([
 
                         children: [
                             {
-                                path: "",
+                                path: "dashboard",
                                 element: <CompanyDashboard />,
                             },
                             // products for all company users
@@ -127,6 +128,25 @@ const router = createBrowserRouter([
                                         <AddCompany />
                                     </ProtectCompanyOwner>
                                 ),
+                            },
+
+                            {
+                                path: "products",
+                                element: <ProductLayout />,
+                                children: [
+                                    {
+                                        path: "view",
+                                        element: <CompanyProductList />,
+                                    },
+                                    {
+                                        path: "buy",
+                                        element: <BuyProduct />,
+                                    },
+                                    {
+                                        path: ":productId",
+                                        element: <SingleProduct />,
+                                    },
+                                ],
                             },
                             {
                                 path: "profile/:id",
@@ -170,21 +190,6 @@ const router = createBrowserRouter([
                                                 element: <AddAgent />,
                                             },
                                         ],
-                                    },
-                                ],
-                            },
-
-                            {
-                                path: "products",
-                                element: <ProductLayout />,
-                                children: [
-                                    {
-                                        path: "buy",
-                                        element: <BuyProduct />,
-                                    },
-                                    {
-                                        path: ":productId",
-                                        element: <SingleProduct />,
                                     },
                                 ],
                             },

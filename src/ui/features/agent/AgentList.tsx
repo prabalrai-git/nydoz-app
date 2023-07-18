@@ -3,8 +3,6 @@ import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { IAgentResponse } from "../../../types/payload.type";
 import BASE_URL from "../../../constants/AppSetting";
-
-import TanStackTable from "../../shared/molecules/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -204,7 +202,7 @@ const DocumentList = () => {
                 <Link
                     to={`add`}
                     onClick={handleAddDocumentOpen}
-                    className='btn btn-info btn-sm'>
+                    className='btn btn-success btn-sm'>
                     <span className='mx-2'>Add Agent</span>
                 </Link>
             </div>
@@ -212,7 +210,7 @@ const DocumentList = () => {
                 <div className='card'>
                     <DataListTable
                         pagination={pagination}
-                        columns={tableColumns}
+                        columns={tableColumns as ColumnDef<unknown>[]}
                         data={data ?? []}
                         fetchData={fetchData}
                     />

@@ -8,6 +8,7 @@ import CompanyLoader from "../../shared/components/company/CompanyLoader";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import { Link } from "react-router-dom";
 import { FileBarGraph, Folder, Person } from "react-bootstrap-icons";
+import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 const CompanyLayout = () => {
     const { dispatch, companyInfo, userInfo } = useAuthContext();
@@ -74,67 +75,70 @@ const CompanyLayout = () => {
             ) : (
                 <div>
                     <div>
-                        <ul className='nav nav-pills nav-pills-custom mb-3'>
-                            <li
-                                className='nav-item my-6 me-3 me-lg-6'
-                                role='presentation'>
-                                <Link
-                                    className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green'
-                                    data-bs-toggle='pill'
-                                    to=''
-                                    aria-selected='true'
-                                    role='tab'>
-                                    <div className='nav-icon'>
-                                        <FileBarGraph
-                                            size='30'
-                                            color='#70b541'
-                                        />
-                                    </div>
-                                    <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
-                                        Dashboard
-                                    </span>
-                                    <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
-                                </Link>
-                            </li>
-                            <li
-                                className='nav-item my-6 me-3 me-lg-6 '
-                                role='presentation'>
-                                <Link
-                                    className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green '
-                                    data-bs-toggle='pill'
-                                    to={`profile/${companyInfo?.id}`}
-                                    aria-selected='true'
-                                    role='tab'>
-                                    <div className='nav-icon'>
-                                        <Person size='30' color='#70b541' />
-                                    </div>
-                                    <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
-                                        Profile
-                                    </span>
-                                    <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
-                                </Link>
-                            </li>
-                            <li
-                                className='nav-item my-6 me-3 me-lg-6'
-                                role='presentation'>
-                                <Link
-                                    className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green'
-                                    data-bs-toggle='pill'
-                                    to='home/sabkura/products/buy'
-                                    aria-selected='true'
-                                    role='tab'>
-                                    <div className='nav-icon'>
-                                        <Folder size='30' color='#70b541' />
-                                    </div>
-
-                                    <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
-                                        Products
-                                    </span>
-                                    <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
-                                </Link>
-                            </li>
-                        </ul>
+                        <CompanyBreadcrumb
+                            title={companyInfo?.name || "HOME"}
+                            btnText='Back'
+                            showBreadcrumb={true}
+                        />
                     </div>
+                    <ul className='nav nav-pills nav-pills-custom '>
+                        <li
+                            className='nav-item my-6 me-3 me-lg-6'
+                            role='presentation'>
+                            <Link
+                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green'
+                                data-bs-toggle='pill'
+                                to='dashboard'
+                                aria-selected='true'
+                                role='tab'>
+                                <div className='nav-icon'>
+                                    <FileBarGraph size='30' color='#70b541' />
+                                </div>
+                                <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
+                                    Dashboard
+                                </span>
+                                <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
+                            </Link>
+                        </li>
+                        <li
+                            className='nav-item my-6 me-3 me-lg-6 '
+                            role='presentation'>
+                            <Link
+                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green '
+                                data-bs-toggle='pill'
+                                to={`profile/${companyInfo?.id}`}
+                                aria-selected='true'
+                                role='tab'>
+                                <div className='nav-icon'>
+                                    <Person size='30' color='#70b541' />
+                                </div>
+                                <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
+                                    Profile
+                                </span>
+                                <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
+                            </Link>
+                        </li>
+                        <li
+                            className='nav-item my-6 me-3 me-lg-6'
+                            role='presentation'>
+                            <Link
+                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green'
+                                data-bs-toggle='pill'
+                                to='products/view'
+                                aria-selected='true'
+                                role='tab'>
+                                <div className='nav-icon'>
+                                    <Folder size='30' color='#70b541' />
+                                </div>
+
+                                <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
+                                    Products
+                                </span>
+                                <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
+                            </Link>
+                        </li>
+                    </ul>
+
                     <Outlet />
                 </div>
             )}

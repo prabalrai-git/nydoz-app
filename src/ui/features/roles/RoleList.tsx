@@ -169,7 +169,7 @@ const DocumentList = () => {
                 <h4>Roles List</h4>
                 <button
                     onClick={handleAddDocumentOpen}
-                    className='btn btn-info btn-sm'>
+                    className='btn btn-success btn-sm'>
                     <span className='mx-2'>Add Roles</span>
                 </button>
             </div>
@@ -177,7 +177,7 @@ const DocumentList = () => {
                 <div className='card'>
                     <DataListTable
                         data={data ?? []}
-                        columns={tableColumns}
+                        columns={tableColumns as ColumnDef<unknown>[]}
                         showSearchBar={false}
                         pagination={pagination}
                         fetchData={fetchData}

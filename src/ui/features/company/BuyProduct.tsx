@@ -117,7 +117,7 @@ const BuyProduct = () => {
         const response = await postData(payload);
         if (response?.status === 201) {
             toast.success("Product bought successfully");
-            navigate(`/home/${companyInfo?.subdomain}`);
+            navigate(`/home/${companyInfo?.subdomain}/dashboard`);
         } else {
             toast.error("Something went wrong");
         }
