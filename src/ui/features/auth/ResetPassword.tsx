@@ -42,7 +42,7 @@ const ResetPassword = () => {
     });
 
     const onFormSubmit = handleSubmit(async (data: IChangePasswordFormData) => {
-        console.log(data);
+        // console.log(data);
         if (!reset_code || !email) return toast.error("Something went wrong");
 
         const payload = { ...data, email, reset_code };

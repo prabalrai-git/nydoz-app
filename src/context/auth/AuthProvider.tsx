@@ -44,7 +44,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         setShowSplashScreen(true);
         try {
             const response = await fetchData();
-            console.log(response?.data, "response in auth provider");
 
             if (response?.data?.payload) {
                 const userResponseObj = response?.data?.payload;
@@ -69,7 +68,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
                 });
             }
         } catch (error) {
-            console.log(error, "error in auth provider");
+            // console.log(error, "error in auth provider");
             toast.error("Something went wrong");
             dispatch({
                 type: "LOGOUT",

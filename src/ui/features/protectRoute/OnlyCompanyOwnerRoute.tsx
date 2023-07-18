@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import useAuthContext from "../../../../context/auth/useAuthContext";
+import useAuthContext from "../../../context/auth/useAuthContext";
 import { Navigate } from "react-router-dom";
 
 const OnlyCompanyOwnerRoute: FC<{ children: React.ReactNode }> = ({

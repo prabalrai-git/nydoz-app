@@ -24,23 +24,18 @@ const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
                     <ul className='breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0'>
                         {pathnames.map((path, index) => {
                             return (
-                                <>
-                                    <li
-                                        key={index}
-                                        className='breadcrumb-item text-muted'>
-                                        <div
-                                            // to={`/${path}`}
-                                            className='text-muted text-hover-primary'>
-                                            {capitalizeText(path)}
-                                        </div>
-                                    </li>
-
+                                <li
+                                    key={index}
+                                    className='breadcrumb-item text-muted'>
+                                    <div
+                                        // to={`/${path}`}
+                                        className='text-muted text-hover-primary'>
+                                        {capitalizeText(path)}
+                                    </div>
                                     {pathnames.length - 1 !== index && (
-                                        <li className='breadcrumb-item'>
-                                            <span className='bullet bg-gray-400 w-5px h-2px'></span>
-                                        </li>
+                                        <span className='bullet bg-gray-400 w-5px h-2px mx-3'></span>
                                     )}
-                                </>
+                                </li>
                             );
                         })}
                     </ul>

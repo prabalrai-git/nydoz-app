@@ -32,7 +32,6 @@ const CompanyLayout = () => {
             const response = await fetchDataById(url);
             if (response?.data?.payload) {
                 const { payload } = response.data;
-                console.log(payload, "payload");
                 const companyInfo = {
                     id: payload.id,
                     name: payload.name,
@@ -52,18 +51,13 @@ const CompanyLayout = () => {
                 });
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         } finally {
             setShowSplashScreen(false);
         }
     }, [companySubdomian, fetchDataById, dispatch, userInfo?.id]);
 
     useEffect(() => {
-        console.log(
-            companySubdomian,
-            companyInfo?.subdomain,
-            "companySubdomian"
-        );
         if (companySubdomian !== companyInfo?.subdomain) {
             fetchCompanyInfo();
         } else {

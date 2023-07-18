@@ -63,7 +63,7 @@ const AddCompany = () => {
     }, [location?.state?.data, reset]);
 
     useEffect(() => {
-        console.log("errList", errList);
+        // console.log("errList", errList);
         if (errList) {
             Object.keys(errList).forEach((fieldName) => {
                 const errorMessages = errList[fieldName];
@@ -82,7 +82,7 @@ const AddCompany = () => {
     }, [error]);
 
     const onFormSubmit = handleSubmit(async (data: IAddAgentForm) => {
-        console.log("data", data);
+        // console.log("data", data);
 
         if (!selectedCountry) {
             toast.error("Please select country");
@@ -108,7 +108,7 @@ const AddCompany = () => {
                 location?.state?.data?.id,
                 tempPostData
             );
-            console.log("response", response);
+            // console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company updated Successfully");
                 navigate("home");
@@ -124,7 +124,7 @@ const AddCompany = () => {
                 profile_picture: thumbnilImg?.[0] ?? "",
             };
             response = await postData(tempPostData);
-            console.log("response", response);
+            // console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Agent Added Successfully");
                 navigate("list");

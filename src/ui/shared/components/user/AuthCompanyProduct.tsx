@@ -7,8 +7,12 @@ import { IUserCompanyProductsResponse } from "../../../../types/payload.type";
 import LoadingSpinner from "../../molecules/LoadingSpinner";
 import NotFound from "../../molecules/NotFound";
 import ImageAtom from "../../atoms/ImageAtom";
+import APP_SETTING from "../../../../config/AppSetting";
+import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
+    const navigate = useNavigate();
+    const { NODE_ENV } = APP_SETTING;
     const { data, fetchData, isloading } =
         useFetch<IUserCompanyProductsResponse>(
             API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS,
@@ -20,10 +24,15 @@ const ProductList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleProductClick = (iproductId: string, subdomain: string) => {
+    const handleProductClick = (productId: string, subdomain: string) => {
+        if (NODE_ENV === "production") {
+            window.location.href = `https://${subdomain}.nydoz.app/home/${subdomain}/products/${productId}`;
+        } else {
+            navigate(`/home/${subdomain}/products/${productId}`);
+        }
         // prod url window.location.href = `http://${subdomain}.api.nydoz.app/home/${subdomain}/products/${iproductId}`;
 
-        window.location.href = `http://localhost:5173/home/${subdomain}/products/${iproductId}`;
+        // window.location.href = `http://localhost:5173/home/${subdomain}/products/${iproductId}`;
     };
 
     return (

@@ -156,7 +156,7 @@ const AddCompany = () => {
                 cover_image: coverImg?.[0] ?? "",
             };
             response = await postData(tempPostData);
-            console.log("response", response);
+            // console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company Added Successfully");
                 navigate("/home");

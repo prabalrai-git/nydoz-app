@@ -5,12 +5,15 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { BuildingAdd, GearWide, PersonGear } from "react-bootstrap-icons";
 import Hamburger from "../../atoms/Hamburger";
 import Images from "../../../../constants/Images";
-
 import { Link, useNavigate } from "react-router-dom";
 import { BoxArrowRight } from "react-bootstrap-icons";
 import useAuthContext from "../../../../context/auth/useAuthContext";
+import { use } from "i18next";
+import useSubdomain from "../../../../hooks/useSubdomain";
 
 const Header2 = () => {
+    const urlSubdomain = useSubdomain();
+
     const { isLoggedIn, dispatch } = useAuthContext();
     const navigate = useNavigate();
     const handleNavigateCreateCompany = () => {
@@ -56,9 +59,19 @@ const Header2 = () => {
                     <ul className='navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll'>
                         {isLoggedIn && (
                             <li className='nav-item'>
-                                <Link to={"/home"} className='nav-link fs-7'>
-                                    Dashboard
-                                </Link>
+                                {urlSubdomain ? (
+                                    <Link
+                                        to={"/home/sabkura/dashboard"}
+                                        className='nav-link fs-7'>
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        to={"/home"}
+                                        className='nav-link fs-7'>
+                                        Workspace
+                                    </Link>
+                                )}
                             </li>
                         )}
 

@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { ILoginResponse } from "../../../types/payload.type";
 import AuthContext from "../../../context/auth/AuthContext";
 import useSubdomain from "../../../hooks/useSubdomain";
+import APP_SETTING from "../../../config/AppSetting";
 interface FormData {
     email: string;
     password: string;
@@ -25,7 +26,7 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const navigate = useNavigate();
-
+    const { PROD } = APP_SETTING;
     const { postData, isLoading, error } = useMutation<ILoginResponse>(
         API_ROUTE.LOGIN,
         false
@@ -67,8 +68,10 @@ const LoginPage = () => {
                 payload: { userInfo: payload.user, token: payload.token },
             });
 
-            if (subdomain && subdomain !== "localhost") {
-                navigate(`/home/${subdomain}/dashboard`, { replace: true });
+            // console.log("subdomain", subdomain);
+
+            if (subdomain && subdomain !== "localhost" && PROD) {
+                window.location.href = `https://${subdomain}.nydoz.app/home/${subdomain}/dashboard`;
             } else {
                 navigate("/home", { replace: true });
             }

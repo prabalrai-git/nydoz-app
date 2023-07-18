@@ -46,7 +46,7 @@ function useFileUpload<T>(
             return response;
         } catch (error) {
             const axiosError = error as AxiosError<IErrorData>;
-            console.log(axiosError, "axiosError");
+            // console.log(axiosError, "axiosError");
             if (axiosError?.response?.status === 500) {
                 setError("Something went wrong");
                 return undefined;

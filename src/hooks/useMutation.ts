@@ -61,7 +61,7 @@ function useMutation<T>(
             return response;
         } catch (error) {
             const axiosError = error as AxiosError<IErrorData>;
-            console.log(axiosError, "axiosError");
+            // console.log(axiosError, "axiosError");
             if (axiosError?.response?.status === 500) {
                 setError("Something went wrong");
                 return undefined;
@@ -91,7 +91,7 @@ function useMutation<T>(
                 setError("Something went wrong");
                 return undefined;
             }
-            console.log(axiosError?.response);
+            // console.log(axiosError?.response);
 
             setError(
                 axiosError?.response?.data?.message || "Something went wrong"
@@ -116,7 +116,7 @@ function useMutation<T>(
                 setError("Something went wrong");
                 return undefined;
             }
-            console.log(axiosError?.response);
+            // console.log(axiosError?.response);
 
             setError(
                 axiosError?.response?.data?.message || "Something went wrong"

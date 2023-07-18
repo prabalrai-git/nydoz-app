@@ -7,7 +7,8 @@ import App from "../App";
 import ProtectAuth from "../ui/features/auth/ProtectAuth";
 import Protected from "../ui/features/auth/ProtectedRoute";
 // import ProtectCompany from "../ui/features/ProtectRoutes/ProtectCompany";
-import ProtectCompanyOwner from "../ui/features/company/protectRoute/OnlyCompanyOwnerRoute";
+import ProtectHomeRoute from "../ui/protection/ProtectHome";
+import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
 
 //Auth Routes
 import AuthLayout from "../ui/features/auth/Layout";

@@ -34,7 +34,7 @@ const ChangePassword = () => {
 
     const onFormSubmit = handleSubmit(async (data: IChangePasswordFormData) => {
         const response = await postData(data);
-        console.log(response, "response");
+        // console.log(response, "response");
         if (response?.data?.message) {
             toast.success(response?.data?.message);
             setIsEmailSent(true);

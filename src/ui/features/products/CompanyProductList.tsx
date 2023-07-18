@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import NotFound from "../../shared/molecules/NotFound";
 import ImageAtom from "../../shared/atoms/ImageAtom";
 import useAuthContext from "../../../context/auth/useAuthContext";
+import { Link } from "react-router-dom";
 
 const ProductList = () => {
     const { companyInfo } = useAuthContext();
@@ -34,7 +35,8 @@ const ProductList = () => {
             {data && data.length > 0 && (
                 <div className='d-flex'>
                     {data.map((product) => (
-                        <div
+                        <Link
+                            to={`/home/${companyInfo?.subdomain}/products/${product.id}`}
                             key={product.id}
                             className='flex-wrap cursor-pointer'>
                             <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box mx-3'>
@@ -46,12 +48,12 @@ const ProductList = () => {
                                     />
                                 </div>
                                 <div className='card-body'>
-                                    <h5 className='card-title mt-6 mb-4'>
+                                    <h5 className='card-title mt-6 mb-4 text-primary'>
                                         {product.name}
                                     </h5>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             )}
