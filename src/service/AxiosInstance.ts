@@ -1,6 +1,6 @@
 import axios from "axios";
 import APP_SETTING from "../config/AppSetting.ts";
-const { VITE_BASE_URL, PROD } = APP_SETTING;
+const { VITE_BASE_URL } = APP_SETTING;
 
 function getSubdomain() {
     const parts = window.location.hostname.split(".");

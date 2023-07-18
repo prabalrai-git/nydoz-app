@@ -26,7 +26,7 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const navigate = useNavigate();
-    const { PROD } = APP_SETTING;
+    const { MODE, VITE_HOST } = APP_SETTING;
     const { postData, isLoading, error } = useMutation<ILoginResponse>(
         API_ROUTE.LOGIN,
         false
@@ -68,11 +68,31 @@ const LoginPage = () => {
                 payload: { userInfo: payload.user, token: payload.token },
             });
 
-            // console.log("subdomain", subdomain);
+            console.log("subdomain", subdomain);
+            console.log(" MODE", MODE);
+            console.log(" VITE_HOST", VITE_HOST);
+            if (
+                (VITE_HOST === "LOCALHOST" && !subdomain) ||
+                subdomain === "localhost"
+            ) {
+                navigate("/home", { replace: true });
+            }
 
-            if (subdomain && subdomain !== "localhost" && PROD) {
-                window.location.href = `https://${subdomain}.nydoz.app/home/${subdomain}/dashboard`;
-            } else {
+            if (VITE_HOST === "LOCALHOST" && subdomain) {
+                navigate(`/home/${subdomain}/dashboard`, { replace: true });
+            }
+
+            if (
+                VITE_HOST !== "LOCALHOST" &&
+                subdomain &&
+                subdomain !== "localhost"
+            ) {
+                navigate(`/home/${subdomain}/dashboard`, {
+                    replace: true,
+                });
+            }
+
+            if (VITE_HOST !== "LOCALHOST" && !subdomain) {
                 navigate("/home", { replace: true });
             }
         }

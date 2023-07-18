@@ -5,9 +5,9 @@ import App from "../App";
 
 //Protection
 import ProtectAuth from "../ui/features/auth/ProtectAuth";
-import Protected from "../ui/features/auth/ProtectedRoute";
+import OnlyLoginUsersRoute from "../ui/features/auth/ProtectedRoute";
 // import ProtectCompany from "../ui/features/ProtectRoutes/ProtectCompany";
-import ProtectHomeRoute from "../ui/protection/ProtectHome";
+// import ProtectHomeRoute from "../ui/protection/ProtectHome";
 import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
 
 //Auth Routes
@@ -97,10 +97,17 @@ const router = createBrowserRouter([
 
             {
                 path: "home",
+                // element: (
+                //     <OnlyLoginUsersRoute>
+                //         <ProtectHomeRoute>
+                //             <UserLayout />
+                //         </ProtectHomeRoute>
+                //     </OnlyLoginUsersRoute>
+                // ),
                 element: (
-                    <Protected>
+                    <OnlyLoginUsersRoute>
                         <UserLayout />
-                    </Protected>
+                    </OnlyLoginUsersRoute>
                 ),
                 children: [
                     {

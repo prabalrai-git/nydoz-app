@@ -4,8 +4,6 @@
   --bs-font-sans-serif: Inter, Helvetica, "sans-serif";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
 
-// admin Navbar
-
 #admin-navbar {
     font-family: var(--bs-font-montserrat);
     font-weight: 500;

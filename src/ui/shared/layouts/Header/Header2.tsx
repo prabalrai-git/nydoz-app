@@ -8,7 +8,6 @@ import Images from "../../../../constants/Images";
 import { Link, useNavigate } from "react-router-dom";
 import { BoxArrowRight } from "react-bootstrap-icons";
 import useAuthContext from "../../../../context/auth/useAuthContext";
-import { use } from "i18next";
 import useSubdomain from "../../../../hooks/useSubdomain";
 
 const Header2 = () => {

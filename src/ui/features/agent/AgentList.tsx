@@ -10,9 +10,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
-import DataListTable from "../../shared/components/DataListTable";
 import { Link } from "react-router-dom";
 import { Flag, People } from "react-bootstrap-icons";
+import TanStackTable from "../../shared/molecules/TanStackTable";
 
 const DocumentList = () => {
     const { id: companyId } = useParams<string>();
@@ -25,7 +25,7 @@ const DocumentList = () => {
 
     const getDocumentUrl = `${API_ROUTE.GET_CLIENT_MANAGEMENT_AGENTS}`;
 
-    const { data, fetchData, pagination } = useFetch<IAgentResponse[]>(
+    const { data, fetchData } = useFetch<IAgentResponse[]>(
         getDocumentUrl,
         true
     );
@@ -202,12 +202,9 @@ const DocumentList = () => {
             </div>
             <section>
                 <div className='card'>
-                    <DataListTable
-                        pagination={pagination}
-                        columns={tableColumns as ColumnDef<unknown>[]}
-                        data={data ?? []}
-                        fetchData={fetchData}
-                    />
+                    {data && (
+                        <TanStackTable columns={tableColumns} data={data} />
+                    )}
                 </div>
             </section>
             <Modal2

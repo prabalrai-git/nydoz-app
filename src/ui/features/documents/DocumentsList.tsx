@@ -25,7 +25,7 @@ const DocumentList = () => {
 
     const getDocumentUrl = `${API_ROUTE.GET_DOCUMENTS_BY_COMPANY_ID}/${companyId}/documents`;
 
-    const { data, fetchData, pagination } = useFetch<IDocumentResponse[]>(
+    const { data, fetchData } = useFetch<IDocumentResponse[]>(
         getDocumentUrl,
         true
     );
@@ -206,11 +206,7 @@ const DocumentList = () => {
             </div>
             <section>
                 <div className='card'>
-                    <TanStackTable
-                        pagination={pagination}
-                        columns={tableColumns}
-                        data={data ?? []}
-                    />
+                    <TanStackTable columns={tableColumns} data={data ?? []} />
                 </div>
             </section>
             <Modal2
