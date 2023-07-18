@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header2 from "../../shared/layouts/Header/Header2";
-import Header from "../../shared/layouts/Header/Header";
+// import Header from "../../shared/layouts/Header/Header";
 
 const MainLayout = () => {
     return (

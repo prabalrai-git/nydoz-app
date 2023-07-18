@@ -21,6 +21,7 @@ const SearchBar = (props: ISearchBarProps) => {
                 clearTimeout(timer);
             };
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

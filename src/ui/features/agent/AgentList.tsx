@@ -21,7 +21,6 @@ const DocumentList = () => {
         IAgentResponse | undefined
     >();
     const [show, setShow] = useState<boolean>(false);
-    const [openAddDocument, setOpenAddDocument] = useState(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
 
     const getDocumentUrl = `${API_ROUTE.GET_CLIENT_MANAGEMENT_AGENTS}`;
@@ -192,17 +191,12 @@ const DocumentList = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const handleAddDocumentClose = () => setOpenAddDocument(false);
-    const handleAddDocumentOpen = () => setOpenAddDocument(true);
 
     return (
         <div className='my-6 px-3'>
             <div className='d-flex justify-content-between align-items-center mb-6'>
                 <h4>Agents List</h4>
-                <Link
-                    to={`add`}
-                    onClick={handleAddDocumentOpen}
-                    className='btn btn-success btn-sm'>
+                <Link to={`add`} className='btn btn-success btn-sm'>
                     <span className='mx-2'>Add Agent</span>
                 </Link>
             </div>

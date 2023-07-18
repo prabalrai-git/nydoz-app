@@ -5,8 +5,7 @@ import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
 import BASE_URL from "../../../constants/AppSetting";
-import Heading from "../../shared/molecules/Heading";
-import Breadcrumb from "../../shared/molecules/Breadcrumb";
+
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
 import { Link } from "react-router-dom";
 import { Flag } from "react-bootstrap-icons";

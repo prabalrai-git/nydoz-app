@@ -2,7 +2,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Bell, BuildingAdd, GearWide, PersonGear } from "react-bootstrap-icons";
+import { BuildingAdd, GearWide, PersonGear } from "react-bootstrap-icons";
 import Hamburger from "../../atoms/Hamburger";
 import Images from "../../../../constants/Images";
 

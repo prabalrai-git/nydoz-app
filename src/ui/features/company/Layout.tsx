@@ -9,6 +9,7 @@ import useAuthContext from "../../../context/auth/useAuthContext";
 import { Link } from "react-router-dom";
 import { FileBarGraph, Folder, Person } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
+import useHandleShowError from "../../../hooks/useHandleShowError";
 
 const CompanyLayout = () => {
     const { dispatch, companyInfo, userInfo } = useAuthContext();
@@ -18,6 +19,8 @@ const CompanyLayout = () => {
         API_ROUTE.GET_COMPANY_BY_SUBDOMAIN,
         true
     );
+
+    useHandleShowError(error);
 
     const fetchCompanyInfo = useCallback(async () => {
         try {

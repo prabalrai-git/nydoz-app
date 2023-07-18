@@ -5,12 +5,15 @@ import API_ROUTE from "../../../../service/api";
 import { IProductResponse } from "../../../../types/payload.type";
 import LoadingPage from "../../../features/utils/LoadingPage";
 import ImageAtom from "../../atoms/ImageAtom";
+import useHandleShowError from "../../../../hooks/useHandleShowError";
 
 const ProductList = () => {
     const { data, error, isloading, fetchData } = useFetch<IProductResponse[]>(
         API_ROUTE.GET_PRODUCTS_LIST,
         true
     );
+
+    useHandleShowError(error);
 
     useEffect(() => {
         fetchData();
