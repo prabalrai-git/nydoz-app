@@ -68,33 +68,7 @@ const LoginPage = () => {
                 payload: { userInfo: payload.user, token: payload.token },
             });
 
-            console.log("subdomain", subdomain);
-            console.log(" MODE", MODE);
-            console.log(" VITE_HOST", VITE_HOST);
-            if (
-                (VITE_HOST === "LOCALHOST" && !subdomain) ||
-                subdomain === "localhost"
-            ) {
-                navigate("/home", { replace: true });
-            }
-
-            if (VITE_HOST === "LOCALHOST" && subdomain) {
-                navigate(`/home/${subdomain}/dashboard`, { replace: true });
-            }
-
-            if (
-                VITE_HOST !== "LOCALHOST" &&
-                subdomain &&
-                subdomain !== "localhost"
-            ) {
-                navigate(`/home/${subdomain}/dashboard`, {
-                    replace: true,
-                });
-            }
-
-            if (VITE_HOST !== "LOCALHOST" && !subdomain) {
-                navigate("/home", { replace: true });
-            }
+            navigate("/home", { replace: true });
         }
     });
 

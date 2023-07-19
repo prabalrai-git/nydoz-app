@@ -236,7 +236,7 @@ const Register = () => {
                                                             )
                                                         }
                                                         className='btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2'>
-                                                        {showPassword ? (
+                                                        {showConfirmPassword ? (
                                                             <Eye size={16} />
                                                         ) : (
                                                             <EyeSlash
@@ -299,6 +299,7 @@ const Register = () => {
                                         <Button
                                             variant='primary'
                                             type='submit'
+                                            disabled={isLoading}
                                             className='w-100'>
                                             {isLoading ? (
                                                 <>

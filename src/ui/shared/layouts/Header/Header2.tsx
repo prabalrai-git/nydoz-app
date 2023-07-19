@@ -1,6 +1,5 @@
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
-import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { BuildingAdd, GearWide, PersonGear } from "react-bootstrap-icons";
 import Hamburger from "../../atoms/Hamburger";
@@ -138,34 +137,30 @@ const Header2 = () => {
                                         <LinkContainer
                                             className='py-1'
                                             to='/auth/login'>
-                                            <Nav.Link>
-                                                <div>
-                                                    <span className='me-3'>
-                                                        <PersonGear
-                                                            size={16}
-                                                            color='#000000'
-                                                        />
-                                                    </span>
-                                                    <span>My Account</span>
-                                                </div>
-                                            </Nav.Link>
+                                            <div>
+                                                <span className='me-3'>
+                                                    <PersonGear
+                                                        size={16}
+                                                        color='#000000'
+                                                    />
+                                                </span>
+                                                <span>My Account</span>
+                                            </div>
                                         </LinkContainer>
                                     </NavDropdown.Item>
                                     <NavDropdown.Item>
                                         <LinkContainer
                                             className='py-1'
                                             to='change-password'>
-                                            <Nav.Link>
-                                                <div>
-                                                    <span className='me-3'>
-                                                        <GearWide
-                                                            size={16}
-                                                            color='#000000'
-                                                        />
-                                                    </span>
-                                                    <span>Change Password</span>
-                                                </div>
-                                            </Nav.Link>
+                                            <div>
+                                                <span className='me-3'>
+                                                    <GearWide
+                                                        size={16}
+                                                        color='#000000'
+                                                    />
+                                                </span>
+                                                <span>Change Password</span>
+                                            </div>
                                         </LinkContainer>
                                     </NavDropdown.Item>
 
@@ -191,7 +186,7 @@ const Header2 = () => {
                             <LinkContainer
                                 className='btn btn-primary'
                                 to='/auth/login'>
-                                <Nav.Link>Login</Nav.Link>
+                                <span>Login</span>
                             </LinkContainer>
                         </div>
                     )}

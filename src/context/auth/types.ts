@@ -30,6 +30,7 @@ export interface IState {
 
 export type TAction =
     | { type: "LOGIN"; payload: { userInfo: IUserInfo; token: string } }
+    | { type: "SET_TOKEN"; payload: { token: string | null } }
     | {
           type: "SET_USER_INFO";
           payload: {

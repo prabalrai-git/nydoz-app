@@ -12,7 +12,7 @@ import useAuthContext from "../../../context/auth/useAuthContext";
 import { Link } from "react-router-dom";
 
 const ProductList = () => {
-    const { companyInfo } = useAuthContext();
+    const { companyInfo, isCompanyOwner } = useAuthContext();
     const companyId = companyInfo?.id;
     const proudctListUrl = `${API_ROUTE.GET_COMPANIES}/${companyId}/products`;
     const { data, fetchData, isloading } = useFetch<IProductResponse[]>(
@@ -59,7 +59,15 @@ const ProductList = () => {
             )}
             {data && data?.length === 0 && (
                 <div>
-                    <NotFound title='This company is not subscribed to any products .  ' />
+                    <NotFound title='This company is not subscribed to any products .' />
+
+                    {isCompanyOwner && (
+                        <Link
+                            to={`/home/${companyInfo?.subdomain}/products/buy`}
+                            className='btn btn-success my-3'>
+                            BUY PRODUCTS
+                        </Link>
+                    )}
                 </div>
             )}
         </div>
