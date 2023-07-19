@@ -4,7 +4,7 @@ const { VITE_BASE_URL } = APP_SETTING;
 
 function getSubdomain() {
     const parts = window.location.hostname.split(".");
-    console.log(parts, "parts");
+    // console.log(parts, "parts");
     if (parts.length > 2 && parts[0] !== "www" && parts[0] !== "localhost") {
         return parts[0];
     }

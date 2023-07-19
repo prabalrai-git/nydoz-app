@@ -26,7 +26,7 @@ const CompanyListCard = () => {
         // } else {
         //      window.open(`http://${subdomain}.localhost:3000`);
         // }
-        navigate(subdomain);
+        navigate(`${subdomain}/dashboard`);
     };
 
     return (

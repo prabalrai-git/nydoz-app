@@ -81,7 +81,7 @@ const ProductList = () => {
                 </div>
             )}
             {data?.companies?.length === 0 && (
-                <NotFound title='Products Not Found. Please refresh the page.' />
+                <NotFound title='Products Not Found. Create company to use product.' />
             )}
             {!isloading &&
                 data?.companies &&
