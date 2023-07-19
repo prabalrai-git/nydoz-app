@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
 import useFetch from "../../../../hooks/useFetch";
 import { ICompanyResponse } from "../../../../types/payload.type";
-import { Link } from "react-router-dom";
 import ImageAtom from "../../atoms/ImageAtom";
+import { Link } from "react-router-dom";
 
 const CompanyListCard = () => {
     const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
@@ -35,12 +35,11 @@ const CompanyListCard = () => {
                 </div>
             </div>
             <div className='card-body pt6'>
-                {data?.map((item: ICompanyResponse, index: number) => (
+                {data?.map((item: ICompanyResponse) => (
                     <Link
-                        key={index}
-                        // to={`company/profile/${item.id}`}
+                        key={item.id}
                         to={item.subdomain}
-                        className='d-flex flex-stack mb-3'>
+                        className='d-flex flex-stack mb-3 cursor-pointer'>
                         <div className='symbol symbol-40px me-4'>
                             <ImageAtom
                                 src={item.logo}
@@ -51,9 +50,7 @@ const CompanyListCard = () => {
 
                         <div className='d-flex align-items-center flex-row-fluid flex-wrap'>
                             <div className='flex-grow-1 me-2'>
-                                <a
-                                    href='/metronic8/demo1/../demo1/pages/user-profile/overview.html'
-                                    className='text-gray-800 text-hover-primary fs-6 fw-bold'>
+                                <a className='text-gray-800 text-hover-primary fs-6 fw-bold'>
                                     {item.name}
                                 </a>
 
@@ -75,8 +72,14 @@ const CompanyListCard = () => {
                 ))}
 
                 {!isloading && data?.length === 0 && (
-                    <div>
-                        <h3> Not Avaible</h3>
+                    <div className='row'>
+                        <div>
+                            <h4>
+                                No Company Found . Please create company to buy
+                                products.
+                            </h4>
+                            <Link to='create-company'>Create Company</Link>
+                        </div>
                     </div>
                 )}
             </div>

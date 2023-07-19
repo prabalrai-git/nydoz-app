@@ -10,20 +10,23 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../../context/AuthContext";
+// import { AuthContext } from "../../../context/AuthContext";
 import { ILoginResponse } from "../../../types/payload.type";
-
+import AuthContext from "../../../context/auth/AuthContext";
+import useSubdomain from "../../../hooks/useSubdomain";
+import APP_SETTING from "../../../config/AppSetting";
 interface FormData {
     email: string;
     password: string;
 }
 
 const LoginPage = () => {
-    const { loginFn } = useContext(AuthContext);
+    const { dispatch } = useContext(AuthContext);
+    const subdomain = useSubdomain();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const navigate = useNavigate();
-
+    const { MODE, VITE_HOST } = APP_SETTING;
     const { postData, isLoading, error } = useMutation<ILoginResponse>(
         API_ROUTE.LOGIN,
         false
@@ -49,24 +52,60 @@ const LoginPage = () => {
 
             if (!user || !token) return toast.error("Login Failed");
             toast.success(response?.data?.message || "Login Successful");
-
+            localStorage.setItem("rememberMe", rememberMe.toString());
+            if (rememberMe) {
+                localStorage.setItem("token", token);
+            } else {
+                sessionStorage.setItem("token", token);
+            }
             const payload: ILoginResponse = {
                 user: user,
                 token: token,
             };
-            loginFn(payload, rememberMe);
-            navigate("/home", { replace: true });
+            // loginFn(payload, rememberMe);
+            dispatch({
+                type: "LOGIN",
+                payload: { userInfo: payload.user, token: payload.token },
+            });
+
+            console.log("subdomain", subdomain);
+            console.log(" MODE", MODE);
+            console.log(" VITE_HOST", VITE_HOST);
+            if (
+                (VITE_HOST === "LOCALHOST" && !subdomain) ||
+                subdomain === "localhost"
+            ) {
+                navigate("/home", { replace: true });
+            }
+
+            if (VITE_HOST === "LOCALHOST" && subdomain) {
+                navigate(`/home/${subdomain}/dashboard`, { replace: true });
+            }
+
+            if (
+                VITE_HOST !== "LOCALHOST" &&
+                subdomain &&
+                subdomain !== "localhost"
+            ) {
+                navigate(`/home/${subdomain}/dashboard`, {
+                    replace: true,
+                });
+            }
+
+            if (VITE_HOST !== "LOCALHOST" && !subdomain) {
+                navigate("/home", { replace: true });
+            }
         }
     });
 
     return (
         <div className='container pt-4' id='kt_app_root '>
             <div className='row '>
-                <div className='col-12  col-md-8 col-lg-4  offset-0 offset-md-2 offset-lg-4 '>
+                <div className='col-12  col-md-8 col-lg-6  offset-0 offset-md-2 offset-lg-3 '>
                     <div className='card shadow shadwo-sm p-3 mt-4'>
                         <div className='card-body'>
                             <div className='row mb-3'>
-                                <div className='col-12 text-center'>
+                                <div className='col-12 text-center mb-6'>
                                     <img
                                         className='mb-2'
                                         src={CompanyLogo}

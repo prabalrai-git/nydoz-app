@@ -13,7 +13,7 @@ import useMutation from "../../../hooks/useMutation";
 
 interface FormData {
     name: string;
-    description: string;
+    description: string | undefined;
 }
 
 interface IModalProps {

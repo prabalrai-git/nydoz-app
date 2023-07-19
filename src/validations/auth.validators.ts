@@ -14,14 +14,14 @@ const LoginSchema = yup.object({
         .required("Email is required."),
     password: yup
         .string()
-        .min(6, "Password must be atleast 6 character long.")
+        .min(6, "Password is required and must be atleast 6 character long.")
         .required("Password is required."),
 });
 
 const UserRegisterSchema = yup.object({
     first_name: yup.string().required("First Name is a required."),
     last_name: yup.string().required("Last Name is a required."),
-    mobile: yup.string(),
+    mobile: yup.string().required("Mobile Number is required."),
     email: yup
         .string()
         .email("Email must be a valid Email.")

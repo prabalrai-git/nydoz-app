@@ -8,6 +8,7 @@ const API_ROUTE = {
     CHANGE_PASSWORD: "/api/auth/change-password",
     LOGGED_IN_USER: "/api/auth/me",
     LOGOUT: "/api/auth/logout",
+    GET_USER_COMPANY_AND_PRODUCTS: "/api/auth/my/company-products",
 
     // File Upload Routes
     ANY_FILE_UPLOAD: "/api/v1/uploads",

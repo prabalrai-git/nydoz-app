@@ -3,8 +3,9 @@ import Accordion from "react-bootstrap/Accordion";
 
 const ViewModal = (props: IAgentResponse) => {
     const { id } = props;
+
     return (
-        <div className='card mb-5 mb-xl-8'>
+        <div key={id} className='card mb-5 mb-xl-8'>
             <div className='card-body'>
                 <div className='d-flex flex-center flex-column py-5'>
                     <div className='symbol symbol-100px symbol-circle mb-7'>

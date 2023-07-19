@@ -1,35 +1,26 @@
-import Breadcrumb from "../../shared/molecules/Breadcrumb";
-import Heading from "../../shared/molecules/Heading";
-import { useParams } from "react-router-dom";
-import ProductList from "../products/ProductList";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
+import CompanyProductList from "../products/CompanyProductList";
+
+import useAuthContext from "../../../context/auth/useAuthContext";
 
 const CompanyDashboard = () => {
-    const { companyId } = useParams<{ companyId: string }>();
+    const { isCompanyOwner, companyInfo } = useAuthContext();
+    useEffect(() => {
+        console.log(isCompanyOwner, "dashboar company owner");
+    }, [isCompanyOwner]);
 
     return (
         <div>
-            <div className='my-6 border shadow shadow-sm py-6 p-3'>
-                <Heading
-                    title={companyId ?? "Dashboard"}
-                    btnText='Back'
-                    showBreadcrumb={true}>
-                    <Breadcrumb
-                        parent='Home'
-                        parentLink='/home'
-                        child={companyId ?? "Dashboard"}
-                    />
-                </Heading>
-            </div>
             <section className='bg-white py-6'>
-                <div className='d-flex align-item-center justify-content-between mb-6 px-3'>
-                    <h4 className='fs-20'>Products</h4>
-
-                    <Link to='products/buy' className='btn btn-primary'>
-                        Buy Products
-                    </Link>
+                <div className='d-flex align-item-center justify-content-between mb-3 px-3'>
+                    <h4 className='fs-20'>
+                        <span className='text-capitalize'>
+                            {companyInfo?.subdomain ?? "company"}'s Products
+                        </span>
+                    </h4>
                 </div>
-                <ProductList />
+                <CompanyProductList />
             </section>
         </div>
     );

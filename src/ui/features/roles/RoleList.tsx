@@ -8,10 +8,9 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import AddRoles from "./AddRole";
-import Images from "../../../constants/Images";
-import DataListTable from "../../shared/components/DataListTable";
+import TanStackTable from "../../shared/molecules/TanStackTable";
 
 const DocumentList = () => {
     const { id: companyId } = useParams<string>();
@@ -25,10 +24,7 @@ const DocumentList = () => {
 
     const getListUrl = API_ROUTE.GET_ROLES;
 
-    const { data, fetchData, pagination } = useFetch<IRoleResponse[]>(
-        getListUrl,
-        true
-    );
+    const { data, fetchData } = useFetch<IRoleResponse[]>(getListUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -170,20 +166,15 @@ const DocumentList = () => {
                 <h4>Roles List</h4>
                 <button
                     onClick={handleAddDocumentOpen}
-                    className='btn btn-info btn-sm'>
+                    className='btn btn-success btn-sm'>
                     <span className='mx-2'>Add Roles</span>
                 </button>
             </div>
             <section>
                 <div className='card'>
-                    <DataListTable
-                        data={data ?? []}
-                        columns={tableColumns}
-                        showSearchBar={false}
-                        pagination={pagination}
-                        fetchData={fetchData}
-                        showPagination={false}
-                    />
+                    {data && (
+                        <TanStackTable columns={tableColumns} data={data} />
+                    )}
                 </div>
             </section>
             <Modal2
@@ -206,7 +197,6 @@ const DocumentList = () => {
                 selectedData={selectedData}
                 setSelectedData={setSelectedData}
             />
-            <ToastContainer />
         </div>
     );
 };

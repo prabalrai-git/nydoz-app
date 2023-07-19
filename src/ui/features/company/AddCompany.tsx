@@ -5,11 +5,12 @@ import Heading from "../../shared/molecules/Heading";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { IAddCompanyPayload } from "../../../types/payload.type";
 import API_ROUTE from "../../../service/api";
 import { companySchema } from "../../../validations/company.validator";
 import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import CountryCode from "../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../types/react-select.type";
 import { ICompanyResponse } from "../../../types/payload.type";
@@ -32,25 +33,6 @@ interface IAddCompanyForm {
     website: string;
     registration_type: string;
     registration_number: string;
-}
-
-interface IAddCompanyPayload {
-    name: string;
-    subdomain: string;
-    email: string;
-    address: string;
-    state: string;
-    city: string;
-    postal_code: string;
-    phone_number: string;
-    contact_person: string;
-    website: string;
-    registration_type: string;
-    registration_number: string;
-    country_calling_code: string;
-    country: string;
-    logo: string;
-    cover_image: string;
 }
 
 const AddCompany = () => {
@@ -83,27 +65,21 @@ const AddCompany = () => {
 
     useEffect(() => {
         if (location?.state?.data && location?.state?.data?.id) {
-            console.log(
-                location?.state?.data && location?.state?.data,
-                "old data"
-            );
-            reset(location?.state?.data);
-            setOldThumbnil(location?.state?.data?.logo);
-            setOldCoverImg(location?.state?.data?.cover_image);
+            const companyDetails: ICompanyResponse = location?.state?.data;
+            reset(companyDetails);
+            setOldThumbnil(companyDetails?.logo);
+            setOldCoverImg(companyDetails?.cover_image);
             const countryCode = getSelectPropsFromCountryCallingCode(
-                location?.state?.data?.country_calling_code
+                companyDetails?.country_calling_code
             );
             setSelectedCountryCode(countryCode);
 
-            const country = getSelectPropsFromCountry(
-                location?.state?.data?.country
-            );
+            const country = getSelectPropsFromCountry(companyDetails?.country);
             setSelectedCountry(country);
         }
-    }, [location?.state?.data, reset]);
+    }, [location?.state, reset]);
 
     useEffect(() => {
-        console.log("errList", errList);
         if (errList) {
             Object.keys(errList).forEach((fieldName) => {
                 const errorMessages = errList[fieldName];
@@ -122,8 +98,6 @@ const AddCompany = () => {
     }, [error]);
 
     const onFormSubmit = handleSubmit(async (data: IAddCompanyForm) => {
-        console.log("data", data);
-
         if (!selectedCountryCode) {
             toast.error("Please select country code");
             return;
@@ -161,10 +135,9 @@ const AddCompany = () => {
                 location?.state?.data?.id,
                 tempPostData
             );
-            console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company updated Successfully");
-                navigate("home");
+                navigate(-1);
             }
         } else {
             if (thumbnilImg?.length === 0) {
@@ -183,118 +156,124 @@ const AddCompany = () => {
                 cover_image: coverImg?.[0] ?? "",
             };
             response = await postData(tempPostData);
-            console.log("response", response);
+            // console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company Added Successfully");
-                navigate("/home/company/list");
+                navigate("/home");
             }
         }
     });
 
     return (
         <div>
-            <Heading
-                title='Create Company'
-                btnText='Back'
-                showBreadcrumb={true}>
-                <Breadcrumb
-                    parent='Company'
-                    parentLink='/account/company/list'
-                    child='Add'
-                />
-            </Heading>
+            <div className='py-6 px-3'>
+                <Heading
+                    title={
+                        location?.state?.data?.id
+                            ? "Edit Company Details"
+                            : "Create Company"
+                    }
+                    btnText='Back'
+                    showBreadcrumb={true}>
+                    <Breadcrumb
+                        parent={
+                            location?.state?.data?.id
+                                ? `${location?.state?.data?.subdomain}`
+                                : "company"
+                        }
+                        parentLink='/account/company/list'
+                        child={location?.state?.data?.id ? "Edit" : "Add"}
+                    />
+                </Heading>
+            </div>
 
             <section>
                 <form className='form w-100 ' onSubmit={onFormSubmit}>
-                    <div className='row'>
-                        <div className='col-12 col-md-4 col-lg-4'>
+                    <div className='row align-items-stretch mb-6'>
+                        <div className='col-12 col-md-6 col-lg-4'>
                             <div className='card card-flush py-4'>
                                 <div className='card-header'>
-                                    <div className='card-title'>
-                                        <h5 className='required'>
+                                    <div className='card-title mx-auto'>
+                                        <h5 className=' required'>
                                             Upload Company's Logo
                                         </h5>
                                     </div>
                                 </div>
 
                                 <div className='card-body  pt-0'>
-                                    <div>
-                                        <div
-                                            className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
-                                            data-kt-image-input='true'>
-                                            <div className='d-flex justify-content-around align-items-center'>
-                                                {location?.state?.data && (
+                                    <div
+                                        className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
+                                        data-kt-image-input='true'>
+                                        <div className='d-flex justify-content-around align-items-center mb-6'>
+                                            {location?.state?.data && (
+                                                <div className='image-input-wrapper w-100px h-100px p-2'>
+                                                    {oldThumbnil ? (
+                                                        <img
+                                                            className={
+                                                                thumbnilImg &&
+                                                                thumbnilImg?.length >
+                                                                    0
+                                                                    ? "img-fluid rounded opacity-20 "
+                                                                    : "img-fluid rounded"
+                                                            }
+                                                            src={`${BASE_URL}${oldThumbnil}`}
+                                                            alt='Company"s logo'
+                                                        />
+                                                    ) : (
+                                                        <p className='text center text-muted'>
+                                                            No Company logo
+                                                            found.
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {thumbnilImg &&
+                                                thumbnilImg?.length > 0 && (
                                                     <div className='image-input-wrapper w-100px h-100px p-2'>
-                                                        {oldThumbnil ? (
-                                                            <img
-                                                                className={
-                                                                    thumbnilImg &&
-                                                                    thumbnilImg?.length >
-                                                                        0
-                                                                        ? "img-fluid rounded opacity-20 "
-                                                                        : "img-fluid rounded"
-                                                                }
-                                                                src={`${BASE_URL}${oldThumbnil}`}
-                                                                alt='Company"s logo'
-                                                            />
-                                                        ) : (
-                                                            <p className='text center text-muted'>
-                                                                No Company logo
-                                                                found.
-                                                            </p>
-                                                        )}
+                                                        <img
+                                                            className='img-fluid rounded'
+                                                            src={`${BASE_URL}${thumbnilImg[0]}`}
+                                                            alt='company logo'
+                                                        />
                                                     </div>
                                                 )}
 
-                                                {thumbnilImg &&
-                                                    thumbnilImg?.length > 0 && (
-                                                        <div className='image-input-wrapper w-100px h-100px p-2'>
-                                                            <img
-                                                                className='img-fluid rounded'
-                                                                src={`${BASE_URL}${thumbnilImg[0]}`}
-                                                                alt='company logo'
-                                                            />
-                                                        </div>
-                                                    )}
+                                            {!location?.state?.data &&
+                                                thumbnilImg?.length === 0 && (
+                                                    <div className='image-input-wrapper w-100px h-100px p-2'>
+                                                        <img
+                                                            className='img-fluid rounded'
+                                                            src={
+                                                                Images.BlackImg
+                                                            }
+                                                            alt='blank'
+                                                        />
+                                                    </div>
+                                                )}
+                                        </div>
 
-                                                {!location?.state?.data &&
-                                                    thumbnilImg?.length ===
-                                                        0 && (
-                                                        <div className='image-input-wrapper w-100px h-100px p-2'>
-                                                            <img
-                                                                className='img-fluid rounded'
-                                                                src={
-                                                                    Images.BlackImg
-                                                                }
-                                                                alt='blank'
-                                                            />
-                                                        </div>
-                                                    )}
-                                            </div>
-
-                                            <div className='text-center'>
-                                                <UploadFile
-                                                    fileUploadLimit={1}
-                                                    fileUploadType='IMAGE'
-                                                    isUploadRequired={false}
-                                                    isRoutePrivate={true}
-                                                    isMultiple={false}
-                                                    setFileInfo={setThumbnilImg}
-                                                    fileInfo={thumbnilImg}
-                                                />
-                                            </div>
+                                        <div>
+                                            <UploadFile
+                                                fileUploadLimit={1}
+                                                fileUploadType='IMAGE'
+                                                isUploadRequired={false}
+                                                isRoutePrivate={true}
+                                                isMultiple={false}
+                                                setFileInfo={setThumbnilImg}
+                                                fileInfo={thumbnilImg}
+                                            />
                                         </div>
                                     </div>
 
                                     <div className='text-muted fs-7'>
-                                        Set the product thumbnail image. Only
-                                        *.png, *.jpg and *.jpeg image files are
-                                        accepted
+                                        Only *.png, *.jpg and *.jpeg image files
+                                        are accepted
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='col-12 col-md-8 col-lg-8'>
+                        <div className='col-12 col-md-6 col-lg-8  '>
                             <div className='card card-flush py-4'>
                                 <div className='card-header'>
                                     <div className='card-title'>
@@ -308,9 +287,9 @@ const AddCompany = () => {
                                     <div
                                         className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
                                         data-kt-image-input='true'>
-                                        <div className='d-flex align-items-center gap-6'>
+                                        <div className='d-flex justify-content-around align-items-center gap-6 mb-6'>
                                             {location?.state?.data && (
-                                                <div className='cover-image-wrapper  p-2'>
+                                                <div className='cover-image-wrapper  h-100px  m-2'>
                                                     {oldCoverImg ? (
                                                         <img
                                                             className={
@@ -334,7 +313,7 @@ const AddCompany = () => {
 
                                             {coverImg &&
                                                 coverImg?.length > 0 && (
-                                                    <div className='cover-image-wrapper p2'>
+                                                    <div className='cover-image-wrapper h-100px m-2'>
                                                         <img
                                                             className='img-thumbnail img-fluid rounded'
                                                             src={`${BASE_URL}${coverImg[0]}`}
@@ -361,7 +340,7 @@ const AddCompany = () => {
                                                 )}
                                         </div>
 
-                                        <div className='text-center'>
+                                        <div>
                                             <UploadFile
                                                 fileUploadLimit={1}
                                                 fileUploadType='IMAGE'
@@ -382,7 +361,7 @@ const AddCompany = () => {
                         </div>
                     </div>
 
-                    <div className='row'>
+                    <div className='row mb-6'>
                         <div className='card card-flush'>
                             <div className='card-header'>
                                 <div className='card-title'>
@@ -510,7 +489,7 @@ const AddCompany = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='row'>
+                    <div className='row mb-6'>
                         <div className='card card-flush'>
                             <div className='card-header'>
                                 <div className='card-title'>
@@ -640,7 +619,7 @@ const AddCompany = () => {
                             <button
                                 type='submit'
                                 disabled={isLoading}
-                                className='btn btn-primary btn-sm mb-6'>
+                                className='btn btn-primary  mb-6'>
                                 {isLoading ? (
                                     <>
                                         <span className='ms-2'>
@@ -655,7 +634,7 @@ const AddCompany = () => {
                                     <span>
                                         {location?.state?.data?.id
                                             ? "Update"
-                                            : "Save"}
+                                            : "Submit"}
                                     </span>
                                 )}
                             </button>
@@ -663,8 +642,6 @@ const AddCompany = () => {
                     </div>
                 </form>
             </section>
-
-            <ToastContainer />
         </div>
     );
 };

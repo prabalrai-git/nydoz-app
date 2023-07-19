@@ -7,13 +7,6 @@ export interface IProductResponse {
     is_for_self_use: boolean;
 }
 
-// {
-//       "id": 0,
-//       "name": "string",
-//       "company_id": 0,
-//       "description": "string"
-//     }
-
 export interface IRoleResponse {
     id: string;
     name: string;
@@ -97,18 +90,39 @@ export interface ICompanyResponse {
     cover_image: string;
 }
 
-// {
-//   "first_name": "string",
-//   "last_name": "string",
-//   "email": "string",
-//   "mobile": "string",
-//   "country": "string",
-//   "state": "string",
-//   "city": "string",
-//   "street_address": "string",
-//   "profile_picture": "string",
-//   "postal_code": "string"
-// }
+export interface IAddCompanyPayload {
+    name: string;
+    subdomain: string;
+    email: string;
+    address: string;
+    state: string;
+    city: string;
+    postal_code: string;
+    phone_number: string;
+    contact_person: string;
+    website: string;
+    registration_type: string;
+    registration_number: string;
+    country_calling_code: string;
+    country: string;
+    logo: string;
+    cover_image: string;
+}
+
+export interface IMyCompanyPayload {
+    id: string;
+    name: string;
+    subdomain: string;
+    status_id: string;
+    email: string;
+    logo: string;
+    cover_image: string;
+    products: IProductResponse[];
+}
+export interface IUserCompanyProductsResponse {
+    companies: IMyCompanyPayload[];
+    saas_core_products: IProductResponse[];
+}
 
 // Agent
 

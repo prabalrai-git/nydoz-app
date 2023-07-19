@@ -47,7 +47,7 @@ const ChangePassword = () => {
     });
 
     useEffect(() => {
-        console.log(errList);
+        // console.log(errList);
         if (errList?.current_password) {
             setError("current_password", {
                 type: "manual",
@@ -57,7 +57,7 @@ const ChangePassword = () => {
     }, [errList, setError]);
 
     const onFormSubmit = handleSubmit(async (data: IChangePasswordFormData) => {
-        console.log(data);
+        // console.log(data);
         const response = await postData(data);
         if (response?.data?.message) {
             toast.success(

@@ -5,8 +5,10 @@ import App from "../App";
 
 //Protection
 import ProtectAuth from "../ui/features/auth/ProtectAuth";
-import Protected from "../ui/features/auth/ProtectedRoute";
+import OnlyLoginUsersRoute from "../ui/features/auth/ProtectedRoute";
 // import ProtectCompany from "../ui/features/ProtectRoutes/ProtectCompany";
+// import ProtectHomeRoute from "../ui/protection/ProtectHome";
+import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
 
 //Auth Routes
 import AuthLayout from "../ui/features/auth/Layout";
@@ -35,7 +37,6 @@ import CompanyList from "../ui/features/company/CompanyList";
 import DocumentsList from "../ui/features/documents/DocumentsList";
 import ProductLayout from "../ui/features/products/ProductLayout";
 // import CompanyProductList from "../ui/features/products/ProductList";
-import AllProductList from "../ui/shared/components/products/ProductList";
 
 // Company Roles
 // import RoleLayout from "../ui/features/roles/RoleLayout";
@@ -47,8 +48,9 @@ import PageNotFound from "../ui/features/utils/PageNotFound";
 import RoleList from "../ui/features/roles/RoleList";
 import AgentLayout from "../ui/features/agent/AgentLayout";
 import AddAgent from "../ui/features/agent/AddAgent";
-import CompanyProvider from "../context/CompanyProvider";
 import SingleProduct from "../ui/features/products/SingleProduct";
+import BuyProduct from "../ui/features/company/BuyProduct";
+import CompanyProductList from "../ui/features/products/CompanyProductList";
 
 const router = createBrowserRouter([
     {
@@ -95,10 +97,17 @@ const router = createBrowserRouter([
 
             {
                 path: "home",
+                // element: (
+                //     <OnlyLoginUsersRoute>
+                //         <ProtectHomeRoute>
+                //             <UserLayout />
+                //         </ProtectHomeRoute>
+                //     </OnlyLoginUsersRoute>
+                // ),
                 element: (
-                    <Protected>
+                    <OnlyLoginUsersRoute>
                         <UserLayout />
-                    </Protected>
+                    </OnlyLoginUsersRoute>
                 ),
                 children: [
                     {
@@ -106,37 +115,27 @@ const router = createBrowserRouter([
                         element: <UserDashboard />,
                     },
                     {
-                        path: ":companyId",
-                        element: (
-                            <CompanyProvider>
-                                <CompanyLayout />
-                            </CompanyProvider>
-                        ),
-                        // element: <CompanyLayout />,
+                        path: "create-company",
+                        element: <AddCompany />,
+                    },
+                    {
+                        path: ":companySubdomian",
+                        element: <CompanyLayout />,
 
                         children: [
                             {
-                                path: "",
+                                path: "dashboard",
                                 element: <CompanyDashboard />,
                             },
+                            // products for all company users
 
                             {
-                                path: "agents",
-                                element: <AgentLayout />,
-                                children: [
-                                    {
-                                        path: "",
-                                        element: <AgentList />,
-                                    },
-                                    {
-                                        path: "add",
-                                        element: <AddAgent />,
-                                    },
-                                    {
-                                        path: "edit",
-                                        element: <AddAgent />,
-                                    },
-                                ],
+                                path: "edit",
+                                element: (
+                                    <ProtectCompanyOwner>
+                                        <AddCompany />
+                                    </ProtectCompanyOwner>
+                                ),
                             },
 
                             {
@@ -144,12 +143,61 @@ const router = createBrowserRouter([
                                 element: <ProductLayout />,
                                 children: [
                                     {
+                                        path: "view",
+                                        element: <CompanyProductList />,
+                                    },
+                                    {
                                         path: "buy",
-                                        element: <AllProductList />,
+                                        element: <BuyProduct />,
                                     },
                                     {
                                         path: ":productId",
                                         element: <SingleProduct />,
+                                    },
+                                ],
+                            },
+                            {
+                                path: "profile/:id",
+                                element: <ProfileLayout />,
+                                children: [
+                                    {
+                                        path: "documents",
+                                        element: (
+                                            <ProtectCompanyOwner>
+                                                <DocumentsList />
+                                            </ProtectCompanyOwner>
+                                        ),
+                                    },
+                                    {
+                                        path: "roles",
+                                        // element: <RoleList />,
+                                        element: (
+                                            <ProtectCompanyOwner>
+                                                <RoleList />
+                                            </ProtectCompanyOwner>
+                                        ),
+                                    },
+                                    {
+                                        path: "agents",
+                                        element: (
+                                            <ProtectCompanyOwner>
+                                                <AgentLayout />
+                                            </ProtectCompanyOwner>
+                                        ),
+                                        children: [
+                                            {
+                                                path: "",
+                                                element: <AgentList />,
+                                            },
+                                            {
+                                                path: "add",
+                                                element: <AddAgent />,
+                                            },
+                                            {
+                                                path: "edit",
+                                                element: <AddAgent />,
+                                            },
+                                        ],
                                     },
                                 ],
                             },
@@ -165,30 +213,12 @@ const router = createBrowserRouter([
                         element: <CompanyLayout />,
                         children: [
                             {
-                                path: "profile/:id",
-                                element: <ProfileLayout />,
-                                children: [
-                                    {
-                                        path: "documents",
-                                        element: <DocumentsList />,
-                                    },
-                                    {
-                                        path: "roles",
-                                        element: <RoleList />,
-                                    },
-                                ],
-                            },
-                            {
-                                path: "add",
-                                element: <AddCompany />,
-                            },
-                            {
-                                path: "edit",
-                                element: <AddCompany />,
-                            },
-                            {
                                 path: "list",
-                                element: <CompanyList />,
+                                element: (
+                                    <ProtectCompanyOwner>
+                                        <CompanyList />
+                                    </ProtectCompanyOwner>
+                                ),
                             },
                         ],
                     },

@@ -1,17 +1,18 @@
 // @ desc Products list brought by company
 
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { IProductResponse } from "../../../types/payload.type";
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
-import { CompanyContext } from "../../../context/CompanyContext";
 import { toast } from "react-toastify";
 import NotFound from "../../shared/molecules/NotFound";
 import ImageAtom from "../../shared/atoms/ImageAtom";
+import useAuthContext from "../../../context/auth/useAuthContext";
+import { Link } from "react-router-dom";
 
 const ProductList = () => {
-    const { companyInfo } = useContext(CompanyContext);
+    const { companyInfo } = useAuthContext();
     const companyId = companyInfo?.id;
     const proudctListUrl = `${API_ROUTE.GET_COMPANIES}/${companyId}/products`;
     const { data, fetchData, isloading } = useFetch<IProductResponse[]>(
@@ -32,11 +33,14 @@ const ProductList = () => {
         <div className='py-6 px-3'>
             {isloading && <LoadingSpinner title='loading...' />}
             {data && data.length > 0 && (
-                <div>
+                <div className='d-flex'>
                     {data.map((product) => (
-                        <div key={product.id} className='col-6 col-md-3 m-5'>
-                            <div className='card card-flush h-md-50  mb-xl-10 border shadow-sm'>
-                                <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative bg-light'>
+                        <Link
+                            to={`/home/${companyInfo?.subdomain}/products/${product.id}`}
+                            key={product.id}
+                            className='flex-wrap cursor-pointer'>
+                            <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box mx-3'>
+                                <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light'>
                                     <ImageAtom
                                         src={product.logo}
                                         alt={product.name}
@@ -44,16 +48,20 @@ const ProductList = () => {
                                     />
                                 </div>
                                 <div className='card-body'>
-                                    <h5 className='card-title'>
+                                    <h5 className='card-title mt-6 mb-4 text-primary'>
                                         {product.name}
                                     </h5>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             )}
-            {data && data?.length === 0 && <NotFound title='Product' />}
+            {data && data?.length === 0 && (
+                <div>
+                    <NotFound title='This company is not subscribed to any products .  ' />
+                </div>
+            )}
         </div>
     );
 };

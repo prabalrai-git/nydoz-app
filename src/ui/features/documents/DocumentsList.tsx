@@ -9,7 +9,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import AddDocuments from "./AddDocuments";
 import Images from "../../../constants/Images";
 
@@ -25,7 +25,7 @@ const DocumentList = () => {
 
     const getDocumentUrl = `${API_ROUTE.GET_DOCUMENTS_BY_COMPANY_ID}/${companyId}/documents`;
 
-    const { data, fetchData, pagination } = useFetch<IDocumentResponse[]>(
+    const { data, fetchData } = useFetch<IDocumentResponse[]>(
         getDocumentUrl,
         true
     );
@@ -124,12 +124,12 @@ const DocumentList = () => {
                         size='sm'
                         id='dropdown-basic-button'
                         title='Action'>
-                        <Dropdown.Item>
+                        {/* <Dropdown.Item>
                             <div className='menu-link'>
                                 <span className='mx-2'>View</span>
                                 <i className='bi bi-box-arrow-up-right text-primary '></i>
                             </div>
-                        </Dropdown.Item>
+                        </Dropdown.Item> */}
                         <Dropdown.Item>
                             <div
                                 onClick={() =>
@@ -187,29 +187,30 @@ const DocumentList = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleAddDocumentClose = () => setOpenAddDocument(false);
-    const handleAddDocumentOpen = () => setOpenAddDocument(true);
+    const handleAddDocumentOpen = () => {
+        setOpenAddDocument(true);
+    };
 
     return (
         <div>
             <div className='d-flex justify-content-between align-items-center mb-6'>
                 <h4>Documents List</h4>
                 <button
-                    onClick={handleAddDocumentOpen}
-                    className='btn btn-info btn-sm'>
+                    onClick={() => {
+                        setSelectedData(undefined);
+                        handleAddDocumentOpen();
+                    }}
+                    className='btn btn-primary btn-sm'>
                     <span className='mx-2'>Add Documents</span>
                 </button>
             </div>
             <section>
                 <div className='card'>
-                    <TanStackTable
-                        pagination={pagination}
-                        columns={tableColumns}
-                        data={data}
-                    />
+                    <TanStackTable columns={tableColumns} data={data ?? []} />
                 </div>
             </section>
             <Modal2
-                title='Are you sure you want to delete this company?'
+                title='Are you sure you want to delete this documents?'
                 showChildren={true}
                 cancelText='Cancel'
                 confirmText='Delete'
@@ -228,7 +229,6 @@ const DocumentList = () => {
                 selectedData={selectedData}
                 setSelectedData={setSelectedData}
             />
-            <ToastContainer />
         </div>
     );
 };

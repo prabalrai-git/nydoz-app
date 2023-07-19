@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 // ------------------------------ import components
@@ -34,7 +34,7 @@ const ChangePassword = () => {
 
     const onFormSubmit = handleSubmit(async (data: IChangePasswordFormData) => {
         const response = await postData(data);
-        console.log(response, "response");
+        // console.log(response, "response");
         if (response?.data?.message) {
             toast.success(response?.data?.message);
             setIsEmailSent(true);
@@ -133,7 +133,6 @@ const ChangePassword = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 };

@@ -8,7 +8,8 @@ import "./assets/metronic/css/style.bundle - Copy.css";
 import router from "./routes/Routes.js";
 import "./i18n/Lang.tsx";
 import "react-toastify/dist/ReactToastify.css";
-import AuthProvider from "./context/AuthContextProvider";
+import AuthProvider from "./context/auth/AuthProvider.tsx";
+// import AuthProvider2 from "./context/AuthContextProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>

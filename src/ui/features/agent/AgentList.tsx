@@ -3,8 +3,6 @@ import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { IAgentResponse } from "../../../types/payload.type";
 import BASE_URL from "../../../constants/AppSetting";
-
-import TanStackTable from "../../shared/molecules/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -12,9 +10,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
-import DataListTable from "../../shared/components/DataListTable";
 import { Link } from "react-router-dom";
 import { Flag, People } from "react-bootstrap-icons";
+import TanStackTable from "../../shared/molecules/TanStackTable";
 
 const DocumentList = () => {
     const { id: companyId } = useParams<string>();
@@ -23,12 +21,11 @@ const DocumentList = () => {
         IAgentResponse | undefined
     >();
     const [show, setShow] = useState<boolean>(false);
-    const [openAddDocument, setOpenAddDocument] = useState(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
 
     const getDocumentUrl = `${API_ROUTE.GET_CLIENT_MANAGEMENT_AGENTS}`;
 
-    const { data, fetchData, pagination } = useFetch<IAgentResponse[]>(
+    const { data, fetchData } = useFetch<IAgentResponse[]>(
         getDocumentUrl,
         true
     );
@@ -194,28 +191,20 @@ const DocumentList = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const handleAddDocumentClose = () => setOpenAddDocument(false);
-    const handleAddDocumentOpen = () => setOpenAddDocument(true);
 
     return (
         <div className='my-6 px-3'>
             <div className='d-flex justify-content-between align-items-center mb-6'>
                 <h4>Agents List</h4>
-                <Link
-                    to={`add`}
-                    onClick={handleAddDocumentOpen}
-                    className='btn btn-info btn-sm'>
+                <Link to={`add`} className='btn btn-success btn-sm'>
                     <span className='mx-2'>Add Agent</span>
                 </Link>
             </div>
             <section>
                 <div className='card'>
-                    <DataListTable
-                        pagination={pagination}
-                        columns={tableColumns}
-                        data={data ?? []}
-                        fetchData={fetchData}
-                    />
+                    {data && (
+                        <TanStackTable columns={tableColumns} data={data} />
+                    )}
                 </div>
             </section>
             <Modal2
