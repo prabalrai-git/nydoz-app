@@ -25,6 +25,12 @@ const authReducer = (state: IState, action: TAction): IState => {
                 token: action.payload.token,
             };
 
+        case "SET_TOKEN":
+            return {
+                ...state,
+                token: action.payload.token,
+            };
+
         case "SET_COMPANY_INFO":
             // console.log("SET_COMPANY_INFO", action.payload);
             return {
