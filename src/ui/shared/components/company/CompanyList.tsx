@@ -3,9 +3,12 @@ import API_ROUTE from "../../../../service/api";
 import useFetch from "../../../../hooks/useFetch";
 import { ICompanyResponse } from "../../../../types/payload.type";
 import ImageAtom from "../../atoms/ImageAtom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AppSetting from "../../../../config/AppSetting";
 
 const CompanyListCard = () => {
+    const { VITE_HOST } = AppSetting;
+    const navigate = useNavigate();
     const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
         API_ROUTE.GET_COMPANIES,
         true
@@ -16,6 +19,15 @@ const CompanyListCard = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handleNavigateToSubDomain = (subdomain: string) => {
+        // if (VITE_HOST === "localhost") {
+        //     window.open(`http://${subdomain}.localhost:3000`, );
+        // } else {
+        //      window.open(`http://${subdomain}.localhost:3000`);
+        // }
+        navigate(subdomain);
+    };
 
     return (
         <div className='card h-xl-100'>
@@ -36,9 +48,11 @@ const CompanyListCard = () => {
             </div>
             <div className='card-body pt6'>
                 {data?.map((item: ICompanyResponse) => (
-                    <Link
+                    <div
                         key={item.id}
-                        to={item.subdomain}
+                        onClick={() =>
+                            handleNavigateToSubDomain(item.subdomain)
+                        }
                         className='d-flex flex-stack mb-3 cursor-pointer'>
                         <div className='symbol symbol-40px me-4'>
                             <ImageAtom
@@ -68,7 +82,7 @@ const CompanyListCard = () => {
                                 </i>{" "}
                             </a>
                         </div>
-                    </Link>
+                    </div>
                 ))}
 
                 {!isloading && data?.length === 0 && (
