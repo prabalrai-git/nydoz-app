@@ -92,7 +92,13 @@ const CompanyListCard = () => {
                                 No Company Found . Please create company to buy
                                 products.
                             </h4>
-                            <Link to='create-company'>Create Company</Link>
+                            <div className='float-end'>
+                                <Link
+                                    className='btn btn-primary my-3'
+                                    to='create-company'>
+                                    Create Company
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 )}

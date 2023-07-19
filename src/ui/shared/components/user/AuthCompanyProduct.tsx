@@ -87,7 +87,7 @@ const ProductList = () => {
                 data?.companies &&
                 data?.companies?.length > 0 &&
                 data?.companies[0]?.products?.length === 0 && (
-                    <NotFound title='you are not subscribed to any products . ' />
+                    <NotFound title='you are not subscribed to any products.' />
                 )}
         </div>
     );
