@@ -6,8 +6,14 @@ import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
 import CompanyLoader from "../../shared/components/company/CompanyLoader";
 import useAuthContext from "../../../context/auth/useAuthContext";
-import { Link } from "react-router-dom";
-import { FileBarGraph, Folder, Person } from "react-bootstrap-icons";
+import { Link, NavLink } from "react-router-dom";
+import {
+    BagCheck,
+    FileBarGraph,
+    Folder,
+    Person,
+    PersonFillGear,
+} from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 import useHandleShowError from "../../../hooks/useHandleShowError";
 
@@ -82,8 +88,8 @@ const CompanyLayout = () => {
                         <li
                             className='nav-item my-6 me-3 me-lg-6'
                             role='presentation'>
-                            <Link
-                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green'
+                            <NavLink
+                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden  w-80px h-85px py-4 hover-green'
                                 data-bs-toggle='pill'
                                 to='dashboard'
                                 aria-selected='true'
@@ -95,13 +101,13 @@ const CompanyLayout = () => {
                                     Dashboard
                                 </span>
                                 <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
-                            </Link>
+                            </NavLink>
                         </li>
                         <li
                             className='nav-item my-6 me-3 me-lg-6 '
                             role='presentation'>
-                            <Link
-                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green '
+                            <NavLink
+                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden  w-80px h-85px py-4 hover-green '
                                 data-bs-toggle='pill'
                                 to={`profile/${companyInfo?.id}`}
                                 aria-selected='true'
@@ -113,15 +119,34 @@ const CompanyLayout = () => {
                                     Profile
                                 </span>
                                 <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
-                            </Link>
+                            </NavLink>
                         </li>
                         <li
                             className='nav-item my-6 me-3 me-lg-6'
                             role='presentation'>
-                            <Link
-                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4 hover-green'
+                            <NavLink
+                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden  w-80px h-85px py-4 hover-green'
                                 data-bs-toggle='pill'
                                 to='products/view'
+                                aria-selected='true'
+                                role='tab'>
+                                <div className='nav-icon'>
+                                    <BagCheck size='30' color='#70b541' />
+                                </div>
+
+                                <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
+                                    Products
+                                </span>
+                                <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
+                            </NavLink>
+                        </li>
+                        <li
+                            className='nav-item my-6 me-3 me-lg-6'
+                            role='presentation'>
+                            <NavLink
+                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden  w-80px h-85px py-4 hover-green'
+                                data-bs-toggle='pill'
+                                to='documents'
                                 aria-selected='true'
                                 role='tab'>
                                 <div className='nav-icon'>
@@ -129,10 +154,29 @@ const CompanyLayout = () => {
                                 </div>
 
                                 <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
-                                    Products
+                                    Documents
                                 </span>
                                 <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
-                            </Link>
+                            </NavLink>
+                        </li>
+                        <li
+                            className='nav-item my-6 me-3 me-lg-6'
+                            role='presentation'>
+                            <NavLink
+                                className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden  w-80px h-85px py-4 hover-green'
+                                data-bs-toggle='pill'
+                                to='roles'
+                                aria-selected='true'
+                                role='tab'>
+                                <div className='nav-icon'>
+                                    <PersonFillGear size='30' color='#70b541' />
+                                </div>
+
+                                <span className='nav-text text-gray-700 fw-bold fs-6 lh-1'>
+                                    Roles
+                                </span>
+                                <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
+                            </NavLink>
                         </li>
                     </ul>
 
