@@ -92,7 +92,7 @@ const AddSocialLink = (props: IModalProps) => {
                 data as ISocialLinksResponse
             );
             if (response?.status === 200) {
-                toast.success("Role updated successfully");
+                toast.success("Social Link updated successfully");
                 reset({
                     title: "",
                     link: "",
