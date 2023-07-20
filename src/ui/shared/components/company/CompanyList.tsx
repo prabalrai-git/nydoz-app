@@ -4,10 +4,10 @@ import useFetch from "../../../../hooks/useFetch";
 import { ICompanyResponse } from "../../../../types/payload.type";
 import ImageAtom from "../../atoms/ImageAtom";
 import { Link, useNavigate } from "react-router-dom";
-import AppSetting from "../../../../config/AppSetting";
+// import AppSetting from "../../../../config/AppSetting";
 
 const CompanyListCard = () => {
-    const { VITE_HOST } = AppSetting;
+    // const { VITE_HOST } = AppSetting;
     const navigate = useNavigate();
     const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
         API_ROUTE.GET_COMPANIES,

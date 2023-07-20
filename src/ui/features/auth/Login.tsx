@@ -13,8 +13,8 @@ import { toast } from "react-toastify";
 // import { AuthContext } from "../../../context/AuthContext";
 import { ILoginResponse } from "../../../types/payload.type";
 import AuthContext from "../../../context/auth/AuthContext";
-import useSubdomain from "../../../hooks/useSubdomain";
-import APP_SETTING from "../../../config/AppSetting";
+// import useSubdomain from "../../../hooks/useSubdomain";
+// import APP_SETTING from "../../../config/AppSetting";
 interface FormData {
     email: string;
     password: string;
@@ -22,11 +22,11 @@ interface FormData {
 
 const LoginPage = () => {
     const { dispatch } = useContext(AuthContext);
-    const subdomain = useSubdomain();
+    // const subdomain = useSubdomain();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const navigate = useNavigate();
-    const { MODE, VITE_HOST } = APP_SETTING;
+    // const { MODE, VITE_HOST } = APP_SETTING;
     const { postData, isLoading, error } = useMutation<ILoginResponse>(
         API_ROUTE.LOGIN,
         false
