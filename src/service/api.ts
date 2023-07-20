@@ -49,6 +49,10 @@ const API_ROUTE = {
     // Socisl Links
     GET_SOCIAL_LINKS_BY_COMPANYID: "/api/v1/companies",
 
+    // visa types
+    GET_VISA_TYPES: "/api/v1/visa-types",
+    POST_VISA_TYPES: "/api/v1/visa-types",
+
     //  Client Management agents routes
     CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
     GET_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",

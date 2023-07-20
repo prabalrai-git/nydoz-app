@@ -41,6 +41,9 @@ import ProductLayout from "../ui/features/products/ProductLayout";
 // Company Roles
 // import RoleLayout from "../ui/features/roles/RoleLayout";
 
+// Visa Type
+import VisaTypeList from "../ui/features/visaType/VisaTypeList";
+
 // Agent
 import AgentList from "../ui/features/agent/AgentList";
 
@@ -157,6 +160,14 @@ const router = createBrowserRouter([
                                 element: (
                                     <ProtectCompanyOwner>
                                         <SocialLinkList />
+                                    </ProtectCompanyOwner>
+                                ),
+                            },
+                            {
+                                path: "visa-types",
+                                element: (
+                                    <ProtectCompanyOwner>
+                                        <VisaTypeList />
                                     </ProtectCompanyOwner>
                                 ),
                             },
