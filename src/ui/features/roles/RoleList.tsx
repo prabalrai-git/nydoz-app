@@ -12,7 +12,7 @@ import AddRoles from "./AddRole";
 import TanStackTable from "../../shared/molecules/TanStackTable";
 import useAuthContext from "../../../context/auth/useAuthContext";
 
-const DocumentList = () => {
+const RoleList = () => {
     const { companyInfo } = useAuthContext();
     const companyId = companyInfo?.id;
 
@@ -207,4 +207,4 @@ const DocumentList = () => {
     );
 };
 
-export default DocumentList;
+export default RoleList;

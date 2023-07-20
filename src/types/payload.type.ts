@@ -7,16 +7,22 @@ export interface IProductResponse {
     is_for_self_use: boolean;
 }
 
-export interface IRoleResponse {
-    id: string;
-    name: string;
-    company_id: number;
-    description: string;
-}
-
 export interface IRolePayload {
     name: string;
     description: string;
+}
+
+export interface IRoleResponse extends IRolePayload {
+    id: string;
+}
+
+export interface IVisaTypePayload {
+    name: string;
+    description: string;
+}
+
+export interface IVisaTypeResponse extends IVisaTypePayload {
+    id: string;
 }
 
 export interface IDocumentResponse {

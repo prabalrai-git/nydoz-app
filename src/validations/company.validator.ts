@@ -33,6 +33,11 @@ export const companyRolesSchema = yup.object().shape({
     description: yup.string(),
 });
 
+export const VisaTypeSchema = yup.object().shape({
+    name: yup.string().required(),
+    description: yup.string(),
+});
+
 export const agentSchema = yup.object().shape({
     first_name: yup.string().required(),
     last_name: yup.string().required(),
