@@ -142,3 +142,15 @@ export interface IAgentPayload {
 export interface IAgentResponse extends IAgentPayload {
     id: string;
 }
+
+// SOCIAL_LINKS
+export interface ISocialLinksPayload {
+    title: string;
+    link: string;
+}
+
+export interface ISocialLinksResponse extends ISocialLinksPayload {
+    id: string;
+}
+
+// -----SOCIAL_LINKS-----ENDS-----

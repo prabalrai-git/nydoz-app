@@ -51,6 +51,7 @@ import AddAgent from "../ui/features/agent/AddAgent";
 import SingleProduct from "../ui/features/products/SingleProduct";
 import BuyProduct from "../ui/features/company/BuyProduct";
 import CompanyProductList from "../ui/features/products/CompanyProductList";
+import SocialLinkList from "../ui/features/socialLinks/SocialLinkList";
 
 const router = createBrowserRouter([
     {
@@ -147,6 +148,15 @@ const router = createBrowserRouter([
                                 element: (
                                     <ProtectCompanyOwner>
                                         <RoleList />
+                                    </ProtectCompanyOwner>
+                                ),
+                            },
+
+                            {
+                                path: "social-links",
+                                element: (
+                                    <ProtectCompanyOwner>
+                                        <SocialLinkList />
                                     </ProtectCompanyOwner>
                                 ),
                             },
