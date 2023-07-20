@@ -1,31 +1,34 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
-import { IRoleResponse } from "../../../types/payload.type";
+import { ISocialLinksResponse } from "../../../types/payload.type";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
-import AddRoles from "./AddRole";
+import SocialLinkAdd from "./SocialLinkAdd";
 import TanStackTable from "../../shared/molecules/TanStackTable";
 import useAuthContext from "../../../context/auth/useAuthContext";
+import CopyToClipboard from "../../shared/molecules/CopyToClipboard";
 
 const DocumentList = () => {
     const { companyInfo } = useAuthContext();
     const companyId = companyInfo?.id;
 
     const [selectedData, setSelectedData] = useState<
-        IRoleResponse | undefined
+        ISocialLinksResponse | undefined
     >();
     const [show, setShow] = useState<boolean>(false);
     const [openAddDocument, setOpenAddDocument] = useState(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
+    const getListUrl = API_ROUTE.GET_SOCIAL_LINKS_BY_COMPANYID;
 
-    const getListUrl = API_ROUTE.GET_ROLES;
-
-    const { data, fetchData } = useFetch<IRoleResponse[]>(getListUrl, true);
+    const { data, fetchData } = useFetch<ISocialLinksResponse[]>(
+        `${getListUrl}/${companyId}/social-links`,
+        true
+    );
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -43,12 +46,12 @@ const DocumentList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchAgain]);
 
-    const handleEditData = (item: IRoleResponse) => {
+    const handleEditData = (item: ISocialLinksResponse) => {
         setSelectedData(item);
         handleAddDocumentOpen();
     };
 
-    const tableColumns: ColumnDef<IRoleResponse>[] = [
+    const tableColumns: ColumnDef<ISocialLinksResponse>[] = [
         {
             accessorKey: "sn",
             header: () => <div>S.N</div>,
@@ -56,36 +59,31 @@ const DocumentList = () => {
         },
 
         {
-            accessorKey: "name",
+            accessorKey: "title",
             header: () => (
                 <div>
-                    <span>Role Name</span>
+                    <span>Social Link</span>
                 </div>
             ),
             cell: (info) => {
-                return (
-                    <div className='text-capitalize'>
-                        {info.getValue<string>()}
-                    </div>
-                );
+                return <div>{info.getValue<string>()}</div>;
             },
         },
         {
-            accessorKey: "description",
+            accessorKey: "link",
             header: () => (
                 <div>
-                    <span>Description</span>
+                    <i className='bi bi-globe2 me-2'></i>
+                    <span>Website</span>
                 </div>
             ),
-            cell: (info) => {
-                return (
-                    <div className='text-capitalize'>
-                        <p className='truncate'> {info.getValue<string>()}</p>
-                    </div>
-                );
-            },
+            cell: (info) => (
+                <div>
+                    <span>{info.getValue<string>()}</span>
+                    <CopyToClipboard text={info.getValue<string>()} />
+                </div>
+            ),
         },
-
         {
             accessorKey: "action",
             header: () => <div className='text-center'>Actions</div>,
@@ -129,7 +127,7 @@ const DocumentList = () => {
         },
     ];
 
-    const handleDeleteModal = (item: IRoleResponse) => {
+    const handleDeleteModal = (item: ISocialLinksResponse) => {
         setSelectedData(item);
         handleShow();
         console.log(item);
@@ -169,11 +167,11 @@ const DocumentList = () => {
     return (
         <div>
             <div className='d-flex justify-content-between align-items-center mb-6'>
-                <h4>Roles List</h4>
+                <h4>Social Links / Social Media List</h4>
                 <button
                     onClick={handleOpenNewModal}
                     className='btn btn-success btn-sm'>
-                    <span className='mx-2'>Add Roles</span>
+                    <span className='mx-2'>Add Social Links</span>
                 </button>
             </div>
             <section>
@@ -192,10 +190,11 @@ const DocumentList = () => {
                 handleConfirm={handleDeleteItem}
                 handleClose={handleClose}>
                 <div>
-                    <h3>{selectedData?.name}</h3>
+                    <h4>{selectedData?.title}</h4>
+                    <h3>{selectedData?.link}</h3>
                 </div>
             </Modal2>
-            <AddRoles
+            <SocialLinkAdd
                 setFetchAgain={setFetchAgain}
                 companyId={companyId || ""}
                 handleClose={handleAddDocumentClose}

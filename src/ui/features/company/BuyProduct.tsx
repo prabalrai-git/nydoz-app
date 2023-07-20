@@ -15,6 +15,10 @@ import { toast } from "react-toastify";
 import { Spinner } from "react-bootstrap";
 
 const BuyProduct = () => {
+    // const surl =
+    //     "https://api.dev.nydoz.com/api/v1/companies/99a0d2c3-22a9-4ddf-8970-a1a7637cffdb/social-links";
+    // const reactUrl =
+    //     "https://api.dev.nydoz.com/v1/companies/99a0d2c3-22a9-4ddf-8970-a1a7637cffdb/social-links";
     const { companyInfo } = useAuthContext();
     const companyId = companyInfo?.id;
     const [show, setShow] = useState(false);

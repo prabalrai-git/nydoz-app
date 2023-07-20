@@ -46,6 +46,9 @@ const API_ROUTE = {
     GET_ROLES: "/api/v1/roles",
     POST_ROLES: "/api/v1/roles",
 
+    // Socisl Links
+    GET_SOCIAL_LINKS_BY_COMPANYID: "/api/v1/companies",
+
     //  Client Management agents routes
     CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
     GET_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",

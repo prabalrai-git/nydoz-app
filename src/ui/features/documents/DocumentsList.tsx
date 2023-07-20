@@ -6,15 +6,16 @@ import TanStackTable from "../../shared/molecules/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import AddDocuments from "./AddDocuments";
 import Images from "../../../constants/Images";
+import useAuthContext from "../../../context/auth/useAuthContext";
 
 const DocumentList = () => {
-    const { id: companyId } = useParams<string>();
+    const { companyInfo } = useAuthContext();
+    const companyId = companyInfo?.id;
 
     const [selectedData, setSelectedData] = useState<
         IDocumentResponse | undefined

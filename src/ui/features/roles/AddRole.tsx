@@ -53,6 +53,11 @@ const AddDocuments = (props: IModalProps) => {
                 name: selectedData.name,
                 description: selectedData.description,
             });
+        } else {
+            reset({
+                name: "",
+                description: "",
+            });
         }
     }, [reset, selectedData]);
 
@@ -73,8 +78,6 @@ const AddDocuments = (props: IModalProps) => {
     }, [errList, setError]);
 
     const onFormSubmit = handleSubmit(async (data: FormData) => {
-        console.log(data, "data");
-
         if (selectedData) {
             const response = await updateData(
                 selectedData.id,
@@ -103,6 +106,14 @@ const AddDocuments = (props: IModalProps) => {
         }
     });
 
+    const handleModalClose = () => {
+        reset({
+            name: "",
+            description: "",
+        });
+        handleClose();
+    };
+
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -113,48 +124,49 @@ const AddDocuments = (props: IModalProps) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div>
-                    <form onSubmit={onFormSubmit}>
-                        <div className='row'>
-                            <div className='col-12 gap-5 gap-md-7 mb-6'>
-                                <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                    <label className='required form-label'>
-                                        Role Name:
-                                    </label>
-                                    <input
-                                        className='form-control'
-                                        placeholder='Enter role Name'
-                                        type='text'
-                                        {...register("name")}
-                                    />
-                                    <p className='text-danger mt-1'>
-                                        {errors.name?.message}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className='col-12 gap-5 gap-md-7 '>
-                                <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                    <label className=' form-label'>
-                                        Description:
-                                    </label>
-                                    <textarea
-                                        rows={5}
-                                        cols={5}
-                                        className='form-control'
-                                        placeholder='Enter description'
-                                        {...register("description")}
-                                    />
-                                    <p className='text-danger mt-1'>
-                                        {errors.description?.message}
-                                    </p>
-                                </div>
+                <form onSubmit={onFormSubmit}>
+                    <div className='row'>
+                        <div className='col-12 gap-5 gap-md-7 mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className='required form-label'>
+                                    Role Name:
+                                </label>
+                                <input
+                                    className='form-control'
+                                    placeholder='Enter role Name'
+                                    type='text'
+                                    {...register("name")}
+                                />
+                                <p className='text-danger mt-1'>
+                                    {errors.name?.message}
+                                </p>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div className='col-12 gap-5 gap-md-7 '>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className=' form-label'>
+                                    Description:
+                                </label>
+                                <textarea
+                                    rows={5}
+                                    cols={5}
+                                    className='form-control'
+                                    placeholder='Enter description'
+                                    {...register("description")}
+                                />
+                                <p className='text-danger mt-1'>
+                                    {errors.description?.message}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </Modal.Body>
             <Modal.Footer>
-                <Button size='sm' variant='secondary' onClick={handleClose}>
+                <Button
+                    size='sm'
+                    variant='secondary'
+                    onClick={handleModalClose}>
                     Cancel
                 </Button>
                 <Button

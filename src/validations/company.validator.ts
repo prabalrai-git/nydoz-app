@@ -53,3 +53,23 @@ export const agentSchema = yup.object().shape({
         )
         .required(),
 });
+
+// CompanySocialLinks Schema
+
+export const CompanySocialLinkSchema = yup.object().shape({
+    title: yup
+        .string()
+        .required("Title is required")
+        .trim()
+        .strict(true)
+        .matches(
+            /^\S+$/,
+            "Title should not contain spaces.Eg:- Facebook.com, Twitter, etc"
+        ),
+    link: yup
+        .string()
+        .required("Link is required")
+        .url(
+            "Invalid URL format. URL should be like:-  https://www.example.com"
+        ),
+});
