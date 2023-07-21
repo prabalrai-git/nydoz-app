@@ -68,7 +68,7 @@ const LoginPage = () => {
                 payload: { userInfo: payload.user, token: payload.token },
             });
 
-            navigate("/home", { replace: true });
+            navigate("/workspace", { replace: true });
         }
     });
 
