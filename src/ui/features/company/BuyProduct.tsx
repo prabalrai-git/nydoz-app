@@ -121,7 +121,7 @@ const BuyProduct = () => {
         const response = await postData(payload);
         if (response?.status === 201) {
             toast.success("Product bought successfully");
-            navigate(`/home/${companyInfo?.subdomain}/dashboard`);
+            navigate(`/workspace/${companyInfo?.subdomain}/dashboard`);
         } else {
             toast.error("Something went wrong");
         }
@@ -141,7 +141,7 @@ const BuyProduct = () => {
 
     return (
         <div className=' mt-3 p-6'>
-            <Heading title='Buy Products' btnText='Back' showBreadcrumb={true}>
+            <Heading title='Buy Products' showBreadcrumb={true}>
                 <Breadcrumb
                     parent='products'
                     parentLink='/account/company/list'
@@ -296,32 +296,23 @@ const BuyProduct = () => {
                     </tbody>
                 </table>
                 <div className='row'>
-                    <div className='col-12 col-md-9 my-6 '>
-                        <h5>
-                            Total Price: <span> 777</span>
-                        </h5>
-                    </div>
-                    <div className='col-12 col-md-3'>
-                        <div className='float-end my-6 border-top'>
-                            <button
-                                onClick={handleProductBuy}
-                                disabled={isLoadingBuyProduct}
-                                className='btn btn-primary btn-lg'>
-                                {isLoadingBuyProduct ? (
-                                    <>
-                                        <span className='ms-2'>
-                                            Please Wait...
-                                        </span>
-                                        <Spinner
-                                            size='sm'
-                                            animation='border'
-                                            role='status'></Spinner>
-                                    </>
-                                ) : (
-                                    <span> Buy Now</span>
-                                )}
-                            </button>
-                        </div>
+                    <div className='col-12'>
+                        <button
+                            onClick={handleProductBuy}
+                            disabled={isLoadingBuyProduct}
+                            className='btn btn-primary btn-lg my-6 mx-auto float-end'>
+                            {isLoadingBuyProduct ? (
+                                <>
+                                    <span className='ms-2'>Please Wait...</span>
+                                    <Spinner
+                                        size='sm'
+                                        animation='border'
+                                        role='status'></Spinner>
+                                </>
+                            ) : (
+                                <span> Buy Now</span>
+                            )}
+                        </button>
                     </div>
                 </div>
             </section>

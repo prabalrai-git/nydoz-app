@@ -136,7 +136,7 @@ const Header2 = () => {
                                         {" "}
                                         <LinkContainer
                                             className='py-1'
-                                            to='/auth/login'>
+                                            to='/workspace'>
                                             <div>
                                                 <span className='me-3'>
                                                     <PersonGear

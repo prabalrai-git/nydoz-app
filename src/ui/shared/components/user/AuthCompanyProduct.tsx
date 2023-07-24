@@ -23,7 +23,7 @@ const ProductList = () => {
     }, []);
 
     const handleProductClick = (productId: string, subdomain: string) => {
-        navigate(`/home/${subdomain}/products/${productId}`);
+        navigate(`/workspace/${subdomain}/products/${productId}`);
     };
 
     return (
