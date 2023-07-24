@@ -15,7 +15,7 @@ const AuthRoutes: RouteObject[] = [
         element: <LoginPage />,
     },
     {
-        path: "register",
+        path: "signup",
         element: <RegisterPage />,
     },
     {

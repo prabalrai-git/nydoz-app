@@ -80,15 +80,17 @@ const ProductList = () => {
                     })}
                 </div>
             )}
-            {data?.companies?.length === 0 && (
-                <NotFound title='Products Not Found. Create company to use product.' />
-            )}
-            {!isloading &&
-                data?.companies &&
-                data?.companies?.length > 0 &&
-                data?.companies[0]?.products?.length === 0 && (
-                    <NotFound title='you are not subscribed to any products.' />
+            <div className='card'>
+                {data?.companies?.length === 0 && (
+                    <NotFound title='Products Not Found. Create company to use product.' />
                 )}
+                {!isloading &&
+                    data?.companies &&
+                    data?.companies?.length > 0 &&
+                    data?.companies[0]?.products?.length === 0 && (
+                        <NotFound title='you are not subscribed to any products.' />
+                    )}
+            </div>
         </div>
     );
 };

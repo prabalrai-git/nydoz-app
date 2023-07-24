@@ -7,7 +7,6 @@ import { ICompanyResponse } from "../../../types/payload.type";
 import BASE_URL from "../../../constants/AppSetting";
 
 import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
-import { Link } from "react-router-dom";
 import { Flag } from "react-bootstrap-icons";
 import useAuthContext from "../../../context/auth/useAuthContext";
 
@@ -24,7 +23,7 @@ const ProfileLayout = () => {
     }, []);
 
     const handleEditCompany = () => {
-        navigate(`/home/${data?.subdomain}/edit`, { state: { data } });
+        navigate(`/workspace/${data?.subdomain}/edit`, { state: { data } });
     };
 
     return (
@@ -111,7 +110,7 @@ const ProfileLayout = () => {
                                     </div>
                                 </div>
                             </div>
-                            {isCompanyOwner && (
+                            {/* {isCompanyOwner && (
                                 <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold'>
                                     <li className='nav-item mt-2'>
                                         <Link
@@ -151,7 +150,7 @@ const ProfileLayout = () => {
                                         </Link>
                                     </li>
                                 </ul>
-                            )}
+                            )} */}
                         </div>
                     </div>
                     <div className='container'>
