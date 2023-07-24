@@ -1,6 +1,8 @@
 import { RouteObject } from "react-router-dom";
 import loadable from "@loadable/component";
 import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
+import Layout from "../ui/features/crm/Layout";
+import CRMRoutes from "./crm";
 
 const CompanyProductList = loadable(
     () => import("../ui/features/products/CompanyProductList")
@@ -24,6 +26,11 @@ const ProductRoutes: RouteObject[] = [
                 <BuyProduct />,
             </ProtectCompanyOwner>
         ),
+    },
+    {
+        path: "crm",
+        element: <Layout />,
+        children: CRMRoutes,
     },
     {
         path: ":productId",

@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { capitalizeText } from "../../../functions/TextMuatations";
+import { NavLink } from "react-router-dom";
 interface IBreadcrumbProps {
     title: string;
     btnText: string;
@@ -8,20 +9,47 @@ interface IBreadcrumbProps {
 
 const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
     const navigate = useNavigate();
-    const { title, btnText, showBreadcrumb } = props;
+    const { btnText, showBreadcrumb } = props;
     const location = useLocation();
     const pathnames = location.pathname
         .split("/")
         .filter((path) => path !== "");
 
     return (
-        <div className='app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100 bg-white p-2 my-3 '>
-            <div className='page-title d-flex flex-column justify-content-center gap-1 me-3'>
-                <h1 className='page-heading d-flex flex-column justify-content-center text-dark fw-bold fs-3 m-0'>
-                    {title}
-                </h1>
+        <div className='card-rounded bg-light d-flex flex-stack flex-wrap p-5'>
+            <div>
+                <ul className='nav flex-wrap border-transparent fw-bold'>
+                    <li className='nav-item my-1'>
+                        <NavLink
+                            className='btn btn-color-gray-600 btn-active-primary btn-active-color-light fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase'
+                            to='dashboard'>
+                            Dashboard
+                        </NavLink>
+                    </li>
+                    <li className='nav-item my-1'>
+                        <NavLink
+                            className='btn btn-color-gray-600 btn-active-primary btn-active-color-light fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase '
+                            to='products'>
+                            Products
+                        </NavLink>
+                    </li>
+                    <li className='nav-item my-1'>
+                        <NavLink
+                            className='btn btn-color-gray-600 btn-active-primary btn-active-color-light fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase'
+                            to='account'>
+                            Account
+                        </NavLink>
+                    </li>
+                    <li className='nav-item my-1'>
+                        <NavLink
+                            className='btn btn-color-gray-600 btn-active-primary btn-active-color-light fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase'
+                            to='setting'>
+                            setting
+                        </NavLink>
+                    </li>
+                </ul>
                 {showBreadcrumb && (
-                    <ul className='breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0'>
+                    <ul className='breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-2'>
                         {pathnames.map((path, index) => {
                             return (
                                 <li
@@ -42,13 +70,11 @@ const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
                 )}
             </div>
 
-            <div className='d-flex align-items-center gap-2 gap-lg-3'>
-                <button
-                    onClick={() => navigate(-1)}
-                    className='btn btn-flex btn-secondary   fs-7 fw-bold btn-sm'>
-                    {btnText}
-                </button>
-            </div>
+            <button
+                onClick={() => navigate(-1)}
+                className='btn btn-flex btn-secondary   fs-7 fw-bold btn-sm'>
+                {btnText}
+            </button>
         </div>
     );
 };
