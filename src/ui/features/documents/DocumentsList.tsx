@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import AddDocuments from "./AddDocuments";
 import Images from "../../../constants/Images";
 import useAuthContext from "../../../context/auth/useAuthContext";
+import NotFound from "../../shared/molecules/NotFound";
 
 const DocumentList = () => {
     const { companyInfo } = useAuthContext();
@@ -201,13 +202,22 @@ const DocumentList = () => {
                         setSelectedData(undefined);
                         handleAddDocumentOpen();
                     }}
-                    className='btn btn-primary btn-sm'>
+                    className='btn btn-success btn-sm'>
                     <span className='mx-2'>Add Documents</span>
                 </button>
             </div>
             <section>
                 <div className='card'>
-                    <TanStackTable columns={tableColumns} data={data ?? []} />
+                    {data && data?.length === 0 ? (
+                        <div>
+                            <NotFound title='Documents Not Available ' />
+                        </div>
+                    ) : (
+                        <TanStackTable
+                            columns={tableColumns}
+                            data={data ?? []}
+                        />
+                    )}
                 </div>
             </section>
             <Modal2

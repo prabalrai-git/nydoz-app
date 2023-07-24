@@ -15,7 +15,7 @@ const Header2 = () => {
     const { isLoggedIn, dispatch } = useAuthContext();
     const navigate = useNavigate();
     const handleNavigateCreateCompany = () => {
-        navigate("/home/create-company");
+        navigate("/workspace/create-company");
     };
 
     const logoutFn = () => {
@@ -65,7 +65,7 @@ const Header2 = () => {
                                     </Link>
                                 ) : (
                                     <Link
-                                        to={"/home"}
+                                        to={"/workspace"}
                                         className='nav-link fs-7'>
                                         Workspace
                                     </Link>
@@ -136,7 +136,7 @@ const Header2 = () => {
                                         {" "}
                                         <LinkContainer
                                             className='py-1'
-                                            to='/auth/login'>
+                                            to='/workspace'>
                                             <div>
                                                 <span className='me-3'>
                                                     <PersonGear

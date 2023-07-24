@@ -47,7 +47,7 @@ const Register = () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { isTermAndConditionAccepted, ...rest } = data;
         const response = await postData(rest);
-        console.log(response);
+        // console.log(response);
 
         if (response?.status === 201) {
             toast.success("Account Created Successfully");

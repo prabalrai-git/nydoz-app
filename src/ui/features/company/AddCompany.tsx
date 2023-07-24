@@ -159,7 +159,7 @@ const AddCompany = () => {
             // console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company Added Successfully");
-                navigate("/home");
+                navigate("/workspace");
             }
         }
     });
@@ -195,7 +195,9 @@ const AddCompany = () => {
                                 <div className='card-header'>
                                     <div className='card-title mx-auto'>
                                         <h5 className=' required'>
-                                            Upload Company's Logo
+                                            {location?.state?.data?.id
+                                                ? "Edit Company's Logo"
+                                                : "Upload Company's Logo"}
                                         </h5>
                                     </div>
                                 </div>
@@ -278,7 +280,9 @@ const AddCompany = () => {
                                 <div className='card-header'>
                                     <div className='card-title'>
                                         <h5 className='required'>
-                                            Upload Company's cover photo
+                                            {location?.state?.data?.id
+                                                ? "Edit Company's cover photo"
+                                                : "Upload Company's cover photo"}
                                         </h5>
                                     </div>
                                 </div>

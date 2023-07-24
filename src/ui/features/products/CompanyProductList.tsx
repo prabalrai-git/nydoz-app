@@ -36,7 +36,7 @@ const ProductList = () => {
                 <div className='d-flex'>
                     {data.map((product) => (
                         <Link
-                            to={`/home/${companyInfo?.subdomain}/products/${product.id}`}
+                            to={`/workspace/${companyInfo?.subdomain}/products/${product.id}`}
                             key={product.id}
                             className='flex-wrap cursor-pointer'>
                             <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box mx-3'>
@@ -63,7 +63,7 @@ const ProductList = () => {
 
                     {isCompanyOwner && (
                         <Link
-                            to={`/home/${companyInfo?.subdomain}/products/buy`}
+                            to={`/workspace/${companyInfo?.subdomain}/products/buy`}
                             className='btn btn-success my-3'>
                             BUY PRODUCTS
                         </Link>

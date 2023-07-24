@@ -1,14 +1,9 @@
-import { useEffect } from "react";
-
 import CompanyProductList from "../products/CompanyProductList";
 
 import useAuthContext from "../../../context/auth/useAuthContext";
 
 const CompanyDashboard = () => {
-    const { isCompanyOwner, companyInfo } = useAuthContext();
-    useEffect(() => {
-        console.log(isCompanyOwner, "dashboar company owner");
-    }, [isCompanyOwner]);
+    const { companyInfo } = useAuthContext();
 
     return (
         <div>

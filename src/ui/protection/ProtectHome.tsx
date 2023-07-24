@@ -8,7 +8,7 @@ const ProtectHomeRoute: FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <div>
             {subDomainFromUrl ? (
-                <Navigate to={`/home/${subDomainFromUrl}`} />
+                <Navigate to={`/workspace/${subDomainFromUrl}`} />
             ) : (
                 <div>{children}</div>
             )}

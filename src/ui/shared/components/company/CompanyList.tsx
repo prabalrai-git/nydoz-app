@@ -42,9 +42,10 @@ const CompanyListCard = () => {
                     </span>
                 </h3>
 
-                <div className='card-toolbar'>
+                {/* <div className='card-toolbar'>
                     <a className='btn btn-sm btn-light'>View All</a>
-                </div>
+                </div> */}
+                <hr className='bg-light' />
             </div>
             <div className='card-body pt6'>
                 {data?.map((item: ICompanyResponse) => (
