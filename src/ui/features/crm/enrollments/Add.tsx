@@ -128,176 +128,192 @@ const Add = () => {
         }
     });
     return (
-        <div className='card shadow-sm'>
-            <div className='card-header py-3'>
-                <CompanyBreadcrumb
-                    title='Add Enrollments'
-                    showBreadcrumb={true}
-                    btnText='Back'
-                />
-            </div>
-            <div className='card-body'>
-                <div className='row'>
-                    <div className='col-12 mb-6'>
-                        <div
-                            className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
-                            data-kt-image-input='true'>
-                            <div className='d-flex justify-content-around align-items-center mb-6'>
-                                {location?.state?.data && (
-                                    <div className='image-input-wrapper w-100px h-100px p-2'>
-                                        {oldThumbnil ? (
-                                            <img
-                                                className={
-                                                    thumbnilImg &&
-                                                    thumbnilImg?.length > 0
-                                                        ? "img-fluid rounded opacity-20 "
-                                                        : "img-fluid rounded"
-                                                }
-                                                src={`${APP_SETTING.VITE_BASE_URL}${oldThumbnil}`}
-                                                alt='Company"s logo'
-                                            />
-                                        ) : (
-                                            <p className='text center text-muted'>
-                                                No Company logo found.
-                                            </p>
-                                        )}
-                                    </div>
-                                )}
+        <div>
+            <CompanyBreadcrumb
+                title='Customer Manangement Enrollments'
+                showBreadcrumb={true}
+                btnText='Back'
+            />
+            <div className='card shadow-sm '>
+                <div className='card-header'>
+                    <h3 className='card-title'>Enrollment List</h3>
+                    <div className='card-toolbar'>
+                        <button
+                            className='btn btn-sm btn-info'
+                            onClick={handleClearForm}>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+                <div className='card-body'>
+                    <div className='row'>
+                        <div className='col-12 mb-6'>
+                            <div
+                                className='image-input image-input-empty image-input-outline image-input-placeholder mb-3'
+                                data-kt-image-input='true'>
+                                <div className='d-flex justify-content-around align-items-center mb-6'>
+                                    {location?.state?.data && (
+                                        <div className='image-input-wrapper w-100px h-100px p-2'>
+                                            {oldThumbnil ? (
+                                                <img
+                                                    className={
+                                                        thumbnilImg &&
+                                                        thumbnilImg?.length > 0
+                                                            ? "img-fluid rounded opacity-20 "
+                                                            : "img-fluid rounded"
+                                                    }
+                                                    src={`${APP_SETTING.VITE_BASE_URL}${oldThumbnil}`}
+                                                    alt='Company"s logo'
+                                                />
+                                            ) : (
+                                                <p className='text center text-muted'>
+                                                    No Company logo found.
+                                                </p>
+                                            )}
+                                        </div>
+                                    )}
 
-                                {thumbnilImg && thumbnilImg?.length > 0 && (
-                                    <div className='image-input-wrapper w-100px h-100px p-2'>
-                                        <img
-                                            className='img-fluid rounded'
-                                            src={`${APP_SETTING.VITE_BASE_URL}${thumbnilImg[0]}`}
-                                            alt='company logo'
-                                        />
-                                    </div>
-                                )}
-
-                                {!location?.state?.data &&
-                                    thumbnilImg?.length === 0 && (
+                                    {thumbnilImg && thumbnilImg?.length > 0 && (
                                         <div className='image-input-wrapper w-100px h-100px p-2'>
                                             <img
                                                 className='img-fluid rounded'
-                                                src={Images.BlackImg}
-                                                alt='blank'
+                                                src={`${APP_SETTING.VITE_BASE_URL}${thumbnilImg[0]}`}
+                                                alt='company logo'
                                             />
                                         </div>
                                     )}
+
+                                    {!location?.state?.data &&
+                                        thumbnilImg?.length === 0 && (
+                                            <div className='image-input-wrapper w-100px h-100px p-2'>
+                                                <img
+                                                    className='img-fluid rounded'
+                                                    src={Images.BlackImg}
+                                                    alt='blank'
+                                                />
+                                            </div>
+                                        )}
+                                </div>
+
+                                <div>
+                                    <UploadFile
+                                        fileUploadLimit={1}
+                                        fileUploadType='IMAGE'
+                                        isUploadRequired={false}
+                                        isRoutePrivate={true}
+                                        isMultiple={false}
+                                        setFileInfo={setThumbnilImg}
+                                        fileInfo={thumbnilImg}
+                                    />
+                                </div>
                             </div>
 
+                            <div className='text-muted fs-7'>
+                                Only *.png, *.jpg and *.jpeg image files are
+                                accepted
+                            </div>
+                        </div>
+                    </div>
+                    <form className='form w-100 ' onSubmit={onFormSubmit}>
+                        <div className='col-12 gap-5 gap-md-7 mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className='required form-label'>
+                                    College/University Name:
+                                </label>
+                                <input
+                                    className='form-control'
+                                    placeholder='College/University name'
+                                    {...register("name")}
+                                />
+                                <div className='fv-plugins-message-container invalid-feedback'>
+                                    {errors.name?.message}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-12 gap-5 gap-md-7  mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className='required form-label'>
+                                    Website
+                                </label>
+                                <input
+                                    className='form-control'
+                                    {...register("website")}
+                                    placeholder='website url'
+                                />
+                                <div className='fv-plugins-message-container invalid-feedback'>
+                                    {errors.website?.message}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-12 gap-5 gap-md-7  mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className=' form-label'>
+                                    Description
+                                </label>
+                                <textarea
+                                    className='form-control'
+                                    {...register("description")}
+                                    placeholder='description'
+                                />
+                                <div className='fv-plugins-message-container invalid-feedback'>
+                                    {errors.website?.message}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-12 gap-5 gap-md-7   mb-6'>
                             <div>
-                                <UploadFile
-                                    fileUploadLimit={1}
-                                    fileUploadType='IMAGE'
-                                    isUploadRequired={false}
-                                    isRoutePrivate={true}
-                                    isMultiple={false}
-                                    setFileInfo={setThumbnilImg}
-                                    fileInfo={thumbnilImg}
+                                <label className='required form-label'>
+                                    State
+                                </label>
+                                <input
+                                    className='form-control'
+                                    placeholder='Enter your state'
+                                    {...register("state")}
+                                />
+                                <div className='fv-plugins-message-container invalid-feedback'>
+                                    {errors.state?.message}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-12  gap-5 gap-md-7   mb-6'>
+                            <div>
+                                <label className='required form-label'>
+                                    Country
+                                </label>
+                                <CountryCode
+                                    placeholder='Select Country'
+                                    forCountry={true}
+                                    selectValue={selectedCountry}
+                                    setSelectValue={setSelectedCountry}
                                 />
                             </div>
                         </div>
-
-                        <div className='text-muted fs-7'>
-                            Only *.png, *.jpg and *.jpeg image files are
-                            accepted
+                        <div className='col-12 d-flex justify-content-end'>
+                            <button
+                                type='submit'
+                                disabled={isLoading}
+                                className='btn btn-primary  mb-6'>
+                                {isLoading ? (
+                                    <>
+                                        <span className='ms-2'>
+                                            Please Wait...
+                                        </span>
+                                        <Spinner
+                                            size='sm'
+                                            animation='border'
+                                            role='status'></Spinner>
+                                    </>
+                                ) : (
+                                    <span>
+                                        {location?.state?.data?.id
+                                            ? "Update"
+                                            : "Submit"}
+                                    </span>
+                                )}
+                            </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <form className='form w-100 ' onSubmit={onFormSubmit}>
-                    <div className='col-12 gap-5 gap-md-7 mb-6'>
-                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                            <label className='required form-label'>
-                                College/University Name:
-                            </label>
-                            <input
-                                className='form-control'
-                                placeholder='College/University name'
-                                {...register("name")}
-                            />
-                            <div className='fv-plugins-message-container invalid-feedback'>
-                                {errors.name?.message}
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 gap-5 gap-md-7  mb-6'>
-                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                            <label className='required form-label'>
-                                Website
-                            </label>
-                            <input
-                                className='form-control'
-                                {...register("website")}
-                                placeholder='website url'
-                            />
-                            <div className='fv-plugins-message-container invalid-feedback'>
-                                {errors.website?.message}
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 gap-5 gap-md-7  mb-6'>
-                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                            <label className=' form-label'>Description</label>
-                            <textarea
-                                className='form-control'
-                                {...register("description")}
-                                placeholder='description'
-                            />
-                            <div className='fv-plugins-message-container invalid-feedback'>
-                                {errors.website?.message}
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12 gap-5 gap-md-7   mb-6'>
-                        <div>
-                            <label className='required form-label'>State</label>
-                            <input
-                                className='form-control'
-                                placeholder='Enter your state'
-                                {...register("state")}
-                            />
-                            <div className='fv-plugins-message-container invalid-feedback'>
-                                {errors.state?.message}
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-12  gap-5 gap-md-7   mb-6'>
-                        <div>
-                            <label className='required form-label'>
-                                Country
-                            </label>
-                            <CountryCode
-                                placeholder='Select Country'
-                                forCountry={true}
-                                selectValue={selectedCountry}
-                                setSelectValue={setSelectedCountry}
-                            />
-                        </div>
-                    </div>
-                    <div className='col-12 d-flex justify-content-end'>
-                        <button
-                            type='submit'
-                            disabled={isLoading}
-                            className='btn btn-primary  mb-6'>
-                            {isLoading ? (
-                                <>
-                                    <span className='ms-2'>Please Wait...</span>
-                                    <Spinner
-                                        size='sm'
-                                        animation='border'
-                                        role='status'></Spinner>
-                                </>
-                            ) : (
-                                <span>
-                                    {location?.state?.data?.id
-                                        ? "Update"
-                                        : "Submit"}
-                                </span>
-                            )}
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
     );

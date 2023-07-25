@@ -4,17 +4,20 @@ import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { IProductResponse } from "../../../types/payload.type";
-import LoadingSpinner from "../../shared/molecules/LoadingSpinner";
 import { toast } from "react-toastify";
 import NotFound from "../../shared/molecules/NotFound";
 import ImageAtom from "../../shared/atoms/ImageAtom";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import { Link } from "react-router-dom";
+import LoadingPage from "../utils/LoadingPage";
+import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 const ProductList = () => {
     const { companyInfo, isCompanyOwner } = useAuthContext();
     const companyId = companyInfo?.id;
     const proudctListUrl = `${API_ROUTE.GET_COMPANIES}/${companyId}/products`;
+
+    console.log("proudctListUrl", proudctListUrl);
     const { data, fetchData, isloading } = useFetch<IProductResponse[]>(
         proudctListUrl,
         true
@@ -30,8 +33,13 @@ const ProductList = () => {
     }, [companyId]);
 
     return (
-        <div className='py-6 px-3'>
-            {isloading && <LoadingSpinner title='loading...' />}
+        <div>
+            <CompanyBreadcrumb
+                title='Products'
+                showBreadcrumb={true}
+                btnText='Back'
+            />
+            {isloading && <LoadingPage />}
             {data && data.length > 0 && (
                 <div className='d-flex'>
                     {data.map((product) => (

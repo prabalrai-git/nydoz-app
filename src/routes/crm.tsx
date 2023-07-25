@@ -11,7 +11,7 @@ const CrmRoutes: RouteObject[] = [
         element: <Dashboard />,
     },
     {
-        path: "enrollments",
+        path: "enrolled-institutes",
         element: <Outlet />,
         children: [
             {

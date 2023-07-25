@@ -15,9 +15,9 @@ const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
         .filter((path) => path !== "");
 
     return (
-        <div className='app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100 '>
+        <div className='app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100 my-3 px-2 '>
             <div className='page-title d-flex flex-column justify-content-center gap-1 me-3'>
-                <h1 className='page-heading d-flex flex-column justify-content-center text-dark fw-bold fs-3 m-0 pt-1'>
+                <h1 className='page-heading d-flex flex-column justify-content-center text-dark fw-bold fs-3 m-0 '>
                     {title}
                 </h1>
                 {showBreadcrumb && (

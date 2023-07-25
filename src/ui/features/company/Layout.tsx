@@ -7,7 +7,7 @@ import { ICompanyResponse } from "../../../types/payload.type";
 import CompanyLoader from "../../shared/components/company/CompanyLoader";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import useHandleShowError from "../../../hooks/useHandleShowError";
-import Sidebar from "../../shared/components/Sidebar";
+import Sidebar from "../../shared/components/CompanySidebar";
 
 const CompanyLayout = () => {
     const { dispatch, companyInfo, userInfo } = useAuthContext();

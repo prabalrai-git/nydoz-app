@@ -1,11 +1,47 @@
+import { NavLink } from "react-router-dom";
+
 interface IProps {
     title: string | undefined;
 }
 
+interface ISideMenu {
+    id: number;
+    title: string;
+    link: string;
+    icon: JSX.Element;
+}
 const Sidebar = (props: IProps) => {
     const { title } = props;
+
+    const sidebarMenu: ISideMenu[] = [
+        {
+            id: 1,
+            title: "Dashboard",
+            link: "dashboard",
+            icon: <i className='ki-outline ki-element-11  fs-1'></i>,
+        },
+        {
+            id: 2,
+            title: "Products",
+            link: "products/view",
+            icon: <i className='ki-outline ki-handcart fs-2'></i>,
+        },
+        {
+            id: 3,
+            title: "My account",
+            link: "my-account",
+            icon: <i className='ki-outline ki-user fs-2'></i>,
+        },
+        {
+            id: 4,
+            title: "Setting",
+            link: "setting",
+            icon: <i className='ki-outline ki-chart-line fs-1'></i>,
+        },
+    ];
+
     return (
-        <div className='app-sidebar-primary'>
+        <div className='app-sidebar-primary h-100vh'>
             <div
                 className='d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-5 '
                 id='kt_app_sidebar_primary_header'>
@@ -18,93 +54,29 @@ const Sidebar = (props: IProps) => {
                 data-kt-scroll-height='auto'
                 data-kt-scroll-dependencies='#kt_app_header, #kt_app_sidebar_primary_header, #kt_app_sidebar_primary_footer'
                 data-kt-scroll-wrappers='#kt_app_content, #kt_app_sidebar_primary_nav'
-                data-kt-scroll-offset='5px'
-                style={{
-                    height: " 629px",
-                }}>
+                data-kt-scroll-offset='5px'>
                 <ul className='nav' role='tablist'>
-                    <li className='nav-item py-1' role='presentation'>
-                        <a
-                            data-bs-toggle='tab'
-                            href='#kt_app_sidebar_secondary_collections'
-                            className='nav-link py-4 px-1 btn'
-                            aria-selected='false'
-                            role='tab'>
-                            <i className='ki-outline ki-questionnaire-tablet fs-1'></i>
-                            <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
-                                Collections
-                            </span>
-                        </a>
-                    </li>
-                    <li className='nav-item py-1' role='presentation'>
-                        <a
-                            data-bs-toggle='tab'
-                            href='#kt_app_sidebar_secondary_apis'
-                            className='nav-link py-4 px-1 btn active'
-                            aria-selected='true'
-                            role='tab'>
-                            <i className='ki-outline ki-abstract-26 fs-1'></i>
-                            <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
-                                APIs
-                            </span>
-                        </a>
-                    </li>
+                    {sidebarMenu.map((item: ISideMenu) => {
+                        return (
+                            <li
+                                key={item.id}
+                                className='nav-item py-1'
+                                role='presentation'>
+                                <NavLink
+                                    data-bs-toggle='tab'
+                                    to={item.link}
+                                    className='nav-link py-4 px-1 btn'
+                                    aria-selected='false'
+                                    role='tab'>
+                                    <span>{item.icon}</span>
 
-                    <li className='nav-item py-1' role='presentation'>
-                        <a
-                            data-bs-toggle='tab'
-                            href='#kt_app_sidebar_secondary_environment'
-                            className='nav-link py-4 px-1 btn'
-                            aria-selected='false'
-                            role='tab'>
-                            <i className='ki-outline ki-notification-status fs-1'></i>
-                            <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
-                                Environment
-                            </span>
-                        </a>
-                    </li>
-
-                    <li className='nav-item py-1' role='presentation'>
-                        <a
-                            data-bs-toggle='tab'
-                            href='#kt_app_sidebar_secondary_servers'
-                            className='nav-link py-4 px-1 btn'
-                            aria-selected='false'
-                            role='tab'>
-                            <i className='ki-outline ki-message-notif fs-1'></i>
-                            <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
-                                Servers
-                            </span>
-                        </a>
-                    </li>
-
-                    <li className='nav-item py-1' role='presentation'>
-                        <a
-                            data-bs-toggle='tab'
-                            href='#kt_app_sidebar_secondary_notifications'
-                            className='nav-link py-4 px-1 btn'
-                            aria-selected='false'
-                            role='tab'>
-                            <i className='ki-outline ki-rocket fs-1'></i>
-                            <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
-                                Notifications
-                            </span>
-                        </a>
-                    </li>
-
-                    <li className='nav-item py-1' role='presentation'>
-                        <a
-                            data-bs-toggle='tab'
-                            href='#kt_app_sidebar_secondary_history'
-                            className='nav-link py-4 px-1 btn'
-                            aria-selected='false'
-                            role='tab'>
-                            <i className='ki-outline ki-chart-line fs-1'></i>
-                            <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
-                                History
-                            </span>
-                        </a>
-                    </li>
+                                    <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
+                                        {item.title}
+                                    </span>
+                                </NavLink>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
             {/* <!--begin::Footer--> */}
