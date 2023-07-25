@@ -58,6 +58,9 @@ const API_ROUTE = {
     GET_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
     POST_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
     UPDATE_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
+
+    //  Client Management institutes routes
+    CM_ENROLLMENT: "/api/v1/client-management/enroll-institutes",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

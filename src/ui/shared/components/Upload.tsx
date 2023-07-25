@@ -105,7 +105,7 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
     };
 
     return (
-        <div>
+        <div className=''>
             <label htmlFor='formFile' className='form-label'>
                 {title && (
                     <span

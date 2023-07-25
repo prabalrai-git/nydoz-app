@@ -29,7 +29,7 @@ const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
                     <li className='nav-item my-1'>
                         <NavLink
                             className='btn btn-color-gray-600 btn-active-primary btn-active-color-light fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase '
-                            to='products'>
+                            to='products/view'>
                             Products
                         </NavLink>
                     </li>

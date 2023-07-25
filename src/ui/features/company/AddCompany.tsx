@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import APP_SETTING from "../../../constants/APP_SETTING";
 import Images from "../../../constants/Images";
 import UploadFile from "../../shared/components/Upload";
 import Heading from "../../shared/molecules/Heading";
@@ -218,7 +219,7 @@ const AddCompany = () => {
                                                                     ? "img-fluid rounded opacity-20 "
                                                                     : "img-fluid rounded"
                                                             }
-                                                            src={`${BASE_URL}${oldThumbnil}`}
+                                                            src={`${APP_SETTING.VITE_BASE_URL}${oldThumbnil}`}
                                                             alt='Company"s logo'
                                                         />
                                                     ) : (
@@ -235,7 +236,7 @@ const AddCompany = () => {
                                                     <div className='image-input-wrapper w-100px h-100px p-2'>
                                                         <img
                                                             className='img-fluid rounded'
-                                                            src={`${BASE_URL}${thumbnilImg[0]}`}
+                                                            src={`${APP_SETTING.VITE_BASE_URL}${thumbnilImg[0]}`}
                                                             alt='company logo'
                                                         />
                                                     </div>
@@ -303,7 +304,7 @@ const AddCompany = () => {
                                                                     ? "img-thumbnail  img-fluid img-thumbnil h-100px rounded opacity-20 "
                                                                     : "img-thumbnail img-fluid rounded"
                                                             }
-                                                            src={`${BASE_URL}${oldCoverImg}`}
+                                                            src={`${APP_SETTING.VITE_BASE_URL}${oldCoverImg}`}
                                                             alt='Company"s logo'
                                                         />
                                                     ) : (
@@ -320,7 +321,7 @@ const AddCompany = () => {
                                                     <div className='cover-image-wrapper h-100px m-2'>
                                                         <img
                                                             className='img-thumbnail img-fluid rounded'
-                                                            src={`${BASE_URL}${coverImg[0]}`}
+                                                            src={`${APP_SETTING.VITE_BASE_URL}${coverImg[0]}`}
                                                             alt='cover Image'
                                                         />
                                                     </div>

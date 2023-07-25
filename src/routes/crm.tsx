@@ -1,5 +1,7 @@
 import loadable from "@loadable/component";
-import { RouteObject } from "react-router-dom";
+import { Outlet, RouteObject } from "react-router-dom";
+import EnrollmentList from "../ui/features/crm/enrollments/list";
+import AddEnrollment from "../ui/features/crm/enrollments/Add";
 
 const Dashboard = loadable(() => import("../ui/features/crm/Dashboard"));
 
@@ -7,6 +9,20 @@ const CrmRoutes: RouteObject[] = [
     {
         path: "dashboard",
         element: <Dashboard />,
+    },
+    {
+        path: "enrollments",
+        element: <Outlet />,
+        children: [
+            {
+                path: "list",
+                element: <EnrollmentList />,
+            },
+            {
+                path: "add",
+                element: <AddEnrollment />,
+            },
+        ],
     },
 ];
 
