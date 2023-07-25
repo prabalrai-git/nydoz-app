@@ -34,7 +34,7 @@ const Header2 = () => {
         <Navbar
             id='admin-navbar'
             className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm fw-bolder'>
-            <div className='container'>
+            <div className='container-fluid'>
                 <Hamburger />
                 <Link to='/' className='navbar-brand'>
                     <img

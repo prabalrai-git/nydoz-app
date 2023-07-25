@@ -6,9 +6,8 @@ import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
 import CompanyLoader from "../../shared/components/company/CompanyLoader";
 import useAuthContext from "../../../context/auth/useAuthContext";
-
-import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 import useHandleShowError from "../../../hooks/useHandleShowError";
+import Sidebar from "../../shared/components/Sidebar";
 
 const CompanyLayout = () => {
     const { dispatch, companyInfo, userInfo } = useAuthContext();
@@ -69,16 +68,18 @@ const CompanyLayout = () => {
             {showSplashScreen ? (
                 <CompanyLoader />
             ) : (
-                <div>
-                    <div>
-                        <CompanyBreadcrumb
-                            title={companyInfo?.name || "HOME"}
-                            btnText='Back'
-                            showBreadcrumb={true}
-                        />
+                <div className='d-flex pt-3'>
+                    <div
+                        style={{
+                            width: "150px",
+                            paddingTop: "10px",
+                            marginRight: "10px",
+                        }}>
+                        <Sidebar title={companyInfo?.subdomain} />
                     </div>
-
-                    <Outlet />
+                    <div className='content container'>
+                        <Outlet />
+                    </div>
                 </div>
             )}
         </div>

@@ -15,7 +15,7 @@ const ProtectedUserLayout: React.FC = () => {
             {/* <UserHeader /> */}
             {/* <Sidebar /> */}
             <div className='doc-content'>
-                <div className='container  '>
+                <div>
                     {isLoggedIn && token ? (
                         <Outlet />
                     ) : (

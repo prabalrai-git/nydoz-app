@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import APP_SETTING from "../../../../config/AppSetting";
 import { enrollmentSchema } from "../../../../validations/crm.validators";
 import { useForm } from "react-hook-form";
@@ -19,6 +19,7 @@ import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
 import { Spinner } from "react-bootstrap";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
+import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 
 interface IFormData {
     name: string;
@@ -54,16 +55,29 @@ const Add = () => {
     useValidationError({ errList, setError });
     useHandleShowError(error);
 
+    const handleResetForm = useCallback(() => {
+        const companyDetails: IEnrollmentResponse = location?.state?.data;
+        reset(companyDetails);
+        setOldThumbnil(companyDetails?.logo);
+        const country = getSelectPropsFromCountry(companyDetails?.country);
+        setSelectedCountry(country);
+    }, [location?.state?.data, reset]);
+
     useEffect(() => {
         if (location?.state?.data && location?.state?.data?.id) {
-            const companyDetails: IEnrollmentResponse = location?.state?.data;
-            reset(companyDetails);
-            setOldThumbnil(companyDetails?.logo);
-
-            const country = getSelectPropsFromCountry(companyDetails?.country);
-            setSelectedCountry(country);
+            handleResetForm();
         }
-    }, [location?.state, reset]);
+    }, [handleResetForm, location?.state, reset]);
+
+    const handleClearForm = () => {
+        reset({
+            name: "",
+            website: "",
+            state: "",
+            description: "",
+        });
+        setSelectedCountry(undefined);
+    };
 
     const onFormSubmit = handleSubmit(async (data: IFormData) => {
         if (!selectedCountry) {
@@ -115,13 +129,12 @@ const Add = () => {
     });
     return (
         <div className='card shadow-sm'>
-            <div className='card-header'>
-                <h3 className='card-title'>Add Enrollment Institution</h3>
-                <div className='card-toolbar'>
-                    <button type='button' className='btn btn-sm btn-light'>
-                        Reset
-                    </button>
-                </div>
+            <div className='card-header py-3'>
+                <CompanyBreadcrumb
+                    title='Add Enrollments'
+                    showBreadcrumb={true}
+                    btnText='Back'
+                />
             </div>
             <div className='card-body'>
                 <div className='row'>
