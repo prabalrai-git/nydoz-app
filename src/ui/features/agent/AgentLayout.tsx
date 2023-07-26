@@ -1,11 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 const AgentLayout = () => {
-    return (
-        <div className='bg-white'>
-            <Outlet />
-        </div>
-    );
+    return <Outlet />;
 };
 
 export default AgentLayout;

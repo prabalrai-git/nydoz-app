@@ -20,48 +20,24 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import { XSquare } from "react-bootstrap-icons";
 import useFetch from "../../../../hooks/useFetch";
 import { IVisaTypeResponse } from "../../../../types/payload.type";
-// {
-//   "first_name": "string",
-//   "last_name": "string",
-//   "country": "string",
-//   "state": "string",
-//   "street_address": "string",
-//   "phone_nos": [
-//     "string"
-//   ],
-//   "visiting_purpose": "string",
-//   "remarks": "string",
-//   "email": [
-//     "string"
-//   ],
-//   "going_to_foreign": true,
-//   "visa_type_id": 0,
-//   "information_channel": "string",
-//   "visiting_country_state": "string",
-//   "deal_amount": 0,
-//   "applied_position": "string",
-//   "expected_salary_pa": 0,
-//   "expected_take_off_date": "string"
-// }
 
 interface IFormData {
-    // personal Details
+    registration_date: Date;
     first_name: string;
     last_name: string;
     state: string;
     street_address: string;
     phone_nos: string[];
     email: string[];
-    // personal Details
-    //  business Details
     visiting_purpose: string;
     remarks: string | undefined;
     going_to_foreign: boolean;
-    information_channel: string | undefined;
-    deal_amount: number;
+    information_channel: string;
+    deal_amount: number | undefined;
     applied_position: string | undefined;
     expected_salary_pa: number | undefined;
     expected_take_off_date: Date | undefined;
+    visiting_country_state: string | undefined;
 }
 
 const AddVisitor = () => {
@@ -205,6 +181,48 @@ const AddVisitor = () => {
                                     </h2>
                                 </div>
                                 <div className='row'>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6 d-flex align-items-center '>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container '>
+                                            <input
+                                                value='true'
+                                                {...register(
+                                                    "going_to_foreign",
+                                                    {
+                                                        setValueAs: (value) =>
+                                                            value == true,
+                                                    }
+                                                )}
+                                                type='checkbox'
+                                                className='form-check-input'
+                                            />
+                                            <label className='required form-label  ms-6'>
+                                                Going for Foreign
+                                            </label>
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {
+                                                    errors.going_to_foreign
+                                                        ?.message
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Registration:
+                                            </label>
+                                            <input
+                                                type='date'
+                                                className='form-control'
+                                                placeholder='Enter your first name.'
+                                                {...register("first_name")}
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {errors.first_name?.message}
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div className='col-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
@@ -518,32 +536,8 @@ const AddVisitor = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-2 gap-5 gap-md-7 mb-6 d-flex align-items-center justify-content-end'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container '>
-                                            <label className='required form-label me-3'>
-                                                Going for Foreign
-                                            </label>
-                                            <input
-                                                value='true'
-                                                {...register(
-                                                    "going_to_foreign",
-                                                    {
-                                                        setValueAs: (value) =>
-                                                            value == true,
-                                                    }
-                                                )}
-                                                type='checkbox'
-                                                className='form-check-input'
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {
-                                                    errors.going_to_foreign
-                                                        ?.message
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='col-10 gap-5 gap-md-7 mb-6'>
+
+                                    <div className='col-12 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
                                                 Visiting Purpose
@@ -631,7 +625,7 @@ const AddVisitor = () => {
                                         </div>
                                     </div>
 
-                                    <div className='col-12 gap-5 gap-md-7  mb-6'>
+                                    <div className='col-6 gap-5 gap-md-7  mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className=' form-label'>
                                                 Remarks
