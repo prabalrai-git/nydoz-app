@@ -20,12 +20,12 @@ const CrmLayout = () => {
             link: "enrolled-institutes/list",
         },
         {
-            id: 3,
+            id: 4,
             title: "Visitors",
             link: "visitors",
         },
         {
-            id: 3,
+            id: 5,
             title: "Agents",
             link: "agents",
         },

@@ -31,10 +31,6 @@ const VisaTypeList = loadable(
 
 const CompanyRoutes: RouteObject[] = [
     {
-        path: "software",
-        element: <div>software</div>,
-    },
-    {
         path: "dashboard",
         element: <CompanyDashboard />,
     },
