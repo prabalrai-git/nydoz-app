@@ -15,31 +15,31 @@ const SoftwareSidebar = () => {
             icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
         {
-            id: 1,
+            id: 2,
             title: "CM",
             link: "crm/dashboard",
             icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
         {
-            id: 1,
+            id: 3,
             title: "CM",
             link: "crm/dashboard",
             icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
         {
-            id: 1,
+            id: 4,
             title: "CM",
             link: "crm/dashboard",
             icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
         {
-            id: 1,
+            id: 5,
             title: "CM",
             link: "crm/dashboard",
             icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
         {
-            id: 1,
+            id: 6,
             title: "CM",
             link: "crm/dashboard",
             icon: <i className='ki-outline ki-element-11  fs-1'></i>,
@@ -66,7 +66,10 @@ const SoftwareSidebar = () => {
                     role='tablist'>
                     {sidebarMenu.map((item: ISideMenu) => {
                         return (
-                            <li className='nav-item mb-3' role='presentation'>
+                            <li
+                                key={item.id}
+                                className='nav-item mb-3'
+                                role='presentation'>
                                 <NavLink
                                     className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden w-80px h-85px  '
                                     data-bs-toggle='pill'

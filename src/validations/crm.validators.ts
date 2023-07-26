@@ -46,12 +46,17 @@ export const visitorsSchema = yup.object().shape({
                 )
         ),
     visiting_purpose: yup.string().required("Visiting purpose is required."),
-    remarks: yup.string(),
+    remarks: yup.string().nullable(),
     email: yup
         .array()
-        .of(yup.string().required("Atleast one email address is required.")),
+        .of(
+            yup
+                .string()
+                .email("Email must be a valid email.")
+                .required("Atleast one email address is required.")
+        ),
     going_to_foreign: yup.boolean(),
-    information_channel: yup.string(),
+    information_channel: yup.string().nullable(),
     deal_amount: yup
         .number()
         .transform((value, originalValue) => {
@@ -61,12 +66,15 @@ export const visitorsSchema = yup.object().shape({
             return value;
         })
         .required("Deal Amount is required."),
-    applied_position: yup.string().required(),
-    expected_salary_pa: yup.number().transform((value, originalValue) => {
-        if (isNaN(originalValue) || originalValue === "") {
-            return undefined;
-        }
-        return value;
-    }),
+    applied_position: yup.string(),
+    expected_salary_pa: yup
+        .number()
+        .transform((value, originalValue) => {
+            if (isNaN(originalValue) || originalValue === "") {
+                return undefined;
+            }
+            return value;
+        })
+        .nullable(),
     expected_take_off_date: yup.date(),
 });

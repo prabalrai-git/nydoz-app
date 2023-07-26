@@ -20,7 +20,6 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import { XSquare } from "react-bootstrap-icons";
 import useFetch from "../../../../hooks/useFetch";
 import { IVisaTypeResponse } from "../../../../types/payload.type";
-import useAuthContext from "../../../../context/auth/useAuthContext";
 // {
 //   "first_name": "string",
 //   "last_name": "string",
@@ -49,26 +48,25 @@ interface IFormData {
     // personal Details
     first_name: string;
     last_name: string;
+    state: string;
+    street_address: string;
     phone_nos: string[];
     email: string[];
     // personal Details
-    state: string;
-    street_address: string;
     //  business Details
     visiting_purpose: string;
     remarks: string | undefined;
     going_to_foreign: boolean;
     information_channel: string | undefined;
     deal_amount: number;
-    applied_position: string;
+    applied_position: string | undefined;
     expected_salary_pa: number | undefined;
-    expected_take_off_date: string | undefined;
+    expected_take_off_date: Date | undefined;
 }
 
 const AddVisitor = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { companyInfo } = useAuthContext();
     const [visaTypeId, setvisaTypeId] = useState<string | undefined>();
     const [selectedCountry, setSelectedCountry] = useState<
         ISelectProps | undefined
@@ -82,7 +80,7 @@ const AddVisitor = () => {
         fetchData,
     } = useFetch<IVisaTypeResponse[]>(API_ROUTE.GET_VISA_TYPES, true);
     const { updateData, postData, isLoading, error, errList } = useMutation(
-        API_ROUTE.CM_ENROLLMENT,
+        API_ROUTE.CM_VISITORS,
         true
     );
 
@@ -100,19 +98,12 @@ const AddVisitor = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<IFormData>({
-        defaultValues: {
-            first_name: "",
-            last_name: "",
-            phone_nos: ["00977"],
-            email: [" "],
-            going_to_foreign: false,
-        },
         resolver: yupResolver(visitorsSchema),
     });
 
     const { fields, append, remove } = useFieldArray({
         control,
-        name: "phone_nos",
+        name: "phone_nos" as never,
     });
 
     const {
@@ -120,7 +111,7 @@ const AddVisitor = () => {
         append: appendEmail,
         remove: removeEmail,
     } = useFieldArray({
-        name: "email",
+        name: "email" as never,
         control,
     });
     useValidationError({ errList, setError });
@@ -175,7 +166,6 @@ const AddVisitor = () => {
                 country: selectedCountry?.value ?? "",
                 visiting_country_state: selectedVisitingCountry?.value ?? "",
                 visa_type_id: visaTypeId ?? "",
-                // companyId: companyInfo?.id,
             };
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
@@ -336,14 +326,14 @@ const AddVisitor = () => {
                                                             />
                                                         </div>
                                                     </div>
-                                                    {errors?.phone_nos &&
-                                                        errors?.phone_nos[
+                                                    {errors?.email &&
+                                                        errors?.email[
                                                             index
                                                         ] && (
                                                             <p className='fv-plugins-message-container invalid-feedback'>
                                                                 {
                                                                     errors
-                                                                        ?.phone_nos[
+                                                                        ?.email[
                                                                         index
                                                                     ]?.message
                                                                 }
@@ -534,10 +524,12 @@ const AddVisitor = () => {
                                                 Going for Foreign
                                             </label>
                                             <input
+                                                value='true'
                                                 {...register(
                                                     "going_to_foreign",
                                                     {
-                                                        valueAsBoolean: true,
+                                                        setValueAs: (value) =>
+                                                            value == true,
                                                     }
                                                 )}
                                                 type='checkbox'

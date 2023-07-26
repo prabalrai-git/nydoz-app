@@ -61,6 +61,7 @@ const API_ROUTE = {
 
     //  Client Management institutes routes
     CM_ENROLLMENT: "/api/v1/client-management/enroll-institutes",
+    CM_VISITORS: "/api/v1/client-management/visitors",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };
