@@ -13,6 +13,7 @@ import useAuthContext from "../../../context/auth/useAuthContext";
 import useMutation from "../../../hooks/useMutation";
 import { toast } from "react-toastify";
 import { Spinner } from "react-bootstrap";
+import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 const BuyProduct = () => {
     // const surl =
@@ -141,13 +142,12 @@ const BuyProduct = () => {
 
     return (
         <div className=' mt-3 p-6'>
-            <Heading title='Buy Products' showBreadcrumb={true}>
-                <Breadcrumb
-                    parent='products'
-                    parentLink='/account/company/list'
-                    child='Buy'
-                />
-            </Heading>
+            <CompanyBreadcrumb
+                title='Buy Products'
+                showBreadcrumb={true}
+                btnText='Back'
+            />
+
             {isloading && <LoadingPage />}
             <section className='p-6 bg-white my-6'>
                 <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer border-bottom  '>

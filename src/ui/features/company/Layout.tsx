@@ -8,6 +8,7 @@ import CompanyLoader from "../../shared/components/company/CompanyLoader";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import useHandleShowError from "../../../hooks/useHandleShowError";
 import Sidebar from "../../shared/components/CompanySidebar";
+import ProductSidebar from "../../shared/components/SoftwareSidebar";
 
 const CompanyLayout = () => {
     const { dispatch, companyInfo, userInfo } = useAuthContext();
@@ -68,14 +69,21 @@ const CompanyLayout = () => {
             {showSplashScreen ? (
                 <CompanyLoader />
             ) : (
-                <div className='d-flex pt-3'>
+                <div className='d-flex'>
                     <div
                         style={{
                             width: "150px",
                             paddingTop: "10px",
-                            marginRight: "10px",
                         }}>
                         <Sidebar title={companyInfo?.subdomain} />
+                    </div>
+                    <div
+                        style={{
+                            width: "120px",
+                            paddingTop: "10px",
+                            marginRight: "10px",
+                        }}>
+                        <ProductSidebar />
                     </div>
                     <div className='content container'>
                         <Outlet />

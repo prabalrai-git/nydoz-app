@@ -1,8 +1,9 @@
 import loadable from "@loadable/component";
-import { RouteObject } from "react-router-dom";
+import { Outlet, RouteObject } from "react-router-dom";
 import ProductRoutes from "./product";
 import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
 import ProfileLayout from "../ui/features/company/ProfileLayout";
+import softwareRoutes from "./software";
 
 // routes
 const EditCompany = loadable(() => import("../ui/features/company/AddCompany"));
@@ -29,6 +30,10 @@ const VisaTypeList = loadable(
 );
 
 const CompanyRoutes: RouteObject[] = [
+    {
+        path: "software",
+        element: <div>software</div>,
+    },
     {
         path: "dashboard",
         element: <CompanyDashboard />,
@@ -81,6 +86,11 @@ const CompanyRoutes: RouteObject[] = [
                 <VisaTypeList />
             </ProtectCompanyOwner>
         ),
+    },
+    {
+        path: "software",
+        element: <Outlet />,
+        children: softwareRoutes,
     },
 ];
 

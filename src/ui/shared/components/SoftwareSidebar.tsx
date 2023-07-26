@@ -1,51 +1,57 @@
 import { NavLink } from "react-router-dom";
 
-interface IProps {
-    title: string | undefined;
-}
-
 interface ISideMenu {
     id: number;
     title: string;
     link: string;
     icon: JSX.Element;
 }
-const CompanySidebar = (props: IProps) => {
-    const { title } = props;
-
+const SoftwareSidebar = () => {
     const sidebarMenu: ISideMenu[] = [
         {
             id: 1,
-            title: "Dashboard",
-            link: "dashboard",
+            title: "CM",
+            link: "software/crm/dashboard",
             icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
         {
-            id: 2,
-            title: "Products",
-            link: "products/view",
-            icon: <i className='ki-outline ki-handcart fs-2'></i>,
+            id: 1,
+            title: "CM",
+            link: "crm/dashboard",
+            icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
         {
-            id: 3,
-            title: "My account",
-            link: "my-account",
-            icon: <i className='ki-outline ki-user fs-2'></i>,
+            id: 1,
+            title: "CM",
+            link: "crm/dashboard",
+            icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
         {
-            id: 4,
-            title: "Setting",
-            link: "setting",
-            icon: <i className='ki-outline ki-chart-line fs-1'></i>,
+            id: 1,
+            title: "CM",
+            link: "crm/dashboard",
+            icon: <i className='ki-outline ki-element-11  fs-1'></i>,
+        },
+        {
+            id: 1,
+            title: "CM",
+            link: "crm/dashboard",
+            icon: <i className='ki-outline ki-element-11  fs-1'></i>,
+        },
+        {
+            id: 1,
+            title: "CM",
+            link: "crm/dashboard",
+            icon: <i className='ki-outline ki-element-11  fs-1'></i>,
         },
     ];
 
     return (
-        <div className='app-sidebar-primary h-100vh'>
+        <div className='app-sidebar-primary h-100vh bg-white'>
             <div
                 className='d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-5 mt-3'
                 id='kt_app_sidebar_primary_header'>
-                <span className='text-uppercase'>{title}</span>
+                <span className='text-uppercase'>SOFTWARE</span>
             </div>
             <div
                 className='app-sidebar-nav flex-grow-1 hover-scroll-overlay-y px-5 pt-2'
@@ -55,24 +61,30 @@ const CompanySidebar = (props: IProps) => {
                 data-kt-scroll-dependencies='#kt_app_header, #kt_app_sidebar_primary_header, #kt_app_sidebar_primary_footer'
                 data-kt-scroll-wrappers='#kt_app_content, #kt_app_sidebar_primary_nav'
                 data-kt-scroll-offset='5px'>
-                <ul className='nav' role='tablist'>
+                <ul
+                    className='nav nav-pills nav-pills-custom mb-3'
+                    role='tablist'>
                     {sidebarMenu.map((item: ISideMenu) => {
                         return (
-                            <li
-                                key={item.id}
-                                className='nav-item py-1'
-                                role='presentation'>
+                            <li className='nav-item mb-3' role='presentation'>
                                 <NavLink
-                                    data-bs-toggle='tab'
+                                    className='nav-link d-flex justify-content-between flex-column flex-center overflow-hidden w-80px h-85px  '
+                                    data-bs-toggle='pill'
                                     to={item.link}
-                                    className='nav-link py-4 px-1 btn'
-                                    aria-selected='false'
+                                    aria-selected='true'
                                     role='tab'>
-                                    <span>{item.icon}</span>
-
-                                    <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
+                                    <div className='nav-icon'>
+                                        {/* <img
+                                            alt=''
+                                            src='assets/media/svg/brand-logos/bp-2.svg'
+                                            className=''
+                                        /> */}
+                                        {item.icon}
+                                    </div>
+                                    <span className='nav-text text-gray-600 fw-bold fs-6 lh-1'>
                                         {item.title}
                                     </span>
+                                    <span className='bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary'></span>
                                 </NavLink>
                             </li>
                         );
@@ -169,4 +181,4 @@ const CompanySidebar = (props: IProps) => {
     );
 };
 
-export default CompanySidebar;
+export default SoftwareSidebar;

@@ -7,7 +7,7 @@ interface IProps {
 const NavPills = (props: IProps) => {
     const { navpills } = props;
     return (
-        <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x  fs-5 fw-bold mb-6'>
+        <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x  fs-5 fw-bold mt-3 mb-6'>
             {navpills.map((navpill: INavPill) => {
                 return (
                     <li key={navpill.id} className='nav-item '>
