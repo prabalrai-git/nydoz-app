@@ -64,34 +64,7 @@ const CompanyLayout = () => {
         }
     }, [fetchCompanyInfo, companySubdomian, companyInfo?.subdomain]);
 
-    return (
-        <div>
-            {showSplashScreen ? (
-                <CompanyLoader />
-            ) : (
-                <div className='d-flex'>
-                    <div
-                        style={{
-                            width: "150px",
-                            paddingTop: "10px",
-                        }}>
-                        <Sidebar title={companyInfo?.subdomain} />
-                    </div>
-                    <div
-                        style={{
-                            width: "120px",
-                            paddingTop: "10px",
-                            marginRight: "10px",
-                        }}>
-                        <ProductSidebar />
-                    </div>
-                    <div className='content container'>
-                        <Outlet />
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+    return <div>{showSplashScreen ? <CompanyLoader /> : <Outlet />}</div>;
 };
 
 export default CompanyLayout;

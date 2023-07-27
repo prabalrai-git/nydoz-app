@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import NavPills from "../../shared/molecules/NavPills";
 import { INavPill } from "../../../types/app.types";
+import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
 const CrmLayout = () => {
     const navpills: INavPill[] = [
@@ -32,9 +33,12 @@ const CrmLayout = () => {
     ];
 
     return (
-        <div>
-            <NavPills navpills={navpills} />
-            <Outlet />
+        <div className='d-flex'>
+            {/* <NavPills navpills={navpills} /> */}
+            <ProductSideMenu />
+            <div className='content'>
+                <Outlet />
+            </div>
         </div>
     );
 };

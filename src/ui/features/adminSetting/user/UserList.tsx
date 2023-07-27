@@ -1,43 +1,29 @@
-import TanStackTable from "../../shared/molecules/TanStackTable";
+import { Link } from "react-router-dom";
+
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-
-import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
+import API_ROUTE from "../../../../service/api";
+import { IUsersOfCompanyResponse } from "../../../../types/company.type";
+import useFetch from "../../../../hooks/useFetch";
+import TanStackTable from "../../../shared/molecules/TanStackTable";
+import { useEffect } from "react";
+import useHandleShowError from "../../../../hooks/useHandleShowError";
+import { Spinner } from "react-bootstrap";
 
 const UserList = () => {
-    const tableColumns: ColumnDef<IDocumentResponse>[] = [
+    const tableColumns: ColumnDef<IUsersOfCompanyResponse>[] = [
         {
             accessorKey: "sn",
             header: () => <div>S.N</div>,
             cell: (info) => info.row.index + 1,
         },
-        {
-            accessorKey: "File",
-            header: () => (
-                <div>
-                    <i className='bi bi-folder me-2'></i>
-                    <span> File</span>
-                </div>
-            ),
-            cell: () => {
-                return (
-                    <div className='symbol symbol-label '>
-                        <img
-                            className='img-fluid'
-                            src={Images.Folder}
-                            alt='Logo'
-                        />
-                    </div>
-                );
-            },
-        },
 
         {
-            accessorKey: "title",
+            accessorKey: "first_name",
             header: () => (
                 <div>
-                    <span>File Name</span>
+                    <span>First Name</span>
                 </div>
             ),
             cell: (info) => {
@@ -46,29 +32,38 @@ const UserList = () => {
         },
 
         {
-            accessorKey: "is_restricted",
+            accessorKey: "last_name",
             header: () => (
                 <div>
-                    <span>Type</span>
+                    <span>Last Name</span>
                 </div>
             ),
             cell: (info) => {
-                return (
-                    <div>
-                        {info?.row?.original?.is_restricted ? (
-                            <span className='badge text-bg-primary'>
-                                Not Restricted
-                            </span>
-                        ) : (
-                            <span className='badge text-bg-danger'>
-                                Restricted
-                            </span>
-                        )}
-                    </div>
-                );
+                return <div>{info.getValue<string>()}</div>;
             },
         },
-
+        {
+            accessorKey: "email",
+            header: () => (
+                <div>
+                    <span>Last Name</span>
+                </div>
+            ),
+            cell: (info) => {
+                return <div>{info.getValue<string>()}</div>;
+            },
+        },
+        {
+            accessorKey: "mobile",
+            header: () => (
+                <div>
+                    <span>Last Name</span>
+                </div>
+            ),
+            cell: (info) => {
+                return <div>{info.getValue<string>()}</div>;
+            },
+        },
         {
             accessorKey: "action",
             header: () => <div className='text-center'>Actions</div>,
@@ -111,16 +106,37 @@ const UserList = () => {
             footer: (info) => info.column.id,
         },
     ];
+
+    const { data, fetchData, error, isloading } = useFetch<
+        IUsersOfCompanyResponse[]
+    >(API_ROUTE.USER, true);
+
+    useEffect(() => {
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useHandleShowError(error);
+
     return (
         <section>
             <div className='card'>
                 <div className='card-header'>
                     <h3 className='card-title'>User List</h3>
                     <div className='card-toolbar'>
-                        <button type='button' className='btn btn-sm btn-info'>
+                        <Link
+                            to='../add-user'
+                            type='button'
+                            className='btn btn-sm btn-info'>
                             Add User
-                        </button>
+                        </Link>
                     </div>
+                </div>
+                <div className='card-body'>
+                    {data && data?.length > 0 && (
+                        <TanStackTable columns={tableColumns} data={data} />
+                    )}
+                    {isloading && <Spinner animation='border' />}
                 </div>
             </div>
         </section>

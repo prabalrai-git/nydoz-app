@@ -29,7 +29,7 @@ const Modal2 = (props: IModalProps) => {
             <Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
-            <Modal.Body>{showChildren && children}</Modal.Body>
+            {showChildren && <Modal.Body>{children}</Modal.Body>}
             <Modal.Footer>
                 <Button size='sm' variant='secondary' onClick={handleClose}>
                     {cancelText}
