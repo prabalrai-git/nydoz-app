@@ -13,6 +13,7 @@ import useHandleShowError from "../../../../hooks/useHandleShowError";
 import useValidationError from "../../../../hooks/useValidationError";
 import { Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
+import BreadcrumbAndBack from "../../../shared/molecules/BreadcrumbAndBack";
 
 interface IFormData {
     first_name: string;
@@ -56,17 +57,22 @@ const AddUser = () => {
 
     return (
         <div>
-            <CompanyBreadcrumb
-                title='Add User'
-                showBreadcrumb={true}
-                btnText='Back'
-            />
             <section>
-                <div className='card'>
-                    <div className='card shadow shadow-sm p-6'>
+                <div className='card shadow shadow-sm '>
+                    <div className='card-header'>
+                        <h3 className='card-title'>Add User</h3>
+                        <div className='card-toolbar'>
+                            <button
+                                type='button'
+                                className='btn btn-sm btn-light'>
+                                clear
+                            </button>
+                        </div>
+                    </div>
+                    <div className='card-body '>
                         <form
                             onSubmit={onFormSubmit}
-                            className='form w-100 p-4'
+                            className='form w-100 '
                             id='kt_sign_up_form'
                             data-kt-redirect-url='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
                             action='#'>
