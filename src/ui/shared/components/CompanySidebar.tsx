@@ -18,25 +18,33 @@ const CompanySidebar = (props: IProps) => {
             id: 1,
             title: "Dashboard",
             link: "dashboard",
-            icon: <i className='ki-outline ki-element-11  fs-1'></i>,
+            icon: <i className='ki-outline ki-chart-simple text-dark fs-1'></i>,
+        },
+        {
+            id: 2,
+            title: "Services",
+            link: "software",
+            icon: (
+                <i className='ki-outline ki-element-11  text-primary fs-1'></i>
+            ),
         },
         {
             id: 2,
             title: "Products",
             link: "products/view",
-            icon: <i className='ki-outline ki-handcart fs-2'></i>,
+            icon: <i className='ki-outline ki-handcart text-info fs-1'></i>,
         },
         {
             id: 3,
             title: "My account",
             link: "my-account",
-            icon: <i className='ki-outline ki-user fs-2'></i>,
+            icon: <i className='ki-outline ki-user text-warning fs-1'></i>,
         },
         {
             id: 4,
             title: "Setting",
-            link: "setting",
-            icon: <i className='ki-outline ki-chart-line fs-1'></i>,
+            link: "settings",
+            icon: <i className='ki-outline ki-chart-line text-danger fs-1'></i>,
         },
     ];
 
@@ -78,92 +86,6 @@ const CompanySidebar = (props: IProps) => {
                         );
                     })}
                 </ul>
-            </div>
-            {/* <!--begin::Footer--> */}
-            <div
-                className='app-sidebar-footer d-flex flex-column flex-center'
-                id='kt_app_sidebar_primary_footer'>
-                <div className='mb-0'>
-                    <button
-                        type='button'
-                        className='btn btn-icon btn-color-gray-400 btn-active-color-primary'
-                        data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                        data-kt-menu-overflow='true'
-                        data-kt-menu-placement='top-start'>
-                        <i className='ki-outline ki-notification-status fs-1'></i>
-                    </button>
-                    <div
-                        className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px'
-                        data-kt-menu='true'>
-                        <div className='menu-item px-3'>
-                            <div className='menu-content fs-6 text-dark fw-bold px-3 py-4'>
-                                Quick Actions
-                            </div>
-                        </div>
-
-                        <div className='separator mb-3 opacity-75'></div>
-
-                        <div className='menu-item px-3'>
-                            <a href='#' className='menu-link px-3'>
-                                New Ticket
-                            </a>
-                        </div>
-
-                        <div className='menu-item px-3'>
-                            <a href='#' className='menu-link px-3'>
-                                New Customer
-                            </a>
-                        </div>
-
-                        <div
-                            className='menu-item px-3'
-                            data-kt-menu-trigger='hover'
-                            data-kt-menu-placement='right-start'>
-                            <a href='#' className='menu-link px-3'>
-                                <span className='menu-title'>New Group</span>
-                                <span className='menu-arrow'></span>
-                            </a>
-
-                            <div className='menu-sub menu-sub-dropdown w-175px py-4'>
-                                <div className='menu-item px-3'>
-                                    <a href='#' className='menu-link px-3'>
-                                        Admin Group
-                                    </a>
-                                </div>
-
-                                <div className='menu-item px-3'>
-                                    <a href='#' className='menu-link px-3'>
-                                        Staff Group
-                                    </a>
-                                </div>
-
-                                <div className='menu-item px-3'>
-                                    <a href='#' className='menu-link px-3'>
-                                        Member Group
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='menu-item px-3'>
-                            <a href='#' className='menu-link px-3'>
-                                New Contact
-                            </a>
-                        </div>
-
-                        <div className='separator mt-3 opacity-75'></div>
-
-                        <div className='menu-item px-3'>
-                            <div className='menu-content px-3 py-3'>
-                                <a
-                                    className='btn btn-primary btn-sm px-4'
-                                    href='#'>
-                                    Generate Reports
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     );
