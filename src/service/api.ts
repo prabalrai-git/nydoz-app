@@ -64,6 +64,9 @@ const API_ROUTE = {
     CM_VISITORS: "/api/v1/client-management/visitors",
     CM_AGENTS: "/api/v1/client-management/agents",
     CM_ENROLLMENT_OPENINGS: "/api/v1/client-management/enrollment-openings",
+
+    // user
+    USER: "/api/v1/users",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };
