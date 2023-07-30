@@ -42,8 +42,8 @@ PublicAxios.interceptors.request.use((config) => {
 PrivateAxios.interceptors.request.use((config) => {
     const subdomain = getSubdomain();
     const token = localStorage.getItem("token");
-    const baseUrl = VITE_BASE_URL;
-    // const baseUrl = "https://sabkura.api.dev.nydoz.com";
+    // const baseUrl = VITE_BASE_URL;
+    const baseUrl = "https://sabkura.api.dev.nydoz.com";
 
     if (subdomain) {
         const subdomain = getSubdomain();

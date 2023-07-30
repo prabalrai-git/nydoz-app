@@ -7,7 +7,7 @@ type FetchDataResponse<T> = {
     data: T | undefined;
     isloading: boolean;
     error: string | null;
-    pagination: IPagination | undefined;
+    pagination: IPagination;
     fetchData: () => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
     fetchDataById: (
         url: string

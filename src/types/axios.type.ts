@@ -39,3 +39,14 @@ export interface ITableProps<T> {
     columns: ColumnDef<T>[];
     data: T[];
 }
+
+export interface IPaginatedTableProps<T> {
+    columns: ColumnDef<T>[];
+    data: T[];
+    baseUrl: string;
+    setFetchUrl: (fetchUrl: string) => void;
+    pagination: IPagination;
+    isLoading: boolean;
+    fetchAgain: boolean;
+    setFetchAgain: (fetchAgain: boolean) => void;
+}

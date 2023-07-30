@@ -12,40 +12,43 @@ import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { Flag, People } from "react-bootstrap-icons";
-import TanStackTable from "../../shared/molecules/TanStackTable";
+import PaginationTable from "../../shared/components/PaginationTable";
 
 const DocumentList = () => {
-    const { id: companyId } = useParams<string>();
     const navigate = useNavigate();
+    const { id: companyId } = useParams<string>();
+    const baseUrl = `${API_ROUTE.GET_CLIENT_MANAGEMENT_AGENTS}`;
+    const [fetchUrl, setFetchUrl] = useState(baseUrl);
+    const [show, setShow] = useState<boolean>(false);
+    const [fetchAgain, setFetchAgain] = useState<boolean>(false);
     const [selectedData, setSelectedData] = useState<
         IAgentResponse | undefined
     >();
-    const [show, setShow] = useState<boolean>(false);
-    const [fetchAgain, setFetchAgain] = useState<boolean>(false);
 
-    const getDocumentUrl = `${API_ROUTE.GET_CLIENT_MANAGEMENT_AGENTS}`;
-
-    const { data, fetchData } = useFetch<IAgentResponse[]>(
-        getDocumentUrl,
-        true
-    );
+    const { data, fetchDataById, pagination, isloading } = useFetch<
+        IAgentResponse[]
+    >(baseUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
     useEffect(() => {
-        fetchData();
+        fetchDataById(fetchUrl);
         setFetchAgain(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (fetchAgain) {
-            fetchData();
+            console.log("fetch again");
+            fetchDataById(fetchUrl);
             setFetchAgain(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchAgain]);
 
+    // function for pagination
+
+    // functions for edit data
     const handleEditData = (item: IAgentResponse) => {
         navigate("edit", {
             state: { data: item },
@@ -162,6 +165,8 @@ const DocumentList = () => {
         },
     ];
 
+    // functions for delete modal
+
     const handleDeleteModal = (item: IAgentResponse) => {
         setSelectedData(item);
         handleShow();
@@ -203,7 +208,16 @@ const DocumentList = () => {
             <section>
                 <div className='card'>
                     {data && (
-                        <TanStackTable columns={tableColumns} data={data} />
+                        <PaginationTable
+                            pagination={pagination}
+                            fetchAgain={fetchAgain}
+                            setFetchAgain={setFetchAgain}
+                            columns={tableColumns as ColumnDef<unknown>[]}
+                            data={data}
+                            isLoading={isloading}
+                            baseUrl={baseUrl}
+                            setFetchUrl={setFetchUrl}
+                        />
                     )}
                 </div>
             </section>
