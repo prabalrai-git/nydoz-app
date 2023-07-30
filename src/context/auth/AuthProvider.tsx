@@ -1,11 +1,12 @@
 import React, { FC, useReducer, useState, useEffect, useCallback } from "react";
 import authReducer from "./authReducer";
 import AuthContext from "./AuthContext";
-import { IState } from "./types";
+import { IState, IWebSetting } from "./types";
 import useFetch from "../../hooks/useFetch";
 import API_ROUTE from "../../service/api";
 import LoadingPage from "../../ui/features/utils/LoadingPage";
 import { toast } from "react-toastify";
+import webSettingReducer from "./webSettingReducer";
 
 const intialState: IState = {
     isLoggedIn: false,
@@ -39,6 +40,10 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
     const [state, dispatch] = useReducer(authReducer, intialState);
     const { fetchData } = useFetch<IUseMeData>(API_ROUTE.LOGGED_IN_USER, true);
+    const [webSetting, dispatchWebSetting] = useReducer(webSettingReducer, {
+        showProductSidebar: true,
+        showProductSidebarApp: false,
+    });
 
     const handleAuthenticationFn = useCallback(async () => {
         setShowSplashScreen(true);
@@ -88,7 +93,8 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     }, [handleAuthenticationFn, tokenFromLocal]);
 
     return (
-        <AuthContext.Provider value={{ state, dispatch }}>
+        <AuthContext.Provider
+            value={{ state, dispatch, webSetting, dispatchWebSetting }}>
             {showSplashScreen ? <LoadingPage /> : children}
         </AuthContext.Provider>
     );

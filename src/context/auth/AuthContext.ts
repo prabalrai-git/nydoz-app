@@ -1,9 +1,16 @@
 import { Dispatch, createContext } from "react";
 import { IState, TAction } from "./types";
 
+interface IWebSetting {
+    showProductSidebar: boolean;
+    showProductSidebarApp: boolean;
+}
+
 export interface AuthContextValue {
     state: IState;
     dispatch: Dispatch<TAction>;
+    webSetting: IWebSetting;
+    dispatchWebSetting: Dispatch<TAction>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -17,6 +24,11 @@ const AuthContext = createContext<AuthContextValue>({
         subdomain: undefined,
     },
     dispatch: () => null,
+    webSetting: {
+        showProductSidebar: true,
+        showProductSidebarApp: false,
+    },
+    dispatchWebSetting: () => null,
 });
 
 export default AuthContext;

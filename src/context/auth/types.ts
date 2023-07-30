@@ -28,6 +28,11 @@ export interface IState {
     subdomain: string | undefined;
 }
 
+export interface IWebSetting {
+    showProductSidebar: boolean;
+    showProductSidebarApp: boolean;
+}
+
 export type TAction =
     | { type: "LOGIN"; payload: { userInfo: IUserInfo; token: string } }
     | { type: "SET_TOKEN"; payload: { token: string | null } }
@@ -43,4 +48,6 @@ export type TAction =
           type: "SET_COMPANY_INFO";
           payload: { companyInfo: ICompanyInfo; isCompanyOwner: boolean };
       }
-    | { type: "LOGOUT" };
+    | { type: "LOGOUT" }
+    | { type: "TOGGLE_PRODUCT_SIDEBAR" }
+    | { type: "TOGGLE_PRODUCT_SIDEBAR_APP" };

@@ -1,11 +1,18 @@
+import useWebSetting from "../../../../context/useWebSetting";
+
 const ProductSideMenu = () => {
+    const { webSetting } = useWebSetting();
+    const { showProductSidebar } = webSetting;
+
+    const sidebarStyle = {
+        width: "220px",
+        marginRight: "10px",
+    };
+
+    const sidebarClassName = showProductSidebar ? "slide-in" : "slide-out";
+
     return (
-        <div
-            className='docs-aside'
-            style={{
-                width: "220px",
-                marginRight: "10px",
-            }}>
+        <div className={`docs-aside ${sidebarClassName}`} style={sidebarStyle}>
             <div className='docs-aside-menu flex-column-fluid p-3 bg-white'>
                 <div
                     className='hover-scroll-overlay-y mt-5 mb-5 mt-lg-0 mb-lg-5 pe-lg-n2 me-lg-2'
