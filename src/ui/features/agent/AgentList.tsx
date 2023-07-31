@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { Flag, People } from "react-bootstrap-icons";
 import PaginationTable from "../../shared/components/PaginationTable";
+import NotFound from "../../shared/molecules/NotFound";
+import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 const DocumentList = () => {
     const navigate = useNavigate();
@@ -207,15 +209,22 @@ const DocumentList = () => {
 
     return (
         <div className='my-6 px-3'>
-            <div className='d-flex justify-content-between align-items-center mb-6'>
-                <h4>Agents List</h4>
-                <Link to={`add`} className='btn btn-success btn-sm'>
-                    <span className='mx-2'>Add Agent</span>
-                </Link>
-            </div>
+            <CompanyBreadcrumb
+                title='Agents'
+                btnText='Back'
+                showBreadcrumb={true}
+            />
             <section>
                 <div className='card'>
-                    {data && (
+                    <div className='card-header'>
+                        <h3 className='card-title'>Agent's List</h3>
+                        <div className='card-toolbar'>
+                            <Link to={`add`} className='btn btn-success btn-sm'>
+                                <span className='mx-2'>Add Agent</span>
+                            </Link>
+                        </div>
+                    </div>
+                    {data ? (
                         <PaginationTable
                             pagination={pagination}
                             fetchAgain={fetchAgain}
@@ -226,6 +235,10 @@ const DocumentList = () => {
                             baseUrl={baseUrl}
                             setFetchUrl={setFetchUrl}
                         />
+                    ) : (
+                        <div className='bg-white flex-center h-75vh'>
+                            <NotFound title='Someting Went Wrong. Agent Not Found. ' />
+                        </div>
                     )}
                 </div>
             </section>

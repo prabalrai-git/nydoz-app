@@ -16,38 +16,43 @@ const ProductSideMenu = (props: IProps) => {
 
     return (
         <div className={`docs-aside ${sidebarClassName}`}>
-            <div className='docs-aside-menu flex-column-fluid p-3 bg-white'>
+            <div className='app-sidebar-primary h-100vh'>
                 <div
-                    className='hover-scroll-overlay-y mt-5 mb-5 mt-lg-0 mb-lg-5 pe-lg-n2 me-lg-2'
-                    id='kt_docs_aside_menu_wrapper'
+                    className='d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-5 mt-3'
+                    id='kt_app_sidebar_primary_header'>
+                    <span className='text-uppercase'>CRM</span>
+                </div>
+                <div
+                    className='app-sidebar-nav flex-grow-1 hover-scroll-overlay-y px-5 pt-2'
+                    id='kt_app_sidebar_primary_nav'
                     data-kt-scroll='true'
-                    data-kt-scroll-activate='{default: false, lg: true}'
                     data-kt-scroll-height='auto'
-                    data-kt-scroll-dependencies='#kt_docs_aside_logo'
-                    data-kt-scroll-wrappers='#kt_docs_aside_menu'
-                    data-kt-scroll-offset='10px'>
-                    <div
-                        id='#kt_docs_aside_menu'
-                        data-kt-menu='true'
-                        className='menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500'>
-                        <div className='menu-item'>
-                            <h4 className='menu-content text-muted mb-0 fs-7 text-uppercase'>
-                                Customer
-                                <br />
-                                Management
-                            </h4>
-                        </div>
-                        {sidebarMenuList.map((item: ISidebarMenu) => (
-                            <div key={item.id} className='menu-item'>
-                                <NavLink className='menu-link' to={item.link}>
-                                    <span className='fs-6'>{item.icon}</span>
-                                    <span className='menu-title'>
-                                        {item.title}
-                                    </span>
-                                </NavLink>
-                            </div>
-                        ))}
-                    </div>
+                    data-kt-scroll-dependencies='#kt_app_header, #kt_app_sidebar_primary_header, #kt_app_sidebar_primary_footer'
+                    data-kt-scroll-wrappers='#kt_app_content, #kt_app_sidebar_primary_nav'
+                    data-kt-scroll-offset='5px'>
+                    <ul className='nav' role='tablist'>
+                        {sidebarMenuList.map((item: ISidebarMenu) => {
+                            return (
+                                <li
+                                    key={item.id}
+                                    className='nav-item py-1'
+                                    role='presentation'>
+                                    <NavLink
+                                        data-bs-toggle='tab'
+                                        to={item.link}
+                                        className='nav-link py-4 px-1 btn'
+                                        aria-selected='false'
+                                        role='tab'>
+                                        <span>{item.icon}</span>
+
+                                        <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
+                                            {item.title}
+                                        </span>
+                                    </NavLink>
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 import useWebSetting from "../../../context/useWebSetting";
+import { House } from "react-bootstrap-icons";
 
 const CrmLayout = () => {
     const sidebarMenu: ISidebarMenu[] = [
@@ -9,7 +10,7 @@ const CrmLayout = () => {
             id: 1,
             title: "Dashboard",
             link: "dashboard",
-            icon: <i className='bi bi-house fs-7'></i>,
+            icon: <House size={20} />,
         },
         {
             id: 2,
