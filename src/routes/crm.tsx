@@ -7,9 +7,11 @@ import AddVisitors from "../ui/features/crm/visitors/Add";
 
 // Agents Routes
 
-const AgentLayout = loadable(() => import("../ui/features/agent/AgentLayout"));
-const AddAgent = loadable(() => import("../ui/features/agent/AddAgent"));
-const AgentList = loadable(() => import("../ui/features/agent/AgentList"));
+const AgentLayout = loadable(
+    () => import("../ui/features/crm/agent/AgentLayout")
+);
+const AddAgent = loadable(() => import("../ui/features/crm/agent/AddAgent"));
+const AgentList = loadable(() => import("../ui/features/crm/agent/AgentList"));
 const Dashboard = loadable(() => import("../ui/features/crm/Dashboard"));
 
 const CrmRoutes: RouteObject[] = [

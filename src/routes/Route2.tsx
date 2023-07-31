@@ -40,12 +40,12 @@ import ProductLayout from "../ui/features/products/ProductLayout";
 import VisaTypeList from "../ui/features/visaType/VisaTypeList";
 
 // Agent
-import AgentList from "../ui/features/agent/AgentList";
+import AgentList from "../ui/features/crm/agent/AgentList";
 
 import PageNotFound from "../ui/features/utils/PageNotFound";
 import RoleList from "../ui/features/roles/RoleList";
-import AgentLayout from "../ui/features/agent/AgentLayout";
-import AddAgent from "../ui/features/agent/AddAgent";
+import AgentLayout from "../ui/features/crm/agent/AgentLayout";
+import AddAgent from "../ui/features/crm/agent/AddAgent";
 import SingleProduct from "../ui/features/products/SingleProduct";
 import BuyProduct from "../ui/features/company/BuyProduct";
 import CompanyProductList from "../ui/features/products/CompanyProductList";

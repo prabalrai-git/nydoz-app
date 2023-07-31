@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
-import Images from "../../../constants/Images";
-import UploadFile from "../../shared/components/Upload";
-import Heading from "../../shared/molecules/Heading";
+import Images from "../../../../constants/Images";
+import UploadFile from "../../../shared/components/Upload";
+import Heading from "../../../shared/molecules/Heading";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import API_ROUTE from "../../../service/api";
-import { agentSchema } from "../../../validations/company.validator";
+import API_ROUTE from "../../../../service/api";
+import { agentSchema } from "../../../../validations/company.validator";
 import Spinner from "react-bootstrap/Spinner";
-import useMutation from "../../../hooks/useMutation";
+import useMutation from "../../../../hooks/useMutation";
 import { toast } from "react-toastify";
-import CountryCode from "../../shared/atoms/CountryCode";
-import { ISelectProps } from "../../../types/react-select.type";
-import { IAgentPayload, IAgentResponse } from "../../../types/payload.type";
-import Breadcrumb from "../../shared/molecules/Breadcrumb";
-import { getSelectPropsFromCountry } from "../../../functions/country";
-import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
-import useValidationError from "../../../hooks/useValidationError";
-import useHandleShowError from "../../../hooks/useHandleShowError";
+import CountryCode from "../../../shared/atoms/CountryCode";
+import { ISelectProps } from "../../../../types/react-select.type";
+import { IAgentPayload, IAgentResponse } from "../../../../types/payload.type";
+import Breadcrumb from "../../../shared/molecules/Breadcrumb";
+import { getSelectPropsFromCountry } from "../../../../functions/country";
+import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
+import useValidationError from "../../../../hooks/useValidationError";
+import useHandleShowError from "../../../../hooks/useHandleShowError";
 
 interface IAddAgentForm {
     first_name: string;

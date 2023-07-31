@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
-import { Flag, People } from "react-bootstrap-icons";
+import { Flag } from "react-bootstrap-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import useFetch from "../../../../hooks/useFetch";
@@ -148,39 +148,24 @@ const DocumentList = () => {
                 </div>
             ),
             cell: (info) => (
-                <div className='text-center'>
-                    <DropdownButton
-                        variant='secondary'
-                        size='sm'
-                        id='dropdown-basic-button'
-                        title='Action'>
-                        <Dropdown.Item>
-                            <div className='menu-link'>
-                                <span className='mx-2'>View</span>
-                                <i className='bi bi-box-arrow-up-right text-primary '></i>
-                            </div>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <div
-                                onClick={() =>
-                                    handleEditData(info?.row?.original)
-                                }
-                                className='menu-link'>
-                                <span className='mx-2'>Edit</span>
-                                <i className='bi bi-pencil-square text-info'></i>
-                            </div>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <div
-                                onClick={() =>
-                                    handleDeleteModal(info?.row?.original)
-                                }
-                                className='menu-link'>
-                                <span className='mx-2'>Delete</span>
-                                <i className='bi bi-trash text-danger'></i>
-                            </div>
-                        </Dropdown.Item>
-                    </DropdownButton>
+                <div className='d-flex justify-content-center'>
+                    <div
+                        title='view'
+                        className='menu-link cursor-pointer bg-primary p-2 px-3'>
+                        <i className='bi bi-box-arrow-up-right text-white'></i>
+                    </div>
+                    <div
+                        title='Edit'
+                        onClick={() => handleEditData(info?.row?.original)}
+                        className='menu-link cursor-pointer bg-info p-2 px-3 mx-3'>
+                        <i className='bi bi-pencil-square text-white'></i>
+                    </div>
+                    <div
+                        title='Delete'
+                        onClick={() => handleDeleteModal(info?.row?.original)}
+                        className='menu-link cursor-pointer bg-danger p-2 px-3 '>
+                        <i className='bi bi-trash text-white'></i>
+                    </div>
                 </div>
             ),
             footer: (info) => info.column.id,
@@ -229,10 +214,12 @@ const DocumentList = () => {
             <section>
                 <div className='card'>
                     <div className='card-header'>
-                        <h3 className='card-title'>Agent's List</h3>
+                        <h3 className='card-title'>Institution's List</h3>
                         <div className='card-toolbar'>
-                            <Link to={`add`} className='btn btn-success btn-sm'>
-                                <span className='mx-2'>Add Agent</span>
+                            <Link
+                                to='../add'
+                                className='btn btn-success btn-sm'>
+                                <span className='mx-2'>Add Institutions</span>
                             </Link>
                         </div>
                     </div>

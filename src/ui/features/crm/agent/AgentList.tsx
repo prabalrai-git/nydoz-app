@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import useFetch from "../../../hooks/useFetch";
-import API_ROUTE from "../../../service/api";
-import { IAgentResponse } from "../../../types/payload.type";
-import BASE_URL from "../../../constants/AppSetting";
+import useFetch from "../../../../hooks/useFetch";
+import API_ROUTE from "../../../../service/api";
+import { IAgentResponse } from "../../../../types/payload.type";
+import BASE_URL from "../../../../constants/AppSetting";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate, useParams } from "react-router-dom";
-import useMutation from "../../../hooks/useMutation";
-import Modal2 from "../../shared/components/Modal2";
+import useMutation from "../../../../hooks/useMutation";
+import Modal2 from "../../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { Flag, People } from "react-bootstrap-icons";
-import PaginationTable from "../../shared/components/PaginationTable";
-import NotFound from "../../shared/molecules/NotFound";
-import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
+import PaginationTable from "../../../shared/components/PaginationTable";
+import NotFound from "../../../shared/molecules/NotFound";
+import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 
 const DocumentList = () => {
     const navigate = useNavigate();

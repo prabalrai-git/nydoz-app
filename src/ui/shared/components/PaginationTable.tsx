@@ -103,7 +103,7 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
                 <div className='min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden p-6'>
                     <div className='d-flex justify-content-between '>
                         <div className='flex-1'>
-                            <h6 className='bg-light text-info py-2  '>
+                            <h6 className='bg-light text-info py-2'>
                                 <span>From :{pagination?.from ?? "N/A"}</span>
                                 <span className='mx-3'>
                                     To :{pagination?.to ?? "N/A"}
@@ -153,65 +153,67 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
                             </li>
                         </ul>
                     </div>
-                    {isLoading ? (
-                        <div className='d-flex h-75vh flex-center'>
-                            <Spinner />
-                        </div>
-                    ) : (
-                        <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable  '>
-                            <thead>
-                                {table.getHeaderGroups().map((headerGroup) => (
-                                    <tr
-                                        className='text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0'
-                                        key={headerGroup.id}>
-                                        {headerGroup.headers.map((header) => {
-                                            return (
-                                                <th
-                                                    key={header.id}
-                                                    colSpan={header.colSpan}>
-                                                    {header.isPlaceholder
-                                                        ? null
-                                                        : flexRender(
-                                                              header.column
-                                                                  .columnDef
-                                                                  .header,
-                                                              header.getContext()
-                                                          )}
-                                                    {header.column.getCanResize() && (
-                                                        <div
-                                                            onMouseDown={header.getResizeHandler()}
-                                                            onTouchStart={header.getResizeHandler()}></div>
-                                                    )}
-                                                </th>
-                                            );
-                                        })}
-                                    </tr>
-                                ))}
-                            </thead>
-                            <tbody className='fw-semibold text-gray-600 min-h-50vh'>
-                                {table.getRowModel().rows.map((row) => {
-                                    return (
-                                        <tr key={row.id}>
-                                            {row
-                                                .getVisibleCells()
-                                                .map((cell) => {
-                                                    return (
-                                                        <td key={cell.id}>
-                                                            {flexRender(
-                                                                cell.column
-                                                                    .columnDef
-                                                                    .cell,
-                                                                cell.getContext()
-                                                            )}
-                                                        </td>
-                                                    );
-                                                })}
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    )}
+
+                    <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable  '>
+                        <thead>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <tr
+                                    className='text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0'
+                                    key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => {
+                                        return (
+                                            <th
+                                                key={header.id}
+                                                colSpan={header.colSpan}>
+                                                {header.isPlaceholder
+                                                    ? null
+                                                    : flexRender(
+                                                          header.column
+                                                              .columnDef.header,
+                                                          header.getContext()
+                                                      )}
+                                                {header.column.getCanResize() && (
+                                                    <div
+                                                        onMouseDown={header.getResizeHandler()}
+                                                        onTouchStart={header.getResizeHandler()}></div>
+                                                )}
+                                            </th>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                        </thead>
+                        <tbody className='fw-semibold text-gray-600 min-h-50vh'>
+                            {isLoading ? (
+                                <div className='d-flex h-75vh flex-center'>
+                                    <Spinner />
+                                </div>
+                            ) : (
+                                <>
+                                    {table.getRowModel().rows.map((row) => {
+                                        return (
+                                            <tr key={row.id}>
+                                                {row
+                                                    .getVisibleCells()
+                                                    .map((cell) => {
+                                                        return (
+                                                            <td key={cell.id}>
+                                                                {flexRender(
+                                                                    cell.column
+                                                                        .columnDef
+                                                                        .cell,
+                                                                    cell.getContext()
+                                                                )}
+                                                            </td>
+                                                        );
+                                                    })}
+                                            </tr>
+                                        );
+                                    })}
+                                </>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             )}
         </div>

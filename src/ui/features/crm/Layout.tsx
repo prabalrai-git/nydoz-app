@@ -2,7 +2,14 @@ import { Outlet } from "react-router-dom";
 import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 import useWebSetting from "../../../context/useWebSetting";
-import { House } from "react-bootstrap-icons";
+import {
+    BuildingAdd,
+    Buildings,
+    House,
+    PersonBadge,
+    PersonCheck,
+    PersonLock,
+} from "react-bootstrap-icons";
 
 const CrmLayout = () => {
     const sidebarMenu: ISidebarMenu[] = [
@@ -13,28 +20,35 @@ const CrmLayout = () => {
             icon: <House size={20} />,
         },
         {
+            id: 4,
+            title: "Visitors",
+            link: "visitors",
+            icon: <PersonBadge size={20} />,
+        },
+        {
+            id: 4,
+            title: "Clients",
+            link: "clients",
+            icon: <PersonCheck size={20} />,
+        },
+        {
             id: 2,
             title: "Enrollment Openings",
             link: "enrollment-openings",
-            icon: <i className='bi bi-house'></i>,
+            icon: <BuildingAdd size={20} />,
         },
         {
             id: 3,
             title: "Enrolled Institutions",
             link: "enrolled-institutes/list",
-            icon: <i className='bi bi-house'></i>,
+            icon: <Buildings size={20} />,
         },
-        {
-            id: 4,
-            title: "Visitors",
-            link: "visitors",
-            icon: <i className='bi bi-house'></i>,
-        },
+
         {
             id: 5,
             title: "Agents",
             link: "agents",
-            icon: <i className='bi bi-house'></i>,
+            icon: <PersonLock size={22} />,
         },
     ];
     const { webSetting } = useWebSetting();
