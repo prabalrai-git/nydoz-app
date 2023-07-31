@@ -39,14 +39,14 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
         const newUrl = `${baseUrl}?page=${
             paginationState.current_page - 1
         }&page_size=${paginationState.per_page}`;
-        // const searchParams = new URLSearchParams(window.location.search);
-        // searchParams.set("page", (paginationState.current_page + 1).toString());
-        // searchParams.set("page_size", paginationState.per_page.toString());
-        // window.history.replaceState(
-        //     null,
-        //     "",
-        //     `${window.location.pathname}?${searchParams.toString()}`
-        // );
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("page", (paginationState.current_page - 1).toString());
+        searchParams.set("page_size", paginationState.per_page.toString());
+        window.history.replaceState(
+            null,
+            "",
+            `${window.location.pathname}?${searchParams.toString()}`
+        );
         setFetchUrl(newUrl);
         setFetchAgain(true);
     };
@@ -61,14 +61,14 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
             paginationState.current_page + 1
         }&page_size=${paginationState.per_page}`;
 
-        // const searchParams = new URLSearchParams(window.location.search);
-        // searchParams.set("page", (paginationState.current_page + 1).toString());
-        // searchParams.set("page_size", paginationState.per_page.toString());
-        // window.history.replaceState(
-        //     null,
-        //     "",
-        //     `${window.location.pathname}?${searchParams.toString()}`
-        // );
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("page", (paginationState.current_page + 1).toString());
+        searchParams.set("page_size", paginationState.per_page.toString());
+        window.history.replaceState(
+            null,
+            "",
+            `${window.location.pathname}?${searchParams.toString()}`
+        );
         setFetchUrl(newUrl);
         setFetchAgain(true);
     };
@@ -78,7 +78,15 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
             ...prevState,
             currentPage: pageNumber,
         }));
-        const newUrl = `${baseUrl}?page=${paginationState.current_page}&page_size=${paginationState.per_page}`;
+        const newUrl = `${baseUrl}?page=${pageNumber}&page_size=${paginationState.per_page}`;
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("page", pageNumber.toString());
+        searchParams.set("page_size", paginationState.per_page.toString());
+        window.history.replaceState(
+            null,
+            "",
+            `${window.location.pathname}?${searchParams.toString()}`
+        );
         setFetchUrl(newUrl);
         setFetchAgain(true);
     };
@@ -92,10 +100,10 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
     return (
         <div className='border '>
             {data && data?.length > 0 && (
-                <div className='min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden py-6'>
-                    <div className='d-flex justify-content-between px-3'>
+                <div className='min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden p-6'>
+                    <div className='d-flex justify-content-between '>
                         <div className='flex-1'>
-                            <h6 className='bg-light text-info py-2 px-3 '>
+                            <h6 className='bg-light text-info py-2  '>
                                 <span>From :{pagination?.from ?? "N/A"}</span>
                                 <span className='mx-3'>
                                     To :{pagination?.to ?? "N/A"}

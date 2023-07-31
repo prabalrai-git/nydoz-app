@@ -18,7 +18,15 @@ const DocumentList = () => {
     const navigate = useNavigate();
     const { id: companyId } = useParams<string>();
     const baseUrl = `${API_ROUTE.GET_CLIENT_MANAGEMENT_AGENTS}`;
-    const [fetchUrl, setFetchUrl] = useState(baseUrl);
+    const searchParams = new URLSearchParams(window.location.search);
+    const pageFromUrl = searchParams.get("page");
+    const pageSizeFromUrl = searchParams.get("page_size");
+    const page = pageFromUrl ? parseInt(pageFromUrl) : 1;
+    const pageSize = pageSizeFromUrl ? parseInt(pageSizeFromUrl) : 15;
+
+    const [fetchUrl, setFetchUrl] = useState(
+        `${baseUrl}?page=${page}&page_size=${pageSize}`
+    );
     const [show, setShow] = useState<boolean>(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
     const [selectedData, setSelectedData] = useState<
