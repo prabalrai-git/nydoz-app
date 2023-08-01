@@ -17,6 +17,7 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import AsyncSelect from "../../../shared/molecules/AsyncSelect";
 import { IVisaTypeResponse } from "../../../../types/payload.type";
 import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
+import SeverSelect from "../../../shared/components/ServerSelect";
 
 // {
 //   "institute_id": 0,
@@ -166,10 +167,14 @@ const Add = () => {
                                         setSelectValue={setSelectedVisaType}
                                         showData='name'
                                     /> */}
-                                    <AsyncSelect
+                                    {/* <AsyncReactSelect
                                         baseUrl={API_ROUTE.CM_AGENTS}
                                         placeholder='Visa Type'
                                         showData='name'
+                                    /> */}
+
+                                    <SeverSelect
+                                        baseUrl={API_ROUTE.CM_AGENTS}
                                     />
                                 </div>
                             </div>

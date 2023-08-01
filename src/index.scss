@@ -160,3 +160,40 @@ $pimary-color: #70b541;
         box-shadow: 0 0 0.875rem rgb(0 0 0 / 10%);
     }
 }
+
+.server-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.server-select-li {
+    list-style: none;
+    padding: 0.5rem 1rem;
+}
+
+.server-select-li:hover {
+    list-style: none;
+    padding: 0.5rem 1rem;
+    background-color: rgb(215, 241, 233);
+}
+.list-box-container {
+    z-index: 999;
+    width: 100%;
+    position: absolute;
+    margin-top: 0.5rem;
+    max-height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: all 0.5s ease-in-out;
+    background-color: #ffffff;
+}
+
+.list-box-show {
+    display: block;
+}
+
+.list-box-hide {
+    display: none;
+}
