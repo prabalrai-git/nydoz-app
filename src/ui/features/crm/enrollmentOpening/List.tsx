@@ -6,14 +6,13 @@ import { Flag } from "react-bootstrap-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
-import { EnrollmentOpeningsResponse } from "../../../../types/products.types";
+import { IEnrollmentOpeningsResponse } from "../../../../types/products.types";
 import BASE_URL from "../../../../constants/AppSetting";
 import useMutation from "../../../../hooks/useMutation";
 import Modal2 from "../../../shared/components/Modal2";
-
+import moment from "moment";
 import PaginationTable from "../../../shared/components/PaginationTable";
 import NotFound from "../../../shared/molecules/NotFound";
-import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 
 const List = () => {
     const navigate = useNavigate();
@@ -31,11 +30,11 @@ const List = () => {
     const [show, setShow] = useState<boolean>(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
     const [selectedData, setSelectedData] = useState<
-        EnrollmentOpeningsResponse | undefined
+        IEnrollmentOpeningsResponse | undefined
     >();
 
     const { data, fetchDataById, pagination, isloading } = useFetch<
-        EnrollmentOpeningsResponse[]
+        IEnrollmentOpeningsResponse[]
     >(baseUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
@@ -58,47 +57,19 @@ const List = () => {
     // function for pagination
 
     // functions for edit data
-    const handleEditData = (item: EnrollmentOpeningsResponse) => {
+    const handleEditData = (item: IEnrollmentOpeningsResponse) => {
         navigate("../edit", {
             state: { data: item },
         });
     };
 
-    const tableColumns: ColumnDef<EnrollmentOpeningsResponse>[] = [
+    const tableColumns: ColumnDef<IEnrollmentOpeningsResponse>[] = [
         {
             accessorKey: "sn",
             header: () => <div>S.N</div>,
             cell: (info) => info.row.index + 1,
         },
-        {
-            accessorKey: "Name",
-            header: () => (
-                <div>
-                    <i className='bi bi-building-fill-add fs-7 me-2'></i>
-                    <span>Institute's Name</span>
-                </div>
-            ),
-            cell: (info) => {
-                const url = `${BASE_URL}${info?.row?.original?.logo}`;
-                return (
-                    <div className='d-flex align-items-center'>
-                        <div className='symbol symbol-40px me-3'>
-                            <img src={url} className='' alt='Logo' />
-                        </div>
-                        <div className='d-flex justify-content-start flex-column'>
-                            <div className='text-dark fw-bold text-hover-primary mb-1 fs-7'>
-                                {info?.row?.original?.name}
-                            </div>
-                            <a
-                                href={info?.row?.original?.website}
-                                className='text-muted fw-semibold d-block fs-7'>
-                                {info?.row?.original?.website}
-                            </a>
-                        </div>
-                    </div>
-                );
-            },
-        },
+
         {
             accessorKey: "enroll_start_date",
             header: () => (
@@ -108,7 +79,11 @@ const List = () => {
                 </div>
             ),
             cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
+                return (
+                    <div>
+                        {moment(info.getValue<string>()).format("MMMM Do YYYY")}
+                    </div>
+                );
             },
         },
         {
@@ -117,6 +92,22 @@ const List = () => {
                 <div>
                     <i className='bi bi-globe me-2 fs-7'></i>
                     <span>End Date</span>
+                </div>
+            ),
+            cell: (info) => {
+                return (
+                    <div>
+                        {moment(info.getValue<string>()).format("MMMM Do YYYY")}
+                    </div>
+                );
+            },
+        },
+        {
+            accessorKey: "total_opening",
+            header: () => (
+                <div>
+                    <i className='bi bi-globe me-2 fs-7'></i>
+                    <span>Total Opening</span>
                 </div>
             ),
             cell: (info) => {
@@ -184,7 +175,7 @@ const List = () => {
 
     // functions for delete modal
 
-    const handleDeleteModal = (item: EnrollmentOpeningsResponse) => {
+    const handleDeleteModal = (item: IEnrollmentOpeningsResponse) => {
         setSelectedData(item);
         handleShow();
         console.log(item);

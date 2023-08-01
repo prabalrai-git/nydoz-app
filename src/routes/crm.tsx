@@ -89,6 +89,10 @@ const CrmRoutes: RouteObject[] = [
                                 element: <Outlet />,
                                 children: [
                                     {
+                                        path: "view",
+                                        element: <EnrollmentOpeningsList />,
+                                    },
+                                    {
                                         path: "list",
                                         element: <EnrollmentOpeningsList />,
                                     },

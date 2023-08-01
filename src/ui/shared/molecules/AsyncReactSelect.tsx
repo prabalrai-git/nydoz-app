@@ -67,7 +67,10 @@ function SimpleSelect<T extends CommonItem>(props: IProps<T>) {
 
     return (
         <Select
-            options={selectOptions}
+            options={options?.map((item) => ({
+                value: item.id,
+                label: item.first_name,
+            }))}
             isLoading={isLoading}
             onMenuScrollToBottom={handleLoadMore}
             isClearable
