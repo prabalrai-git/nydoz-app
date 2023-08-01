@@ -215,42 +215,33 @@ const List = () => {
     const handleShow = () => setShow(true);
 
     return (
-        <div>
-            <CompanyBreadcrumb
-                title='Agents'
-                btnText='Back'
-                showBreadcrumb={true}
-            />
-            <section>
-                <div className='card'>
-                    <div className='card-header'>
-                        <h3 className='card-title'>Institution's List</h3>
-                        <div className='card-toolbar'>
-                            <Link
-                                to='../add'
-                                className='btn btn-success btn-sm'>
-                                <span className='mx-2'>Add Institutions</span>
-                            </Link>
-                        </div>
+        <section>
+            <div className='card'>
+                <div className='card-header'>
+                    <h3 className='card-title'>Institution's Openings List</h3>
+                    <div className='card-toolbar'>
+                        <Link to='../add' className='btn btn-success btn-sm'>
+                            <span className='mx-2'>Add Openings</span>
+                        </Link>
                     </div>
-                    {data ? (
-                        <PaginationTable
-                            pagination={pagination}
-                            fetchAgain={fetchAgain}
-                            setFetchAgain={setFetchAgain}
-                            columns={tableColumns as ColumnDef<unknown>[]}
-                            data={data}
-                            isLoading={isloading}
-                            baseUrl={baseUrl}
-                            setFetchUrl={setFetchUrl}
-                        />
-                    ) : (
-                        <div className='bg-white flex-center h-75vh'>
-                            <NotFound title='Someting Went Wrong. Data Not Found. ' />
-                        </div>
-                    )}
                 </div>
-            </section>
+                {data ? (
+                    <PaginationTable
+                        pagination={pagination}
+                        fetchAgain={fetchAgain}
+                        setFetchAgain={setFetchAgain}
+                        columns={tableColumns as ColumnDef<unknown>[]}
+                        data={data}
+                        isLoading={isloading}
+                        baseUrl={baseUrl}
+                        setFetchUrl={setFetchUrl}
+                    />
+                ) : (
+                    <div className='bg-white flex-center h-75vh'>
+                        <NotFound title='Someting Went Wrong. Data Not Found. ' />
+                    </div>
+                )}
+            </div>
             <Modal2
                 title='Are you sure  ?'
                 showChildren={true}
@@ -263,7 +254,7 @@ const List = () => {
                     <h3>{selectedData?.position}</h3>
                 </div>
             </Modal2>
-        </div>
+        </section>
     );
 };
 

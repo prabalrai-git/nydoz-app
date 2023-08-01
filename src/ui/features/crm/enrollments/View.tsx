@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { NavLink, useNavigate, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
 import API_ROUTE from "../../../../service/api";
 import { IEnrollmentResponse } from "../../../../types/products.types";
 import useFetch from "../../../../hooks/useFetch";
@@ -9,18 +9,31 @@ import BASE_URL from "../../../../constants/AppSetting";
 import Avatar from "../../../../assets/media/avatars/300-1.jpg";
 import { Flag } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
+import { IMenubar } from "../../../../types/app.types";
+import Menubar from "../../../shared/layouts/sidebar/Menubar";
+
+const menubarList: IMenubar[] = [
+    {
+        title: "Overview",
+        path: "",
+    },
+    {
+        title: "Enrollments Openings",
+        path: "openings/list",
+    },
+];
 
 const View = () => {
-    const { id } = useParams<string>();
+    const { institueId } = useParams<string>();
     const navigate = useNavigate();
-    const { data, fetchDataById, isloading } = useFetch<IEnrollmentResponse>(
+    const { data, fetchDataById } = useFetch<IEnrollmentResponse>(
         API_ROUTE.CM_ENROLLMENT,
         true
     );
 
     useEffect(() => {
-        fetchDataById(`${API_ROUTE.CM_ENROLLMENT}/${id}`);
-    }, [fetchDataById, id]);
+        fetchDataById(`${API_ROUTE.CM_ENROLLMENT}/${institueId}`);
+    }, [fetchDataById, institueId]);
 
     const handleEdit = () => {
         navigate("../edit", {
@@ -98,52 +111,10 @@ const View = () => {
                                         </div>
                                     </div>
                                 </div>
-                                {true && (
-                                    <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold'>
-                                        <li className='nav-item mt-2'>
-                                            <NavLink
-                                                className='nav-link  ms-0 me-10 py-5 '
-                                                to={""}>
-                                                Overview
-                                            </NavLink>
-                                        </li>
-
-                                        <li className='nav-item mt-2'>
-                                            <NavLink
-                                                className='nav-link  ms-0 me-10 py-5'
-                                                to='/home/sabkura/products/buy'>
-                                                Buy Products
-                                            </NavLink>
-                                        </li>
-                                        <li className='nav-item mt-2'>
-                                            <NavLink
-                                                className='nav-link  ms-0 me-10 py-5'
-                                                to={"agents"}>
-                                                Agents
-                                            </NavLink>
-                                        </li>
-
-                                        <li className='nav-item mt-2'>
-                                            <NavLink
-                                                to={`roles`}
-                                                className='nav-link  ms-0 me-10 py-5'>
-                                                Roles
-                                            </NavLink>
-                                        </li>
-                                        <li className='nav-item mt-2'>
-                                            <NavLink
-                                                to={`documents`}
-                                                className='nav-link  ms-0 me-10 py-5'>
-                                                Documents
-                                            </NavLink>
-                                        </li>
-                                    </ul>
-                                )}
+                                <Menubar menubarList={menubarList} />
                             </div>
                         </div>
-                        <div className='container'>
-                            <Outlet />
-                        </div>
+                        <Outlet />
                     </div>
                 )}
             </section>

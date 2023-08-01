@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { enrollmentOpeningsSchema } from "../../../../validations/crm.validators";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import CountryCode from "../../../shared/atoms/CountryCode";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import {
     IEnrollmentOpeningsPayload,
@@ -41,9 +40,11 @@ interface IFormData {
 const Add = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {instituteId }= useParams();
-    const { updateData, postData, isLoading, error, errList } =
-        useMutation<IEnrollmentOpeningsResponse>(API_ROUTE.CM_ENROLLMENT, true);
+    const { instituteId } = useParams<string>();
+    const { updateData, postData, isLoading, error, errList } = useMutation(
+        API_ROUTE.CM_ENROLLMENT,
+        true
+    );
 
     const {
         register,
@@ -59,8 +60,11 @@ const Add = () => {
     useHandleShowError(error);
 
     const handleResetForm = useCallback(() => {
-        const dataDetails: IEnrollmentOpeningsResponse = location?.state?.data;
-        const { institute_id, visa_type_id, ...rest } = dataDetails;
+        const companyDetails: IEnrollmentOpeningsResponse =
+            location?.state?.data;
+        // console.log(companyDetails, "companyDetails");
+
+        const { _id, ...rest } = companyDetails;
         reset(rest);
     }, [location?.state?.data, reset]);
 
@@ -81,8 +85,8 @@ const Add = () => {
         if (location?.state?.data?.id) {
             const tempPostData: IEnrollmentOpeningsPayload = {
                 ...data,
-                institute_id: location?.state?.data?.institute_id,
                 visa_type_id: location?.state?.data?.visa_type_id,
+                institute_id: location?.state?.data?.institute_id,
             };
 
             response = await updateData(
@@ -90,16 +94,18 @@ const Add = () => {
                 tempPostData
             );
             if (response?.data?.status === "ok") {
-                toast.success("Institute updated Successfully");
+                toast.success("Opening updated Successfully");
                 navigate(-1);
             }
         } else {
             const tempPostData: IEnrollmentOpeningsPayload = {
                 ...data,
+                visa_type_id: location?.state?.data?.visa_type_id,
+                institute_id: instituteId,
             };
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
-                toast.success("Institute  Enrolled  Successfully");
+                toast.success("Opening Added  Successfully");
                 navigate(-1);
             }
         }
@@ -141,69 +147,51 @@ const Add = () => {
                 <div className='card-body'>
                     <form className='form w-100 ' onSubmit={onFormSubmit}>
                         <div className='row'>
-                            <div className='col-12 gap-5 gap-md-7  mb-6'>
+                            <div className='col-6 gap-5 gap-md-7  mb-6'>
                                 <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                     <label className='required form-label'>
-                                        Website
+                                        Opening Start Date
                                     </label>
                                     <input
+                                        type='date'
                                         className='form-control'
-                                        {...register("website")}
+                                        {...register("enroll_start_date")}
                                         placeholder='website url'
                                     />
                                     <div className='fv-plugins-message-container invalid-feedback'>
-                                        {errors.website?.message}
+                                        {errors.enroll_start_date?.message}
                                     </div>
                                 </div>
                             </div>
-                            <div className='col-12 gap-5 gap-md-7   mb-6'>
+                            <div className='col-6 gap-5 gap-md-7   mb-6'>
                                 <div>
                                     <label className='required form-label'>
-                                        State
+                                        Opening End Date
                                     </label>
                                     <input
+                                        type='date'
                                         className='form-control'
                                         placeholder='Enter your state'
-                                        {...register("state")}
+                                        {...register("enroll_end_date")}
                                     />
                                     <div className='fv-plugins-message-container invalid-feedback'>
-                                        {errors.state?.message}
+                                        {errors.enroll_end_date?.message}
                                     </div>
-                                </div>
-                            </div>
-                            <div className='col-12  gap-5 gap-md-7   mb-6'>
-                                <div>
-                                    <label className='required form-label'>
-                                        Institution
-                                    </label>
-                                   
-                            </div>
-                            <div className='col-12  gap-5 gap-md-7   mb-6'>
-                                <div>
-                                    <label className='required form-label'>
-                                        Visa Type
-                                    </label>
-                                    <CountryCode
-                                        placeholder='Select Country'
-                                        forCountry={true}
-                                        selectValue={selectedCountry}
-                                        setSelectValue={setSelectedCountry}
-                                    />
                                 </div>
                             </div>
 
                             <div className='col-12 gap-5 gap-md-7 mb-6'>
                                 <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                     <label className='required form-label'>
-                                        College/University Name:
+                                        Postion/Course
                                     </label>
                                     <input
                                         className='form-control'
                                         placeholder='College/University name'
-                                        {...register("name")}
+                                        {...register("position")}
                                     />
                                     <div className='fv-plugins-message-container invalid-feedback'>
-                                        {errors.name?.message}
+                                        {errors.position?.message}
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +206,7 @@ const Add = () => {
                                         placeholder='description'
                                     />
                                     <div className='fv-plugins-message-container invalid-feedback'>
-                                        {errors.website?.message}
+                                        {errors.description?.message}
                                     </div>
                                 </div>
                             </div>

@@ -226,7 +226,7 @@ const List = () => {
                             </Link>
                         </div>
                     </div>
-                    {data ? (
+                    {data && (
                         <PaginationTable
                             pagination={pagination}
                             fetchAgain={fetchAgain}
@@ -237,10 +237,11 @@ const List = () => {
                             baseUrl={baseUrl}
                             setFetchUrl={setFetchUrl}
                         />
-                    ) : (
-                        <div className='bg-white flex-center h-75vh'>
-                            <NotFound title='Someting Went Wrong. Data Not Found. ' />
-                        </div>
+                    )}
+                    {!data && !isloading && (
+                        <NotFound
+                            title={"Something Went Wrong. Data Not Found."}
+                        />
                     )}
                 </div>
             </section>

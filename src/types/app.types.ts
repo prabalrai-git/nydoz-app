@@ -12,3 +12,8 @@ export interface ISidebarMenu {
     link: string;
     icon: ReactElement;
 }
+
+export interface IMenubar {
+    title: string;
+    path: string;
+}
