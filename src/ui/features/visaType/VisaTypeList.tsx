@@ -9,8 +9,8 @@ import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import AddVisaType from "./AddVisaType";
-import TanStackTable from "../../shared/molecules/TanStackTable";
 import useAuthContext from "../../../context/auth/useAuthContext";
+import PaginationTable from "../../shared/components/PaginationTable";
 
 const VisaTypeList = () => {
     const { companyInfo } = useAuthContext();
@@ -23,21 +23,30 @@ const VisaTypeList = () => {
     const [openAddDocument, setOpenAddDocument] = useState(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
 
-    const getListUrl = API_ROUTE.GET_VISA_TYPES;
-
-    const { data, fetchData } = useFetch<IRoleResponse[]>(getListUrl, true);
+    const basUrl = API_ROUTE.GET_VISA_TYPES;
+    const searchParams = new URLSearchParams(window.location.search);
+    const pageFromUrl = searchParams.get("page");
+    const pageSizeFromUrl = searchParams.get("page_size");
+    const page = pageFromUrl ? parseInt(pageFromUrl) : 1;
+    const pageSize = pageSizeFromUrl ? parseInt(pageSizeFromUrl) : 15;
+    const [fetchUrl, setFetchUrl] = useState(
+        `${basUrl}?page=${page}&page_size=${pageSize}`
+    );
+    const { data, isloading, fetchDataById, pagination } = useFetch<
+        IRoleResponse[]
+    >(basUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
     useEffect(() => {
-        fetchData();
+        fetchDataById(fetchUrl);
         setFetchAgain(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (fetchAgain) {
-            fetchData();
+            fetchDataById(fetchUrl);
             setFetchAgain(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -163,24 +172,34 @@ const VisaTypeList = () => {
     };
 
     return (
-        <div>
-            <div className='d-flex justify-content-between align-items-center mb-6'>
-                <h4>Visa Type</h4>
-                <button
-                    onClick={handleOpenNewModal}
-                    className='btn btn-success btn-sm'>
-                    <span className='mx-2'>Add Visa Type</span>
-                </button>
-            </div>
+        <div className='mt-6'>
             <section>
                 <div className='card'>
+                    <div className='card-header'>
+                        <h3 className='card-title'>Visa Type 's List</h3>
+                        <div className='card-toolbar'>
+                            <button
+                                onClick={handleOpenNewModal}
+                                className='btn btn-success btn-sm'>
+                                <span className='mx-2'>Add Visa Type</span>
+                            </button>
+                        </div>
+                    </div>
                     {data && (
-                        <TanStackTable columns={tableColumns} data={data} />
+                        <PaginationTable
+                            pagination={pagination}
+                            baseUrl={basUrl}
+                            columns={tableColumns}
+                            data={data}
+                            isLoading={isloading}
+                            setFetchAgain={setFetchAgain}
+                            setFetchUrl={setFetchUrl}
+                        />
                     )}
                 </div>
             </section>
             <Modal2
-                title='Are you sure you want to delete this company?'
+                title='Are you sure you want to delete this vist type?'
                 showChildren={true}
                 cancelText='Cancel'
                 confirmText='Delete'

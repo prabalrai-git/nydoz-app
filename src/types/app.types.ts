@@ -17,3 +17,8 @@ export interface IMenubar {
     title: string;
     path: string;
 }
+
+export interface IMenubar2 {
+    title: string;
+    link: string;
+}

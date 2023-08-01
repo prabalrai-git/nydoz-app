@@ -18,7 +18,7 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 const List = () => {
     const navigate = useNavigate();
     const { id: companyId } = useParams<string>();
-    const baseUrl = `${API_ROUTE.CM_ENROLLMENT}`;
+    const baseUrl = `${API_ROUTE.CM_INFORMATION_CHANNEL}`;
     const searchParams = new URLSearchParams(window.location.search);
     const pageFromUrl = searchParams.get("page");
     const pageSizeFromUrl = searchParams.get("page_size");

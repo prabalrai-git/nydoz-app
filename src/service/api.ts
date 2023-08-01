@@ -64,6 +64,9 @@ const API_ROUTE = {
     CM_VISITORS: "/api/v1/client-management/visitors",
     CM_AGENTS: "/api/v1/client-management/agents",
     CM_ENROLLMENT_OPENINGS: "/api/v1/client-management/enrollment-openings",
+    CM_INFORMATION_CHANNEL:
+        "/api/v1/client-management/common-information-channels",
+    CM_VISITING_PURPOSES: "/api/v1/client-management/common-visiting-purposes",
 
     // user
     USER: "/api/v1/users",

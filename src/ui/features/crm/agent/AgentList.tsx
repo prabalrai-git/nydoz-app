@@ -227,7 +227,6 @@ const DocumentList = () => {
                     {data ? (
                         <PaginationTable
                             pagination={pagination}
-                            fetchAgain={fetchAgain}
                             setFetchAgain={setFetchAgain}
                             columns={tableColumns as ColumnDef<unknown>[]}
                             data={data}

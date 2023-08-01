@@ -143,7 +143,14 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
                                     </li>
                                 )
                             )}
-                            <li className='page-item next'>
+                            <li
+                                className={
+                                    pagination.per_page *
+                                        pagination.current_page >=
+                                    pagination.total
+                                        ? "page-item next disabled"
+                                        : "page-item next"
+                                }>
                                 <button
                                     onClick={handleNext}
                                     className='page-link'>

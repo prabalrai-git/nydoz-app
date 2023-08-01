@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
 import { useUpdateEffect } from "usehooks-ts";
 
 interface CommonItem {
@@ -29,26 +29,23 @@ function SimpleSelect<T extends CommonItem>(props: IProps<T>) {
     );
     const { data, fetchDataById } = useFetch<T[]>(fetchUrl, true);
 
-    const [isApiCalled, setisApiCalled] = useState(false);
-
     useEffect(() => {
-        console.log("fetchUrl", fetchUrl);
-        if (!isApiCalled) {
-            fetchDataById(fetchUrl);
-            setisApiCalled(true);
-        }
+        fetchDataById(fetchUrl);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchUrl]);
 
     useEffect(() => {
+        console.log("data", data);
         if (data && data?.length > 0 && options) {
             setOptions([...data, ...options]);
         }
+        return () => setOptions([]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
     // Function to load more data when scrolling to the bottom
-    const handleLoadMore = async () => {
+    const handleLoadMore = () => {
+        console.log("load more");
         const nextPage = currentPage + 1;
         setCurrentPage(() => nextPage);
         setfetchUrl(`${baseUrl}?page=${nextPage}&per_page=15`);
@@ -66,11 +63,12 @@ function SimpleSelect<T extends CommonItem>(props: IProps<T>) {
     }, [options]);
 
     return (
-        <Select
-            options={options?.map((item) => ({
+        <AsyncSelect
+            loadOptions={options?.map((item) => ({
                 value: item.id,
                 label: item.first_name,
             }))}
+            cacheOptions
             isLoading={isLoading}
             onMenuScrollToBottom={handleLoadMore}
             isClearable

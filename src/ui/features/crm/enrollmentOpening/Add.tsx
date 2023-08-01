@@ -166,11 +166,9 @@ const Add = () => {
                                         setSelectValue={setSelectedVisaType}
                                         showData='name'
                                     /> */}
-                                    <AsyncReactSelect
+                                    <AsyncSelect
                                         baseUrl={API_ROUTE.CM_AGENTS}
                                         placeholder='Visa Type'
-                                        selectValue={selectedVisaType}
-                                        setSelectValue={setSelectedVisaType}
                                         showData='name'
                                     />
                                 </div>

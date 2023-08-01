@@ -22,6 +22,19 @@ const EnrollmentOpeningsList = loadable(
     () => import("../ui/features/crm/enrollmentOpening/List")
 );
 
+//settings Routes
+const SettingsLayout = loadable(
+    () => import("../ui/features/crm/settings/Layout")
+);
+
+const InformationChannelList = loadable(
+    () => import("../ui/features/crm/InformationChannel/InformationList")
+);
+const VisaType = loadable(() => import("../ui/features/visaType/VisaTypeList"));
+const VisitingPurposesList = loadable(
+    () => import("../ui/features/crm/visitingPurpose/VisitingPurposeList")
+);
+
 const CrmRoutes: RouteObject[] = [
     {
         path: "dashboard",
@@ -62,7 +75,7 @@ const CrmRoutes: RouteObject[] = [
     },
     {
         path: "settings",
-        element: <Outlet />,
+        element: <SettingsLayout />,
         children: [
             {
                 path: "enrolled-institutes",
@@ -109,6 +122,18 @@ const CrmRoutes: RouteObject[] = [
                         ],
                     },
                 ],
+            },
+            {
+                path: "visa-types",
+                element: <VisaType />,
+            },
+            {
+                path: "information-channels",
+                element: <InformationChannelList />,
+            },
+            {
+                path: "visiting-purposes",
+                element: <VisitingPurposesList />,
             },
         ],
     },

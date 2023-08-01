@@ -4,6 +4,7 @@ import React, {
     useEffect,
     useState,
     useCallback,
+    useRef,
 } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { useUpdateEffect } from "usehooks-ts";
@@ -42,6 +43,7 @@ function SimpleSelect<T extends CommonItem>(props: IProps<T>) {
     }, [fetchUrl]);
 
     useEffect(() => {
+        console.log("data", data);
         if (data && data?.length > 0 && allValue) {
             setAllValue([...data, ...allValue]);
         }
@@ -53,36 +55,31 @@ function SimpleSelect<T extends CommonItem>(props: IProps<T>) {
         setfetchUrl(`${baseUrl}?page=${currentPage}&per_page=15`);
     };
 
+    const scrollRef = useRef(null);
+
+    const handleChangeUrl = () => {
+        // Your logic for handling the URL change when scroll reaches the end
+        console.log("Scroll reached the end");
+    };
+
     return (
         <select
+            ref={scrollRef}
+            onScroll={handleChangeUrl}
             onClick={handleClickSelect}
-            onChange={(e) => {
-                if (e.target.value === "LOAD_MORE") {
-                    handleloadMore(currentPage + 1);
-                } else {
-                    const selectedValue = allValue?.find(
-                        (item) => item.id === e.target.value
-                    );
-                    setSelectValue(selectedValue);
-                }
-            }}
             placeholder='Select Visa Type'
             className='form-select'>
             {allValue?.map((item: T, index: number) => (
-                <option key={index} value={item?.id}>
+                <option
+                    style={{
+                        height: "50px",
+                    }}
+                    onMouseOver={() => handleloadMore(currentPage)}
+                    key={index}
+                    value={item?.id}>
                     {item.first_name}
                 </option>
             ))}
-            {pagination?.total >
-                pagination?.current_page * pagination?.per_page && (
-                <option value='LOAD_MORE'>Load more</option>
-            )}
-
-            {isloading && (
-                <option>
-                    <span>Loading...</span>
-                </option>
-            )}
         </select>
     );
 }

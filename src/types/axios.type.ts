@@ -47,6 +47,5 @@ export interface IPaginatedTableProps<T> {
     setFetchUrl: (fetchUrl: string) => void;
     pagination: IPagination;
     isLoading: boolean;
-    fetchAgain: boolean;
     setFetchAgain: (fetchAgain: boolean) => void;
 }
