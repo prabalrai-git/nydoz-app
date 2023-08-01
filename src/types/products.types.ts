@@ -39,14 +39,49 @@ export interface IVisitorResponse extends IVisitorPayload {
 }
 
 // {
-//   "first_name": ,
-//   "last_name": ,
-//   "email": "string@gmail.com",
-//   "mobile": ,
-//   "country": ,
-//   "state": ,
-//   "city": ,
-//   "street_address": ,
-//   "profile_picture": ,
-//   "postal_code":
+//   "institute_id": 0,
+//   "enroll_start_date": "string",
+//   "enroll_end_date": "string",
+//   "position": "string",
+//   "total_opening": 0,
+//   "visa_type_id": 0,
+//   "currency": "string",
+//   "offered_salary": 0,
+//   "description": "string"
 // }
+
+export interface IEnrollmentOpeningsPayload {
+    institute_id: string;
+    enroll_start_date: string;
+    enroll_end_date: string;
+    position: string;
+    total_opening: number;
+    visa_type_id: string;
+    currency: string;
+    offered_salary: number;
+    description: string;
+}
+
+export interface IEnrollmentOpeningsResponse
+    extends IEnrollmentOpeningsPayload {
+    id: string;
+}
+
+// {
+//   "institute_id":"99c6ac4b-feef-4c9e-9fe1-3ec2362a5fc3",
+//   "enroll_start_date": "10/10/2031",
+//   "enroll_end_date": "10/10/2031",
+//   "position": "Msc IT",
+//   "total_opening": 6,
+//   "visa_type_id": 0,
+//   "currency": "string",
+//   "offered_salary": 0,
+//   "description": "string"
+// }
+
+// {
+//       "id": "99b0de9b-6d8b-4bc1-aaa1-df32b205658c",
+//       "name": "Myra Norman",
+//       "description": "Nisi ipsum dolor fu",
+//       "company_id": 0
+//     },

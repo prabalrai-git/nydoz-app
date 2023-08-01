@@ -6,7 +6,7 @@ import { Flag } from "react-bootstrap-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
-import { IEnrollmentResponse } from "../../../../types/products.types";
+import { EnrollmentOpeningsResponse } from "../../../../types/products.types";
 import BASE_URL from "../../../../constants/AppSetting";
 import useMutation from "../../../../hooks/useMutation";
 import Modal2 from "../../../shared/components/Modal2";
@@ -18,7 +18,7 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 const List = () => {
     const navigate = useNavigate();
     const { id: companyId } = useParams<string>();
-    const baseUrl = `${API_ROUTE.CM_ENROLLMENT}`;
+    const baseUrl = `${API_ROUTE.CM_ENROLLMENT_OPENINGS}`;
     const searchParams = new URLSearchParams(window.location.search);
     const pageFromUrl = searchParams.get("page");
     const pageSizeFromUrl = searchParams.get("page_size");
@@ -31,11 +31,11 @@ const List = () => {
     const [show, setShow] = useState<boolean>(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
     const [selectedData, setSelectedData] = useState<
-        IEnrollmentResponse | undefined
+        EnrollmentOpeningsResponse | undefined
     >();
 
     const { data, fetchDataById, pagination, isloading } = useFetch<
-        IEnrollmentResponse[]
+        EnrollmentOpeningsResponse[]
     >(baseUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
@@ -58,17 +58,13 @@ const List = () => {
     // function for pagination
 
     // functions for edit data
-    const handleEditData = (item: IEnrollmentResponse) => {
+    const handleEditData = (item: EnrollmentOpeningsResponse) => {
         navigate("../edit", {
             state: { data: item },
         });
     };
 
-    const handleView = (id: string) => {
-        navigate(`../view/${id}`);
-    };
-
-    const tableColumns: ColumnDef<IEnrollmentResponse>[] = [
+    const tableColumns: ColumnDef<EnrollmentOpeningsResponse>[] = [
         {
             accessorKey: "sn",
             header: () => <div>S.N</div>,
@@ -104,11 +100,23 @@ const List = () => {
             },
         },
         {
-            accessorKey: "website",
+            accessorKey: "enroll_start_date",
             header: () => (
                 <div>
                     <i className='bi bi-globe me-2 fs-7'></i>
-                    <span>Website</span>
+                    <span>Start Date</span>
+                </div>
+            ),
+            cell: (info) => {
+                return <div>{info.getValue<string>()}</div>;
+            },
+        },
+        {
+            accessorKey: "enroll_end_date",
+            header: () => (
+                <div>
+                    <i className='bi bi-globe me-2 fs-7'></i>
+                    <span>End Date</span>
                 </div>
             ),
             cell: (info) => {
@@ -117,11 +125,11 @@ const List = () => {
         },
 
         {
-            accessorKey: "state",
+            accessorKey: "position",
             header: () => (
                 <div>
                     <i className='bi bi-geo-alt me-2 fs-7'></i>
-                    <span>State</span>
+                    <span>Position</span>
                 </div>
             ),
             cell: (info) => {
@@ -130,11 +138,11 @@ const List = () => {
         },
 
         {
-            accessorKey: "country",
+            accessorKey: "visa_type_id",
             header: () => (
                 <div>
                     <Flag size={16} className='mx-2' />
-                    <span>Country</span>
+                    <span>Visa Type</span>
                 </div>
             ),
             cell: (info) => {
@@ -153,7 +161,6 @@ const List = () => {
                 <div className='d-flex justify-content-center'>
                     <div
                         title='view'
-                        onClick={() => handleView(info?.row?.original?.id)}
                         className='menu-link cursor-pointer bg-primary p-2 px-3'>
                         <i className='bi bi-box-arrow-up-right text-white'></i>
                     </div>
@@ -177,7 +184,7 @@ const List = () => {
 
     // functions for delete modal
 
-    const handleDeleteModal = (item: IEnrollmentResponse) => {
+    const handleDeleteModal = (item: EnrollmentOpeningsResponse) => {
         setSelectedData(item);
         handleShow();
         console.log(item);
@@ -253,7 +260,7 @@ const List = () => {
                 handleConfirm={handleDeleteItem}
                 handleClose={handleClose}>
                 <div>
-                    <h3>{selectedData?.name}</h3>
+                    <h3>{selectedData?.position}</h3>
                 </div>
             </Modal2>
         </div>

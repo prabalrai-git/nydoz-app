@@ -57,13 +57,19 @@ const Add = () => {
 
     const handleResetForm = useCallback(() => {
         const companyDetails: IEnrollmentResponse = location?.state?.data;
-        reset(companyDetails);
-        setOldThumbnil(companyDetails?.logo);
-        const country = getSelectPropsFromCountry(companyDetails?.country);
-        setSelectedCountry(country);
+        // console.log(companyDetails, "companyDetails");
+
+        const { logo, country, ...rest } = companyDetails;
+
+        reset(rest);
+        setOldThumbnil(logo);
+        const countryValue = getSelectPropsFromCountry(country);
+        setSelectedCountry(countryValue);
+        setThumbnilImg(undefined);
     }, [location?.state?.data, reset]);
 
     useEffect(() => {
+        console.log(location?.state);
         if (location?.state?.data && location?.state?.data?.id) {
             handleResetForm();
         }
@@ -130,19 +136,35 @@ const Add = () => {
     return (
         <div>
             <CompanyBreadcrumb
-                title='Add Institute'
+                title={
+                    location?.state?.data?.id
+                        ? "CM Update Institute"
+                        : "Cm Add Institute"
+                }
                 showBreadcrumb={true}
                 btnText='Back'
             />
             <div className='card shadow-sm '>
                 <div className='card-header'>
-                    <h3 className='card-title'>Add Institute</h3>
+                    <h3 className='card-title'>
+                        {location?.state?.data?.id
+                            ? "Update Institute Details"
+                            : "Add Institute Details"}
+                    </h3>
                     <div className='card-toolbar'>
-                        <button
-                            className='btn btn-sm btn-info'
-                            onClick={handleClearForm}>
-                            Clear
-                        </button>
+                        {location?.state?.data?.id ? (
+                            <button
+                                className='btn btn-sm btn-info'
+                                onClick={handleResetForm}>
+                                Reset
+                            </button>
+                        ) : (
+                            <button
+                                className='btn btn-sm btn-info'
+                                onClick={handleClearForm}>
+                                Clear
+                            </button>
+                        )}
                     </div>
                 </div>
                 <div className='card-body'>

@@ -52,79 +52,6 @@ export const visitorsSchema = yup.object().shape({
     expected_take_off_date: yup.date(),
 });
 
-// {
-//   "message": "The registration date field is required. (and 7 more errors)",
-//   "errors": {
-//     "registration_date": [
-//       "The registration date field is required."
-//     ],
-//     "first_name": [
-//       "The first name field is required."
-//     ],
-//     "last_name": [
-//       "The last name field is required."
-//     ],
-//     "country": [
-//       "The country field is required."
-//     ],
-//     "state": [
-//       "The state field is required."
-//     ],
-//     "visiting_purpose": [
-//       "The visiting purpose field is required."
-//     ],
-//     "information_channel": [
-//       "The information channel field is required."
-//     ],
-//     "going_to_foreign": [
-//       "The going to foreign field is required."
-//     ]
-//   }
-// }
-
-// {
-//   "message": "The registration date field is required. (and 7 more errors)",
-//   "errors": {
-//     "registration_date": [
-//       "The registration date field is required."
-//     ],
-//     "first_name": [
-//       "The first name field is required."
-//     ],
-//     "last_name": [
-//       "The last name field is required."
-//     ],
-//     "country": [
-//       "The country field is required."
-//     ],
-//     "state": [
-//       "The state field is required."
-//     ],
-//     "visiting_purpose": [
-//       "The visiting purpose field is required."
-//     ],
-//     "information_channel": [
-//       "The information channel field is required."
-//     ],
-//     "going_to_foreign": [
-//       "The going to foreign field is required."
-//     ]
-//   }
-// }
-
-// {
-//   "first_name": ,
-//   "last_name": ,
-//   "email": "string@gmail.com",
-//   "mobile": ,
-//   "country": ,
-//   "state": ,
-//   "city": ,
-//   "street_address": ,
-//   "profile_picture": ,
-//   "postal_code":
-// }
-
 export const agentSchema = yup.object().shape({
     first_name: yup.string().required("First Name field is required."),
     last_name: yup.string().required("Last Name field is required."),
@@ -137,4 +64,14 @@ export const agentSchema = yup.object().shape({
     city: yup.string().required("City field is required."),
     street_address: yup.string().required("Address field is required."),
     postal_code: yup.string().required("Postal Code field is required."),
+});
+
+export const enrollmentOpeningsSchema = yup.object().shape({
+    enroll_start_date: yup.date().required(),
+    enroll_end_date: yup.date().required(),
+    position: yup.string().required(),
+    total_opening: yup.number(),
+    currency: yup.string(),
+    offered_salary: yup.number(),
+    description: yup.string(),
 });

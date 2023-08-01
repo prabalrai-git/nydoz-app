@@ -5,6 +5,7 @@ import useWebSetting from "../../../context/useWebSetting";
 import {
     BuildingAdd,
     Buildings,
+    Gear,
     House,
     PersonBadge,
     PersonCheck,
@@ -20,35 +21,41 @@ const CrmLayout = () => {
             icon: <House size={20} />,
         },
         {
-            id: 4,
+            id: 2,
             title: "Visitors",
             link: "visitors",
             icon: <PersonBadge size={20} />,
         },
         {
-            id: 4,
+            id: 3,
             title: "Clients",
             link: "clients",
             icon: <PersonCheck size={20} />,
         },
+        // {
+        //     id: 4,
+        //     title: "Enrollment Openings",
+        //     link: "enrollment-openings",
+        //     icon: <BuildingAdd size={20} />,
+        // },
+        // {
+        //     id: 3,
+        //     title: "Enrolled Institutions",
+        //     link: "enrolled-institutes/list",
+        //     icon: <Buildings size={20} />,
+        // },
         {
-            id: 2,
-            title: "Enrollment Openings",
-            link: "enrollment-openings",
-            icon: <BuildingAdd size={20} />,
-        },
-        {
-            id: 3,
-            title: "Enrolled Institutions",
-            link: "enrolled-institutes/list",
-            icon: <Buildings size={20} />,
+            id: 4,
+            title: "Agents",
+            link: "agents",
+            icon: <PersonLock size={22} />,
         },
 
         {
             id: 5,
-            title: "Agents",
-            link: "agents",
-            icon: <PersonLock size={22} />,
+            title: "Settings",
+            link: "settings",
+            icon: <Gear size={22} />,
         },
     ];
     const { webSetting } = useWebSetting();
@@ -64,7 +71,9 @@ const CrmLayout = () => {
                         ? "doc-content  "
                         : "doc-content-wide container-fluid"
                 }>
-                <Outlet />
+                <div className='mt-6 px-3'>
+                    <Outlet />
+                </div>
             </div>
         </div>
     );
