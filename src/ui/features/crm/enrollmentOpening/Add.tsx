@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { enrollmentOpeningsSchema } from "../../../../validations/crm.validators";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,6 +14,9 @@ import useMutation from "../../../../hooks/useMutation";
 import { Spinner } from "react-bootstrap";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
+import AsyncSelect from "../../../shared/molecules/AsyncSelect";
+import { IVisaTypeResponse } from "../../../../types/payload.type";
+import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
 
 // {
 //   "institute_id": 0,
@@ -45,6 +48,10 @@ const Add = () => {
         API_ROUTE.CM_ENROLLMENT,
         true
     );
+
+    const [selectedVisaType, setSelectedVisaType] = useState<
+        IVisaTypeResponse | undefined
+    >();
 
     const {
         register,
@@ -147,6 +154,27 @@ const Add = () => {
                 <div className='card-body'>
                     <form className='form w-100 ' onSubmit={onFormSubmit}>
                         <div className='row'>
+                            <div className='col-6 gap-5 gap-md-7  mb-6'>
+                                <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                    <label className='required form-label'>
+                                        Select Visa Type
+                                    </label>
+                                    {/* <AsyncSelect
+                                        baseUrl={API_ROUTE.CM_AGENTS}
+                                        placeholder='Visa Type'
+                                        selectValue={selectedVisaType}
+                                        setSelectValue={setSelectedVisaType}
+                                        showData='name'
+                                    /> */}
+                                    <AsyncReactSelect
+                                        baseUrl={API_ROUTE.CM_AGENTS}
+                                        placeholder='Visa Type'
+                                        selectValue={selectedVisaType}
+                                        setSelectValue={setSelectedVisaType}
+                                        showData='name'
+                                    />
+                                </div>
+                            </div>
                             <div className='col-6 gap-5 gap-md-7  mb-6'>
                                 <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                     <label className='required form-label'>
