@@ -14,22 +14,8 @@ import useMutation from "../../../../hooks/useMutation";
 import { Spinner } from "react-bootstrap";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
-import AsyncSelect from "../../../shared/molecules/AsyncSelect";
 import { IVisaTypeResponse } from "../../../../types/payload.type";
-import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
 import SeverSelect from "../../../shared/components/ServerSelect";
-
-// {
-//   "institute_id": 0,
-//   "enroll_start_date": "string",
-//   "enroll_end_date": "string",
-//   "position": "string",
-//   "total_opening": 0,
-//   "visa_type_id": 0,
-//   "currency": "string",
-//   "offered_salary": 0,
-//   "description": "string"
-// }
 
 interface IFormData {
     enroll_start_date: Date | undefined;

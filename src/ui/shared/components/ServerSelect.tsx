@@ -1,72 +1,102 @@
-import React, { useRef, useState, useEffect } from "react";
+import { Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
 import { ArrowDown } from "react-bootstrap-icons";
 import useFetch from "../../../hooks/useFetch";
-import { useUpdateEffect } from "usehooks-ts";
+import { useOnClickOutside } from "usehooks-ts";
 
-const ServerSelect = ({ baseUrl }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [fetchUrl, setfetchUrl] = useState(
+interface CommonItem {
+    id: string;
+    name: string;
+    first_name: string;
+}
+interface IProps<T extends CommonItem> {
+    baseUrl: string;
+    selectedListItem: T | undefined;
+    setselectedListItem: Dispatch<SetStateAction<T | undefined>>;
+    placeholder: string;
+    showDataLabel: string;
+}
+
+function ServerSelect<T extends CommonItem>(props: IProps<T>) {
+    const { baseUrl, selectedListItem, setselectedListItem, placeholder } =
+        props;
+    const [selectedItemText, setSelectedItemText] = useState<string>("");
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [fetchUrl, setfetchUrl] = useState<string>(
         `${baseUrl}?page=${currentPage}&per_page=15`
     );
-    const [newData, setNewData] = useState(true);
+    const [fetchNewData, setfetchNewData] = useState<boolean>(false);
     const [showListBox, setShowListBox] = useState<boolean>(false);
-    const [selectedListItem, setselectedListItem] = useState();
-    const [selectedItemText, setSelectedItemText] = useState("");
-    const scrollRef = useRef(null);
-    const [allValue, setAllValue] = useState([]);
-    const { data, isloading, fetchDataById } = useFetch(
+    const [allValue, setAllValue] = useState<T[]>([]);
+    const { data, fetchDataById } = useFetch<T[]>(
         `${baseUrl}/api/Server/GetAllServers`,
         true
     );
-    const prevDataRef = useRef([]);
-
+    const selectRef = useRef(null);
     const handleChangeUrl = () => {
         console.log("handleChangeUrl");
+        setfetchNewData(true);
         setfetchUrl(`${baseUrl}?page=${currentPage + 1}&per_page=15`);
         setCurrentPage(currentPage + 1);
-        setNewData(true);
     };
 
     useEffect(() => {
-        fetchDataById(fetchUrl);
+        if (fetchNewData) fetchDataById(fetchUrl);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchUrl]);
 
-    const handleScroll = (e) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleScroll = (e: any) => {
         const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-        const element = scrollRef.current;
-
-        if (scrollHeight - scrollTop === clientHeight) {
+        if (scrollHeight - scrollTop - clientHeight === 1) {
             handleChangeUrl();
         }
     };
 
-    const handleInputClick = (item) => {
+    const handleClickOutside = () => {
         setShowListBox(false);
+    };
+
+    const handleInputClick = (item: T) => {
+        console.log("handleInputClick", item);
         console.log(item);
-        setSelectedItemText(item.first_name);
         setselectedListItem(item);
+        setSelectedItemText(item.first_name);
+        setShowListBox(false);
     };
 
     useEffect(() => {
-        if (data?.length > 0 && newData) {
+        if (data && data?.length > 0 && fetchNewData) {
             setAllValue([...data, ...allValue]);
-            setNewData(false);
+            setfetchNewData(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
+    const handleOpenList = () => {
+        console.log("handleOpenList");
+        setfetchNewData(!fetchNewData);
+        setShowListBox(!showListBox);
+    };
+
+    useEffect(() => {
+        if (fetchNewData) fetchDataById(fetchUrl);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchNewData]);
+
+    useOnClickOutside(selectRef, handleClickOutside);
     return (
         <div className='server-select'>
             <div className='input-group '>
                 <input
+                    ref={selectRef}
                     type='text'
                     value={selectedItemText}
                     onChange={(e) => setSelectedItemText(e.target.value)}
                     className='form-control'
-                    placeholder='search...'
+                    placeholder={placeholder}
                 />
                 <span
-                    onClick={() => setShowListBox(!showListBox)}
+                    onClick={handleOpenList}
                     className='input-group-text cursor-pointer'>
                     <ArrowDown />
                 </span>
@@ -76,19 +106,20 @@ const ServerSelect = ({ baseUrl }) => {
                     showListBox
                         ? "list-box-container list-box-show"
                         : "list-box-container list-box-hide"
-                }
-                onScroll={handleScroll}>
+                }>
                 {allValue?.map((item, index: number) => (
                     <li
                         key={index}
                         onClick={() => handleInputClick(item)}
-                        className='server-select-li'>
+                        className='server-select-li cursor-pointer'>
                         {item.first_name}
                     </li>
                 ))}
             </div>
         </div>
     );
-};
+}
 
 export default ServerSelect;
+
+// onScroll={(e) => handleScroll(e)}

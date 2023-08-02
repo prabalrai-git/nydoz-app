@@ -74,55 +74,55 @@ const CrmRoutes: RouteObject[] = [
         ],
     },
     {
-        path: "settings",
-        element: <SettingsLayout />,
+        path: "enrolled-institutes",
+        element: <Outlet />,
         children: [
             {
-                path: "enrolled-institutes",
-                element: <Outlet />,
+                path: "list",
+                element: <EnrollmentList />,
+            },
+            {
+                path: "add",
+                element: <AddEnrollment />,
+            },
+            {
+                path: "edit",
+                element: <AddEnrollment />,
+            },
+            {
+                path: "view/:institueId",
+                element: <View />,
                 children: [
                     {
-                        path: "list",
-                        element: <EnrollmentList />,
-                    },
-                    {
-                        path: "add",
-                        element: <AddEnrollment />,
-                    },
-                    {
-                        path: "edit",
-                        element: <AddEnrollment />,
-                    },
-                    {
-                        path: "view/:institueId",
-                        element: <View />,
+                        path: "openings",
+                        element: <Outlet />,
                         children: [
                             {
-                                path: "openings",
-                                element: <Outlet />,
-                                children: [
-                                    {
-                                        path: "view",
-                                        element: <EnrollmentOpeningsList />,
-                                    },
-                                    {
-                                        path: "list",
-                                        element: <EnrollmentOpeningsList />,
-                                    },
-                                    {
-                                        path: "add",
-                                        element: <AddEnrollmentOpenings />,
-                                    },
-                                    {
-                                        path: "edit",
-                                        element: <AddEnrollmentOpenings />,
-                                    },
-                                ],
+                                path: "view",
+                                element: <EnrollmentOpeningsList />,
+                            },
+                            {
+                                path: "list",
+                                element: <EnrollmentOpeningsList />,
+                            },
+                            {
+                                path: "add",
+                                element: <AddEnrollmentOpenings />,
+                            },
+                            {
+                                path: "edit",
+                                element: <AddEnrollmentOpenings />,
                             },
                         ],
                     },
                 ],
             },
+        ],
+    },
+    {
+        path: "settings",
+        element: <SettingsLayout />,
+        children: [
             {
                 path: "visa-types",
                 element: <VisaType />,
