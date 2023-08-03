@@ -27,7 +27,7 @@ function AsyncSelect<T>(props: IProps<T>) {
     } = props;
     const [options, setOptions] = useState<IOption[] | []>([]);
     const { data, fetchDataById } = useFetch<T[]>(baseUrl, true);
-    const [selectedOption, setSelectedOption] = useState<IOption | undefined>();
+    const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
 
     useEffect(() => {
         fetchDataById(baseUrl);
@@ -59,7 +59,10 @@ function AsyncSelect<T>(props: IProps<T>) {
     }, [data]);
 
     const handleChange = (selectedOption: IOption | null) => {
-        if (selectedOption) {
+        if (selectedOption == null) {
+            setSelectedOption(null);
+            setSelectValue(undefined);
+        } else {
             setSelectedOption(selectedOption);
             const temp = data?.find(
                 (item: T) => item[dataId] === selectedOption.value
@@ -73,6 +76,7 @@ function AsyncSelect<T>(props: IProps<T>) {
     return (
         <Select
             isSearchable
+            isClearable
             options={options}
             value={selectedOption}
             onChange={handleChange}

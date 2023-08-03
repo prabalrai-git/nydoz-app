@@ -38,7 +38,10 @@ const CountryCode = (props: ICountryCodeProps) => {
     }, []);
 
     const handleChange = (selectedOption: ISelectProps | null) => {
-        if (selectedOption) {
+        console.log(selectedOption, "selectedOption");
+        if (selectedOption == null) {
+            setSelectValue(undefined);
+        } else {
             setSelectValue(selectedOption);
         }
     };
@@ -49,6 +52,7 @@ const CountryCode = (props: ICountryCodeProps) => {
             value={selectValue}
             placeholder={placeholder}
             onChange={handleChange}
+            isClearable
         />
     );
 };

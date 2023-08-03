@@ -22,14 +22,12 @@ import { Spinner } from "react-bootstrap";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import { XCircle } from "react-bootstrap-icons";
-import {
-    IVisaTypeResponse,
-    IAgentResponse,
-} from "../../../../types/payload.type";
+import { IVisaTypeResponse } from "../../../../types/payload.type";
 import AsyncSelect from "../../../shared/molecules/AsyncReactSelect";
 import {
     InformationChannelResponse,
     IVisitingPurposeResponse,
+    IAgentResponse,
 } from "../../../../types/products.types";
 
 interface IFormData {
@@ -42,7 +40,6 @@ interface IFormData {
     email: string[];
     visiting_purpose: string;
     remarks: string | undefined;
-    information_channel: string;
     deal_amount: number | undefined;
     applied_position: string | undefined;
     expected_salary_pa: number | undefined;
@@ -148,12 +145,13 @@ const AddVisitor = () => {
         setSelectedVisitingCountry(visitingCountry);
         setSelectInformationChannel(dataDetails?.information_channel);
         setSelectCommonVisitingPurpose(dataDetails?.visiting_purpose);
-        setSelectedVisaType(dataDetails?.visa_type);
+        setSelectedVisaType(dataDetails?.visa_type_id);
 
         reset({
             ...dataDetails,
             registration_date: registrationDateObj.toDate(),
             expected_take_off_date: expectedTakeUpDateObj.toDate(),
+            visiting_purpose: dataDetails?.visiting_purpose?.description,
         });
     }, [location?.state?.data, reset]);
 

@@ -181,7 +181,7 @@ export interface IClientResponse {
     visiting_purpose: string;
     information_channel: InformationChannelResponse;
     going_to_foreign: boolean;
-    visa_type_id: IVisaTypeResponse | null;
+    visa_type_id: IVisaTypeResponse | undefined;
     visiting_country: string;
     visiting_country_state: string;
     deal_amount: number;
