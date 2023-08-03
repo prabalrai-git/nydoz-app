@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { visitorsSchema } from "../../../../validations/crm.validators";
+import {
+    visitorsNotGoingOutSchema,
+    visitorsGoingOutSchema,
+} from "../../../../validations/crm.validators";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CountryCode from "../../../shared/atoms/CountryCode";
@@ -17,9 +20,13 @@ import useMutation from "../../../../hooks/useMutation";
 import { Spinner } from "react-bootstrap";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
-import { XSquare } from "react-bootstrap-icons";
-import useFetch from "../../../../hooks/useFetch";
-import { IVisaTypeResponse } from "../../../../types/payload.type";
+import { XCircle } from "react-bootstrap-icons";
+import {
+    IVisaTypeResponse,
+    IAgentResponse,
+} from "../../../../types/payload.type";
+import AsyncSelect from "../../../shared/molecules/AsyncReactSelect";
+import { InformationChannelResponse } from "../../../../types/products.types";
 
 interface IFormData {
     registration_date: Date;
@@ -31,7 +38,6 @@ interface IFormData {
     email: string[];
     visiting_purpose: string;
     remarks: string | undefined;
-    going_to_foreign: boolean;
     information_channel: string;
     deal_amount: number | undefined;
     applied_position: string | undefined;
@@ -43,28 +49,29 @@ interface IFormData {
 const AddVisitor = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [visaTypeId, setvisaTypeId] = useState<string | undefined>();
+    const [goingForeign, setGoingForeign] = useState(false);
+
+    const [selectInformationChannel, setSelectInformationChannel] = useState<
+        InformationChannelResponse | undefined
+    >();
+
+    const [selectedVisaType, setSelectedVisaType] = useState<
+        IVisaTypeResponse | undefined
+    >();
+    const [selectedAgent, setSelectedAgent] = useState<
+        IAgentResponse | undefined
+    >();
     const [selectedCountry, setSelectedCountry] = useState<
         ISelectProps | undefined
     >(undefined);
     const [selectedVisitingCountry, setSelectedVisitingCountry] = useState<
         ISelectProps | undefined
     >(undefined);
-    const {
-        data: visaTypeArray,
-        isloading: isVisaTypeLoading,
-        fetchData,
-    } = useFetch<IVisaTypeResponse[]>(API_ROUTE.GET_VISA_TYPES, true);
+
     const { updateData, postData, isLoading, error, errList } = useMutation(
         API_ROUTE.CM_VISITORS,
         true
     );
-
-    useEffect(() => {
-        fetchData();
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const {
         register,
@@ -76,14 +83,15 @@ const AddVisitor = () => {
         formState: { errors },
     } = useForm<IFormData>({
         defaultValues: {
-            registration_date: new Date(),
             first_name: "",
             last_name: "",
             state: "",
             phone_nos: [" "],
             email: [" "],
         },
-        resolver: yupResolver(visitorsSchema),
+        resolver: yupResolver(
+            goingForeign ? visitorsGoingOutSchema : visitorsNotGoingOutSchema
+        ),
     });
 
     const { fields, append, remove } = useFieldArray({
@@ -91,11 +99,10 @@ const AddVisitor = () => {
         name: "phone_nos" as never,
     });
 
-    useEffect(() => {
-        console.log("fields", fields);
-    }, [fields]);
+    // useEffect(() => {
+    //     console.log("fields", fields);
+    // }, [fields]);
 
-    console.log("tt", watch("phone_nos"));
     const {
         fields: emailFields,
         append: appendEmail,
@@ -138,8 +145,10 @@ const AddVisitor = () => {
             const tempPostData: IVisitorPayload = {
                 ...data,
                 country: selectedCountry?.value ?? "",
-                visiting_country_state: selectedVisitingCountry?.value ?? "",
-                visa_type_id: visaTypeId ?? "",
+                visiting_country: selectedVisitingCountry?.value ?? "",
+                visa_type_id: selectedVisaType?.id,
+                information_channel: selectInformationChannel?.id ?? "",
+                going_to_foreign: goingForeign,
             };
 
             response = await updateData(
@@ -154,8 +163,10 @@ const AddVisitor = () => {
             const tempPostData: IVisitorPayload = {
                 ...data,
                 country: selectedCountry?.value ?? "",
-                visiting_country_state: selectedVisitingCountry?.value ?? "",
-                visa_type_id: visaTypeId ?? "",
+                visa_type_id: selectedVisaType?.id ?? "",
+                information_channel: selectInformationChannel?.id ?? "",
+                going_to_foreign: goingForeign,
+                visiting_country: selectedVisitingCountry?.value ?? "",
             };
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
@@ -195,45 +206,78 @@ const AddVisitor = () => {
                                     </h2>
                                 </div>
                                 <div className='row'>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6 d-flex align-items-center '>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6 d-flex align-items-center '>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container '>
                                             <input
                                                 value='true'
-                                                {...register(
-                                                    "going_to_foreign",
-                                                    {
-                                                        setValueAs: (value) =>
-                                                            value == true,
-                                                    }
-                                                )}
+                                                onChange={(e) => {
+                                                    setGoingForeign(
+                                                        e.target.checked
+                                                    );
+                                                }}
                                                 type='checkbox'
                                                 className='form-check-input'
                                             />
-                                            <label className='required form-label  ms-6'>
+                                            <label className=' form-label  ms-6'>
                                                 Going for Foreign
                                             </label>
+                                        </div>
+                                    </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Registration Date:
+                                            </label>
+                                            <input
+                                                type='date'
+                                                className='form-control'
+                                                placeholder='Enter your first name.'
+                                                {...register(
+                                                    "registration_date"
+                                                )}
+                                            />
                                             <div className='fv-plugins-message-container invalid-feedback'>
-                                                {
-                                                    errors.going_to_foreign
-                                                        ?.message
-                                                }
+                                                {errors.first_name?.message}
                                             </div>
                                         </div>
                                     </div>
                                     <div className='col-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
-                                                Registration:
+                                                Information Channel:
                                             </label>
-                                            <input
-                                                type='date'
-                                                className='form-control'
-                                                placeholder='Enter your first name.'
-                                                {...register("first_name")}
+                                            <AsyncSelect
+                                                placeholder='Search..'
+                                                baseUrl={
+                                                    API_ROUTE.CM_INFORMATION_CHANNEL
+                                                }
+                                                setSelectValue={
+                                                    setSelectInformationChannel
+                                                }
+                                                selectValue={
+                                                    selectInformationChannel
+                                                }
+                                                dataId='id'
+                                                showDataLabel='description'
                                             />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {errors.first_name?.message}
-                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='form-label'>
+                                                Agent:
+                                            </label>
+                                            <AsyncSelect
+                                                placeholder='Search..'
+                                                baseUrl={API_ROUTE.CM_AGENTS}
+                                                setSelectValue={
+                                                    setSelectedAgent
+                                                }
+                                                selectValue={selectedAgent}
+                                                dataId='id'
+                                                showDataLabel='first_name'
+                                            />
                                         </div>
                                     </div>
 
@@ -290,7 +334,7 @@ const AddVisitor = () => {
                                                             )}
                                                         />
                                                         <div className='flex-center cursor-pointer'>
-                                                            <XSquare
+                                                            <XCircle
                                                                 onClick={() =>
                                                                     remove(
                                                                         index
@@ -320,9 +364,9 @@ const AddVisitor = () => {
                                             <div className='d-flex justify-content-end'>
                                                 <button
                                                     type='button'
-                                                    className='btn btn-info btn-sm'
+                                                    className='btn btn-secondary btn-sm'
                                                     onClick={() => append("")}>
-                                                    Add Phone Number
+                                                    Add More Phone Number
                                                 </button>
                                             </div>
                                         </div>
@@ -348,7 +392,7 @@ const AddVisitor = () => {
                                                             )}
                                                         />
                                                         <div className='flex-center cursor-pointer'>
-                                                            <XSquare
+                                                            <XCircle
                                                                 onClick={() =>
                                                                     removeEmail(
                                                                         index
@@ -377,11 +421,11 @@ const AddVisitor = () => {
                                             <div className='d-flex justify-content-end'>
                                                 <button
                                                     type='button'
-                                                    className='btn btn-info btn-sm'
+                                                    className='btn btn-secondary btn-sm'
                                                     onClick={() =>
                                                         appendEmail("")
                                                     }>
-                                                    Add Email
+                                                    Add More Email
                                                 </button>
                                             </div>
                                         </div>
@@ -451,212 +495,206 @@ const AddVisitor = () => {
                             {/* Address Details Ends */}
                             <hr className='bg-gray-100 mb-6 ' />
                             {/* Visiting Details */}
-                            <div className='col-12 mb-6'>
-                                <div>
-                                    <h2
-                                        className='fw-bold mb-5'
-                                        id='custom-form-control'>
-                                        Visiting Details
-                                    </h2>
-                                </div>
-                                <div className='row'>
-                                    <div className='col-6  gap-5 gap-md-7   mb-6'>
-                                        <div>
-                                            <label className='required form-label'>
-                                                Country
-                                            </label>
-                                            <CountryCode
-                                                placeholder='Select Visiting Country'
-                                                forCountry={true}
-                                                selectValue={
-                                                    selectedVisitingCountry
-                                                }
-                                                setSelectValue={
-                                                    setSelectedVisitingCountry
-                                                }
-                                            />
-                                        </div>
+                            {goingForeign && (
+                                <div className='col-12 mb-6'>
+                                    <div>
+                                        <h2
+                                            className='fw-bold mb-5'
+                                            id='custom-form-control'>
+                                            Visiting Details
+                                        </h2>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Visa Type
-                                            </label>
-                                            {isVisaTypeLoading ? (
-                                                <div>loading</div>
-                                            ) : (
-                                                <select
-                                                    onChange={(e) =>
-                                                        setvisaTypeId(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    className='form-select'
-                                                    placeholder='Choose Visa Type'>
-                                                    {visaTypeArray &&
-                                                        visaTypeArray?.map(
-                                                            (
-                                                                item: IVisaTypeResponse
-                                                            ) => (
-                                                                <option
-                                                                    key={
-                                                                        item.id
-                                                                    }
-                                                                    value={
-                                                                        item.id
-                                                                    }>
-                                                                    {item.name}
-                                                                </option>
-                                                            )
-                                                        )}
-                                                </select>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Information Channel
-                                            </label>
-                                            <input
-                                                className='form-control'
-                                                placeholder='How do you know about our office ?'
-                                                {...register(
-                                                    "information_channel"
-                                                )}
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {
-                                                    errors.information_channel
-                                                        ?.message
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Deal Amount
-                                            </label>
-                                            <input
-                                                className='form-control'
-                                                type='number'
-                                                placeholder='Enter deal amount'
-                                                {...register("deal_amount", {
-                                                    valueAsNumber: true,
-                                                })}
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {errors.deal_amount?.message}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='col-12 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Visiting Purpose
-                                            </label>
-                                            <input
-                                                className='form-control'
-                                                placeholder='Enter your visiting purpose.'
-                                                {...register(
-                                                    "visiting_purpose"
-                                                )}
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {
-                                                    errors.visiting_purpose
-                                                        ?.message
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Applied Position
-                                            </label>
-                                            <input
-                                                className='form-control'
-                                                placeholder='Enter your visiting purpose.'
-                                                {...register(
-                                                    "applied_position"
-                                                )}
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {
-                                                    errors.applied_position
-                                                        ?.message
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Expected Salary
-                                            </label>
-                                            <input
-                                                type='number'
-                                                className='form-control'
-                                                placeholder='Enter your visiting purpose.'
-                                                {...register(
-                                                    "expected_salary_pa",
+                                    <div className='row'>
+                                        <div className='col-12 gap-5 gap-md-7 mb-6'>
+                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                                <label className='required form-label'>
+                                                    Visiting Purpose
+                                                </label>
+                                                <input
+                                                    className='form-control'
+                                                    placeholder='Enter your visiting purpose.'
+                                                    {...register(
+                                                        "visiting_purpose"
+                                                    )}
+                                                />
+                                                <div className='fv-plugins-message-container invalid-feedback'>
                                                     {
-                                                        valueAsNumber: true,
+                                                        errors.visiting_purpose
+                                                            ?.message
                                                     }
-                                                )}
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {
-                                                    errors.expected_salary_pa
-                                                        ?.message
-                                                }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Expected Take Off Date
-                                            </label>
-                                            <input
-                                                className='form-control'
-                                                type='date'
-                                                placeholder='Enter your visiting purpose.'
-                                                {...register(
-                                                    "expected_take_off_date"
-                                                )}
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {
-                                                    errors
-                                                        .expected_take_off_date
-                                                        ?.message
-                                                }
+                                        <div className='col-6  gap-5 gap-md-7   mb-6'>
+                                            <div>
+                                                <label className='required form-label'>
+                                                    Country
+                                                </label>
+                                                <CountryCode
+                                                    placeholder='Select Visiting Country'
+                                                    forCountry={true}
+                                                    selectValue={
+                                                        selectedVisitingCountry
+                                                    }
+                                                    setSelectValue={
+                                                        setSelectedVisitingCountry
+                                                    }
+                                                />
                                             </div>
                                         </div>
-                                    </div>
+                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                                <label className='required form-label'>
+                                                    Visa Type
+                                                </label>
+                                                <AsyncSelect
+                                                    placeholder='Search..'
+                                                    baseUrl={
+                                                        API_ROUTE.GET_VISA_TYPES
+                                                    }
+                                                    setSelectValue={
+                                                        setSelectedVisaType
+                                                    }
+                                                    selectValue={
+                                                        selectedVisaType
+                                                    }
+                                                    dataId='id'
+                                                    showDataLabel='description'
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                                <label className='form-label'>
+                                                    Visiting State
+                                                </label>
+                                                <input
+                                                    className='form-control'
+                                                    placeholder='How do you know about our office ?'
+                                                    {...register(
+                                                        "visiting_country_state"
+                                                    )}
+                                                />
+                                                <div className='fv-plugins-message-container invalid-feedback'>
+                                                    {
+                                                        errors
+                                                            .visiting_country_state
+                                                            ?.message
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                                <label className='required form-label'>
+                                                    Deal Amount
+                                                </label>
+                                                <input
+                                                    className='form-control'
+                                                    type='number'
+                                                    placeholder='Enter deal amount'
+                                                    {...register(
+                                                        "deal_amount",
+                                                        {
+                                                            valueAsNumber: true,
+                                                        }
+                                                    )}
+                                                />
+                                                <div className='fv-plugins-message-container invalid-feedback'>
+                                                    {
+                                                        errors.deal_amount
+                                                            ?.message
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <div className='col-6 gap-5 gap-md-7  mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className=' form-label'>
-                                                Remarks
-                                            </label>
-                                            <textarea
-                                                className='form-control'
-                                                {...register("remarks")}
-                                                placeholder='description'
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {errors.remarks?.message}
+                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                                <label className='form-label'>
+                                                    Applied Position
+                                                </label>
+                                                <input
+                                                    className='form-control'
+                                                    placeholder='Enter your visiting purpose.'
+                                                    {...register(
+                                                        "applied_position"
+                                                    )}
+                                                />
+                                                <div className='fv-plugins-message-container invalid-feedback'>
+                                                    {
+                                                        errors.applied_position
+                                                            ?.message
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                                <label className='required form-label'>
+                                                    Expected Salary
+                                                </label>
+                                                <input
+                                                    type='number'
+                                                    className='form-control'
+                                                    placeholder='Enter your visiting purpose.'
+                                                    {...register(
+                                                        "expected_salary_pa",
+                                                        {
+                                                            valueAsNumber: true,
+                                                        }
+                                                    )}
+                                                />
+                                                <div className='fv-plugins-message-container invalid-feedback'>
+                                                    {
+                                                        errors
+                                                            .expected_salary_pa
+                                                            ?.message
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                                <label className='required form-label'>
+                                                    Expected Take Off Date
+                                                </label>
+                                                <input
+                                                    className='form-control'
+                                                    type='date'
+                                                    placeholder='Enter your visiting purpose.'
+                                                    {...register(
+                                                        "expected_take_off_date"
+                                                    )}
+                                                />
+                                                <div className='fv-plugins-message-container invalid-feedback'>
+                                                    {
+                                                        errors
+                                                            .expected_take_off_date
+                                                            ?.message
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className='col-6 gap-5 gap-md-7  mb-6'>
+                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                                <label className=' form-label'>
+                                                    Remarks
+                                                </label>
+                                                <textarea
+                                                    className='form-control'
+                                                    {...register("remarks")}
+                                                    placeholder='description'
+                                                />
+                                                <div className='fv-plugins-message-container invalid-feedback'>
+                                                    {errors.remarks?.message}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                             {/* Visiting Details Ends */}
 
                             <div className='col-12 d-flex justify-content-end'>

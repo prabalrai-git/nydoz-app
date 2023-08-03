@@ -41,14 +41,14 @@ export interface IEnrollmentResponse extends IEnrollmentPayload {
 // }
 
 export interface IVisitorPayload {
-    registration_date: string;
+    registration_date: Date;
+    information_channel: string;
     first_name: string;
     last_name: string;
     country: string;
     state: string;
-    information_channel: string;
     visiting_purpose: string;
-    visa_type_id: string;
+    visa_type_id: string | undefined;
     street_address: string;
     phone_nos: string[];
     remarks: string | undefined;
@@ -58,7 +58,8 @@ export interface IVisitorPayload {
     deal_amount: number | undefined;
     applied_position: string | undefined;
     expected_salary_pa: number | undefined;
-    expected_take_off_date: string | undefined;
+    expected_take_off_date: Date | undefined;
+    visiting_country: string;
 }
 
 export interface IVisitorResponse extends IVisitorPayload {
@@ -81,25 +82,6 @@ export interface IEnrollmentOpeningsResponse
     extends IEnrollmentOpeningsPayload {
     id: string;
 }
-
-// {
-//   "institute_id":"99c6ac4b-feef-4c9e-9fe1-3ec2362a5fc3",
-//   "enroll_start_date": "10/10/2031",
-//   "enroll_end_date": "10/10/2031",
-//   "position": "Msc IT",
-//   "total_opening": 6,
-//   "visa_type_id": 0,
-//   "currency": "string",
-//   "offered_salary": 0,
-//   "description": "string"
-// }
-
-// {
-//       "id": "99b0de9b-6d8b-4bc1-aaa1-df32b205658c",
-//       "name": "Myra Norman",
-//       "description": "Nisi ipsum dolor fu",
-//       "company_id": 0
-//     },
 
 export interface InformationChannelPayload {
     description: string;

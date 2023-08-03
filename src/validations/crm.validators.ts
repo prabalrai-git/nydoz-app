@@ -34,7 +34,35 @@ export const enrollmentSchema = yup.object().shape({
 //   "expected_take_off_date": "
 // }
 
-export const visitorsSchema = yup.object().shape({
+export const visitorsNotGoingOutSchema = yup.object().shape({
+    registration_date: yup.date().required(),
+    first_name: yup.string().required("First Name is required."),
+    last_name: yup.string().required("Last Name is required."),
+    state: yup.string().required("State is required."),
+    // country-from-component
+    street_address: yup.string().required("Address is required."),
+    phone_nos: yup
+        .array()
+        .of(
+            yup
+                .string()
+                .required(
+                    "Atleast one phone number /mobile number is required."
+                )
+        ),
+    visiting_purpose: yup.string().required("Visiting purpose is required."),
+    remarks: yup.string(),
+    // information_channel-from-component
+    email: yup
+        .array()
+        .of(
+            yup
+                .string()
+                .email("Email must be a valid email.")
+                .required("Atleast one email address is required.")
+        ),
+});
+export const visitorsGoingOutSchema = yup.object().shape({
     registration_date: yup.date().required(),
     first_name: yup.string().required("First Name is required."),
     last_name: yup.string().required("Last Name is required."),
@@ -62,7 +90,6 @@ export const visitorsSchema = yup.object().shape({
                 .required("Atleast one email address is required.")
         ),
 
-    going_to_foreign: yup.boolean(),
     // visiting-purpose-from-component
     deal_amount: yup.number().transform((value, originalValue) => {
         if (isNaN(originalValue) || originalValue === "") {

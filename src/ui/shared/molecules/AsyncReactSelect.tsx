@@ -16,7 +16,7 @@ interface IOption {
     label: string;
 }
 
-function SimpleSelect<T>(props: IProps<T>) {
+function AsyncSelect<T>(props: IProps<T>) {
     const {
         baseUrl,
         selectValue,
@@ -81,4 +81,4 @@ function SimpleSelect<T>(props: IProps<T>) {
     );
 }
 
-export default SimpleSelect;
+export default AsyncSelect;
