@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Images from "../../../../constants/Images";
 import UploadFile from "../../../shared/components/Upload";
-import Heading from "../../../shared/molecules/Heading";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,8 +11,10 @@ import useMutation from "../../../../hooks/useMutation";
 import { toast } from "react-toastify";
 import CountryCode from "../../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../../types/react-select.type";
-import { IAgentPayload, IAgentResponse } from "../../../../types/payload.type";
-import Breadcrumb from "../../../shared/molecules/Breadcrumb";
+import {
+    IAgentPayload,
+    IAgentResponse,
+} from "../../../../types/products.types";
 import { getSelectPropsFromCountry } from "../../../../functions/country";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import useValidationError from "../../../../hooks/useValidationError";

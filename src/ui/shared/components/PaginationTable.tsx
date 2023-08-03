@@ -32,17 +32,18 @@ function PaginatedTanStackTable<T>(props: IPaginatedTableProps<T>) {
         return Math.ceil(pagination.total / pagination.per_page);
     }, [pagination.total, pagination.per_page]);
 
-    const handlePrevious = () => {
-        if (paginationState.current_page === 1) return;
+    const handlePrevious = (currentPage: number) => {
+        if (currentPage === 1) return;
+
         setPaginationState((prevState) => ({
             ...prevState,
-            currentPage: prevState.current_page - 1,
+            currentPage: currentPage - 1,
         }));
-        const newUrl = `${baseUrl}?page=${
-            paginationState.current_page - 1
-        }&page_size=${paginationState.per_page}`;
+        const newUrl = `${baseUrl}?page=${currentPage - 1}&page_size=${
+            paginationState.per_page
+        }`;
         const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set("page", (paginationState.current_page - 1).toString());
+        searchParams.set("page", (currentPage - 1).toString());
         searchParams.set("page_size", paginationState.per_page.toString());
         window.history.replaceState(
             null,
@@ -53,18 +54,18 @@ function PaginatedTanStackTable<T>(props: IPaginatedTableProps<T>) {
         setFetchAgain(true);
     };
 
-    const handleNext = () => {
-        if (paginationState.current_page === pagination?.last_page) return;
+    const handleNext = (currentPage: number) => {
+        if (currentPage === pagination?.last_page) return;
         setPaginationState((prevState) => ({
             ...prevState,
-            currentPage: prevState.current_page + 1,
+            currentPage: currentPage + 1,
         }));
-        const newUrl = `${baseUrl}?page=${
-            paginationState.current_page + 1
-        }&page_size=${paginationState.per_page}`;
+        const newUrl = `${baseUrl}?page=${currentPage + 1}&page_size=${
+            paginationState.per_page
+        }`;
 
         const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set("page", (paginationState.current_page + 1).toString());
+        searchParams.set("page", (currentPage + 1).toString());
         searchParams.set("page_size", paginationState.per_page.toString());
         window.history.replaceState(
             null,
@@ -121,7 +122,9 @@ function PaginatedTanStackTable<T>(props: IPaginatedTableProps<T>) {
                                         : "page-item previous"
                                 }>
                                 <button
-                                    onClick={handlePrevious}
+                                    onClick={() =>
+                                        handlePrevious(pagination.current_page)
+                                    }
                                     className='page-link'>
                                     <i className='previous'></i>
                                     <span className='mx-2'>prev</span>
@@ -154,7 +157,9 @@ function PaginatedTanStackTable<T>(props: IPaginatedTableProps<T>) {
                                         : "page-item next"
                                 }>
                                 <button
-                                    onClick={handleNext}
+                                    onClick={() =>
+                                        handleNext(pagination.current_page)
+                                    }
                                     className='page-link'>
                                     <span className='mx-2'>next</span>
                                     <i className='next'></i>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
-import { IAgentResponse } from "../../../../types/payload.type";
+import { IClientResponse } from "../../../../types/products.types";
 import BASE_URL from "../../../../constants/AppSetting";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -13,13 +13,12 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { Flag, People } from "react-bootstrap-icons";
 import PaginationTable from "../../../shared/components/PaginationTable";
-import NotFound from "../../../shared/molecules/NotFound";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 
-const DocumentList = () => {
+const ClientList = () => {
     const navigate = useNavigate();
     const { id: companyId } = useParams<string>();
-    const baseUrl = `${API_ROUTE.CM_VISITORS}`;
+    const baseUrl = `${API_ROUTE.CM_CLIENTS}`;
     const searchParams = new URLSearchParams(window.location.search);
     const pageFromUrl = searchParams.get("page");
     const pageSizeFromUrl = searchParams.get("page_size");
@@ -32,14 +31,14 @@ const DocumentList = () => {
     const [show, setShow] = useState<boolean>(false);
     const [fetchAgain, setFetchAgain] = useState<boolean>(false);
     const [selectedData, setSelectedData] = useState<
-        IAgentResponse | undefined
+        IClientResponse | undefined
     >();
 
     const { data, fetchDataById, pagination, isloading } = useFetch<
-        IAgentResponse[]
+        IClientResponse[]
     >(baseUrl, true);
 
-    const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
+    const { deleteData } = useMutation(API_ROUTE.CM_AGENTS, true);
 
     useEffect(() => {
         fetchDataById(fetchUrl);
@@ -59,13 +58,13 @@ const DocumentList = () => {
     // function for pagination
 
     // functions for edit data
-    const handleEditData = (item: IAgentResponse) => {
+    const handleEditData = (item: IClientResponse) => {
         navigate("edit", {
             state: { data: item },
         });
     };
 
-    const tableColumns: ColumnDef<IAgentResponse>[] = [
+    const tableColumns: ColumnDef<IClientResponse>[] = [
         {
             accessorKey: "sn",
             header: () => <div>S.N</div>,
@@ -177,7 +176,7 @@ const DocumentList = () => {
 
     // functions for delete modal
 
-    const handleDeleteModal = (item: IAgentResponse) => {
+    const handleDeleteModal = (item: IClientResponse) => {
         setSelectedData(item);
         handleShow();
         console.log(item);
@@ -210,17 +209,17 @@ const DocumentList = () => {
     return (
         <div className='my-6 px-3'>
             <CompanyBreadcrumb
-                title='Visitors Details'
+                title='Client Details'
                 btnText='Back'
                 showBreadcrumb={true}
             />
             <section>
                 <div className='card'>
                     <div className='card-header'>
-                        <h3 className='card-title'>Visitor's List</h3>
+                        <h3 className='card-title'>Client's List</h3>
                         <div className='card-toolbar'>
                             <Link to={`add`} className='btn btn-success btn-sm'>
-                                <span className='mx-2'>Add Visitor</span>
+                                <span className='mx-2'>Add Client</span>
                             </Link>
                         </div>
                     </div>
@@ -234,11 +233,6 @@ const DocumentList = () => {
                             baseUrl={baseUrl}
                             setFetchUrl={setFetchUrl}
                         />
-                    )}
-                    {!data?.length && !isloading && (
-                        <div className='bg-white flex-center h-75vh'>
-                            <NotFound title='Someting Went Wrong. Agent Not Found. ' />
-                        </div>
                     )}
                 </div>
             </section>
@@ -258,4 +252,4 @@ const DocumentList = () => {
     );
 };
 
-export default DocumentList;
+export default ClientList;

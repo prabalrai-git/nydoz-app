@@ -5,6 +5,8 @@ import AddEnrollment from "../ui/features/crm/enrollments/Add";
 import VisitorList from "../ui/features/crm/visitors/List";
 import AddVisitors from "../ui/features/crm/visitors/Add";
 import View from "../ui/features/crm/enrollments/View";
+import AddClient from "../ui/features/crm/clients/AddClient";
+import ClientList from "../ui/features/crm/clients/ClientList";
 
 // Agents Routes
 const AgentLayout = loadable(
@@ -52,6 +54,20 @@ const CrmRoutes: RouteObject[] = [
             {
                 path: "add",
                 element: <AddVisitors />,
+            },
+        ],
+    },
+    {
+        path: "clients",
+        element: <Outlet />,
+        children: [
+            {
+                path: "",
+                element: <ClientList />,
+            },
+            {
+                path: "add",
+                element: <AddClient />,
             },
         ],
     },

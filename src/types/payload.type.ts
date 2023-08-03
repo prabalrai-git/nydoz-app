@@ -132,23 +132,6 @@ export interface IUserCompanyProductsResponse {
 
 // Agent
 
-export interface IAgentPayload {
-    first_name: string;
-    last_name: string;
-    email: string;
-    mobile: string;
-    country: string;
-    state: string;
-    city: string;
-    street_address: string;
-    profile_picture: string;
-    postal_code: string;
-}
-
-export interface IAgentResponse extends IAgentPayload {
-    id: string;
-}
-
 // SOCIAL_LINKS
 export interface ISocialLinksPayload {
     title: string;
@@ -165,84 +148,4 @@ export interface ICurrencysResponse {
     name: string;
     code: string;
     symbol: string;
-}
-
-// VISITOR
-// {
-//   "registration_date": "2023-08-03",
-//   "first_name": "string",
-//   "last_name": "string",
-//   "country": "string",
-//   "state": "string",
-//   "street_address": "string",
-//   "agent_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "phone_nos": [
-//     "string"
-//   ],
-//   "visiting_purpose": "string",
-//   "remarks": "string",
-//   "information_channel": "string",
-//   "email": [
-//     "string"
-//   ],
-//   "going_to_foreign": true,
-//   "visa_type_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "visiting_country": "string",
-//   "visiting_country_state": "string",
-//   "deal_amount": 0,
-//   "applied_position": "string",
-//   "expected_salary_pa": 0,
-//   "expected_take_off_date": "2023-08-03"
-// }
-
-// "errors": {
-//     "registration_date": [
-//       "The registration date field is required."
-//     ],
-//     "first_name": [
-//       "The first name field is required."
-//     ],
-//     "last_name": [
-//       "The last name field is required."
-//     ],
-//     "country": [
-//       "The country field is required."
-//     ],
-//     "state": [
-//       "The state field is required."
-//     ],
-//     "visiting_purpose": [
-//       "The visiting purpose field is required."
-//     ],
-//     "information_channel": [
-//       "The information channel field is required."
-//     ],
-//     "going_to_foreign": [
-//       "The going to foreign field is required."
-//     ]
-//   }
-export interface IVisitorPayload {
-    registration_date: Date;
-    first_name: string;
-    last_name: string;
-    email: string[];
-    mobile: string;
-    country: string;
-    state: string;
-    street_address: string | null;
-    profile_picture: string | null;
-    postal_code: string | null;
-    agent_id: string | null;
-    phone_nos: string[] | null;
-    visiting_purpose: string;
-    remarks: string;
-    information_channel: string;
-    going_to_foreign: boolean;
-    visa_type_id: string;
-    visiting_country: string;
-    visiting_country_state: string;
-    deal_amount: number;
-    applied_position: string;
-    expected_salary_pa: number;
-    expected_take_off_date: Date;
 }
