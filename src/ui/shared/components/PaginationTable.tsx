@@ -7,10 +7,11 @@ import {
 } from "@tanstack/react-table";
 import { IPaginatedTableProps, IPagination } from "../../../types/axios.type";
 import { Spinner } from "react-bootstrap";
+import NotFound from "../molecules/NotFound";
 
 // props required
 
-function TanStackTable<T>(props: IPaginatedTableProps<T>) {
+function PaginatedTanStackTable<T>(props: IPaginatedTableProps<T>) {
     const {
         columns,
         data,
@@ -26,7 +27,8 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
         useState<IPagination>(pagination);
 
     const noOfPages = useMemo(() => {
-        if (pagination.total === 0) return 0;
+        if (pagination?.total === undefined || pagination?.total === 0)
+            return 0;
         return Math.ceil(pagination.total / pagination.per_page);
     }, [pagination.total, pagination.per_page]);
 
@@ -223,8 +225,11 @@ function TanStackTable<T>(props: IPaginatedTableProps<T>) {
                     </table>
                 </div>
             )}
+            {data?.length === 0 && isLoading === false && (
+                <NotFound title='No data found' />
+            )}
         </div>
     );
 }
 
-export default TanStackTable;
+export default PaginatedTanStackTable;

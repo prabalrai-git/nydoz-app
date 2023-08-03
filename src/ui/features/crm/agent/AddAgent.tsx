@@ -113,7 +113,7 @@ const AddCompany = () => {
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
                 toast.success("Agent Added Successfully");
-                navigate("../list");
+                navigate(-1);
             }
         }
     });

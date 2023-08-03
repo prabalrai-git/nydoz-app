@@ -1,43 +1,40 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
-import { IAgentResponse } from "../../../../types/payload.type";
-import BASE_URL from "../../../../constants/AppSetting";
+import { InformationChannelResponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { useNavigate, useParams } from "react-router-dom";
 import useMutation from "../../../../hooks/useMutation";
 import Modal2 from "../../../shared/components/Modal2";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import { Flag, People } from "react-bootstrap-icons";
+import AddVisaType from "./AddInformationChannel";
+import useAuthContext from "../../../../context/auth/useAuthContext";
 import PaginationTable from "../../../shared/components/PaginationTable";
-import NotFound from "../../../shared/molecules/NotFound";
-import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 
-const DocumentList = () => {
-    const navigate = useNavigate();
-    const { id: companyId } = useParams<string>();
-    const baseUrl = `${API_ROUTE.GET_CLIENT_MANAGEMENT_AGENTS}`;
+const VisaTypeList = () => {
+    const { companyInfo } = useAuthContext();
+    const companyId = companyInfo?.id;
+
+    const [selectedData, setSelectedData] = useState<
+        InformationChannelResponse | undefined
+    >();
+    const [show, setShow] = useState<boolean>(false);
+    const [openAddDocument, setOpenAddDocument] = useState(false);
+    const [fetchAgain, setFetchAgain] = useState<boolean>(false);
+
+    const basUrl = API_ROUTE.CM_INFORMATION_CHANNEL;
     const searchParams = new URLSearchParams(window.location.search);
     const pageFromUrl = searchParams.get("page");
     const pageSizeFromUrl = searchParams.get("page_size");
     const page = pageFromUrl ? parseInt(pageFromUrl) : 1;
     const pageSize = pageSizeFromUrl ? parseInt(pageSizeFromUrl) : 15;
-
     const [fetchUrl, setFetchUrl] = useState(
-        `${baseUrl}?page=${page}&page_size=${pageSize}`
+        `${basUrl}?page=${page}&page_size=${pageSize}`
     );
-    const [show, setShow] = useState<boolean>(false);
-    const [fetchAgain, setFetchAgain] = useState<boolean>(false);
-    const [selectedData, setSelectedData] = useState<
-        IAgentResponse | undefined
-    >();
-
-    const { data, fetchDataById, pagination, isloading } = useFetch<
-        IAgentResponse[]
-    >(baseUrl, true);
+    const { data, isloading, fetchDataById, pagination } = useFetch<
+        InformationChannelResponse[]
+    >(basUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -49,92 +46,43 @@ const DocumentList = () => {
 
     useEffect(() => {
         if (fetchAgain) {
-            console.log("fetch again");
             fetchDataById(fetchUrl);
             setFetchAgain(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchAgain]);
 
-    // function for pagination
-
-    // functions for edit data
-    const handleEditData = (item: IAgentResponse) => {
-        navigate("edit", {
-            state: { data: item },
-        });
+    const handleEditData = (item: InformationChannelResponse) => {
+        setSelectedData(item);
+        handleAddDocumentOpen();
     };
 
-    const tableColumns: ColumnDef<IAgentResponse>[] = [
+    const tableColumns: ColumnDef<InformationChannelResponse>[] = [
         {
             accessorKey: "sn",
             header: () => <div>S.N</div>,
             cell: (info) => info.row.index + 1,
         },
+
         {
-            accessorKey: "Name",
+            accessorKey: "description",
             header: () => (
                 <div>
-                    <People size={16} className='mx-2' />
-                    <span>Name</span>
+                    <span>Description</span>
                 </div>
             ),
             cell: (info) => {
-                const url = `${BASE_URL}${info?.row?.original?.profile_picture}`;
                 return (
-                    <div className='d-flex align-items-center'>
-                        <div className='symbol symbol-40px me-3'>
-                            <img src={url} className='' alt='profile picture' />
-                        </div>
-                        <div className='d-flex justify-content-start flex-column'>
-                            <a
-                                href='#'
-                                className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                                {info?.row?.original?.first_name}{" "}
-                                {info?.row?.original?.last_name}
-                            </a>
-                            <span className='text-muted fw-semibold d-block fs-7'>
-                                {info?.row?.original?.email}
-                            </span>
-                        </div>
+                    <div className='text-capitalize'>
+                        <p className='truncate'> {info.getValue<string>()}</p>
                     </div>
                 );
             },
         },
 
         {
-            accessorKey: "mobile",
-            header: () => (
-                <div>
-                    <i className='bi bi-telephone me-2 fs-7'></i>
-                    <span>Mobile Number</span>
-                </div>
-            ),
-            cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
-            },
-        },
-
-        {
-            accessorKey: "country",
-            header: () => (
-                <div>
-                    <Flag size={16} className='mx-2' />
-                    <span>Country</span>
-                </div>
-            ),
-            cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
-            },
-        },
-
-        {
             accessorKey: "action",
-            header: () => (
-                <div className='text-center'>
-                    <span>Actions</span>
-                </div>
-            ),
+            header: () => <div className='text-center'>Actions</div>,
             cell: (info) => (
                 <div className='text-center'>
                     <DropdownButton
@@ -142,12 +90,12 @@ const DocumentList = () => {
                         size='sm'
                         id='dropdown-basic-button'
                         title='Action'>
-                        <Dropdown.Item>
+                        {/* <Dropdown.Item>
                             <div className='menu-link'>
                                 <span className='mx-2'>View</span>
                                 <i className='bi bi-box-arrow-up-right text-primary '></i>
                             </div>
-                        </Dropdown.Item>
+                        </Dropdown.Item> */}
                         <Dropdown.Item>
                             <div
                                 onClick={() =>
@@ -175,9 +123,7 @@ const DocumentList = () => {
         },
     ];
 
-    // functions for delete modal
-
-    const handleDeleteModal = (item: IAgentResponse) => {
+    const handleDeleteModal = (item: InformationChannelResponse) => {
         setSelectedData(item);
         handleShow();
         console.log(item);
@@ -206,44 +152,45 @@ const DocumentList = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleAddDocumentClose = () => setOpenAddDocument(false);
+    const handleAddDocumentOpen = () => setOpenAddDocument(true);
+
+    const handleOpenNewModal = () => {
+        setSelectedData(undefined);
+        handleAddDocumentOpen();
+    };
 
     return (
-        <div className='my-6 px-3'>
-            <CompanyBreadcrumb
-                title='Agents'
-                btnText='Back'
-                showBreadcrumb={true}
-            />
+        <div className='mt-6'>
             <section>
                 <div className='card'>
                     <div className='card-header'>
-                        <h3 className='card-title'>Agent's List</h3>
+                        <h3 className='card-title'>Information Channel List</h3>
                         <div className='card-toolbar'>
-                            <Link to={`add`} className='btn btn-success btn-sm'>
-                                <span className='mx-2'>Add Agent</span>
-                            </Link>
+                            <button
+                                onClick={handleOpenNewModal}
+                                className='btn btn-success btn-sm'>
+                                <span className='mx-2'>
+                                    Add Information Channel
+                                </span>
+                            </button>
                         </div>
                     </div>
                     {data && (
                         <PaginationTable
                             pagination={pagination}
-                            setFetchAgain={setFetchAgain}
-                            columns={tableColumns as ColumnDef<unknown>[]}
+                            baseUrl={basUrl}
+                            columns={tableColumns}
                             data={data}
                             isLoading={isloading}
-                            baseUrl={baseUrl}
+                            setFetchAgain={setFetchAgain}
                             setFetchUrl={setFetchUrl}
                         />
-                    )}
-                    {!data?.length && !isloading && (
-                        <div className='bg-white flex-center h-75vh'>
-                            <NotFound title='Someting Went Wrong. Agent Not Found. ' />
-                        </div>
                     )}
                 </div>
             </section>
             <Modal2
-                title='Are you sure you want to delete this agent ?'
+                title='Are you sure you want to delete this vist type?'
                 showChildren={true}
                 cancelText='Cancel'
                 confirmText='Delete'
@@ -251,11 +198,19 @@ const DocumentList = () => {
                 handleConfirm={handleDeleteItem}
                 handleClose={handleClose}>
                 <div>
-                    <h3>{selectedData?.email}</h3>
+                    <div>{selectedData?.description}</div>
                 </div>
             </Modal2>
+            <AddVisaType
+                setFetchAgain={setFetchAgain}
+                companyId={companyId || ""}
+                handleClose={handleAddDocumentClose}
+                show={openAddDocument}
+                selectedData={selectedData}
+                setSelectedData={setSelectedData}
+            />
         </div>
     );
 };
 
-export default DocumentList;
+export default VisaTypeList;

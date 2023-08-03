@@ -69,11 +69,20 @@ const AddVisitor = () => {
     const {
         register,
         reset,
+        watch,
         control,
         setError,
         handleSubmit,
         formState: { errors },
     } = useForm<IFormData>({
+        defaultValues: {
+            registration_date: new Date(),
+            first_name: "",
+            last_name: "",
+            state: "",
+            phone_nos: [" "],
+            email: [" "],
+        },
         resolver: yupResolver(visitorsSchema),
     });
 
@@ -82,6 +91,11 @@ const AddVisitor = () => {
         name: "phone_nos" as never,
     });
 
+    useEffect(() => {
+        console.log("fields", fields);
+    }, [fields]);
+
+    console.log("tt", watch("phone_nos"));
     const {
         fields: emailFields,
         append: appendEmail,
@@ -260,6 +274,7 @@ const AddVisitor = () => {
                                             <label className='required form-label'>
                                                 Phone Number:
                                             </label>
+
                                             {fields.map((field, index) => (
                                                 <div
                                                     key={field.id}

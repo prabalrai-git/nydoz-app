@@ -13,16 +13,31 @@ import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
 import { Spinner } from "react-bootstrap";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
-import { IVisaTypeResponse } from "../../../../types/payload.type";
+import {
+    IVisaTypeResponse,
+    ICurrencysResponse,
+} from "../../../../types/payload.type";
 import SeverSelect from "../../../shared/components/ServerSelect";
+import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
+
+// {}        {
+//   "institute_id": 0,
+//   "enroll_start_date": "string",
+//   "enroll_end_date": "string",
+//   "position": "string",
+//   "total_opening": 0,
+//   "visa_type_id": 0,
+//   "currency": "string",
+//   "offered_salary": 0,
+//   "description": "string"
+// }
 
 interface IFormData {
-    enroll_start_date: Date | undefined;
-    enroll_end_date: Date | undefined;
+    enroll_start_date: Date;
+    enroll_end_date: Date;
     position: string;
     total_opening: number;
     offered_salary: number;
-    currency: string;
     description: string;
 }
 
@@ -34,9 +49,14 @@ const Add = () => {
         API_ROUTE.CM_ENROLLMENT,
         true
     );
-    const showDataLabel: keyof IVisaTypeResponse = "name";
+    const showDataLabel: keyof IVisaTypeResponse = "id";
+    const currencyCode: keyof ICurrencysResponse = "code";
+    const currencyCountry: keyof ICurrencysResponse = "name";
     const [selectedListItem, setselectedListItem] = useState<
         IVisaTypeResponse | undefined
+    >();
+    const [selectCurrencyValue, setSelectCurrencyValue] = useState<
+        ICurrencysResponse | undefined
     >();
 
     const [selectedItemText, setSelectedItemText] = useState<string>(
@@ -57,11 +77,11 @@ const Add = () => {
     useHandleShowError(error);
 
     const handleResetForm = useCallback(() => {
-        const companyDetails: IEnrollmentOpeningsResponse =
-            location?.state?.data;
+        const dataDetails: IEnrollmentOpeningsResponse = location?.state?.data;
         // console.log(companyDetails, "companyDetails");
 
-        const { _id, ...rest } = companyDetails;
+        const { _id, institute_id, currency, visa_type_id, ...rest } =
+            dataDetails;
         reset(rest);
     }, [location?.state?.data, reset]);
 
@@ -137,35 +157,6 @@ const Add = () => {
                         <div className='col-6 gap-5 gap-md-7  mb-6'>
                             <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                 <label className='required form-label'>
-                                    Select Visa Type
-                                </label>
-                                {/* <AsyncSelect
-                                        baseUrl={API_ROUTE.CM_AGENTS}
-                                        placeholder='Visa Type'
-                                        selectValue={selectedVisaType}
-                                        setSelectValue={setSelectedVisaType}
-                                        showData='name'
-                                    /> */}
-                                {/* <AsyncReactSelect
-                                        baseUrl={API_ROUTE.CM_AGENTS}
-                                        placeholder='Visa Type'
-                                        showData='name'
-                                    /> */}
-
-                                <SeverSelect
-                                    showDataLabel={showDataLabel}
-                                    selectedListItem={selectedListItem}
-                                    setselectedListItem={setselectedListItem}
-                                    selectedItemText={selectedItemText}
-                                    setSelectedItemText={setSelectedItemText}
-                                    placeholder='Search visa Type'
-                                    baseUrl={API_ROUTE.CM_AGENTS}
-                                />
-                            </div>
-                        </div>
-                        <div className='col-6 gap-5 gap-md-7  mb-6'>
-                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                <label className='required form-label'>
                                     Opening Start Date
                                 </label>
                                 <input
@@ -195,7 +186,53 @@ const Add = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className='col-6 gap-5 gap-md-7  mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className='required form-label'>
+                                    Select Visa Type
+                                </label>
+                                <SeverSelect
+                                    showDataLabel={showDataLabel}
+                                    selectedListItem={selectedListItem}
+                                    setselectedListItem={setselectedListItem}
+                                    selectedItemText={selectedItemText}
+                                    setSelectedItemText={setSelectedItemText}
+                                    placeholder='Search visa Type'
+                                    baseUrl={API_ROUTE.CM_AGENTS}
+                                />
+                            </div>
+                        </div>
 
+                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className='required form-label'>
+                                    Total Opening
+                                </label>
+                                <input
+                                    className='form-control'
+                                    placeholder='Enter the total opening'
+                                    {...register("total_opening")}
+                                />
+                                <div className='fv-plugins-message-container invalid-feedback'>
+                                    {errors.total_opening?.message}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className='required form-label'>
+                                    Currency
+                                </label>
+                                <AsyncReactSelect
+                                    baseUrl={API_ROUTE.GET_CURRENCY}
+                                    placeholder='Select Currency'
+                                    dataId={currencyCode as never}
+                                    showDataLabel={currencyCountry as never}
+                                    selectValue={selectCurrencyValue}
+                                    setSelectValue={setSelectCurrencyValue}
+                                />
+                            </div>
+                        </div>
                         <div className='col-12 gap-5 gap-md-7 mb-6'>
                             <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                 <label className='required form-label'>
@@ -203,7 +240,7 @@ const Add = () => {
                                 </label>
                                 <input
                                     className='form-control'
-                                    placeholder='College/University name'
+                                    placeholder='Enter the course name'
                                     {...register("position")}
                                 />
                                 <div className='fv-plugins-message-container invalid-feedback'>
@@ -211,6 +248,22 @@ const Add = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className='required form-label'>
+                                    Salary Offered
+                                </label>
+                                <input
+                                    className='form-control'
+                                    placeholder='Enter the offered salary'
+                                    {...register("offered_salary")}
+                                />
+                                <div className='fv-plugins-message-container invalid-feedback'>
+                                    {errors.offered_salary?.message}
+                                </div>
+                            </div>
+                        </div>
+
                         <div className='col-12 gap-5 gap-md-7  mb-6'>
                             <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                 <label className=' form-label'>

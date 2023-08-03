@@ -7,11 +7,39 @@ export const enrollmentSchema = yup.object().shape({
     description: yup.string(),
 });
 
+// {
+//   "registration_date": "04/03/2023",
+//   "first_name": "rahul",
+//   "last_name": "prasad",
+//   "country": "Nepal",
+//   "state": "hello",
+//   "street_address": "",
+//   "agent_id": ,
+//   "phone_nos": [
+
+//   ],
+//   "visiting_purpose":"dancing",
+//   "remarks": ,
+//   "information_channel": ,
+//   "email": [
+//     ""
+//   ],
+//   "going_to_foreign": true,
+//   "visa_type_id": "",
+//   "visiting_country": "",
+//   "visiting_country_state": "",
+//   "deal_amount": ,
+//   "applied_position": "",
+//   "expected_salary_pa": ,
+//   "expected_take_off_date": "
+// }
+
 export const visitorsSchema = yup.object().shape({
     registration_date: yup.date().required(),
     first_name: yup.string().required("First Name is required."),
     last_name: yup.string().required("Last Name is required."),
     state: yup.string().required("State is required."),
+    // country-from-component
     street_address: yup.string().required("Address is required."),
     phone_nos: yup
         .array()
@@ -24,6 +52,7 @@ export const visitorsSchema = yup.object().shape({
         ),
     visiting_purpose: yup.string().required("Visiting purpose is required."),
     remarks: yup.string(),
+    // information_channel-from-component
     email: yup
         .array()
         .of(
@@ -32,16 +61,16 @@ export const visitorsSchema = yup.object().shape({
                 .email("Email must be a valid email.")
                 .required("Atleast one email address is required.")
         ),
+
     going_to_foreign: yup.boolean(),
-    information_channel: yup
-        .string()
-        .required("Information Channel is required."),
+    // visiting-purpose-from-component
     deal_amount: yup.number().transform((value, originalValue) => {
         if (isNaN(originalValue) || originalValue === "") {
             return undefined;
         }
         return value;
     }),
+    visiting_country_state: yup.string(),
     applied_position: yup.string(),
     expected_salary_pa: yup.number().transform((value, originalValue) => {
         if (isNaN(originalValue) || originalValue === "") {
@@ -71,7 +100,40 @@ export const enrollmentOpeningsSchema = yup.object().shape({
     enroll_end_date: yup.date().required(),
     position: yup.string().required(),
     total_opening: yup.number(),
-    currency: yup.string(),
     offered_salary: yup.number(),
     description: yup.string(),
+});
+
+//  "errors": {
+//     "institute_id": [
+//       "The institute id field is required."
+//     ],
+//     "enroll_start_date": [
+//       "The enroll start date field is required."
+//     ],
+//     "enroll_end_date": [
+//       "The enroll end date field is required."
+//     ],
+//     "position": [
+//       "The position field is required."
+//     ],
+//     "visa_type_id": [
+//       "The visa type id field is required."
+//     ]
+//   }
+
+// {
+//   "institute_id": ,
+//   "enroll_start_date": ,
+//   "enroll_end_date": ,
+//   "position": ,
+//   "total_opening": ,
+//   "visa_type_id": ,
+//   "currency": ,
+//   "offered_salary": ,
+//   "description":
+// }
+
+export const informationChannelSchema = yup.object().shape({
+    description: yup.string().required(),
 });

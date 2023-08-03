@@ -28,7 +28,7 @@ const SettingsLayout = loadable(
 );
 
 const InformationChannelList = loadable(
-    () => import("../ui/features/crm/InformationChannel/InformationList")
+    () => import("../ui/features/crm/InformationChannel/InformationChannelList")
 );
 const VisaType = loadable(() => import("../ui/features/visaType/VisaTypeList"));
 const VisitingPurposesList = loadable(

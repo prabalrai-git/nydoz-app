@@ -1,42 +1,41 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
-import { Flag } from "react-bootstrap-icons";
-import { ColumnDef } from "@tanstack/react-table";
 import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
-import { IEnrollmentResponse } from "../../../../types/products.types";
-import BASE_URL from "../../../../constants/AppSetting";
+import { IVisitingPurposeResponse } from "../../../../types/products.types";
+import { ColumnDef } from "@tanstack/react-table";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import useMutation from "../../../../hooks/useMutation";
 import Modal2 from "../../../shared/components/Modal2";
-
+import { toast } from "react-toastify";
+import AddVisaType from "./AddVisitingPurpose";
+import useAuthContext from "../../../../context/auth/useAuthContext";
 import PaginationTable from "../../../shared/components/PaginationTable";
-import NotFound from "../../../shared/molecules/NotFound";
-import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
+import TanStackTable from "../../../shared/molecules/TanStackTable";
 
-const List = () => {
-    const navigate = useNavigate();
-    const { id: companyId } = useParams<string>();
-    const baseUrl = `${API_ROUTE.CM_VISITING_PURPOSES}`;
+const VisaTypeList = () => {
+    const { companyInfo } = useAuthContext();
+    const companyId = companyInfo?.id;
+
+    const [selectedData, setSelectedData] = useState<
+        IVisitingPurposeResponse | undefined
+    >();
+    const [show, setShow] = useState<boolean>(false);
+    const [openAddDocument, setOpenAddDocument] = useState(false);
+    const [fetchAgain, setFetchAgain] = useState<boolean>(false);
+
+    const basUrl = API_ROUTE.CM_VISITING_PURPOSES;
     const searchParams = new URLSearchParams(window.location.search);
     const pageFromUrl = searchParams.get("page");
     const pageSizeFromUrl = searchParams.get("page_size");
     const page = pageFromUrl ? parseInt(pageFromUrl) : 1;
     const pageSize = pageSizeFromUrl ? parseInt(pageSizeFromUrl) : 15;
-
     const [fetchUrl, setFetchUrl] = useState(
-        `${baseUrl}?page=${page}&page_size=${pageSize}`
+        `${basUrl}?page=${page}&page_size=${pageSize}`
     );
-    const [show, setShow] = useState<boolean>(false);
-    const [fetchAgain, setFetchAgain] = useState<boolean>(false);
-    const [selectedData, setSelectedData] = useState<
-        IEnrollmentResponse | undefined
-    >();
-
-    const { data, fetchDataById, pagination, isloading } = useFetch<
-        IEnrollmentResponse[]
-    >(baseUrl, true);
+    const { data, isloading, fetchDataById, pagination } = useFetch<
+        IVisitingPurposeResponse[]
+    >(basUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -48,136 +47,84 @@ const List = () => {
 
     useEffect(() => {
         if (fetchAgain) {
-            console.log("fetch again");
             fetchDataById(fetchUrl);
             setFetchAgain(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchAgain]);
 
-    // function for pagination
-
-    // functions for edit data
-    const handleEditData = (item: IEnrollmentResponse) => {
-        navigate("../edit", {
-            state: { data: item },
-        });
+    const handleEditData = (item: IVisitingPurposeResponse) => {
+        setSelectedData(item);
+        handleAddDocumentOpen();
     };
 
-    const handleView = (id: string) => {
-        navigate(`../view/${id}`);
-    };
-
-    const tableColumns: ColumnDef<IEnrollmentResponse>[] = [
+    const tableColumns: ColumnDef<IVisitingPurposeResponse>[] = [
         {
             accessorKey: "sn",
             header: () => <div>S.N</div>,
             cell: (info) => info.row.index + 1,
         },
+
         {
-            accessorKey: "Name",
+            accessorKey: "description",
             header: () => (
                 <div>
-                    <i className='bi bi-building-fill-add fs-7 me-2'></i>
-                    <span>Institute's Name</span>
+                    <span>Description</span>
                 </div>
             ),
             cell: (info) => {
-                const url = `${BASE_URL}${info?.row?.original?.logo}`;
                 return (
-                    <div className='d-flex align-items-center'>
-                        <div className='symbol symbol-40px me-3'>
-                            <img src={url} className='' alt='Logo' />
-                        </div>
-                        <div className='d-flex justify-content-start flex-column'>
-                            <div className='text-dark fw-bold text-hover-primary mb-1 fs-7'>
-                                {info?.row?.original?.name}
-                            </div>
-                            <a
-                                href={info?.row?.original?.website}
-                                className='text-muted fw-semibold d-block fs-7'>
-                                {info?.row?.original?.website}
-                            </a>
-                        </div>
+                    <div className='text-capitalize'>
+                        <p className='truncate'> {info.getValue<string>()}</p>
                     </div>
                 );
-            },
-        },
-        {
-            accessorKey: "website",
-            header: () => (
-                <div>
-                    <i className='bi bi-globe me-2 fs-7'></i>
-                    <span>Website</span>
-                </div>
-            ),
-            cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
-            },
-        },
-
-        {
-            accessorKey: "state",
-            header: () => (
-                <div>
-                    <i className='bi bi-geo-alt me-2 fs-7'></i>
-                    <span>State</span>
-                </div>
-            ),
-            cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
-            },
-        },
-
-        {
-            accessorKey: "country",
-            header: () => (
-                <div>
-                    <Flag size={16} className='mx-2' />
-                    <span>Country</span>
-                </div>
-            ),
-            cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
             },
         },
 
         {
             accessorKey: "action",
-            header: () => (
-                <div className='text-center'>
-                    <span>Actions</span>
-                </div>
-            ),
+            header: () => <div className='text-center'>Actions</div>,
             cell: (info) => (
-                <div className='d-flex justify-content-center'>
-                    <div
-                        title='view'
-                        onClick={() => handleView(info?.row?.original?.id)}
-                        className='menu-link cursor-pointer bg-primary p-2 px-3'>
-                        <i className='bi bi-box-arrow-up-right text-white'></i>
-                    </div>
-                    <div
-                        title='Edit'
-                        onClick={() => handleEditData(info?.row?.original)}
-                        className='menu-link cursor-pointer bg-info p-2 px-3 mx-3'>
-                        <i className='bi bi-pencil-square text-white'></i>
-                    </div>
-                    <div
-                        title='Delete'
-                        onClick={() => handleDeleteModal(info?.row?.original)}
-                        className='menu-link cursor-pointer bg-danger p-2 px-3 '>
-                        <i className='bi bi-trash text-white'></i>
-                    </div>
+                <div className='text-center'>
+                    <DropdownButton
+                        variant='secondary'
+                        size='sm'
+                        id='dropdown-basic-button'
+                        title='Action'>
+                        {/* <Dropdown.Item>
+                            <div className='menu-link'>
+                                <span className='mx-2'>View</span>
+                                <i className='bi bi-box-arrow-up-right text-primary '></i>
+                            </div>
+                        </Dropdown.Item> */}
+                        <Dropdown.Item>
+                            <div
+                                onClick={() =>
+                                    handleEditData(info?.row?.original)
+                                }
+                                className='menu-link'>
+                                <span className='mx-2'>Edit</span>
+                                <i className='bi bi-pencil-square text-info'></i>
+                            </div>
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <div
+                                onClick={() =>
+                                    handleDeleteModal(info?.row?.original)
+                                }
+                                className='menu-link'>
+                                <span className='mx-2'>Delete</span>
+                                <i className='bi bi-trash text-danger'></i>
+                            </div>
+                        </Dropdown.Item>
+                    </DropdownButton>
                 </div>
             ),
             footer: (info) => info.column.id,
         },
     ];
 
-    // functions for delete modal
-
-    const handleDeleteModal = (item: IEnrollmentResponse) => {
+    const handleDeleteModal = (item: IVisitingPurposeResponse) => {
         setSelectedData(item);
         handleShow();
         console.log(item);
@@ -206,46 +153,38 @@ const List = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleAddDocumentClose = () => setOpenAddDocument(false);
+    const handleAddDocumentOpen = () => setOpenAddDocument(true);
+
+    const handleOpenNewModal = () => {
+        setSelectedData(undefined);
+        handleAddDocumentOpen();
+    };
 
     return (
-        <div>
-            <CompanyBreadcrumb
-                title='Agents'
-                btnText='Back'
-                showBreadcrumb={true}
-            />
+        <div className='mt-6'>
             <section>
                 <div className='card'>
                     <div className='card-header'>
-                        <h3 className='card-title'>Institution's List</h3>
+                        <h3 className='card-title'>Visiting Purpose List</h3>
                         <div className='card-toolbar'>
-                            <Link
-                                to='../add'
+                            <button
+                                onClick={handleOpenNewModal}
                                 className='btn btn-success btn-sm'>
-                                <span className='mx-2'>Add Institutions</span>
-                            </Link>
+                                <span className='mx-2'>
+                                    Add Visiting Purpose
+                                </span>
+                            </button>
                         </div>
                     </div>
+
                     {data && (
-                        <PaginationTable
-                            pagination={pagination}
-                            setFetchAgain={setFetchAgain}
-                            columns={tableColumns as ColumnDef<unknown>[]}
-                            data={data}
-                            isLoading={isloading}
-                            baseUrl={baseUrl}
-                            setFetchUrl={setFetchUrl}
-                        />
-                    )}
-                    {!data && !isloading && (
-                        <NotFound
-                            title={"Something Went Wrong. Data Not Found."}
-                        />
+                        <TanStackTable columns={tableColumns} data={data} />
                     )}
                 </div>
             </section>
             <Modal2
-                title='Are you sure  ?'
+                title='Are you sure you want to delete this vist type?'
                 showChildren={true}
                 cancelText='Cancel'
                 confirmText='Delete'
@@ -253,11 +192,19 @@ const List = () => {
                 handleConfirm={handleDeleteItem}
                 handleClose={handleClose}>
                 <div>
-                    <h3>{selectedData?.name}</h3>
+                    <div>{selectedData?.description}</div>
                 </div>
             </Modal2>
+            <AddVisaType
+                setFetchAgain={setFetchAgain}
+                companyId={companyId || ""}
+                handleClose={handleAddDocumentClose}
+                show={openAddDocument}
+                selectedData={selectedData}
+                setSelectedData={setSelectedData}
+            />
         </div>
     );
 };
 
-export default List;
+export default VisaTypeList;

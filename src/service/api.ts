@@ -70,6 +70,7 @@ const API_ROUTE = {
 
     // user
     USER: "/api/v1/users",
+    GET_CURRENCY: "/api/v1/currencies",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

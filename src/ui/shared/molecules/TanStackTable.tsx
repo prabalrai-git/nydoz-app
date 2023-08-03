@@ -4,9 +4,11 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { ITableProps } from "../../../types/axios.type";
+// import { Search } from "react-bootstrap-icons";
 
 function TanStackTable<T>(props: ITableProps<T>) {
     const { columns, data } = props;
+
     const table = useReactTable({
         data,
         columns,
@@ -16,7 +18,30 @@ function TanStackTable<T>(props: ITableProps<T>) {
     return (
         <div className='border '>
             {data && data?.length > 0 && (
-                <div className='min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden'>
+                <div className='min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden px-6'>
+                    <div className='row align-items-center'>
+                        <div className='col-12 col-md-6'>
+                            <h6 className=' text-info py-2'>
+                                <span>Total :{data?.length}</span>
+                            </h6>
+                        </div>
+                        {/* <div className='col-12 col-md-6'>
+                            <div className='input-group my-3'>
+                                <input
+                                    type='text'
+                                    value={globalFilter || ""}
+                                    onChange={(e) =>
+                                        setGlobalFilter(e.target.value)
+                                    }
+                                    className='form-control form-control-sm'
+                                    placeholder='Search..'
+                                />
+                                <span className='input-group-text'>
+                                    <Search />
+                                </span>
+                            </div>
+                        </div> */}
+                    </div>
                     <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable  '>
                         <thead>
                             {table.getHeaderGroups().map((headerGroup) => (

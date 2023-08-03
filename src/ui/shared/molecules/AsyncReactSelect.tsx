@@ -1,79 +1,82 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
-import AsyncSelect from "react-select/async";
-import { useUpdateEffect } from "usehooks-ts";
+import Select from "react-select";
 
-interface CommonItem {
-    id: string;
-    name: string;
-    first_name: string;
-}
-
-interface IProps<T extends CommonItem> {
+interface IProps<T> {
     baseUrl: string;
     selectValue: T | undefined;
     setSelectValue: Dispatch<SetStateAction<T | undefined>>;
     placeholder: string;
-    showData: string;
+    showDataLabel: keyof T;
+    dataId: keyof T;
 }
 
-function SimpleSelect<T extends CommonItem>(props: IProps<T>) {
-    const { baseUrl, selectValue, setSelectValue, placeholder, showData } =
-        props;
-    const [options, setOptions] = useState<T[] | undefined>([]);
-    const [selectOptions, setSelectOptions] = useState<unknown[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [fetchUrl, setfetchUrl] = useState<string>(
-        `/api/v1/client-management/agents?page=${currentPage}&per_page=15`
-    );
-    const { data, fetchDataById } = useFetch<T[]>(fetchUrl, true);
+interface IOption {
+    value: string;
+    label: string;
+}
+
+function SimpleSelect<T>(props: IProps<T>) {
+    const {
+        baseUrl,
+        selectValue,
+        setSelectValue,
+        placeholder,
+        dataId,
+        showDataLabel,
+    } = props;
+    const [options, setOptions] = useState<IOption[] | []>([]);
+    const { data, fetchDataById } = useFetch<T[]>(baseUrl, true);
+    const [selectedOption, setSelectedOption] = useState<IOption | undefined>();
 
     useEffect(() => {
-        fetchDataById(fetchUrl);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchUrl]);
+        fetchDataById(baseUrl);
+    }, [baseUrl, fetchDataById]);
 
     useEffect(() => {
-        console.log("data", data);
-        if (data && data?.length > 0 && options) {
-            setOptions([...data, ...options]);
+        if (selectValue) {
+            const temp: IOption = {
+                value: selectValue[dataId] as string,
+                label: selectValue[showDataLabel] as string,
+            };
+            setSelectedOption(temp);
         }
-        return () => setOptions([]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectValue]);
+
+    useEffect(() => {
+        if (data && data.length > 0) {
+            const options: IOption[] = data.map((item: T) => {
+                const temp: IOption = {
+                    value: item[dataId] as string,
+                    label: item[showDataLabel] as string,
+                };
+                return temp;
+            });
+            setOptions(options);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    // Function to load more data when scrolling to the bottom
-    const handleLoadMore = () => {
-        console.log("load more");
-        const nextPage = currentPage + 1;
-        setCurrentPage(() => nextPage);
-        setfetchUrl(`${baseUrl}?page=${nextPage}&per_page=15`);
-        setIsLoading(false);
+    const handleChange = (selectedOption: IOption | null) => {
+        if (selectedOption) {
+            setSelectedOption(selectedOption);
+            const temp = data?.find(
+                (item: T) => item[dataId] === selectedOption.value
+            );
+            if (temp) {
+                setSelectValue(temp);
+            }
+        }
     };
 
-    useEffect(() => {
-        if (options && options.length > 0) {
-            const newOptions = options.map((item) => ({
-                value: item.id,
-                label: item.first_name,
-            }));
-            setSelectOptions(newOptions);
-        }
-    }, [options]);
-
     return (
-        <AsyncSelect
-            loadOptions={options?.map((item) => ({
-                value: item.id,
-                label: item.first_name,
-            }))}
-            cacheOptions
-            isLoading={isLoading}
-            onMenuScrollToBottom={handleLoadMore}
-            isClearable
+        <Select
             isSearchable
-            // Add other props as needed
+            options={options}
+            value={selectedOption}
+            onChange={handleChange}
+            placeholder={placeholder}
         />
     );
 }
