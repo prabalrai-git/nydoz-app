@@ -41,6 +41,7 @@ export const visitorsNotGoingOutSchema = yup.object().shape({
     state: yup.string().required("State is required."),
     // country-from-component
     street_address: yup.string().required("Address is required."),
+    remarks: yup.string(),
     phone_nos: yup
         .array()
         .of(
@@ -50,8 +51,6 @@ export const visitorsNotGoingOutSchema = yup.object().shape({
                     "Atleast one phone number /mobile number is required."
                 )
         ),
-    visiting_purpose: yup.string().required("Visiting purpose is required."),
-    remarks: yup.string(),
     // information_channel-from-component
     email: yup
         .array()
@@ -130,36 +129,6 @@ export const enrollmentOpeningsSchema = yup.object().shape({
     offered_salary: yup.number(),
     description: yup.string(),
 });
-
-//  "errors": {
-//     "institute_id": [
-//       "The institute id field is required."
-//     ],
-//     "enroll_start_date": [
-//       "The enroll start date field is required."
-//     ],
-//     "enroll_end_date": [
-//       "The enroll end date field is required."
-//     ],
-//     "position": [
-//       "The position field is required."
-//     ],
-//     "visa_type_id": [
-//       "The visa type id field is required."
-//     ]
-//   }
-
-// {
-//   "institute_id": ,
-//   "enroll_start_date": ,
-//   "enroll_end_date": ,
-//   "position": ,
-//   "total_opening": ,
-//   "visa_type_id": ,
-//   "currency": ,
-//   "offered_salary": ,
-//   "description":
-// }
 
 export const informationChannelSchema = yup.object().shape({
     description: yup.string().required(),

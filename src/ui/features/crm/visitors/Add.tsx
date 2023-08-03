@@ -3,6 +3,7 @@ import {
     visitorsNotGoingOutSchema,
     visitorsGoingOutSchema,
 } from "../../../../validations/crm.validators";
+import moment from "moment";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CountryCode from "../../../shared/atoms/CountryCode";
@@ -26,7 +27,10 @@ import {
     IAgentResponse,
 } from "../../../../types/payload.type";
 import AsyncSelect from "../../../shared/molecules/AsyncReactSelect";
-import { InformationChannelResponse } from "../../../../types/products.types";
+import {
+    InformationChannelResponse,
+    IVisitingPurposeResponse,
+} from "../../../../types/products.types";
 
 interface IFormData {
     registration_date: Date;
@@ -54,6 +58,8 @@ const AddVisitor = () => {
     const [selectInformationChannel, setSelectInformationChannel] = useState<
         InformationChannelResponse | undefined
     >();
+    const [selectCommonVisitingPurpose, setSelectCommonVisitingPurpose] =
+        useState<IVisitingPurposeResponse | undefined>();
 
     const [selectedVisaType, setSelectedVisaType] = useState<
         IVisaTypeResponse | undefined
@@ -94,6 +100,15 @@ const AddVisitor = () => {
         ),
     });
 
+    useEffect(() => {
+        if (selectCommonVisitingPurpose) {
+            reset({
+                ...watch(),
+                visiting_purpose: selectCommonVisitingPurpose?.description,
+            });
+        }
+    }, [reset, selectCommonVisitingPurpose, watch]);
+
     const { fields, append, remove } = useFieldArray({
         control,
         name: "phone_nos" as never,
@@ -115,10 +130,31 @@ const AddVisitor = () => {
     useHandleShowError(error);
 
     const handleResetForm = useCallback(() => {
-        const companyDetails: IVisitorResponse = location?.state?.data;
-        reset(companyDetails);
-        const country = getSelectPropsFromCountry(companyDetails?.country);
+        const dataDetails: IVisitorResponse = location?.state?.data;
+        const country = getSelectPropsFromCountry(dataDetails?.country);
+        const visitingCountry = getSelectPropsFromCountry(
+            dataDetails?.visiting_country
+        );
+        const registrationDateObj = moment(
+            dataDetails.registration_date,
+            "YYYY-MM-DD HH:mm:ss"
+        );
+        const expectedTakeUpDateObj = moment(
+            dataDetails.expected_take_off_date,
+            "YYYY-MM-DD HH:mm:ss"
+        );
+
         setSelectedCountry(country);
+        setSelectedVisitingCountry(visitingCountry);
+        setSelectInformationChannel(dataDetails?.information_channel);
+        setSelectCommonVisitingPurpose(dataDetails?.visiting_purpose);
+        setSelectedVisaType(dataDetails?.visa_type);
+
+        reset({
+            ...dataDetails,
+            registration_date: registrationDateObj.toDate(),
+            expected_take_off_date: expectedTakeUpDateObj.toDate(),
+        });
     }, [location?.state?.data, reset]);
 
     useEffect(() => {
@@ -133,10 +169,25 @@ const AddVisitor = () => {
     };
 
     const onFormSubmit = handleSubmit(async (data: IFormData) => {
-        console.log(data);
         if (!selectedCountry) {
             toast.error("Please select country");
             return;
+        }
+
+        if (!selectInformationChannel) {
+            toast.error("Please select information channel");
+            return;
+        }
+
+        if (goingForeign) {
+            if (!selectedVisitingCountry) {
+                toast.error("Please select visiting country");
+                return;
+            }
+            // if (!selectedVisaType) {
+            //     toast.error("Please select visa type");
+            //     return;
+            // }
         }
 
         let response;
@@ -144,10 +195,17 @@ const AddVisitor = () => {
         if (location?.state?.data?.id) {
             const tempPostData: IVisitorPayload = {
                 ...data,
+                registration_date: moment(data.registration_date).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                ),
+                expected_take_off_date: moment(
+                    data.expected_take_off_date
+                ).format("YYYY-MM-DD HH:mm:ss"),
                 country: selectedCountry?.value ?? "",
                 visiting_country: selectedVisitingCountry?.value ?? "",
                 visa_type_id: selectedVisaType?.id,
                 information_channel: selectInformationChannel?.id ?? "",
+                agent_id: selectedAgent?.id ?? "",
                 going_to_foreign: goingForeign,
             };
 
@@ -156,25 +214,33 @@ const AddVisitor = () => {
                 tempPostData
             );
             if (response?.data?.status === "ok") {
-                toast.success("Institute updated Successfully");
+                toast.success("Visitor updated Successfully");
                 navigate(-1);
             }
         } else {
             const tempPostData: IVisitorPayload = {
                 ...data,
+                registration_date: moment(data.registration_date).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                ),
+                expected_take_off_date: moment(
+                    data.expected_take_off_date
+                ).format("YYYY-MM-DD HH:mm:ss"),
                 country: selectedCountry?.value ?? "",
                 visa_type_id: selectedVisaType?.id ?? "",
                 information_channel: selectInformationChannel?.id ?? "",
                 going_to_foreign: goingForeign,
                 visiting_country: selectedVisitingCountry?.value ?? "",
+                agent_id: selectedAgent?.id ?? "",
             };
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
-                toast.success("Institute  Enrolled  Successfully");
+                toast.success("Visitor Added  Successfully");
                 navigate(-1);
             }
         }
     });
+
     return (
         <div>
             <CompanyBreadcrumb
@@ -237,7 +303,10 @@ const AddVisitor = () => {
                                                 )}
                                             />
                                             <div className='fv-plugins-message-container invalid-feedback'>
-                                                {errors.first_name?.message}
+                                                {
+                                                    errors.registration_date
+                                                        ?.message
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -490,6 +559,62 @@ const AddVisitor = () => {
                                             />
                                         </div>
                                     </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Visiting Purpose
+                                            </label>
+                                            <input
+                                                className='form-control'
+                                                placeholder='Enter your visiting purpose.'
+                                                {...register(
+                                                    "visiting_purpose"
+                                                )}
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {
+                                                    errors.visiting_purpose
+                                                        ?.message
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Common Visiting Purpose:
+                                            </label>
+                                            <AsyncSelect
+                                                placeholder='Search..'
+                                                baseUrl={
+                                                    API_ROUTE.CM_VISITING_PURPOSES
+                                                }
+                                                setSelectValue={
+                                                    setSelectCommonVisitingPurpose
+                                                }
+                                                selectValue={
+                                                    selectCommonVisitingPurpose
+                                                }
+                                                dataId='id'
+                                                showDataLabel='description'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-12 gap-5 gap-md-7  mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className=' form-label'>
+                                                Remarks
+                                            </label>
+                                            <textarea
+                                                className='form-control'
+                                                {...register("remarks")}
+                                                placeholder='description'
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {errors.remarks?.message}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             {/* Address Details Ends */}
@@ -505,26 +630,6 @@ const AddVisitor = () => {
                                         </h2>
                                     </div>
                                     <div className='row'>
-                                        <div className='col-12 gap-5 gap-md-7 mb-6'>
-                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                                <label className='required form-label'>
-                                                    Visiting Purpose
-                                                </label>
-                                                <input
-                                                    className='form-control'
-                                                    placeholder='Enter your visiting purpose.'
-                                                    {...register(
-                                                        "visiting_purpose"
-                                                    )}
-                                                />
-                                                <div className='fv-plugins-message-container invalid-feedback'>
-                                                    {
-                                                        errors.visiting_purpose
-                                                            ?.message
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div className='col-6  gap-5 gap-md-7   mb-6'>
                                             <div>
                                                 <label className='required form-label'>
@@ -673,22 +778,6 @@ const AddVisitor = () => {
                                                             .expected_take_off_date
                                                             ?.message
                                                     }
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='col-6 gap-5 gap-md-7  mb-6'>
-                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                                <label className=' form-label'>
-                                                    Remarks
-                                                </label>
-                                                <textarea
-                                                    className='form-control'
-                                                    {...register("remarks")}
-                                                    placeholder='description'
-                                                />
-                                                <div className='fv-plugins-message-container invalid-feedback'>
-                                                    {errors.remarks?.message}
                                                 </div>
                                             </div>
                                         </div>

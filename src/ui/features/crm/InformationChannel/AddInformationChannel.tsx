@@ -28,7 +28,7 @@ interface IModalProps {
     setSelectedData?: (value: InformationChannelResponse) => void;
 }
 
-const AddVisaType = (props: IModalProps) => {
+const AddInformationChannel = (props: IModalProps) => {
     const { show, handleClose, setFetchAgain, selectedData } = props;
     const { postData, updateData, errList, error, isLoading } =
         useMutation<InformationChannelResponse>(
@@ -174,4 +174,4 @@ const AddVisaType = (props: IModalProps) => {
     );
 };
 
-export default AddVisaType;
+export default AddInformationChannel;
