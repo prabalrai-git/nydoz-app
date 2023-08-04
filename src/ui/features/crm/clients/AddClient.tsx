@@ -56,7 +56,7 @@ interface IFormData {
 const AddClient = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const showDataLabel: keyof IVisitorResponse = "id";
+    const showDataLabel: keyof IVisitorResponse = "first_name";
 
     const [selectInformationChannel, setSelectInformationChannel] = useState<
         InformationChannelResponse | undefined
