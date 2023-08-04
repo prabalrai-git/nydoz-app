@@ -32,10 +32,7 @@ function ServerSideSearchSelect<T>(props: IProps<T>) {
     const [fetchNewData, setfetchNewData] = useState<boolean>(false);
     const [showListBox, setShowListBox] = useState<boolean>(false);
     const [allValue, setAllValue] = useState<T[]>([]);
-    const { data, fetchDataById } = useFetch<T[]>(
-        `${baseUrl}/api/Server/GetAllServers`,
-        true
-    );
+    const { data, fetchDataById } = useFetch<T[]>(`${baseUrl}`, true);
     const [searchTextValue, setSearchTextValue] = useState<string>("");
 
     useEffect(() => {
@@ -47,6 +44,7 @@ function ServerSideSearchSelect<T>(props: IProps<T>) {
                     `${baseUrl}?${searchBy}=${searchTextValue}page=${queryParameter.currentPage}&per_page=${queryParameter.per_page}`
                 );
                 setfetchNewData(true);
+                setShowListBox(true);
             }, 500);
             return () => {
                 clearTimeout(timer);
@@ -98,6 +96,7 @@ function ServerSideSearchSelect<T>(props: IProps<T>) {
         console.log("handleInputClick", item);
         console.log(item);
         setselectedListItem(item);
+        setSearchTextValue(item[showDataLabel] as string);
         setShowListBox(false);
     };
 

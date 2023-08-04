@@ -292,7 +292,7 @@ const AddClient = () => {
                                             </label>
                                             <ServerSideSearchSelect
                                                 placeholder='Search..'
-                                                baseUrl={API_ROUTE.CM_AGENTS}
+                                                baseUrl={API_ROUTE.CM_VISITORS}
                                                 selectedListItem={
                                                     selectedVistor
                                                 }
