@@ -1,34 +1,40 @@
-import { useState, useEffect, useCallback } from "react";
 import {
-    visitorsNotGoingOutSchema,
-    visitorsGoingOutSchema,
-} from "../../../../validations/crm.validators";
+    useState,
+    useEffect,
+    useCallback,
+    Dispatch,
+    SetStateAction,
+} from "react";
+import { toast } from "react-toastify";
 import moment from "moment";
+import { XCircle } from "react-bootstrap-icons";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Spinner } from "react-bootstrap";
+import { useNavigate, useLocation } from "react-router-dom";
+
+import { clientSchema } from "../../../../validations/crm.validators";
 import CountryCode from "../../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../../types/react-select.type";
-import { useNavigate, useLocation } from "react-router-dom";
 import {
     IClientPayload,
     IClientResponse,
 } from "../../../../types/products.types";
-import { toast } from "react-toastify";
+import { IVisaTypeResponse } from "../../../../types/payload.type";
 import { getSelectPropsFromCountry } from "../../../../functions/country";
 import useValidationError from "../../../../hooks/useValidationError";
 import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
-import { Spinner } from "react-bootstrap";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
-import { XCircle } from "react-bootstrap-icons";
-import { IVisaTypeResponse } from "../../../../types/payload.type";
 import AsyncSelect from "../../../shared/molecules/AsyncReactSelect";
 import {
     InformationChannelResponse,
     IVisitingPurposeResponse,
     IAgentResponse,
+    IVisitorResponse,
 } from "../../../../types/products.types";
+import ServerSideSearchSelect from "../../../shared/molecules/ServerSideSearchSelect";
 
 interface IFormData {
     registration_date: Date;
@@ -50,10 +56,14 @@ interface IFormData {
 const AddClient = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [goingForeign, setGoingForeign] = useState(false);
+    const showDataLabel: keyof IVisitorResponse = "id";
 
     const [selectInformationChannel, setSelectInformationChannel] = useState<
         InformationChannelResponse | undefined
+    >();
+
+    const [selectedVistor, setSelectedVistor] = useState<
+        IVisitorResponse | undefined
     >();
     const [selectCommonVisitingPurpose, setSelectCommonVisitingPurpose] =
         useState<IVisitingPurposeResponse | undefined>();
@@ -92,9 +102,7 @@ const AddClient = () => {
             phone_nos: [" "],
             email: [" "],
         },
-        resolver: yupResolver(
-            goingForeign ? visitorsGoingOutSchema : visitorsNotGoingOutSchema
-        ),
+        resolver: yupResolver(clientSchema),
     });
 
     useEffect(() => {
@@ -177,17 +185,6 @@ const AddClient = () => {
             return;
         }
 
-        if (goingForeign) {
-            if (!selectedVisitingCountry) {
-                toast.error("Please select visiting country");
-                return;
-            }
-            // if (!selectedVisaType) {
-            //     toast.error("Please select visa type");
-            //     return;
-            // }
-        }
-
         let response;
 
         if (location?.state?.data?.id) {
@@ -204,7 +201,6 @@ const AddClient = () => {
                 visa_type_id: selectedVisaType?.id,
                 information_channel: selectInformationChannel?.id ?? "",
                 agent_id: selectedAgent?.id ?? "",
-                going_to_foreign: goingForeign,
             };
 
             response = await updateData(
@@ -212,7 +208,7 @@ const AddClient = () => {
                 tempPostData
             );
             if (response?.data?.status === "ok") {
-                toast.success("Visitor updated Successfully");
+                toast.success("Client updated Successfully");
                 navigate(-1);
             }
         } else {
@@ -226,14 +222,12 @@ const AddClient = () => {
                 ).format("YYYY-MM-DD HH:mm:ss"),
                 country: selectedCountry?.value ?? "",
                 visa_type_id: selectedVisaType?.id ?? "",
-                information_channel: selectInformationChannel?.id ?? "",
-                going_to_foreign: goingForeign,
                 visiting_country: selectedVisitingCountry?.value ?? "",
                 agent_id: selectedAgent?.id ?? "",
             };
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
-                toast.success("Visitor Added  Successfully");
+                toast.success("Client Added  Successfully");
                 navigate(-1);
             }
         }
@@ -270,23 +264,6 @@ const AddClient = () => {
                                     </h2>
                                 </div>
                                 <div className='row'>
-                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6 d-flex align-items-center '>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container '>
-                                            <input
-                                                value='true'
-                                                onChange={(e) => {
-                                                    setGoingForeign(
-                                                        e.target.checked
-                                                    );
-                                                }}
-                                                type='checkbox'
-                                                className='form-check-input'
-                                            />
-                                            <label className=' form-label  ms-6'>
-                                                Going for Foreign
-                                            </label>
-                                        </div>
-                                    </div>
                                     <div className='col-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
@@ -311,21 +288,22 @@ const AddClient = () => {
                                     <div className='col-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
-                                                Information Channel:
+                                                Visitor:
                                             </label>
-                                            <AsyncSelect
+                                            <ServerSideSearchSelect
                                                 placeholder='Search..'
-                                                baseUrl={
-                                                    API_ROUTE.CM_INFORMATION_CHANNEL
+                                                baseUrl={API_ROUTE.CM_AGENTS}
+                                                selectedListItem={
+                                                    selectedVistor
                                                 }
-                                                setSelectValue={
-                                                    setSelectInformationChannel
-                                                }
-                                                selectValue={
-                                                    selectInformationChannel
+                                                searchBy={"first_name"}
+                                                setselectedListItem={
+                                                    setSelectedVistor
                                                 }
                                                 dataId='id'
-                                                showDataLabel='description'
+                                                showDataLabel={
+                                                    showDataLabel as never
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -618,170 +596,159 @@ const AddClient = () => {
                             {/* Address Details Ends */}
                             <hr className='bg-gray-100 mb-6 ' />
                             {/* Visiting Details */}
-                            {goingForeign && (
-                                <div className='col-12 mb-6'>
-                                    <div>
-                                        <h2
-                                            className='fw-bold mb-5'
-                                            id='custom-form-control'>
-                                            Visiting Details
-                                        </h2>
+                            <div className='col-12 mb-6'>
+                                <div>
+                                    <h2
+                                        className='fw-bold mb-5'
+                                        id='custom-form-control'>
+                                        Visiting Details
+                                    </h2>
+                                </div>
+                                <div className='row'>
+                                    <div className='col-6  gap-5 gap-md-7   mb-6'>
+                                        <div>
+                                            <label className='required form-label'>
+                                                Country
+                                            </label>
+                                            <CountryCode
+                                                placeholder='Select Visiting Country'
+                                                forCountry={true}
+                                                selectValue={
+                                                    selectedVisitingCountry
+                                                }
+                                                setSelectValue={
+                                                    setSelectedVisitingCountry
+                                                }
+                                            />
+                                        </div>
                                     </div>
-                                    <div className='row'>
-                                        <div className='col-6  gap-5 gap-md-7   mb-6'>
-                                            <div>
-                                                <label className='required form-label'>
-                                                    Country
-                                                </label>
-                                                <CountryCode
-                                                    placeholder='Select Visiting Country'
-                                                    forCountry={true}
-                                                    selectValue={
-                                                        selectedVisitingCountry
-                                                    }
-                                                    setSelectValue={
-                                                        setSelectedVisitingCountry
-                                                    }
-                                                />
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Visa Type
+                                            </label>
+                                            <AsyncSelect
+                                                placeholder='Search..'
+                                                baseUrl={
+                                                    API_ROUTE.GET_VISA_TYPES
+                                                }
+                                                setSelectValue={
+                                                    setSelectedVisaType
+                                                }
+                                                selectValue={selectedVisaType}
+                                                dataId='id'
+                                                showDataLabel='description'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='form-label'>
+                                                Visiting State
+                                            </label>
+                                            <input
+                                                className='form-control'
+                                                placeholder='How do you know about our office ?'
+                                                {...register(
+                                                    "visiting_country_state"
+                                                )}
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {
+                                                    errors
+                                                        .visiting_country_state
+                                                        ?.message
+                                                }
                                             </div>
                                         </div>
-                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                                <label className='required form-label'>
-                                                    Visa Type
-                                                </label>
-                                                <AsyncSelect
-                                                    placeholder='Search..'
-                                                    baseUrl={
-                                                        API_ROUTE.GET_VISA_TYPES
-                                                    }
-                                                    setSelectValue={
-                                                        setSelectedVisaType
-                                                    }
-                                                    selectValue={
-                                                        selectedVisaType
-                                                    }
-                                                    dataId='id'
-                                                    showDataLabel='description'
-                                                />
+                                    </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Deal Amount
+                                            </label>
+                                            <input
+                                                className='form-control'
+                                                type='number'
+                                                placeholder='Enter deal amount'
+                                                {...register("deal_amount", {
+                                                    valueAsNumber: true,
+                                                })}
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {errors.deal_amount?.message}
                                             </div>
                                         </div>
-                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                                <label className='form-label'>
-                                                    Visiting State
-                                                </label>
-                                                <input
-                                                    className='form-control'
-                                                    placeholder='How do you know about our office ?'
-                                                    {...register(
-                                                        "visiting_country_state"
-                                                    )}
-                                                />
-                                                <div className='fv-plugins-message-container invalid-feedback'>
-                                                    {
-                                                        errors
-                                                            .visiting_country_state
-                                                            ?.message
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                                <label className='required form-label'>
-                                                    Deal Amount
-                                                </label>
-                                                <input
-                                                    className='form-control'
-                                                    type='number'
-                                                    placeholder='Enter deal amount'
-                                                    {...register(
-                                                        "deal_amount",
-                                                        {
-                                                            valueAsNumber: true,
-                                                        }
-                                                    )}
-                                                />
-                                                <div className='fv-plugins-message-container invalid-feedback'>
-                                                    {
-                                                        errors.deal_amount
-                                                            ?.message
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </div>
 
-                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                                <label className='form-label'>
-                                                    Applied Position
-                                                </label>
-                                                <input
-                                                    className='form-control'
-                                                    placeholder='Enter your visiting purpose.'
-                                                    {...register(
-                                                        "applied_position"
-                                                    )}
-                                                />
-                                                <div className='fv-plugins-message-container invalid-feedback'>
-                                                    {
-                                                        errors.applied_position
-                                                            ?.message
-                                                    }
-                                                </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='form-label'>
+                                                Applied Position
+                                            </label>
+                                            <input
+                                                className='form-control'
+                                                placeholder='Enter your visiting purpose.'
+                                                {...register(
+                                                    "applied_position"
+                                                )}
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {
+                                                    errors.applied_position
+                                                        ?.message
+                                                }
                                             </div>
                                         </div>
-                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                                <label className='required form-label'>
-                                                    Expected Salary
-                                                </label>
-                                                <input
-                                                    type='number'
-                                                    className='form-control'
-                                                    placeholder='Enter your visiting purpose.'
-                                                    {...register(
-                                                        "expected_salary_pa",
-                                                        {
-                                                            valueAsNumber: true,
-                                                        }
-                                                    )}
-                                                />
-                                                <div className='fv-plugins-message-container invalid-feedback'>
+                                    </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Expected Salary
+                                            </label>
+                                            <input
+                                                type='number'
+                                                className='form-control'
+                                                placeholder='Enter your visiting purpose.'
+                                                {...register(
+                                                    "expected_salary_pa",
                                                     {
-                                                        errors
-                                                            .expected_salary_pa
-                                                            ?.message
+                                                        valueAsNumber: true,
                                                     }
-                                                </div>
+                                                )}
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {
+                                                    errors.expected_salary_pa
+                                                        ?.message
+                                                }
                                             </div>
                                         </div>
-                                        <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                                <label className='required form-label'>
-                                                    Expected Take Off Date
-                                                </label>
-                                                <input
-                                                    className='form-control'
-                                                    type='date'
-                                                    placeholder='Enter your visiting purpose.'
-                                                    {...register(
-                                                        "expected_take_off_date"
-                                                    )}
-                                                />
-                                                <div className='fv-plugins-message-container invalid-feedback'>
-                                                    {
-                                                        errors
-                                                            .expected_take_off_date
-                                                            ?.message
-                                                    }
-                                                </div>
+                                    </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Expected Take Off Date
+                                            </label>
+                                            <input
+                                                className='form-control'
+                                                type='date'
+                                                placeholder='Enter your visiting purpose.'
+                                                {...register(
+                                                    "expected_take_off_date"
+                                                )}
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {
+                                                    errors
+                                                        .expected_take_off_date
+                                                        ?.message
+                                                }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            )}
+                            </div>
                             {/* Visiting Details Ends */}
 
                             <div className='col-12 d-flex justify-content-end'>

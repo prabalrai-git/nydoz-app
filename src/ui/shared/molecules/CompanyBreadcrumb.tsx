@@ -17,7 +17,7 @@ const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
     return (
         <div className='app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100 my-3 px-2 '>
             <div className='page-title d-flex flex-column justify-content-center gap-1 me-3'>
-                <h1 className='page-heading d-flex flex-column justify-content-center text-dark fw-bold fs-3 m-0 '>
+                <h1 className='page-heading d-flex flex-column justify-content-center  fw-bold fs-3 m-0 text-primary '>
                     {title}
                 </h1>
                 {showBreadcrumb && (
@@ -46,7 +46,7 @@ const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
                 <div className='d-flex align-items-center gap-2 gap-lg-3'>
                     <button
                         onClick={() => navigate(-1)}
-                        className='btn btn-flex btn-secondary   fs-7 fw-bold btn-sm'>
+                        className='btn btn-flex btn-warning  fs-7 fw-bold btn-sm'>
                         {btnText}
                     </button>
                 </div>

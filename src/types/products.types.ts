@@ -108,7 +108,7 @@ export interface InformationChannelResponse extends InformationChannelPayload {
 }
 
 // {
-//   "registration_date": "2023-08-03",
+//   "registration_date": "2023-08-04",
 //   "first_name": "string",
 //   "last_name": "string",
 //   "country": "string",
@@ -127,39 +127,33 @@ export interface InformationChannelResponse extends InformationChannelPayload {
 //   "deal_amount": 0,
 //   "applied_position": "string",
 //   "expected_salary_pa": 0,
-//   "expected_take_off_date": "2023-08-03",
+//   "expected_take_off_date": "2023-08-04",
 //   "salary_currency_code": "string",
 //   "agent_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
 //   "visiting_country_state": "string",
 //   "enrollment_institute_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
 //   "enrollment_opening_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 // }
-
 export interface IClientPayload {
     registration_date: string;
     first_name: string;
     last_name: string;
+    country: string;
+    state: string;
+    street_address: string | null;
     phone_nos: string[];
-    email: string[];
     visitor_id: string | null;
     remarks: string;
-    street_address: string | null;
-    state: string;
-    country: string;
-    profile_picture: string | null;
-    postal_code: string | null;
-    agent_id: string | null;
-    visiting_purpose: string;
-    information_channel: string;
-    going_to_foreign: boolean;
+    email: string[];
     visa_type_id: string | null;
     visiting_country: string;
-    visiting_country_state: string;
     deal_amount: number;
     applied_position: string;
     expected_salary_pa: number;
-    salary_currency_code: string;
     expected_take_off_date: string;
+    salary_currency_code: string;
+    agent_id: string | null;
+    visiting_country_state: string;
     enrollment_institute_id: string;
     enrollment_opening_id: string;
 }

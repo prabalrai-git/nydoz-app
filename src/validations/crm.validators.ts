@@ -7,33 +7,6 @@ export const enrollmentSchema = yup.object().shape({
     description: yup.string(),
 });
 
-// {
-//   "registration_date": "04/03/2023",
-//   "first_name": "rahul",
-//   "last_name": "prasad",
-//   "country": "Nepal",
-//   "state": "hello",
-//   "street_address": "",
-//   "agent_id": ,
-//   "phone_nos": [
-
-//   ],
-//   "visiting_purpose":"dancing",
-//   "remarks": ,
-//   "information_channel": ,
-//   "email": [
-//     ""
-//   ],
-//   "going_to_foreign": true,
-//   "visa_type_id": "",
-//   "visiting_country": "",
-//   "visiting_country_state": "",
-//   "deal_amount": ,
-//   "applied_position": "",
-//   "expected_salary_pa": ,
-//   "expected_take_off_date": "
-// }
-
 export const visitorsNotGoingOutSchema = yup.object().shape({
     registration_date: yup.date().required(),
     first_name: yup.string().required("First Name is required."),
@@ -132,4 +105,56 @@ export const enrollmentOpeningsSchema = yup.object().shape({
 
 export const informationChannelSchema = yup.object().shape({
     description: yup.string().required(),
+});
+
+export const clientSchema = yup.object().shape({
+    registration_date: yup.date().required(),
+    first_name: yup.string().required("First Name is required."),
+    last_name: yup.string().required("Last Name is required."),
+    // country-from-component
+    state: yup.string().required("State is required."),
+    street_address: yup.string().required("Address is required."),
+    phone_nos: yup
+        .array()
+        .of(
+            yup
+                .string()
+                .required(
+                    "Atleast one phone number /mobile number is required."
+                )
+        ),
+    // visitor id from component
+    remarks: yup.string(),
+
+    email: yup
+        .array()
+        .of(
+            yup
+                .string()
+                .email("Email must be a valid email.")
+                .required("Atleast one email address is required.")
+        ),
+    // visa_type_id-from-component
+    // visiting_country-from-component
+    deal_amount: yup.number().transform((value, originalValue) => {
+        if (isNaN(originalValue) || originalValue === "") {
+            return undefined;
+        }
+        return value;
+    }),
+    applied_position: yup.string(),
+    expected_salary_pa: yup.number().transform((value, originalValue) => {
+        if (isNaN(originalValue) || originalValue === "") {
+            return undefined;
+        }
+        return value;
+    }),
+    expected_take_off_date: yup.date(),
+    salary_currency_code: yup.string().required("Currency is required."),
+    //agent_id-from-component
+    visiting_country_state: yup
+        .string()
+        .required("Visiting State is required."),
+    // enrollment_id-from-component
+    // enrollment_opening_from-component
 });

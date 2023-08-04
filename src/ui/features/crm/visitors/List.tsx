@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
-import { IAgentResponse } from "../../../../types/payload.type";
+import { IAgentResponse } from "../../../../types/products.types";
 import BASE_URL from "../../../../constants/AppSetting";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";

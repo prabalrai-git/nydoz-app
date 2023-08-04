@@ -77,6 +77,8 @@ function AsyncSelect<T>(props: IProps<T>) {
         <Select
             isSearchable
             isClearable
+            className='react-select-container'
+            classNamePrefix='react-select'
             options={options}
             value={selectedOption}
             onChange={handleChange}

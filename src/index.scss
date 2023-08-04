@@ -198,3 +198,33 @@ $pimary-color: #70b541;
 .list-box-hide {
     display: none;
 }
+
+.react-select__control {
+    display: block;
+    width: 100%;
+    padding: 0.3rem 0.75rem !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--bs-gray-700);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: 1px solid #70b541;
+    appearance: none;
+    border-radius: 0.65rem !important;
+    box-shadow: false;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Styles for .form-control on hover */
+.react-select__control:hover {
+    border-color: #b6b9b5 !important;
+    outline: 0;
+}
+
+/* Styles for .form-control on focus */
+.react-select__control:focus {
+    border-color: #8aaf71 !important;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem #6fb541a4 !important;
+}
