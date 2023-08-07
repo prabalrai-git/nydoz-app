@@ -29,7 +29,7 @@ const Navbar = () => {
     }, [location.pathname]);
 
     return (
-        <nav className=' navbar navbar-expand-lg bg-body-tertiary navbar-wrapper bg-white'>
+        <nav className=' navbar navbar-expand-lg bg-body-tertiary navbar-wrapper bg-white fixed-top'>
             <div className='container'>
                 <div className='inner-container'>
                     <div className='left-container'>

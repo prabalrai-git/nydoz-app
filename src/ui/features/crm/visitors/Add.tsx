@@ -1,29 +1,33 @@
 import { useState, useEffect, useCallback } from "react";
+import moment from "moment";
+import { useForm, useFieldArray } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
+import { Spinner } from "react-bootstrap";
+
+import CountryCode from "../../../shared/atoms/CountryCode";
+
 import {
     visitorsNotGoingOutSchema,
     visitorsGoingOutSchema,
 } from "../../../../validations/crm.validators";
-import moment from "moment";
-import { useForm, useFieldArray } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import CountryCode from "../../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../../types/react-select.type";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
     IVisitorPayload,
     IVisitorResponse,
 } from "../../../../types/products.types";
-import { toast } from "react-toastify";
 import { getSelectPropsFromCountry } from "../../../../functions/country";
 import useValidationError from "../../../../hooks/useValidationError";
 import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
-import { Spinner } from "react-bootstrap";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import { XCircle } from "react-bootstrap-icons";
 import { IVisaTypeResponse } from "../../../../types/payload.type";
-import AsyncSelect from "../../../shared/molecules/AsyncReactSelect";
+import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
+import ServerSelect from "../../../shared/components/ServerSelect";
+
 import {
     InformationChannelResponse,
     IVisitingPurposeResponse,
@@ -51,7 +55,6 @@ const AddVisitor = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [goingForeign, setGoingForeign] = useState(false);
-
     const [selectInformationChannel, setSelectInformationChannel] = useState<
         InformationChannelResponse | undefined
     >();
@@ -313,7 +316,7 @@ const AddVisitor = () => {
                                             <label className='required form-label'>
                                                 Information Channel:
                                             </label>
-                                            <AsyncSelect
+                                            <AsyncReactSelect
                                                 placeholder='Search..'
                                                 baseUrl={
                                                     API_ROUTE.CM_INFORMATION_CHANNEL
@@ -335,15 +338,16 @@ const AddVisitor = () => {
                                             <label className='form-label'>
                                                 Agent:
                                             </label>
-                                            <AsyncSelect
+                                            <ServerSelect
                                                 placeholder='Search..'
                                                 baseUrl={API_ROUTE.CM_AGENTS}
-                                                setSelectValue={
+                                                selectedListItem={selectedAgent}
+                                                setselectedListItem={
                                                     setSelectedAgent
                                                 }
-                                                selectValue={selectedAgent}
-                                                dataId='id'
-                                                showDataLabel='first_name'
+                                                showDataLabel={
+                                                    "first_name" as never
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -582,7 +586,7 @@ const AddVisitor = () => {
                                             <label className='required form-label'>
                                                 Common Visiting Purpose:
                                             </label>
-                                            <AsyncSelect
+                                            <AsyncReactSelect
                                                 placeholder='Search..'
                                                 baseUrl={
                                                     API_ROUTE.CM_VISITING_PURPOSES
@@ -650,7 +654,7 @@ const AddVisitor = () => {
                                                 <label className='required form-label'>
                                                     Visa Type
                                                 </label>
-                                                <AsyncSelect
+                                                <AsyncReactSelect
                                                     placeholder='Search..'
                                                     baseUrl={
                                                         API_ROUTE.GET_VISA_TYPES

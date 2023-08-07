@@ -38,13 +38,13 @@ const CrmLayout = () => {
             icon: <PersonLock size={22} />,
         },
         {
-            id: 3,
+            id: 5,
             title: "Institutions",
             link: "enrolled-institutes/list",
             icon: <Buildings size={20} />,
         },
         {
-            id: 5,
+            id: 6,
             title: "Settings",
             link: "settings",
             icon: <Gear size={22} />,

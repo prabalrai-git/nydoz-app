@@ -16,6 +16,10 @@ const Layout = () => {
             title: "Visa Types",
             link: "visa-types",
         },
+        {
+            title: "Documents",
+            link: "documents",
+        },
     ];
 
     return (

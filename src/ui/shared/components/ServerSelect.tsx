@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
 import { ArrowDown } from "react-bootstrap-icons";
 import useFetch from "../../../hooks/useFetch";
 import { useOnClickOutside } from "usehooks-ts";
+import { RESULT_PER_PAGE } from "../../../constants/AppSetting";
 
 interface IProps<T> {
     baseUrl: string;
@@ -9,22 +10,14 @@ interface IProps<T> {
     setselectedListItem: Dispatch<SetStateAction<T | undefined>>;
     placeholder: string;
     showDataLabel: keyof T;
-    selectedItemText: string;
-    setSelectedItemText: Dispatch<SetStateAction<string>>;
 }
 
 function ServerSelect<T>(props: IProps<T>) {
-    const {
-        baseUrl,
-        setselectedListItem,
-        placeholder,
-        selectedItemText,
-        setSelectedItemText,
-        showDataLabel,
-    } = props;
+    const { baseUrl, setselectedListItem, placeholder, showDataLabel } = props;
+    const [selectedItemText, setSelectedItemText] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [fetchUrl, setfetchUrl] = useState<string>(
-        `${baseUrl}?page=${currentPage}&per_page=15`
+        `${baseUrl}?page=${currentPage}&per_page=${RESULT_PER_PAGE}`
     );
     const [fetchNewData, setfetchNewData] = useState<boolean>(false);
     const [showListBox, setShowListBox] = useState<boolean>(false);
@@ -37,7 +30,9 @@ function ServerSelect<T>(props: IProps<T>) {
     const handleChangeUrl = () => {
         console.log("handleChangeUrl");
         setfetchNewData(true);
-        setfetchUrl(`${baseUrl}?page=${currentPage + 1}&per_page=15`);
+        setfetchUrl(
+            `${baseUrl}?page=${currentPage + 1}&per_page=${RESULT_PER_PAGE}`
+        );
         setCurrentPage(currentPage + 1);
     };
 
@@ -92,7 +87,7 @@ function ServerSelect<T>(props: IProps<T>) {
                 <input
                     type='text'
                     value={selectedItemText}
-                    onChange={(e) => setSelectedItemText(e.target.value)}
+                    readOnly
                     className='form-control'
                     placeholder={placeholder}
                 />
