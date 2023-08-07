@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
     flexRender,
@@ -12,6 +12,7 @@ import {
 import { Spinner } from "react-bootstrap";
 import NotFound from "../molecules/NotFound";
 import { capitalizeText } from "../../../functions/TextMuatations";
+import { ArrowDownUp } from "react-bootstrap-icons";
 
 interface SearchState {
     [key: string]: string;
@@ -27,13 +28,66 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
         setFetchAgain,
         baseUrl,
         setFetchUrl,
-        searchParams,
+        searchParamsArray,
     } = props;
     // page=1&page_size=5
-
+    const table = useReactTable({
+        data,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+    });
     const [paginationState, setPaginationState] =
         useState<IPagination>(pagination);
     const [searchState, setSearchState] = useState<SearchState>({});
+
+    const getQueryParams = () => {
+        const query = new URLSearchParams(window.location.search);
+        const queryObject: SearchState = {};
+        query.forEach((value, key) => {
+            queryObject[key as string] = value;
+        });
+        return queryObject;
+    };
+
+    const setQueryParams = (queryParams: SearchState) => {
+        const searchParams = new URLSearchParams(window.location.search);
+        Object.keys(queryParams).forEach((key: string) => {
+            searchParams.set(key, queryParams[key] as string);
+        });
+        window.history.replaceState(
+            null,
+            "",
+            `${window.location.pathname}?${searchParams.toString()}`
+        );
+        return searchParams;
+    };
+
+    useEffect(() => {
+        const query = getQueryParams();
+        if (Object.keys(query).length === 0) {
+            console.log(
+                "query if",
+                getQueryParams(),
+                "searchState",
+                searchState
+            );
+            setSearchState((prevState) => ({
+                ...prevState,
+                page: paginationState.current_page.toString(),
+                page_size: paginationState.per_page.toString(),
+            }));
+
+            window.history.replaceState(
+                null,
+                "",
+                `${window.location.pathname}?${query.toString()}`
+            );
+        } else {
+            setSearchState(getQueryParams());
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const noOfPages = useMemo(() => {
         if (pagination?.total === undefined || pagination?.total === 0)
@@ -90,38 +144,23 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
             ...prevState,
             currentPage: pageNumber,
         }));
-        const newUrl = `${baseUrl}?page=${pageNumber}&page_size=${paginationState.per_page}`;
-        const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set("page", pageNumber.toString());
-        searchParams.set("page_size", paginationState.per_page.toString());
-        window.history.replaceState(
-            null,
-            "",
-            `${window.location.pathname}?${searchParams.toString()}`
-        );
+
+        setSearchState((prevState) => ({
+            ...prevState,
+            page: pageNumber.toString(),
+        }));
+
+        const queryParams = { ...searchState, page: pageNumber.toString() };
+        const searchParams = setQueryParams(queryParams);
+        const newUrl = `${baseUrl}?${searchParams.toString()}`;
+
         setFetchUrl(newUrl);
         setFetchAgain(true);
     };
 
-    const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-    });
-
     const handleSearch = () => {
         console.log(searchState, "searchState");
-        const searchParams = new URLSearchParams(window.location.search);
-        Object.keys(searchState).forEach((key: string) => {
-            searchParams.set(key, searchState[key] as string);
-        });
-        searchParams.set("page", paginationState.current_page.toString());
-        searchParams.set("page_size", paginationState.per_page.toString());
-        window.history.replaceState(
-            null,
-            "",
-            `${window.location.pathname}?${searchParams.toString()}`
-        );
+        const searchParams = setQueryParams(searchState);
         setFetchUrl(`${baseUrl}?${searchParams.toString()}`);
         setFetchAgain(true);
     };
@@ -130,28 +169,41 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
         <div className='border '>
             {data && data?.length > 0 && (
                 <div className='min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden p-6 '>
-                    <div>
+                    <div
+                        className={
+                            searchParamsArray.length > 1
+                                ? "col-12 col-md-12"
+                                : "col-12 col-md-6 "
+                        }>
                         <div className='input-group mb-3'>
-                            {searchParams.map((item: string, index: number) => (
-                                <input
-                                    key={index}
-                                    onChange={(e) =>
-                                        setSearchState({
-                                            ...searchState,
-                                            [item]: e.target.value,
-                                        })
-                                    }
-                                    type='text'
-                                    className='form-control placeholder-hover'
-                                    placeholder={capitalizeText(
-                                        item.replace(/_/g, " ")
-                                    )}
-                                />
-                            ))}
+                            <span
+                                className='input-group-text'
+                                id='basic-addon1'>
+                                <ArrowDownUp size={20} />
+                            </span>
+                            {searchParamsArray.map(
+                                (item: string, index: number) => (
+                                    <input
+                                        key={index}
+                                        onChange={(e) =>
+                                            setSearchState({
+                                                ...searchState,
+                                                [item]: e.target.value,
+                                            })
+                                        }
+                                        value={searchState[item] ?? ""}
+                                        type='text'
+                                        className='form-control form-control-sm placeholder-hover'
+                                        placeholder={capitalizeText(
+                                            item.replace(/_/g, " ")
+                                        )}
+                                    />
+                                )
+                            )}
                             <span
                                 onClick={handleSearch}
                                 className='btn btn-info btn-sm input-group-text'>
-                                Search
+                                <i className='bi bi-search'></i>
                             </span>
                         </div>
                     </div>

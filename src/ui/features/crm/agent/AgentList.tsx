@@ -15,6 +15,7 @@ import { Flag, People } from "react-bootstrap-icons";
 import PaginationTable from "../../../shared/components/PaginationTable";
 import NotFound from "../../../shared/molecules/NotFound";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
+import SearchPaginationTable from "../../../shared/components/SearchPaginationTable";
 
 const DocumentList = () => {
     const navigate = useNavigate();
@@ -225,13 +226,27 @@ const DocumentList = () => {
                         </div>
                     </div>
                     {data && (
-                        <PaginationTable
+                        // <PaginationTable
+                        //     pagination={pagination}
+                        //     setFetchAgain={setFetchAgain}
+                        //     columns={tableColumns as ColumnDef<unknown>[]}
+                        //     data={data}
+                        //     isLoading={isloading}
+                        //     baseUrl={baseUrl}
+                        //     setFetchUrl={setFetchUrl}
+                        // />
+                        <SearchPaginationTable
                             pagination={pagination}
                             setFetchAgain={setFetchAgain}
                             columns={tableColumns as ColumnDef<unknown>[]}
                             data={data}
                             isLoading={isloading}
                             baseUrl={baseUrl}
+                            searchParamsArray={[
+                                "first_name",
+                                "email",
+                                "mobile",
+                            ]}
                             setFetchUrl={setFetchUrl}
                         />
                     )}

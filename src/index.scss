@@ -313,10 +313,10 @@ $pimary-color: #70b541;
 .placeholder-hover:focus::placeholder {
     color: #5dbd65;
     position: absolute;
-    bottom: -0.5rem; /* Adjust the top position to move the placeholder up */
-    left: 2rem; /* Adjust the left position for proper alignment */
-    font-size: 1.1rem; /* Adjust the font size to make the placeholder smaller */
-    transition: top 0.2s ease-out; /* Add a smooth transition effect */
+    top: -0.5rem;
+    left: 2rem;
+    font-size: 1.1rem;
+    transition: top 0.2s ease-out;
     z-index: 666;
     background-color: #ffffff;
 }

@@ -14,6 +14,7 @@ import Modal2 from "../../../shared/components/Modal2";
 import PaginationTable from "../../../shared/components/PaginationTable";
 import NotFound from "../../../shared/molecules/NotFound";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
+import SearchPaginationTable from "../../../shared/components/SearchPaginationTable";
 
 const List = () => {
     const navigate = useNavigate();
@@ -227,13 +228,23 @@ const List = () => {
                         </div>
                     </div>
                     {data && (
-                        <PaginationTable
+                        // <PaginationTable
+                        //     pagination={pagination}
+                        //     setFetchAgain={setFetchAgain}
+                        //     columns={tableColumns as ColumnDef<unknown>[]}
+                        //     data={data}
+                        //     isLoading={isloading}
+                        //     baseUrl={baseUrl}
+                        //     setFetchUrl={setFetchUrl}
+                        // />
+                        <SearchPaginationTable
                             pagination={pagination}
                             setFetchAgain={setFetchAgain}
                             columns={tableColumns as ColumnDef<unknown>[]}
                             data={data}
                             isLoading={isloading}
                             baseUrl={baseUrl}
+                            searchParams={["name"]}
                             setFetchUrl={setFetchUrl}
                         />
                     )}
