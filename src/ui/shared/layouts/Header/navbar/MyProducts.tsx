@@ -1,6 +1,3 @@
-import { useEffect } from "react";
-import { useBoolean } from "usehooks-ts";
-
 interface IProps {
     showProduct: boolean;
 }
@@ -8,13 +5,14 @@ interface IProps {
 const MyProducts = (props: IProps) => {
     const { showProduct } = props;
 
-    useEffect(() => {
-        console.log(showProduct, "showProduct");
-    }, [showProduct]);
-
     return (
-        <div className='dropdown-content '>
-            <div className='card py-2 px-5'>
+        <div
+            className={
+                showProduct
+                    ? "dropdown-content d-block"
+                    : "dropdown-content d-none"
+            }>
+            <div className='card'>
                 <div className='card'>
                     <div className='card-header'>
                         <div className='card-title'>My Products</div>

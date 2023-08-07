@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import NavbarProducts from "./MyProducts";
 import useAuthContext from "../../../../../context/auth/useAuthContext";
 import { NavLink } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import MyProducts from "./MyProducts";
+import { useOnClickOutside } from "usehooks-ts";
+import MyAccount from "./MyAccount";
 
 const Navbar = () => {
+    const productRef = useRef(null);
+    const myAccountRef = useRef(null);
+    useOnClickOutside(productRef, () => setShowProducts(false));
+    useOnClickOutside(myAccountRef, () => setShowMyAccount(false));
+
     const { isLoggedIn, dispatch } = useAuthContext();
     const [showProducts, setShowProducts] = useState<boolean>(false);
+    const [showMyAccount, setShowMyAccount] = useState(false);
 
     const location = useLocation();
     const [pathName, setPathName] = useState<string[]>([]);
@@ -28,13 +36,19 @@ const Navbar = () => {
                         <NavLink className='navbar-brand' to='/'>
                             Navbar
                         </NavLink>
-                        <div className='p-relative'>
-                            <button
-                                onClick={() =>
-                                    setShowProducts(() => !showProducts)
-                                }>
-                                Products
-                            </button>
+                        <div ref={productRef} className='p-relative'>
+                            <div className='nav-item '>
+                                <div
+                                    className='d-flex align-items-center   btn btn-info btn-sm '
+                                    onClick={() =>
+                                        setShowProducts(() => !showProducts)
+                                    }>
+                                    <i className='ki-outline ki-abstract-26 fs-1 me-3'></i>
+                                    <span className='fw-bold fs-7'>
+                                        Products
+                                    </span>
+                                </div>
+                            </div>
                             <div>
                                 <MyProducts showProduct={showProducts} />
                             </div>
@@ -42,9 +56,34 @@ const Navbar = () => {
                     </div>
                     <div className='right-container'>
                         <li className='nav-item list-style-none'>
-                            <NavLink className='nav-link fw-bold fs-7' to='/'>
-                                Login
-                            </NavLink>
+                            {isLoggedIn ? (
+                                <div ref={myAccountRef} className='p-relative'>
+                                    <div className='nav-item '>
+                                        <div
+                                            className='d-flex align-items-center   nav-link '
+                                            onClick={() =>
+                                                setShowMyAccount(
+                                                    () => !showProducts
+                                                )
+                                            }>
+                                            <span className='fw-bold fs-7'>
+                                                My Accounts
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <MyAccount
+                                            showProduct={showMyAccount}
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                <NavLink
+                                    className='nav-link fw-bold '
+                                    to='/auth/login'>
+                                    Login
+                                </NavLink>
+                            )}
                         </li>
                     </div>
                 </div>
