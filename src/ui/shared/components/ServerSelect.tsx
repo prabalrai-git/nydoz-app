@@ -1,4 +1,11 @@
-import { Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
+import {
+    Dispatch,
+    SetStateAction,
+    useState,
+    useEffect,
+    useRef,
+    MouseEvent,
+} from "react";
 import { ArrowDown } from "react-bootstrap-icons";
 import useFetch from "../../../hooks/useFetch";
 import { useOnClickOutside } from "usehooks-ts";
@@ -10,10 +17,19 @@ interface IProps<T> {
     setselectedListItem: Dispatch<SetStateAction<T | undefined>>;
     placeholder: string;
     showDataLabel: keyof T;
+    showDataLabel2?: keyof T;
+    showDataLabelFromArray?: keyof T;
 }
 
 function ServerSelect<T>(props: IProps<T>) {
-    const { baseUrl, setselectedListItem, placeholder, showDataLabel } = props;
+    const {
+        baseUrl,
+        setselectedListItem,
+        placeholder,
+        showDataLabel,
+        showDataLabel2,
+        showDataLabelFromArray,
+    } = props;
     const [selectedItemText, setSelectedItemText] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [fetchUrl, setfetchUrl] = useState<string>(
@@ -53,11 +69,13 @@ function ServerSelect<T>(props: IProps<T>) {
         setShowListBox(false);
     };
 
-    const handleInputClick = (item: T) => {
-        console.log("handleInputClick", item);
-        console.log(item);
+    const handleInputClick = (
+        e: MouseEvent<HTMLLIElement, MouseEvent<Element, MouseEvent>>,
+        item: T
+    ) => {
+        e.stopPropagation();
         setselectedListItem(item);
-        setSelectedItemText(item[showDataLabel] as string);
+        setSelectedItemText(e?.currentTarget?.innerText ?? "");
         setShowListBox(false);
     };
 
@@ -107,9 +125,10 @@ function ServerSelect<T>(props: IProps<T>) {
                 {allValue?.map((item, index: number) => (
                     <li
                         key={index}
-                        onClick={() => handleInputClick(item)}
+                        onClick={(e) => handleInputClick(e, item)}
                         className='server-select-li cursor-pointer'>
-                        {item[showDataLabel] as string}
+                        &nbsp; {item[showDataLabel] as string} &nbsp;
+                        {showDataLabel2 && (item[showDataLabel2] as string)}
                     </li>
                 ))}
             </div>

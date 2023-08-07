@@ -1,10 +1,4 @@
-import {
-    useState,
-    useEffect,
-    useCallback,
-    Dispatch,
-    SetStateAction,
-} from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { XCircle } from "react-bootstrap-icons";
@@ -20,7 +14,10 @@ import {
     IClientPayload,
     IClientResponse,
 } from "../../../../types/products.types";
-import { IVisaTypeResponse } from "../../../../types/payload.type";
+import {
+    IVisaTypeResponse,
+    ICurrencysResponse,
+} from "../../../../types/payload.type";
 import { getSelectPropsFromCountry } from "../../../../functions/country";
 import useValidationError from "../../../../hooks/useValidationError";
 import API_ROUTE from "../../../../service/api";
@@ -29,44 +26,38 @@ import useHandleShowError from "../../../../hooks/useHandleShowError";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import AsyncSelect from "../../../shared/molecules/AsyncReactSelect";
 import {
-    InformationChannelResponse,
-    IVisitingPurposeResponse,
     IAgentResponse,
     IVisitorResponse,
+    IEnrollmentOpeningsResponse,
+    IEnrollmentResponse,
 } from "../../../../types/products.types";
-import ServerSideSearchSelect from "../../../shared/molecules/ServerSideSearchSelect";
+import ServerSelect from "../../../shared/components/ServerSelect";
 
 interface IFormData {
     registration_date: Date;
     first_name: string;
     last_name: string;
-    state: string;
-    street_address: string;
-    phone_nos: string[];
-    email: string[];
-    visiting_purpose: string;
+    state: string | undefined;
+    street_address: string | undefined;
+    phone_nos: string[] | [];
+    email: string[] | [];
     remarks: string | undefined;
-    deal_amount: number | undefined;
-    applied_position: string | undefined;
-    expected_salary_pa: number | undefined;
-    expected_take_off_date: Date | undefined;
+    deal_amount: number;
+    applied_position: string;
+    expected_salary_pa: number;
+    expected_take_off_date: Date;
     visiting_country_state: string | undefined;
 }
 
 const AddClient = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const showDataLabel: keyof IVisitorResponse = "first_name";
-
-    const [selectInformationChannel, setSelectInformationChannel] = useState<
-        InformationChannelResponse | undefined
-    >();
+    const firstName: keyof IVisitorResponse = "first_name";
+    const lastName: keyof IVisitorResponse = "last_name";
 
     const [selectedVistor, setSelectedVistor] = useState<
         IVisitorResponse | undefined
     >();
-    const [selectCommonVisitingPurpose, setSelectCommonVisitingPurpose] =
-        useState<IVisitingPurposeResponse | undefined>();
 
     const [selectedVisaType, setSelectedVisaType] = useState<
         IVisaTypeResponse | undefined
@@ -82,14 +73,24 @@ const AddClient = () => {
     >(undefined);
 
     const { updateData, postData, isLoading, error, errList } = useMutation(
-        API_ROUTE.CM_VISITORS,
+        API_ROUTE.CM_CLIENTS,
         true
     );
+
+    const [selectedCurrencyCode, setSelectCurrencyCode] = useState<
+        ICurrencysResponse | undefined
+    >();
+
+    const [selectedEnrollmentInstitute, setSelectEnrollmentInstitute] =
+        useState<IEnrollmentResponse | undefined>();
+
+    const [selectedEnrollmentOpening, setSelectEnrollmentOpening] = useState<
+        IEnrollmentOpeningsResponse | undefined
+    >();
 
     const {
         register,
         reset,
-        watch,
         control,
         setError,
         handleSubmit,
@@ -105,23 +106,10 @@ const AddClient = () => {
         resolver: yupResolver(clientSchema),
     });
 
-    useEffect(() => {
-        if (selectCommonVisitingPurpose) {
-            reset({
-                ...watch(),
-                visiting_purpose: selectCommonVisitingPurpose?.description,
-            });
-        }
-    }, [reset, selectCommonVisitingPurpose, watch]);
-
     const { fields, append, remove } = useFieldArray({
         control,
         name: "phone_nos" as never,
     });
-
-    // useEffect(() => {
-    //     console.log("fields", fields);
-    // }, [fields]);
 
     const {
         fields: emailFields,
@@ -151,15 +139,17 @@ const AddClient = () => {
 
         setSelectedCountry(country);
         setSelectedVisitingCountry(visitingCountry);
-        setSelectInformationChannel(dataDetails?.information_channel);
-        setSelectCommonVisitingPurpose(dataDetails?.visiting_purpose);
         setSelectedVisaType(dataDetails?.visa_type_id);
+        setSelectedAgent(dataDetails?.agent_id);
+        setSelectedVistor(dataDetails?.visitor_id);
+        setSelectCurrencyCode(dataDetails?.salary_currency_code);
+        setSelectEnrollmentInstitute(dataDetails?.enrollment_institute_id);
+        setSelectEnrollmentOpening(dataDetails?.enrollment_opening_id);
 
         reset({
             ...dataDetails,
             registration_date: registrationDateObj.toDate(),
             expected_take_off_date: expectedTakeUpDateObj.toDate(),
-            visiting_purpose: dataDetails?.visiting_purpose?.description,
         });
     }, [location?.state?.data, reset]);
 
@@ -175,13 +165,26 @@ const AddClient = () => {
     };
 
     const onFormSubmit = handleSubmit(async (data: IFormData) => {
+        console.log(data, "data");
+        console.log(selectedCountry, "selectedCountry");
+        console.log(selectedVisitingCountry, "selectedVisitingCountry");
+        console.log(selectedVisaType, "selectedVisaType");
+        console.log(selectedAgent, "selectedAgent");
+        console.log(selectedVistor, "selectedVistor");
+        console.log(selectedCurrencyCode, "selectedCurrencyCode");
+
         if (!selectedCountry) {
             toast.error("Please select country");
             return;
         }
 
-        if (!selectInformationChannel) {
-            toast.error("Please select information channel");
+        if (!selectedVisitingCountry) {
+            toast.error("Please select visiting country");
+            return;
+        }
+
+        if (!selectedVisaType) {
+            toast.error("Please select visa type");
             return;
         }
 
@@ -196,11 +199,15 @@ const AddClient = () => {
                 expected_take_off_date: moment(
                     data.expected_take_off_date
                 ).format("YYYY-MM-DD HH:mm:ss"),
+
                 country: selectedCountry?.value ?? "",
                 visiting_country: selectedVisitingCountry?.value ?? "",
-                visa_type_id: selectedVisaType?.id,
-                information_channel: selectInformationChannel?.id ?? "",
                 agent_id: selectedAgent?.id ?? "",
+                visa_type_id: selectedVisaType?.id ?? "",
+                visitor_id: selectedVistor?.id ?? "",
+                salary_currency_code: selectedCurrencyCode?.code ?? "",
+                enrollment_institute_id: selectedEnrollmentInstitute?.id ?? "",
+                enrollment_opening_id: selectedEnrollmentOpening?.id ?? "",
             };
 
             response = await updateData(
@@ -220,10 +227,15 @@ const AddClient = () => {
                 expected_take_off_date: moment(
                     data.expected_take_off_date
                 ).format("YYYY-MM-DD HH:mm:ss"),
+
                 country: selectedCountry?.value ?? "",
-                visa_type_id: selectedVisaType?.id ?? "",
                 visiting_country: selectedVisitingCountry?.value ?? "",
                 agent_id: selectedAgent?.id ?? "",
+                visa_type_id: selectedVisaType?.id ?? "",
+                visitor_id: selectedVistor?.id ?? "",
+                salary_currency_code: selectedCurrencyCode?.code ?? "",
+                enrollment_institute_id: selectedEnrollmentInstitute?.id ?? "",
+                enrollment_opening_id: selectedEnrollmentOpening?.id ?? "",
             };
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
@@ -242,7 +254,7 @@ const AddClient = () => {
             />
             <div className='card shadow-sm '>
                 <div className='card-header'>
-                    <h3 className='card-title'>Add Visitor Details</h3>
+                    <h2 className='card-title fw-bold'>Add Visitor Details</h2>
                     <div className='card-toolbar'>
                         <button
                             className='btn btn-sm btn-secondary'
@@ -257,14 +269,14 @@ const AddClient = () => {
                             {/* Personal Details */}
                             <div className='col-12 mb-3'>
                                 <div>
-                                    <h2
-                                        className='fw-bold mb-5'
+                                    <h3
+                                        className='fs-4 mb-5'
                                         id='custom-form-control'>
                                         Personal Details
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div className='row'>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className=' col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
                                                 Registration Date:
@@ -285,48 +297,55 @@ const AddClient = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className=' col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
+                                            <label className='form-label'>
                                                 Visitor:
                                             </label>
-                                            <ServerSideSearchSelect
+                                            <ServerSelect
                                                 placeholder='Search..'
                                                 baseUrl={API_ROUTE.CM_VISITORS}
                                                 selectedListItem={
                                                     selectedVistor
                                                 }
-                                                searchBy={"first_name"}
                                                 setselectedListItem={
                                                     setSelectedVistor
                                                 }
-                                                dataId='id'
                                                 showDataLabel={
-                                                    showDataLabel as never
+                                                    firstName as never
                                                 }
+                                                showDataLabel2={
+                                                    lastName as never
+                                                }
+                                                showDataLabelFromArray='phone_nos'
                                             />
                                         </div>
                                     </div>
 
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='form-label'>
                                                 Agent:
                                             </label>
-                                            <AsyncSelect
+
+                                            <ServerSelect
                                                 placeholder='Search..'
                                                 baseUrl={API_ROUTE.CM_AGENTS}
-                                                setSelectValue={
+                                                selectedListItem={selectedAgent}
+                                                setselectedListItem={
                                                     setSelectedAgent
                                                 }
-                                                selectValue={selectedAgent}
-                                                dataId='id'
-                                                showDataLabel='first_name'
+                                                showDataLabel={
+                                                    firstName as never
+                                                }
+                                                showDataLabel2={
+                                                    lastName as never
+                                                }
                                             />
                                         </div>
                                     </div>
 
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
                                                 First Name:
@@ -342,7 +361,7 @@ const AddClient = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
                                                 Last Name:
@@ -358,9 +377,9 @@ const AddClient = () => {
                                         </div>
                                     </div>
                                     {/* Phone Number */}
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
+                                            <label className=' form-label'>
                                                 Phone Number:
                                             </label>
 
@@ -417,9 +436,9 @@ const AddClient = () => {
                                         </div>
                                     </div>
                                     {/* Email */}
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
+                                            <label className=' form-label'>
                                                 Email Address:
                                             </label>
                                             {emailFields.map((field, index) => (
@@ -484,7 +503,7 @@ const AddClient = () => {
                             <div className='col-12 mb-6'>
                                 <div>
                                     <h2
-                                        className='fw-bold mb-5'
+                                        className='fs-4 mb-5'
                                         id='custom-form-control'>
                                         Address Details
                                     </h2>
@@ -492,7 +511,7 @@ const AddClient = () => {
                                 <div className='row'>
                                     <div className='col-12 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
+                                            <label className=' form-label'>
                                                 Full Address
                                             </label>
                                             <input
@@ -505,9 +524,9 @@ const AddClient = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7   mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7   mb-6'>
                                         <div>
-                                            <label className='required form-label'>
+                                            <label className='form-label'>
                                                 Visitor's State /province
                                             </label>
                                             <input
@@ -520,7 +539,7 @@ const AddClient = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-6  gap-5 gap-md-7   mb-6'>
+                                    <div className='col-12 col-md-6  gap-5 gap-md-7   mb-6'>
                                         <div>
                                             <label className='required form-label'>
                                                 Country
@@ -535,62 +554,6 @@ const AddClient = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Visiting Purpose
-                                            </label>
-                                            <input
-                                                className='form-control'
-                                                placeholder='Enter your visiting purpose.'
-                                                {...register(
-                                                    "visiting_purpose"
-                                                )}
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {
-                                                    errors.visiting_purpose
-                                                        ?.message
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Common Visiting Purpose:
-                                            </label>
-                                            <AsyncSelect
-                                                placeholder='Search..'
-                                                baseUrl={
-                                                    API_ROUTE.CM_VISITING_PURPOSES
-                                                }
-                                                setSelectValue={
-                                                    setSelectCommonVisitingPurpose
-                                                }
-                                                selectValue={
-                                                    selectCommonVisitingPurpose
-                                                }
-                                                dataId='id'
-                                                showDataLabel='description'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className='col-12 gap-5 gap-md-7  mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className=' form-label'>
-                                                Remarks
-                                            </label>
-                                            <textarea
-                                                className='form-control'
-                                                {...register("remarks")}
-                                                placeholder='description'
-                                            />
-                                            <div className='fv-plugins-message-container invalid-feedback'>
-                                                {errors.remarks?.message}
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             {/* Address Details Ends */}
@@ -599,16 +562,35 @@ const AddClient = () => {
                             <div className='col-12 mb-6'>
                                 <div>
                                     <h2
-                                        className='fw-bold mb-5'
+                                        className='fs-4 mb-5'
                                         id='custom-form-control'>
                                         Visiting Details
                                     </h2>
                                 </div>
                                 <div className='row'>
-                                    <div className='col-6  gap-5 gap-md-7   mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Visa Type
+                                            </label>
+                                            <AsyncSelect
+                                                placeholder='Search for visa type.'
+                                                baseUrl={
+                                                    API_ROUTE.GET_VISA_TYPES
+                                                }
+                                                setSelectValue={
+                                                    setSelectedVisaType
+                                                }
+                                                selectValue={selectedVisaType}
+                                                dataId='id'
+                                                showDataLabel='description'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-md-6  gap-5 gap-md-7   mb-6'>
                                         <div>
                                             <label className='required form-label'>
-                                                Country
+                                                Visit Country
                                             </label>
                                             <CountryCode
                                                 placeholder='Select Visiting Country'
@@ -622,33 +604,15 @@ const AddClient = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
-                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='required form-label'>
-                                                Visa Type
-                                            </label>
-                                            <AsyncSelect
-                                                placeholder='Search..'
-                                                baseUrl={
-                                                    API_ROUTE.GET_VISA_TYPES
-                                                }
-                                                setSelectValue={
-                                                    setSelectedVisaType
-                                                }
-                                                selectValue={selectedVisaType}
-                                                dataId='id'
-                                                showDataLabel='description'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='form-label'>
                                                 Visiting State
                                             </label>
                                             <input
                                                 className='form-control'
-                                                placeholder='How do you know about our office ?'
+                                                placeholder='Enter your visiting state.'
                                                 {...register(
                                                     "visiting_country_state"
                                                 )}
@@ -662,7 +626,7 @@ const AddClient = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
                                                 Deal Amount
@@ -681,14 +645,14 @@ const AddClient = () => {
                                         </div>
                                     </div>
 
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                            <label className='form-label'>
+                                            <label className='required form-label'>
                                                 Applied Position
                                             </label>
                                             <input
                                                 className='form-control'
-                                                placeholder='Enter your visiting purpose.'
+                                                placeholder='Enter applied position or course.'
                                                 {...register(
                                                     "applied_position"
                                                 )}
@@ -701,15 +665,15 @@ const AddClient = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
-                                                Expected Salary
+                                                Expected Salary Per Annum
                                             </label>
                                             <input
                                                 type='number'
                                                 className='form-control'
-                                                placeholder='Enter your visiting purpose.'
+                                                placeholder='Enter expected salary/fee per annum.'
                                                 {...register(
                                                     "expected_salary_pa",
                                                     {
@@ -725,7 +689,7 @@ const AddClient = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                             <label className='required form-label'>
                                                 Expected Take Off Date
@@ -744,6 +708,87 @@ const AddClient = () => {
                                                         .expected_take_off_date
                                                         ?.message
                                                 }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Salary Currency Code
+                                            </label>
+                                            <AsyncSelect
+                                                placeholder='Search for visa type.'
+                                                baseUrl={API_ROUTE.GET_CURRENCY}
+                                                setSelectValue={
+                                                    setSelectCurrencyCode
+                                                }
+                                                selectValue={
+                                                    selectedCurrencyCode
+                                                }
+                                                dataId='code'
+                                                showDataLabel='name'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='form-label'>
+                                                Enrollment Institute:
+                                            </label>
+
+                                            <ServerSelect
+                                                placeholder='Search..'
+                                                baseUrl={
+                                                    API_ROUTE.CM_ENROLLMENT
+                                                }
+                                                selectedListItem={
+                                                    selectedEnrollmentInstitute
+                                                }
+                                                setselectedListItem={
+                                                    setSelectEnrollmentInstitute
+                                                }
+                                                showDataLabel={"name" as never}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='form-label'>
+                                                Enrollment Openings:
+                                            </label>
+
+                                            <div>
+                                                <ServerSelect
+                                                    placeholder='Search..'
+                                                    baseUrl={`${API_ROUTE.CM_ENROLLMENT_OPENINGS}?enroll_institute_id=${selectedEnrollmentInstitute}`}
+                                                    selectedListItem={
+                                                        selectedEnrollmentOpening
+                                                    }
+                                                    setselectedListItem={
+                                                        setSelectEnrollmentOpening
+                                                    }
+                                                    showDataLabel={
+                                                        "position" as never
+                                                    }
+                                                    showDataLabel2={
+                                                        "total_opening" as never
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='col-12  gap-5 gap-md-7  mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className=' form-label'>
+                                                Remarks
+                                            </label>
+                                            <textarea
+                                                className='form-control'
+                                                {...register("remarks")}
+                                                placeholder='description'
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {errors.remarks?.message}
                                             </div>
                                         </div>
                                     </div>

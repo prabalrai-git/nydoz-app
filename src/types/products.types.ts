@@ -54,6 +54,7 @@ export interface IVisitorPayload {
 }
 
 export interface IVisitorResponse {
+    id: string;
     registration_date: string;
     information_channel: InformationChannelResponse;
     first_name: string;
@@ -139,11 +140,11 @@ export interface IClientPayload {
     first_name: string;
     last_name: string;
     country: string;
-    state: string;
-    street_address: string | null;
+    state: string | undefined;
+    street_address: string | undefined;
     phone_nos: string[];
     visitor_id: string | null;
-    remarks: string;
+    remarks: string | undefined;
     email: string[];
     visa_type_id: string | null;
     visiting_country: string;
@@ -153,7 +154,7 @@ export interface IClientPayload {
     expected_take_off_date: string;
     salary_currency_code: string;
     agent_id: string | null;
-    visiting_country_state: string;
+    visiting_country_state: string | undefined;
     enrollment_institute_id: string;
     enrollment_opening_id: string;
 }
@@ -164,14 +165,14 @@ export interface IClientResponse {
     last_name: string;
     phone_nos: string[];
     email: string[];
-    visitor_id: IVisitorResponse | null;
+    visitor_id: IVisitorResponse | undefined;
     remarks: string;
-    street_address: string | null;
+    street_address: string | undefined;
     state: string;
     country: string;
-    profile_picture: string | null;
-    postal_code: string | null;
-    agent_id: IAgentResponse | null;
+    profile_picture: string | undefined;
+    postal_code: string | undefined;
+    agent_id: IAgentResponse | undefined;
     visiting_purpose: string;
     information_channel: InformationChannelResponse;
     going_to_foreign: boolean;

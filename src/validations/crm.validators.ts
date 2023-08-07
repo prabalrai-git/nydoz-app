@@ -107,54 +107,65 @@ export const informationChannelSchema = yup.object().shape({
     description: yup.string().required(),
 });
 
+// {
+//     "first_name": "Ian",
+//     "last_name": "Blankenship",
+//     "state": "Eum impedit aliqua",
+//     "phone_nos": [
+//         "+1 (907) 769-7639"
+//     ],
+//     "email": [
+//         "dohuqejik@mailinator.com"
+//     ],
+//     "registration_date": "1989-10-11",
+//     "street_address": "Velit similique odi",
+//     "visiting_country_state": "Magni reprehenderit ",
+//     "deal_amount": 94,
+//     "applied_position": "Vitae nemo reprehend",
+//     "expected_salary_pa": 80,
+//     "expected_take_off_date": "1987-10-22",
+//     "remarks": "Eos magna itaque ha"
+// }
+
 export const clientSchema = yup.object().shape({
     registration_date: yup.date().required(),
     first_name: yup.string().required("First Name is required."),
     last_name: yup.string().required("Last Name is required."),
     // country-from-component
-    state: yup.string().required("State is required."),
-    street_address: yup.string().required("Address is required."),
-    phone_nos: yup
-        .array()
-        .of(
-            yup
-                .string()
-                .required(
-                    "Atleast one phone number /mobile number is required."
-                )
-        ),
+    state: yup.string(),
+    street_address: yup.string(),
+    phone_nos: yup.array().of(yup.string()),
     // visitor id from component
     remarks: yup.string(),
 
-    email: yup
-        .array()
-        .of(
-            yup
-                .string()
-                .email("Email must be a valid email.")
-                .required("Atleast one email address is required.")
-        ),
+    email: yup.array().of(yup.string().email("Email must be a valid email.")),
     // visa_type_id-from-component
     // visiting_country-from-component
-    deal_amount: yup.number().transform((value, originalValue) => {
-        if (isNaN(originalValue) || originalValue === "") {
-            return undefined;
-        }
-        return value;
-    }),
-    applied_position: yup.string(),
-    expected_salary_pa: yup.number().transform((value, originalValue) => {
-        if (isNaN(originalValue) || originalValue === "") {
-            return undefined;
-        }
-        return value;
-    }),
-    expected_take_off_date: yup.date(),
-    salary_currency_code: yup.string().required("Currency is required."),
+    deal_amount: yup
+        .number()
+        .transform((value, originalValue) => {
+            if (isNaN(originalValue) || originalValue === "") {
+                return undefined;
+            }
+            return value;
+        })
+        .required("Deal amount is required."),
+    applied_position: yup.string().required("Applied position is required."),
+    expected_salary_pa: yup
+        .number()
+        .transform((value, originalValue) => {
+            if (isNaN(originalValue) || originalValue === "") {
+                return undefined;
+            }
+            return value;
+        })
+        .required("Expected salary is required."),
+    expected_take_off_date: yup
+        .date()
+        .required("Expected take off date is required."),
+    // salary_currency_code-from-component
     //agent_id-from-component
-    visiting_country_state: yup
-        .string()
-        .required("Visiting State is required."),
+    visiting_country_state: yup.string(),
     // enrollment_id-from-component
     // enrollment_opening_from-component
 });
