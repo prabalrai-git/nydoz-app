@@ -36,8 +36,6 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
-    const [paginationState, setPaginationState] =
-        useState<IPagination>(pagination);
     const [searchState, setSearchState] = useState<SearchState>({});
 
     const getQueryParams = () => {
@@ -65,22 +63,16 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
     useEffect(() => {
         const query = getQueryParams();
         if (Object.keys(query).length === 0) {
-            console.log(
-                "query if",
-                getQueryParams(),
-                "searchState",
-                searchState
-            );
-            setSearchState((prevState) => ({
-                ...prevState,
-                page: paginationState.current_page.toString(),
-                page_size: paginationState.per_page.toString(),
-            }));
-
+            setSearchState({
+                page: pagination.current_page.toString(),
+                page_size: pagination.per_page.toString(),
+            });
             window.history.replaceState(
                 null,
                 "",
-                `${window.location.pathname}?${query.toString()}`
+                `${
+                    window.location.pathname
+                }?page=${pagination.current_page.toString()}&page_size=${pagination.per_page.toString()} `
             );
         } else {
             setSearchState(getQueryParams());
@@ -98,53 +90,44 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
     const handlePrevious = (currentPage: number) => {
         if (currentPage === 1) return;
 
-        setPaginationState((prevState) => ({
+        setSearchState((prevState) => ({
             ...prevState,
-            currentPage: currentPage - 1,
+            page: (currentPage - 1).toString(),
         }));
-        const newUrl = `${baseUrl}?page=${currentPage - 1}&page_size=${
-            paginationState.per_page
-        }`;
-        const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set("page", (currentPage - 1).toString());
-        searchParams.set("page_size", paginationState.per_page.toString());
-        window.history.replaceState(
-            null,
-            "",
-            `${window.location.pathname}?${searchParams.toString()}`
-        );
+
+        const queryParams = {
+            ...searchState,
+            page: (currentPage - 1).toString(),
+        };
+
+        const searchParams = setQueryParams(queryParams);
+        const newUrl = `${baseUrl}?${searchParams.toString()}`;
+
         setFetchUrl(newUrl);
         setFetchAgain(true);
     };
 
     const handleNext = (currentPage: number) => {
         if (currentPage === pagination?.last_page) return;
-        setPaginationState((prevState) => ({
-            ...prevState,
-            currentPage: currentPage + 1,
-        }));
-        const newUrl = `${baseUrl}?page=${currentPage + 1}&page_size=${
-            paginationState.per_page
-        }`;
 
-        const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set("page", (currentPage + 1).toString());
-        searchParams.set("page_size", paginationState.per_page.toString());
-        window.history.replaceState(
-            null,
-            "",
-            `${window.location.pathname}?${searchParams.toString()}`
-        );
+        setSearchState((prevState) => ({
+            ...prevState,
+            page: (currentPage + 1).toString(),
+        }));
+
+        const queryParams = {
+            ...searchState,
+            page: (currentPage + 1).toString(),
+        };
+
+        const searchParams = setQueryParams(queryParams);
+        const newUrl = `${baseUrl}?${searchParams.toString()}`;
+
         setFetchUrl(newUrl);
         setFetchAgain(true);
     };
 
     const changePage = (pageNumber: number) => {
-        setPaginationState((prevState) => ({
-            ...prevState,
-            currentPage: pageNumber,
-        }));
-
         setSearchState((prevState) => ({
             ...prevState,
             page: pageNumber.toString(),
@@ -153,15 +136,56 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
         const queryParams = { ...searchState, page: pageNumber.toString() };
         const searchParams = setQueryParams(queryParams);
         const newUrl = `${baseUrl}?${searchParams.toString()}`;
-
         setFetchUrl(newUrl);
         setFetchAgain(true);
     };
 
     const handleSearch = () => {
-        console.log(searchState, "searchState");
         const searchParams = setQueryParams(searchState);
-        setFetchUrl(`${baseUrl}?${searchParams.toString()}`);
+        const newUrl = `${baseUrl}?${searchParams.toString()}`;
+        setFetchUrl(newUrl);
+        setFetchAgain(true);
+    };
+
+    const handleReset = () => {
+        if (
+            JSON.stringify({
+                page: pagination.current_page.toString(),
+                page_size: pagination.per_page.toString(),
+            }) === JSON.stringify(searchState)
+        )
+            return;
+        setSearchState({
+            page: pagination.current_page.toString(),
+            page_size: pagination.per_page.toString(),
+        });
+        window.history.replaceState(
+            null,
+            "",
+            `${
+                window.location.pathname
+            }?page=${pagination.current_page.toString()}&page_size=${pagination.per_page.toString()} `
+        );
+        const newUrl = `${baseUrl}`;
+        setFetchUrl(newUrl);
+        setFetchAgain(true);
+    };
+
+    const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSearchState((prevState) => ({
+            ...prevState,
+            page_size: e.target.value,
+        }));
+
+        const queryParams = {
+            ...searchState,
+            page_size: e.target.value,
+        };
+
+        const searchParams = setQueryParams(queryParams);
+        const newUrl = `${baseUrl}?${searchParams.toString()}`;
+
+        setFetchUrl(newUrl);
         setFetchAgain(true);
     };
 
@@ -177,9 +201,11 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
                         }>
                         <div className='input-group mb-3'>
                             <span
+                                onClick={handleReset}
                                 className='input-group-text'
                                 id='basic-addon1'>
-                                <ArrowDownUp size={20} />
+                                {/* <ArrowDownUp size={20} /> */}
+                                Reset
                             </span>
                             {searchParamsArray.map(
                                 (item: string, index: number) => (
@@ -208,6 +234,16 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
                         </div>
                     </div>
                     <div className='d-flex justify-content-between '>
+                        <div className='flex-2'>
+                            <select
+                                value={pagination.per_page}
+                                className='form-select'
+                                onChange={(e) => handlePageSizeChange(e)}>
+                                <option value='5'>15</option>
+                                <option value='10'>10</option>
+                                <option value='20'>20</option>
+                            </select>
+                        </div>
                         <div className='flex-1'>
                             <h6 className='bg-light text-info py-2'>
                                 <span>From :{pagination?.from ?? "N/A"}</span>
