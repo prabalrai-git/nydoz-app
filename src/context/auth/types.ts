@@ -50,4 +50,16 @@ export type TAction =
       }
     | { type: "LOGOUT" }
     | { type: "TOGGLE_PRODUCT_SIDEBAR" }
-    | { type: "TOGGLE_PRODUCT_SIDEBAR_APP" };
+    | {
+          type: "SET_PRODUCT_SIDEBAR";
+          payload: { showProductSidebar: boolean };
+      }
+    | { type: "TOGGLE_PRODUCT_SIDEBAR_APP" }
+    | {
+          type: "SET_PRODUCT_SIDEBAR_APP";
+          payload: { showProductSidebarApp: boolean };
+      }
+    | {
+          type: "SET_WINDOW_SIZE";
+          payload: { windowWidthSize: number };
+      };

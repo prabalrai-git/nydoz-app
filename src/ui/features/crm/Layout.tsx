@@ -10,8 +10,11 @@ import {
     PersonCheck,
     PersonLock,
 } from "react-bootstrap-icons";
+import { useWindowSize } from "usehooks-ts";
 
 const CrmLayout = () => {
+    const { width } = useWindowSize();
+
     const sidebarMenu: ISidebarMenu[] = [
         {
             id: 1,
@@ -59,13 +62,11 @@ const CrmLayout = () => {
             <ProductSideMenu sidebarMenuList={sidebarMenu} />
             <div
                 className={
-                    showProductSidebar
-                        ? "doc-content  "
-                        : "doc-content-wide container-fluid"
+                    showProductSidebar && width > 768
+                        ? "doc-content"
+                        : "doc-content-sm "
                 }>
-                <div className='mt-6 px-3'>
-                    <Outlet />
-                </div>
+                <Outlet />
             </div>
         </div>
     );

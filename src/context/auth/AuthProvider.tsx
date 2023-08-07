@@ -7,6 +7,7 @@ import API_ROUTE from "../../service/api";
 import LoadingPage from "../../ui/features/utils/LoadingPage";
 import { toast } from "react-toastify";
 import webSettingReducer from "./webSettingReducer";
+import { useWindowSize } from "usehooks-ts";
 
 const intialState: IState = {
     isLoggedIn: false,
@@ -36,12 +37,12 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         sessionStorage.getItem("token") ||
         null;
     // const [token, setToken] = useState<string | null>(tokenFromLocal);
-
+    const { width } = useWindowSize();
     const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
     const [state, dispatch] = useReducer(authReducer, intialState);
     const { fetchData } = useFetch<IUseMeData>(API_ROUTE.LOGGED_IN_USER, true);
     const [webSetting, dispatchWebSetting] = useReducer(webSettingReducer, {
-        showProductSidebar: true,
+        showProductSidebar: width > 768 ? true : false,
         showProductSidebarApp: false,
     });
 
@@ -95,6 +96,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{ state, dispatch, webSetting, dispatchWebSetting }}>
+            <h1>{width}</h1>
             {showSplashScreen ? <LoadingPage /> : children}
         </AuthContext.Provider>
     );

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import useWebSetting from "../../../../context/useWebSetting";
 import { ISidebarMenu } from "../../../../types/app.types";
+import { useWindowSize } from "usehooks-ts";
 
 interface IProps {
     sidebarMenuList: ISidebarMenu[];
@@ -8,14 +9,17 @@ interface IProps {
 
 const ProductSideMenu = (props: IProps) => {
     const { sidebarMenuList } = props;
-
+    const { width } = useWindowSize();
     const { webSetting } = useWebSetting();
     const { showProductSidebar } = webSetting;
 
     const sidebarClassName = showProductSidebar ? "slide-in" : "slide-out";
 
     return (
-        <div className={`docs-aside ${sidebarClassName}`}>
+        <div
+            className={`${
+                width > 768 ? "docs-aside" : "docs-aside-sm"
+            } ${sidebarClassName}`}>
             <div className='app-sidebar-primary h-100vh'>
                 <div
                     className='d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-5 mt-3'
@@ -44,10 +48,11 @@ const ProductSideMenu = (props: IProps) => {
                                         aria-selected='false'
                                         role='tab'>
                                         <span>{item.icon}</span>
-
-                                        <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
-                                            {item.title}
-                                        </span>
+                                        {showProductSidebar && (
+                                            <span className='pt-2 fs-9 fs-lg-7 fw-bold'>
+                                                {item.title}
+                                            </span>
+                                        )}
                                     </NavLink>
                                 </li>
                             );
