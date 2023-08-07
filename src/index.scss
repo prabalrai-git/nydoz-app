@@ -299,3 +299,24 @@ $pimary-color: #70b541;
 .list-style-none {
     list-style: none;
 }
+
+.placeholder-hover {
+    position: relative;
+    z-index: 6;
+    background-color: transparent;
+}
+
+.placeholder-hover::placeholder {
+    color: transparent;
+}
+
+.placeholder-hover:focus::placeholder {
+    color: #5dbd65;
+    position: absolute;
+    bottom: -0.5rem; /* Adjust the top position to move the placeholder up */
+    left: 2rem; /* Adjust the left position for proper alignment */
+    font-size: 1.1rem; /* Adjust the font size to make the placeholder smaller */
+    transition: top 0.2s ease-out; /* Add a smooth transition effect */
+    z-index: 666;
+    background-color: #ffffff;
+}

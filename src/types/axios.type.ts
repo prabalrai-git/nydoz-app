@@ -49,3 +49,7 @@ export interface IPaginatedTableProps<T> {
     isLoading: boolean;
     setFetchAgain: (fetchAgain: boolean) => void;
 }
+
+export interface ISearchPaginatedTableProps<T> extends IPaginatedTableProps<T> {
+    searchParams: string[];
+}
