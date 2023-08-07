@@ -13,18 +13,13 @@ const MyProducts = (props: IProps) => {
                     : "dropdown-content d-none"
             }>
             <div className='card'>
-                <div className='card'>
-                    <div className='card-header'>
-                        <div className='card-title'>My Products</div>
-                        <div className='card-toolbar'>
-                            <button className='btn btn-info btn-sm '>
-                                View All
-                            </button>
-                        </div>
+                <div className='card-header'>
+                    <div className='card-title'>My Products</div>
+                    <div className='card-toolbar'>
+                        <button className='btn btn-secondary text-primary btn-sm '>
+                            View All
+                        </button>
                     </div>
-                </div>
-                <div className='card-body'>
-                    <div className='mh-450px scroll-y me-n5 pe-5'></div>
                 </div>
             </div>
         </div>
