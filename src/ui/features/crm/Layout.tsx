@@ -66,7 +66,9 @@ const CrmLayout = () => {
                         ? "doc-content"
                         : "doc-content-sm "
                 }>
-                <Outlet />
+                <div className='ps-2'>
+                    <Outlet />
+                </div>
             </div>
         </div>
     );

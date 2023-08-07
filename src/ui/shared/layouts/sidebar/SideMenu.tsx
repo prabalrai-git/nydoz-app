@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import useWebSetting from "../../../../context/useWebSetting";
 import { ISidebarMenu } from "../../../../types/app.types";
 import { useWindowSize } from "usehooks-ts";
+import { ArrowBarLeft, ArrowBarRight } from "react-bootstrap-icons";
 
 interface IProps {
     sidebarMenuList: ISidebarMenu[];
@@ -10,16 +11,29 @@ interface IProps {
 const ProductSideMenu = (props: IProps) => {
     const { sidebarMenuList } = props;
     const { width } = useWindowSize();
-    const { webSetting } = useWebSetting();
+    const { webSetting, dispatchWebSetting } = useWebSetting();
     const { showProductSidebar } = webSetting;
 
     const sidebarClassName = showProductSidebar ? "slide-in" : "slide-out";
+
+    const handleToggleSidebar = () => {
+        dispatchWebSetting({
+            type: "TOGGLE_PRODUCT_SIDEBAR",
+        });
+    };
 
     return (
         <div
             className={`${
                 width > 768 ? "docs-aside" : "docs-aside-sm"
             } ${sidebarClassName}`}>
+            <div onClick={handleToggleSidebar} className='sidebar_btn'>
+                {showProductSidebar ? (
+                    <ArrowBarLeft size={20} />
+                ) : (
+                    <ArrowBarRight size={20} />
+                )}
+            </div>
             <div className='app-sidebar-primary h-100vh'>
                 <div
                     className='d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-5 mt-3'

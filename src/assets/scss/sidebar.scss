@@ -24,6 +24,25 @@
     // background-color: #c6f3e4;
 }
 
+.sidebar_btn {
+    position: absolute;
+    color: #2c2b2b;
+    border: none;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    right: 2px;
+    top: 35%;
+    z-index: 105;
+    background-color: #efefef59;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
 .doc-content {
     margin-top: 40px;
     margin-left: 150px;
