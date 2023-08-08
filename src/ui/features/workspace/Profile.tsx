@@ -22,7 +22,7 @@ interface FormData {
     postal_code: string;
 }
 
-const Register = () => {
+const Profile = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [selectedCountryCode, setSelectedCountryCode] = useState<
@@ -422,4 +422,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Profile;

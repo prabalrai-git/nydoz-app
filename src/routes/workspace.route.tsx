@@ -2,7 +2,9 @@ import loadable from "@loadable/component";
 import { RouteObject } from "react-router-dom";
 import CompanyRoutes from "./Company";
 
-const UserDashboard = loadable(() => import("../ui/features/user/Dashboard"));
+const WorkSpaceDashboard = loadable(
+    () => import("../ui/features/workspace/Dashboard")
+);
 const AddCompany = loadable(() => import("../ui/features/company/AddCompany"));
 const ChangePassword = loadable(
     () => import("../ui/features/auth/ForgetPassword")
@@ -13,7 +15,7 @@ const WorkspaceRoutes: RouteObject[] = [
     {
         id: "1",
         path: "",
-        element: <UserDashboard />,
+        element: <WorkSpaceDashboard />,
     },
     {
         id: "2",
