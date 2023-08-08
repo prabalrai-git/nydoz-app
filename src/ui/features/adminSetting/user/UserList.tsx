@@ -6,10 +6,9 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import API_ROUTE from "../../../../service/api";
 import { IUsersOfCompanyResponse } from "../../../../types/company.type";
 import useFetch from "../../../../hooks/useFetch";
-import TanStackTable from "../../../shared/molecules/TanStackTable";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
-import { Spinner } from "react-bootstrap";
+import SearchPaginationTable from "../../../shared/components/SearchPaginationTable";
 
 const UserList = () => {
     const tableColumns: ColumnDef<IUsersOfCompanyResponse>[] = [
@@ -106,15 +105,20 @@ const UserList = () => {
             footer: (info) => info.column.id,
         },
     ];
-
-    const { data, fetchData, error, isloading } = useFetch<
+    const baseUrl = API_ROUTE.USER;
+    const [fetchUrl, setFetchUrl] = useState<string>(baseUrl);
+    const [fetchAgain, setFetchAgain] = useState<boolean>(true);
+    const { data, error, isloading, fetchDataById, pagination } = useFetch<
         IUsersOfCompanyResponse[]
     >(API_ROUTE.USER, true);
 
     useEffect(() => {
-        fetchData();
+        if (fetchAgain) {
+            fetchDataById(fetchUrl);
+            setFetchAgain(false);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [fetchAgain, fetchDataById]);
 
     useHandleShowError(error);
 
@@ -133,10 +137,21 @@ const UserList = () => {
                     </div>
                 </div>
                 <div className='card-body'>
-                    {data && data?.length > 0 && (
-                        <TanStackTable columns={tableColumns} data={data} />
-                    )}
-                    {isloading && <Spinner animation='border' />}
+                    <SearchPaginationTable
+                        pagination={pagination}
+                        setFetchAgain={setFetchAgain}
+                        columns={tableColumns as ColumnDef<unknown>[]}
+                        data={data ?? []}
+                        isLoading={isloading}
+                        baseUrl={baseUrl}
+                        searchParamsArray={[
+                            "first_name",
+                            "last_name",
+                            "email",
+                            "mobile",
+                        ]}
+                        setFetchUrl={setFetchUrl}
+                    />
                 </div>
             </div>
         </section>

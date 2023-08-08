@@ -6,10 +6,11 @@ import { ArrowBarLeft, ArrowBarRight } from "react-bootstrap-icons";
 
 interface IProps {
     sidebarMenuList: ISidebarMenu[];
+    title: string;
 }
 
 const ProductSideMenu = (props: IProps) => {
-    const { sidebarMenuList } = props;
+    const { sidebarMenuList, title } = props;
     const { width } = useWindowSize();
     const { webSetting, dispatchWebSetting } = useWebSetting();
     const { showProductSidebar } = webSetting;
@@ -36,9 +37,9 @@ const ProductSideMenu = (props: IProps) => {
             </div>
             <div className='app-sidebar-primary h-100vh'>
                 <div
-                    className='d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-5 mt-3'
+                    className='d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-3 mt-6'
                     id='kt_app_sidebar_primary_header'>
-                    <span className='text-uppercase'>CRM</span>
+                    <span className='text-uppercase'>{title}</span>
                 </div>
                 <div
                     className='app-sidebar-nav flex-grow-1 hover-scroll-overlay-y px-5 pt-2'

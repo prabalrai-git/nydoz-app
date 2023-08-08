@@ -141,7 +141,10 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
     };
 
     const handleSearch = () => {
-        const searchParams = setQueryParams(searchState);
+        const searchParams = setQueryParams({
+            ...searchState,
+            page: (1).toString(),
+        });
         const newUrl = `${baseUrl}?${searchParams.toString()}`;
         setFetchUrl(newUrl);
         setFetchAgain(true);

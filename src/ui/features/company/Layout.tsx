@@ -11,7 +11,6 @@ import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
 import {
-    Buildings,
     Gear,
     House,
     PersonBadge,
@@ -82,29 +81,24 @@ const CompanyLayout = () => {
             link: "dashboard",
             icon: <House size={20} />,
         },
-        {
-            id: 2,
-            title: "Visitors",
-            link: "visitors",
-            icon: <PersonBadge size={20} />,
-        },
+
         {
             id: 3,
-            title: "Clients",
-            link: "clients",
+            title: "Products",
+            link: "products",
             icon: <PersonCheck size={20} />,
         },
         {
             id: 4,
-            title: "Agents",
-            link: "agents",
+            title: "Software",
+            link: "software",
             icon: <PersonLock size={22} />,
         },
         {
-            id: 5,
-            title: "Institutions",
-            link: "enrolled-institutes/list",
-            icon: <Buildings size={20} />,
+            id: 2,
+            title: "Profile",
+            link: `profile/${companyInfo?.id}`,
+            icon: <PersonBadge size={20} />,
         },
         {
             id: 6,
@@ -115,7 +109,7 @@ const CompanyLayout = () => {
     ];
 
     const { webSetting } = useWebSetting();
-    const { showCompanySidebar } = webSetting;
+    // const { showCompanySidebar } = webSetting;
     return (
         <div>
             {showSplashScreen ? (
@@ -124,13 +118,19 @@ const CompanyLayout = () => {
                 <div>
                     <div className='d-flex'>
                         {/* <NavPills navpills={navpills} /> */}
-                        <ProductSideMenu sidebarMenuList={sidebarMenu} />
+                        <ProductSideMenu
+                            title={
+                                companyInfo?.subdomain || companySubdomian || ""
+                            }
+                            sidebarMenuList={sidebarMenu}
+                        />
                         <div
                             className={
-                                showCompanySidebar && width > 768
-                                    ? "doc-content"
-                                    : "doc-content-sm "
-                            }>
+                                width > 768 ? "doc-content" : "doc-content-sm "
+                            }
+                            style={{
+                                marginTop: "0px",
+                            }}>
                             <div className='ps-2'>
                                 <Outlet />
                             </div>

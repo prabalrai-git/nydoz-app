@@ -12,7 +12,6 @@ import Modal2 from "../../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { Flag, People } from "react-bootstrap-icons";
-import PaginationTable from "../../../shared/components/PaginationTable";
 import NotFound from "../../../shared/molecules/NotFound";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationTable from "../../../shared/components/SearchPaginationTable";
@@ -50,7 +49,6 @@ const DocumentList = () => {
 
     useEffect(() => {
         if (fetchAgain) {
-            console.log("fetch again");
             fetchDataById(fetchUrl);
             setFetchAgain(false);
         }
