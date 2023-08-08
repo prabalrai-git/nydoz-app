@@ -51,11 +51,11 @@ const Navbar = () => {
                         <div ref={productRef} className='p-relative'>
                             <div className='nav-item '>
                                 <div
-                                    className='d-flex align-items-center  btn btn-secondary text-primary btn-sm '
+                                    className='d-flex align-items-center  btn btn-light-primary  btn-sm '
                                     onClick={() =>
                                         setShowProducts(() => !showProducts)
                                     }>
-                                    <i className='ki-outline ki-abstract-26 fs-1 me-3 text-primary'></i>
+                                    <i className='ki-outline ki-abstract-26 fs-1 me-3 '></i>
                                     <span className='fw-bold fs-7'>
                                         Products & Services{" "}
                                         <i className='fas fa-chevron-down ms-2'></i>

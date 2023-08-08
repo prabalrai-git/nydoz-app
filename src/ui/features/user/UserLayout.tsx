@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import { Outlet } from "react-router-dom";
-import Navbar from "../../shared/layouts/Header/navbar/Navbar";
+import Navbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
 
 const ProtectedUserLayout: React.FC = () => {
     const { isLoggedIn, token } = useAuthContext();
