@@ -16,6 +16,11 @@ const webSettingReducer = (
                 ...state,
                 showProductSidebarApp: !state.showProductSidebarApp,
             };
+        case "TOGGLE_COMPANY_SIDEBAR":
+            return {
+                ...state,
+                showCompanySidebar: !state.showCompanySidebar,
+            };
 
         default:
             return state;

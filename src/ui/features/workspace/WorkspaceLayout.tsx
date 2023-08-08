@@ -12,11 +12,10 @@ const ProtectedUserLayout: React.FC = () => {
     const { isLoggedIn, token } = useAuthContext();
     const location = useLocation().pathname;
 
-    const { data, fetchDataById, isloading } =
-        useFetch<IUserCompanyProductsResponse>(
-            API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS,
-            true
-        );
+    const { data, fetchDataById } = useFetch<IUserCompanyProductsResponse>(
+        API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS,
+        true
+    );
 
     useEffect(() => {
         console.log(data, "data");

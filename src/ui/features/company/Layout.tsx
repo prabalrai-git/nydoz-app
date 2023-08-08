@@ -7,6 +7,19 @@ import { ICompanyResponse } from "../../../types/payload.type";
 import CompanyLoader from "../../shared/components/company/CompanyLoader";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import useHandleShowError from "../../../hooks/useHandleShowError";
+import { ISidebarMenu } from "../../../types/app.types";
+import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
+
+import {
+    Buildings,
+    Gear,
+    House,
+    PersonBadge,
+    PersonCheck,
+    PersonLock,
+} from "react-bootstrap-icons";
+import { useWindowSize } from "usehooks-ts";
+import useWebSetting from "../../../context/useWebSetting";
 
 const CompanyLayout = () => {
     const { dispatch, companyInfo, userInfo } = useAuthContext();
@@ -16,7 +29,7 @@ const CompanyLayout = () => {
         API_ROUTE.GET_COMPANY_BY_SUBDOMAIN,
         true
     );
-
+    const { width } = useWindowSize();
     useHandleShowError(error);
 
     const fetchCompanyInfo = useCallback(async () => {
@@ -62,7 +75,71 @@ const CompanyLayout = () => {
         }
     }, [fetchCompanyInfo, companySubdomian, companyInfo?.subdomain]);
 
-    return <div>{showSplashScreen ? <CompanyLoader /> : <Outlet />}</div>;
+    const sidebarMenu: ISidebarMenu[] = [
+        {
+            id: 1,
+            title: "Dashboard",
+            link: "dashboard",
+            icon: <House size={20} />,
+        },
+        {
+            id: 2,
+            title: "Visitors",
+            link: "visitors",
+            icon: <PersonBadge size={20} />,
+        },
+        {
+            id: 3,
+            title: "Clients",
+            link: "clients",
+            icon: <PersonCheck size={20} />,
+        },
+        {
+            id: 4,
+            title: "Agents",
+            link: "agents",
+            icon: <PersonLock size={22} />,
+        },
+        {
+            id: 5,
+            title: "Institutions",
+            link: "enrolled-institutes/list",
+            icon: <Buildings size={20} />,
+        },
+        {
+            id: 6,
+            title: "Settings",
+            link: "settings",
+            icon: <Gear size={22} />,
+        },
+    ];
+
+    const { webSetting } = useWebSetting();
+    const { showCompanySidebar } = webSetting;
+    return (
+        <div>
+            {showSplashScreen ? (
+                <CompanyLoader />
+            ) : (
+                <div>
+                    <div className='d-flex'>
+                        {/* <NavPills navpills={navpills} /> */}
+                        <ProductSideMenu sidebarMenuList={sidebarMenu} />
+                        <div
+                            className={
+                                showCompanySidebar && width > 768
+                                    ? "doc-content"
+                                    : "doc-content-sm "
+                            }>
+                            <div className='ps-2'>
+                                <Outlet />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 };
 
 export default CompanyLayout;

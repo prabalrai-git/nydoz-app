@@ -6,7 +6,9 @@ import Footer from "./ui/shared/layouts/Footer/Footer";
 function App() {
     return (
         <div className='app'>
-            <Outlet />
+            <div className='app-container'>
+                <Outlet />
+            </div>
             <ToastContainer position='bottom-left' />
             <Footer />
         </div>

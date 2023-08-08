@@ -31,6 +31,7 @@ export interface IState {
 export interface IWebSetting {
     showProductSidebar: boolean;
     showProductSidebarApp: boolean;
+    showCompanySidebar: boolean;
 }
 
 export type TAction =
@@ -50,6 +51,7 @@ export type TAction =
       }
     | { type: "LOGOUT" }
     | { type: "TOGGLE_PRODUCT_SIDEBAR" }
+    | { type: "TOGGLE_COMPANY_SIDEBAR" }
     | {
           type: "SET_PRODUCT_SIDEBAR";
           payload: { showProductSidebar: boolean };

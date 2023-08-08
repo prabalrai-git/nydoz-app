@@ -4,6 +4,7 @@ import { IState, TAction } from "./types";
 interface IWebSetting {
     showProductSidebar: boolean;
     showProductSidebarApp: boolean;
+    showCompanySidebar: boolean;
 }
 
 export interface AuthContextValue {
@@ -27,6 +28,7 @@ const AuthContext = createContext<AuthContextValue>({
     webSetting: {
         showProductSidebar: true,
         showProductSidebarApp: false,
+        showCompanySidebar: true,
     },
     dispatchWebSetting: () => null,
 });

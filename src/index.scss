@@ -15,6 +15,10 @@ $pimary-color: #70b541;
     height: 15px;
 }
 
+.app-container {
+    min-height: calc(100vh - 70px);
+}
+
 .h-25px {
     height: 25px;
 }
