@@ -96,7 +96,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{ state, dispatch, webSetting, dispatchWebSetting }}>
-            <h1>{width}</h1>
             {showSplashScreen ? <LoadingPage /> : children}
         </AuthContext.Provider>
     );

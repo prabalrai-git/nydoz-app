@@ -64,16 +64,6 @@ export interface IUserState {
     permissions: string[];
 }
 
-export interface ILoginResponse {
-    user: IUserState;
-    token: string;
-}
-
-export interface ILoginPayload {
-    email: string;
-    password: string;
-}
-
 export interface ICompanyResponse {
     id: string;
     name: string;

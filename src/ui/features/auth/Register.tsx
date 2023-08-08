@@ -8,14 +8,19 @@ import { useForm } from "react-hook-form";
 import useMutation from "../../../hooks/useMutation";
 import API_ROUTE from "../../../service/api";
 import { toast } from "react-toastify";
-import { IUserResponseResponse } from "../../../types/payload.type";
+import {
+    IUserRegisterResponse,
+    IUserRegisterPayload,
+} from "../../../types/auth.type";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import useHandleShowError from "../../../hooks/useHandleShowError";
+import useValidationError from "../../../hooks/useValidationError";
 
 interface FormData {
     first_name: string;
     last_name: string;
-    mobile: string;
+    mobile: string | undefined;
     email: string;
     password: string;
     password_confirmation: string;
@@ -24,30 +29,36 @@ interface FormData {
 
 const Register = () => {
     const navigate = useNavigate();
-    const { postData, error, isLoading } = useMutation<IUserResponseResponse>(
-        API_ROUTE.USER_REGISTER,
-        false
-    );
+    const { postData, error, isLoading, errList } =
+        useMutation<IUserRegisterResponse>(API_ROUTE.USER_REGISTER, false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    if (error) {
-        toast.error(error || "Something went wrong");
-    }
-
-    // send request to server
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors },
     } = useForm<FormData>({
         resolver: yupResolver(UserRegisterSchema),
     });
+
+    useHandleShowError(error);
+    useValidationError({ errList, setError });
+
+    // send request to server
+
     const onFormSubmit = handleSubmit(async (data: FormData) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { isTermAndConditionAccepted, ...rest } = data;
-        const response = await postData(rest);
-        // console.log(response);
+        const {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            isTermAndConditionAccepted,
+            ...rest
+        } = data;
+
+        const payload: IUserRegisterPayload = {
+            ...rest,
+        };
+        const response = await postData(payload);
 
         if (response?.status === 201) {
             toast.success("Account Created Successfully");
@@ -145,7 +156,7 @@ const Register = () => {
 
                                     <div className='col-12 col-md-6'>
                                         <label
-                                            className='form-label required'
+                                            className='form-label '
                                             htmlFor='mobile_number'>
                                             Mobile Number
                                         </label>
@@ -317,11 +328,11 @@ const Register = () => {
                                         </Button>
                                     </div>
                                     <div className='col-12'>
-                                        <div className='text-gray-500 mt-6 fw-semibold fs-6 float-end'>
+                                        <div className='text-gray-500 mt-3 fw-semibold fs-6 float-end'>
                                             Already have an Account ?&nbsp;
                                             <Link
                                                 to='/auth/login'
-                                                className='ms-1 link-primary text-decoration-none'>
+                                                className='btn  btn-light-info btn-sm '>
                                                 Sign in
                                             </Link>
                                         </div>

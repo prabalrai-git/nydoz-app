@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 function useHandleShowError(error: string | null) {
     useEffect(() => {
         if (error) {
-            toast.error(error);
+            toast.error(error || "Something went wrong");
         }
     }, [error]);
 }

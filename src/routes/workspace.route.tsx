@@ -11,28 +11,28 @@ const CompanyLayout = loadable(() => import("../ui/features/company/Layout"));
 
 const WorkspaceRoutes: RouteObject[] = [
     {
-        id: "w1",
+        id: "1",
         path: "",
         element: <UserDashboard />,
     },
     {
-        id: "w2",
+        id: "2",
         path: "create-company",
         element: <AddCompany />,
     },
     {
-        id: "w3",
+        id: "3",
         path: "edit-company/:id",
         element: <AddCompany />,
     },
     {
-        id: "w4",
+        id: "4",
         path: "change-password",
         element: <ChangePassword />,
     },
 
     {
-        id: "w5",
+        id: "5",
         path: ":companySubdomian",
         element: <CompanyLayout />,
         children: CompanyRoutes,

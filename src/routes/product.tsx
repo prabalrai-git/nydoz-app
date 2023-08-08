@@ -2,7 +2,7 @@ import { RouteObject } from "react-router-dom";
 import loadable from "@loadable/component";
 import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
 import Layout from "../ui/features/crm/Layout";
-import CRMRoutes from "./crm";
+import CRMRoutes from "./Cm";
 
 const CompanyProductList = loadable(
     () => import("../ui/features/products/CompanyProductList")
