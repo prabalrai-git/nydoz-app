@@ -8,7 +8,7 @@ import LandingHomePage from "../ui/features/home/Home";
 
 import AuthRoutes from "./auth";
 import PageNotFound from "../ui/features/utils/PageNotFound";
-import UserLayout from "../ui/features/user/UserLayout";
+import WorkspaceLayout from "../ui/features/user/WorkspaceLayout";
 import WorkspaceRoutes from "./workspace.route";
 
 const router = createBrowserRouter([
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "workspace",
-                element: <UserLayout />,
+                element: <WorkspaceLayout />,
                 children: WorkspaceRoutes,
             },
             {

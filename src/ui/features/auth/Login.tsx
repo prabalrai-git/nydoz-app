@@ -76,7 +76,7 @@ const LoginPage = () => {
         <div className='container pt-4' id='kt_app_root '>
             <div className='row '>
                 <div className='col-12  col-md-8 col-lg-6  offset-0 offset-md-2 offset-lg-3 '>
-                    <div className='card shadow shadwo-sm p-3 mt-4'>
+                    <div className='card shadow shadow-sm p-3 mt-4'>
                         <div className='card-body'>
                             <div className='row mb-3'>
                                 <div className='col-12 text-center mb-6'>

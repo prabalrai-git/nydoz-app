@@ -10,14 +10,12 @@ import { BoxArrowRight, BuildingAdd, GearWide } from "react-bootstrap-icons";
 
 const Navbar = () => {
     const productRef = useRef(null);
-    const myAccountRef = useRef(null);
-    const { isLoggedIn, dispatch } = useAuthContext();
+
+    const { isLoggedIn, dispatch, companyInfo } = useAuthContext();
     const navigate = useNavigate();
     useOnClickOutside(productRef, () => setShowProducts(false));
-    useOnClickOutside(myAccountRef, () => setShowMyAccount(false));
 
     const [showProducts, setShowProducts] = useState<boolean>(false);
-    const [showMyAccount, setShowMyAccount] = useState(false);
 
     const location = useLocation();
     const [pathName, setPathName] = useState<string[]>([]);
