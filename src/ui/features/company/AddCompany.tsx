@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import APP_SETTING from "../../../constants/APP_SETTING";
+import APP_SETTING from "../../../constants/AppSetting";
 import Images from "../../../constants/Images";
 import UploadFile from "../../shared/components/Upload";
 import Heading from "../../shared/molecules/Heading";
@@ -20,6 +20,7 @@ import {
     getSelectPropsFromCountry,
     getSelectPropsFromCountryCallingCode,
 } from "../../../functions/country";
+import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 interface IAddCompanyForm {
     name: string;
@@ -166,7 +167,7 @@ const AddCompany = () => {
     });
 
     return (
-        <div>
+        <div className='container'>
             <div className='py-6 px-3'>
                 <Heading
                     title={

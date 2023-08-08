@@ -1,22 +1,21 @@
 import { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuthContext from "../../../../../context/auth/useAuthContext";
 import { NavLink } from "react-router-dom";
 import MyProducts from "./MyProducts";
 import { useOnClickOutside } from "usehooks-ts";
-import MyAccount from "./MyAccount";
-import Hamburger from "../../../atoms/Hamburger";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
-import { BoxArrowRight, GearWide } from "react-bootstrap-icons";
+import { BoxArrowRight, BuildingAdd, GearWide } from "react-bootstrap-icons";
 
 const Navbar = () => {
     const productRef = useRef(null);
     const myAccountRef = useRef(null);
+    const { isLoggedIn, dispatch } = useAuthContext();
+    const navigate = useNavigate();
     useOnClickOutside(productRef, () => setShowProducts(false));
     useOnClickOutside(myAccountRef, () => setShowMyAccount(false));
 
-    const { isLoggedIn } = useAuthContext();
     const [showProducts, setShowProducts] = useState<boolean>(false);
     const [showMyAccount, setShowMyAccount] = useState(false);
 
@@ -46,7 +45,6 @@ const Navbar = () => {
             <div className='container-lg'>
                 <div className='inner-container'>
                     <div className='left-container'>
-                        <Hamburger />
                         <NavLink className='navbar-brand' to='/'>
                             Navbar
                         </NavLink>
@@ -72,12 +70,39 @@ const Navbar = () => {
                     <div className='right-container'>
                         {isLoggedIn ? (
                             <NavDropdown title='My Account' id='nav-dropdown'>
-                                <NavDropdown.Item eventKey='4.1'>
-                                    Action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item eventKey='4.2'>
+                                <NavDropdown.Item>
                                     <LinkContainer
-                                        className='py-1'
+                                        className='btn btn-light-info btn-sm w-100'
+                                        to='profile'>
+                                        <div>
+                                            <span className='me-3'>
+                                                <BuildingAdd
+                                                    size={16}
+                                                    color='#1e40d6'
+                                                />
+                                            </span>
+                                            <span>My Profile</span>
+                                        </div>
+                                    </LinkContainer>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item>
+                                    <LinkContainer
+                                        className='btn btn-light-primary btn-sm'
+                                        to='create-company'>
+                                        <div>
+                                            <span className='me-3'>
+                                                <BuildingAdd
+                                                    size={16}
+                                                    color='#1ed63d'
+                                                />
+                                            </span>
+                                            <span>Create New Company</span>
+                                        </div>
+                                    </LinkContainer>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item>
+                                    <LinkContainer
+                                        className='btn btn-light-warning btn-sm w-100'
                                         to='change-password'>
                                         <div>
                                             <span className='me-3'>
@@ -93,7 +118,7 @@ const Navbar = () => {
                                 <NavDropdown.Item>
                                     <div className='text-center'>
                                         <div
-                                            className='btn btn-sm btn-secondary'
+                                            className='btn btn-light-danger btn-sm w-100'
                                             onClick={() => logoutFn()}>
                                             <span className='me-3'>Logout</span>
                                             <span>
@@ -107,11 +132,13 @@ const Navbar = () => {
                                 </NavDropdown.Item>
                             </NavDropdown>
                         ) : (
-                            <NavLink
-                                className='nav-link fw-bold '
-                                to='/auth/login'>
-                                Login
-                            </NavLink>
+                            <div>
+                                <NavLink
+                                    className='nav-link fw-bold '
+                                    to='/auth/login'>
+                                    Login
+                                </NavLink>
+                            </div>
                         )}
                     </div>
                 </div>

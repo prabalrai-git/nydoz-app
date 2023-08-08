@@ -333,7 +333,7 @@ const Register = () => {
                                             <Link
                                                 to='/auth/login'
                                                 className='btn  btn-light-info btn-sm '>
-                                                Sign in
+                                                Login
                                             </Link>
                                         </div>
                                     </div>

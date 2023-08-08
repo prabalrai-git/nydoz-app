@@ -46,7 +46,7 @@ const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
                 <div className='d-flex align-items-center gap-2 gap-lg-3'>
                     <button
                         onClick={() => navigate(-1)}
-                        className='btn btn-flex btn-warning  fs-7 fw-bold btn-sm'>
+                        className='btn btn-flex btn-bg-light  fs-7 fw-bold btn-sm'>
                         {btnText}
                     </button>
                 </div>
