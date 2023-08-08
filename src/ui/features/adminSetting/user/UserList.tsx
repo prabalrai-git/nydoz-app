@@ -113,6 +113,7 @@ const UserList = () => {
     >(API_ROUTE.USER, true);
 
     useEffect(() => {
+        console.log("fetchAgain", fetchAgain, "fetchUrl", fetchUrl);
         if (fetchAgain) {
             fetchDataById(fetchUrl);
             setFetchAgain(false);
@@ -131,7 +132,7 @@ const UserList = () => {
                         <Link
                             to='../add-user'
                             type='button'
-                            className='btn btn-sm btn-info'>
+                            className='btn btn-sm btn-primary'>
                             Add User
                         </Link>
                     </div>

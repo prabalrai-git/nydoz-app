@@ -5,14 +5,10 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import {
-    ISearchPaginatedTableProps,
-    IPagination,
-} from "../../../types/axios.type";
+import { ISearchPaginatedTableProps } from "../../../types/axios.type";
 import { Spinner } from "react-bootstrap";
 import NotFound from "../molecules/NotFound";
 import { capitalizeText } from "../../../functions/TextMuatations";
-import { ArrowDownUp } from "react-bootstrap-icons";
 
 interface SearchState {
     [key: string]: string;
@@ -61,6 +57,10 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
     };
 
     useEffect(() => {
+        console.log(pagination, "pagination");
+    }, [pagination]);
+
+    useEffect(() => {
         const query = getQueryParams();
         if (Object.keys(query).length === 0) {
             setSearchState({
@@ -76,6 +76,10 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
             );
         } else {
             setSearchState(getQueryParams());
+            const newUrl = `${baseUrl}${window.location.search}`;
+            console.log(newUrl, "sdsd");
+            setFetchUrl(newUrl);
+            setFetchAgain(true);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -193,9 +197,9 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
     };
 
     return (
-        <div className='border '>
+        <div className='search-table-container'>
             {data && data?.length > 0 && (
-                <div className='min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden p-6 '>
+                <div className='min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden '>
                     <div
                         className={
                             searchParamsArray.length > 1
@@ -240,7 +244,7 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
                         <div className='flex-2'>
                             <select
                                 value={pagination.per_page}
-                                className='form-select'
+                                className='form-select form-select-sm'
                                 onChange={(e) => handlePageSizeChange(e)}>
                                 <option value='5'>15</option>
                                 <option value='10'>10</option>
@@ -339,11 +343,11 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
                                 </tr>
                             ))}
                         </thead>
-                        <tbody className='fw-semibold text-gray-600 min-h-50vh'>
+                        <tbody className='fw-semibold text-gray-600 min-h-50vh search-table-body'>
                             {isLoading ? (
-                                <div className='d-flex h-75vh flex-center'>
+                                <span className='d-flex h-75vh flex-center'>
                                     <Spinner />
-                                </div>
+                                </span>
                             ) : (
                                 <>
                                     {table.getRowModel().rows.map((row) => {

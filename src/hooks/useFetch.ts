@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
 import { IData, IErrorData, IPagination } from "../types/axios.type";
+import { RESULT_PER_PAGE } from "../constants/AppSetting";
 
 type FetchDataResponse<T> = {
     data: T | undefined;
@@ -21,7 +22,7 @@ function useFetch<T>(
 ): FetchDataResponse<T> {
     const paginationConst: IPagination = {
         total: 0,
-        per_page: 0,
+        per_page: RESULT_PER_PAGE,
         last_page: 0,
         current_page: 1,
         from: 0,
