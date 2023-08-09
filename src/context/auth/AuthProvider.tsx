@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import authReducer from "./authReducer";
 import AuthContext from "./AuthContext";
-import { IState, IWebSetting } from "./types";
+import { IState } from "./types";
 import useFetch from "../../hooks/useFetch";
 import API_ROUTE from "../../service/api";
 import LoadingPage from "../../ui/features/utils/LoadingPage";

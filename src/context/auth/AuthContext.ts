@@ -1,11 +1,11 @@
 import { Dispatch, createContext } from "react";
-import { IState, TAction } from "./types";
+import { IState, TAction, IWebSetting } from "./types";
 
-interface IWebSetting {
-    showProductSidebar: boolean;
-    showProductSidebarApp: boolean;
-    showCompanySidebar: boolean;
-}
+// interface IWebSetting {
+//     showProductSidebar: boolean;
+//     showProductSidebarApp: boolean;
+//     showCompanySidebar: boolean;
+// }
 
 export interface AuthContextValue {
     state: IState;
@@ -29,6 +29,11 @@ const AuthContext = createContext<AuthContextValue>({
         showProductSidebar: true,
         showProductSidebarApp: false,
         showCompanySidebar: true,
+        urlData: {
+            url: "",
+            subdomain: "",
+            path: "",
+        },
     },
     dispatchWebSetting: () => null,
 });
