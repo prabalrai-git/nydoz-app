@@ -88,7 +88,7 @@ const PublicNavbar = () => {
                         <div>
                             <NavLink
                                 className='nav-link fw-bold '
-                                to='/auth/login'>
+                                to='auth/login'>
                                 Login
                             </NavLink>
                         </div>
