@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    RouterProvider,
+} from "react-router-dom";
 import useWebSetting from "../context/useWebSetting";
 
 // public Routes
@@ -26,18 +31,22 @@ function MainRoutes() {
                     <Route path='' element={<MainLayout />}>
                         <Route path='' element={<LandingHomePage />} />
                     </Route>
-                    <Route path='workspace' element={<WorkspaceLayout />}>
-                        {WorkspaceRoutes.map((route, index) => (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                element={route.element}
-                            />
-                        ))}
-                    </Route>
-                    {urlData?.hasSubdomain && (
-                        <Route path='company' element={<CompanyLayout />}>
+
+                    {urlData?.hasSubdomain ? (
+                        <Route
+                            path={urlData?.subdomain ?? "company"}
+                            element={<CompanyLayout />}>
                             {CompanyRoutes.map((route, index) => (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={route.element}
+                                />
+                            ))}
+                        </Route>
+                    ) : (
+                        <Route path='workspace' element={<WorkspaceLayout />}>
+                            {WorkspaceRoutes.map((route, index) => (
                                 <Route
                                     key={index}
                                     path={route.path}
