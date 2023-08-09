@@ -21,6 +21,21 @@ const webSettingReducer = (
                 ...state,
                 showCompanySidebar: !state.showCompanySidebar,
             };
+        case "SET_PRODUCT_SIDEBAR":
+            return {
+                ...state,
+                showProductSidebar: action.payload.showProductSidebar,
+            };
+        case "SET_PRODUCT_SIDEBAR_APP":
+            return {
+                ...state,
+                showProductSidebarApp: action.payload.showProductSidebarApp,
+            };
+        case "SET_URL_DATA":
+            return {
+                ...state,
+                urlData: action.payload.urlData,
+            };
 
         default:
             return state;

@@ -32,6 +32,11 @@ export interface IWebSetting {
     showProductSidebar: boolean;
     showProductSidebarApp: boolean;
     showCompanySidebar: boolean;
+    urlData: {
+        url: string;
+        subdomain: string;
+        path: string;
+    };
 }
 
 export type TAction =
@@ -60,6 +65,10 @@ export type TAction =
     | {
           type: "SET_PRODUCT_SIDEBAR_APP";
           payload: { showProductSidebarApp: boolean };
+      }
+    | {
+          type: "SET_URL_DATA";
+          payload: { urlData: IWebSetting["urlData"] };
       }
     | {
           type: "SET_WINDOW_SIZE";

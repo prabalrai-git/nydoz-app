@@ -1,4 +1,11 @@
-import React, { FC, useReducer, useState, useEffect, useCallback } from "react";
+import React, {
+    FC,
+    useReducer,
+    useState,
+    useEffect,
+    useCallback,
+    useLayoutEffect,
+} from "react";
 import authReducer from "./authReducer";
 import AuthContext from "./AuthContext";
 import { IState, IWebSetting } from "./types";
@@ -44,6 +51,12 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     const [webSetting, dispatchWebSetting] = useReducer(webSettingReducer, {
         showProductSidebar: width > 768 ? true : false,
         showProductSidebarApp: false,
+        showCompanySidebar: true,
+        urlData: {
+            url: "",
+            subdomain: "",
+            path: "",
+        },
     });
 
     const handleAuthenticationFn = useCallback(async () => {
@@ -92,6 +105,19 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
             setShowSplashScreen(false);
         }
     }, [handleAuthenticationFn, tokenFromLocal]);
+
+    useLayoutEffect(() => {
+        dispatchWebSetting({
+            type: "SET_URL_DATA",
+            payload: {
+                urlData: {
+                    url: window.location.href,
+                    subdomain: window.location.hostname.split(".")[0],
+                    path: window.location.pathname,
+                },
+            },
+        });
+    }, []);
 
     return (
         <AuthContext.Provider
