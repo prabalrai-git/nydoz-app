@@ -33,6 +33,7 @@ const AuthContext = createContext<AuthContextValue>({
             url: "",
             subdomain: "",
             path: "",
+            hasSubdomain: false,
         },
     },
     dispatchWebSetting: () => null,

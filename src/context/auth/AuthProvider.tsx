@@ -56,6 +56,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
             url: "",
             subdomain: "",
             path: "",
+            hasSubdomain: false,
         },
     });
 
@@ -107,6 +108,13 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     }, [handleAuthenticationFn, tokenFromLocal]);
 
     useLayoutEffect(() => {
+        let hasSubdomain = false;
+        const subDomainName = window.location.hostname.split(".")[0];
+        if (subDomainName && subDomainName !== "localhost") {
+            hasSubdomain = true;
+        }
+        console.log(subDomainName, "subDomainName");
+
         dispatchWebSetting({
             type: "SET_URL_DATA",
             payload: {
@@ -114,6 +122,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
                     url: window.location.href,
                     subdomain: window.location.hostname.split(".")[0],
                     path: window.location.pathname,
+                    hasSubdomain: hasSubdomain,
                 },
             },
         });

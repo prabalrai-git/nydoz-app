@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import "./index.scss";
 import "./assets/metronic/css/style.bundle - Copy.css";
 
-import router from "./routes/Routes.tsx";
+import Router from "./routes/Routes.tsx";
 import "./i18n/Lang.tsx";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./context/auth/AuthProvider.tsx";
@@ -14,7 +14,7 @@ import AuthProvider from "./context/auth/AuthProvider.tsx";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
         <AuthProvider>
-            <RouterProvider router={router} />
+            <Router />
         </AuthProvider>
     </React.StrictMode>
 );

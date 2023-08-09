@@ -36,6 +36,7 @@ export interface IWebSetting {
         url: string;
         subdomain: string;
         path: string;
+        hasSubdomain: boolean;
     };
 }
 
