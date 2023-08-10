@@ -1,21 +1,15 @@
 import { Dispatch, createContext } from "react";
 import { IState, TAction, IWebSetting } from "./types";
 
-// interface IWebSetting {
-//     showProductSidebar: boolean;
-//     showProductSidebarApp: boolean;
-//     showCompanySidebar: boolean;
-// }
-
 export interface AuthContextValue {
-    state: IState;
+    auth: IState;
     dispatch: Dispatch<TAction>;
     webSetting: IWebSetting;
     dispatchWebSetting: Dispatch<TAction>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
-    state: {
+    auth: {
         isLoggedIn: false,
         userInfo: undefined,
         companyInfo: undefined,
@@ -23,6 +17,7 @@ const AuthContext = createContext<AuthContextValue>({
         isAdmin: false,
         isCompanyOwner: false,
         subdomain: undefined,
+        userCompanyAndItsProducts: undefined,
     },
     dispatch: () => null,
     webSetting: {

@@ -7,11 +7,13 @@ import { useOnClickOutside } from "usehooks-ts";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
 import { BoxArrowRight, BuildingAdd, GearWide } from "react-bootstrap-icons";
+import UserCompanyAndProducts from "./products/UserCompanyAndProducts";
 
 const Navbar = () => {
     const productRef = useRef(null);
 
-    const { isLoggedIn, dispatch, companyInfo } = useAuthContext();
+    const { isLoggedIn, dispatch, userCompanyAndItsProducts } =
+        useAuthContext();
     const navigate = useNavigate();
     useOnClickOutside(productRef, () => setShowProducts(false));
 
@@ -61,7 +63,9 @@ const Navbar = () => {
                                 </div>
                             </div>
                             <div>
-                                <MyProducts showProduct={showProducts} />
+                                <MyProducts showProduct={showProducts}>
+                                    <UserCompanyAndProducts />
+                                </MyProducts>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,5 @@
+import { IUserCompanyProductsResponse } from "../../types/payload.type";
+
 export interface IUserInfo {
     id: string | null;
     email: string;
@@ -26,6 +28,7 @@ export interface IState {
     isAdmin: boolean;
     isCompanyOwner: boolean;
     subdomain: string | undefined;
+    userCompanyAndItsProducts: IUserCompanyProductsResponse | undefined;
 }
 
 export interface IWebSetting {
@@ -74,4 +77,10 @@ export type TAction =
     | {
           type: "SET_WINDOW_SIZE";
           payload: { windowWidthSize: number };
+      }
+    | {
+          type: "SET_USER_COMPANY_AND_PRODUCTS";
+          payload: {
+              userCompanyAndItsProduct: IUserCompanyProductsResponse;
+          };
       };

@@ -53,3 +53,9 @@ export interface IPaginatedTableProps<T> {
 export interface ISearchPaginatedTableProps<T> extends IPaginatedTableProps<T> {
     searchParamsArray: string[];
 }
+
+export interface ISearchPaginationListProps<T> {
+    columns: ColumnDef<T>[];
+    baseUrl: string;
+    searchParamsArray: string[];
+}

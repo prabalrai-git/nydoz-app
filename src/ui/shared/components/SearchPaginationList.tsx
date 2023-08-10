@@ -5,30 +5,40 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { ISearchPaginatedTableProps } from "../../../types/axios.type";
+import { ISearchPaginationListProps } from "../../../types/axios.type";
 import { Spinner } from "react-bootstrap";
 import NotFound from "../molecules/NotFound";
 import { capitalizeText } from "../../../functions/TextMuatations";
+import useFetch from "../../../hooks/useFetch";
 
 interface SearchState {
     [key: string]: string;
 }
 // props required
 
-function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
-    const {
-        columns,
-        data,
-        pagination,
-        isLoading,
-        setFetchAgain,
-        baseUrl,
-        setFetchUrl,
-        searchParamsArray,
-    } = props;
-    // page=1&page_size=5
+function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
+    const { columns, baseUrl, searchParamsArray } = props;
+    const [fetchUrl, setFetchUrl] = useState(baseUrl);
+    const [tableData, setTableData] = useState<T[]>([] as T[]);
+    const { fetchDataById, isloading, data, pagination } = useFetch<T[]>(
+        fetchUrl,
+        true
+    );
+    const [fetchAgain, setFetchAgain] = useState(false);
+
+    useEffect(() => {
+        if (fetchAgain) {
+            fetchDataById(fetchUrl);
+            setFetchAgain(false);
+        }
+    }, [fetchAgain, fetchDataById, fetchUrl]);
+
+    useEffect(() => {
+        setTableData(data);
+    }, [data]);
+
     const table = useReactTable({
-        data,
+        tableData,
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
@@ -55,10 +65,6 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
         );
         return searchParams;
     };
-
-    useEffect(() => {
-        console.log(pagination, "pagination");
-    }, [pagination]);
 
     useEffect(() => {
         const query = getQueryParams();
@@ -349,7 +355,7 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
                             ))}
                         </thead>
                         <tbody className='fw-semibold text-gray-600 min-h-50vh search-table-body'>
-                            {isLoading ? (
+                            {isloading ? (
                                 <span className='d-flex h-75vh flex-center'>
                                     <Spinner />
                                 </span>
@@ -381,11 +387,11 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
                     </table>
                 </div>
             )}
-            {data?.length === 0 && isLoading === false && (
+            {data?.length === 0 && isloading === false && (
                 <NotFound title='No data found' />
             )}
         </div>
     );
 }
 
-export default PaginatedTanStackTable;
+export default SearchPaginationList;
