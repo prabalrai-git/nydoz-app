@@ -19,7 +19,7 @@ interface SearchState {
 function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
     const { columns, baseUrl, searchParamsArray } = props;
     const [fetchUrl, setFetchUrl] = useState(baseUrl);
-    const [tableData, setTableData] = useState<T[]>([] as T[]);
+    const [tableData, setTableData] = useState<T[] | []>([]);
     const { fetchDataById, isloading, data, pagination } = useFetch<T[]>(
         fetchUrl,
         true
@@ -34,11 +34,13 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
     }, [fetchAgain, fetchDataById, fetchUrl]);
 
     useEffect(() => {
-        setTableData(data);
+        if (data !== undefined && data.length > 0) {
+            setTableData(data);
+        }
     }, [data]);
 
-    const table = useReactTable({
-        tableData,
+    const table = useReactTable<T>({
+        data: tableData,
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
@@ -80,6 +82,10 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                     window.location.pathname
                 }?page=${pagination.current_page.toString()}&page_size=${pagination.per_page.toString()} `
             );
+            setFetchUrl(
+                `${baseUrl}?page=${pagination.current_page.toString()}&page_size=${pagination.per_page.toString()}`
+            );
+            setFetchAgain(true);
         } else {
             setSearchState(getQueryParams());
             const newUrl = `${baseUrl}${window.location.search}`;
