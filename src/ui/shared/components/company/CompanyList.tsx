@@ -5,6 +5,7 @@ import { ICompanyResponse } from "../../../../types/payload.type";
 import ImageAtom from "../../atoms/ImageAtom";
 import { Link, useNavigate } from "react-router-dom";
 import useWebSetting from "../../../../context/useWebSetting";
+import DynamicLink from "../../molecules/DynamicLink";
 // import AppSetting from "../../../../config/AppSetting";
 
 const CompanyListCard = () => {
@@ -48,81 +49,41 @@ const CompanyListCard = () => {
             <div className='card-body pt6'>
                 <h3>hasSubdomain :{hasSubdomain.toString()}</h3>
                 {data?.map((item: ICompanyResponse) => {
-                    if (hasSubdomain) {
-                        return (
-                            <a
-                                key={item.id}
-                                href={`https://www.${item.subdomain}.nydoz.com/${item.subdomain}/dashboard`}
-                                className='d-flex flex-stack mb-3 cursor-pointer'>
-                                <div className='symbol symbol-40px me-4'>
-                                    <ImageAtom
-                                        src={item.logo}
-                                        className='h-50px w-50px'
-                                        alt={item.name}
-                                    />
-                                </div>
-
-                                <div className='d-flex align-items-center flex-row-fluid flex-wrap'>
-                                    <div className='flex-grow-1 me-2'>
-                                        <a className='text-gray-800 text-hover-primary fs-6 fw-bold'>
-                                            {item.name}
-                                        </a>
-
-                                        <span className='text-muted fw-semibold d-block fs-7'>
-                                            {item.website}
-                                        </span>
-                                    </div>
-
-                                    <a
-                                        href='#'
-                                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px'>
-                                        <i className='ki-duotone ki-arrow-right fs-2'>
-                                            <span className='path1'></span>
-                                            <span className='path2'></span>
-                                        </i>{" "}
-                                    </a>
-                                </div>
-                            </a>
-                        );
-                    } else {
-                        return (
-                            <div
-                                key={item.id}
-                                onClick={() =>
-                                    handleNavigateToSubDomain(item.subdomain)
-                                }
-                                className='d-flex flex-stack mb-3 cursor-pointer'>
-                                <div className='symbol symbol-40px me-4'>
-                                    <ImageAtom
-                                        src={item.logo}
-                                        className='h-50px w-50px'
-                                        alt={item.name}
-                                    />
-                                </div>
-
-                                <div className='d-flex align-items-center flex-row-fluid flex-wrap'>
-                                    <div className='flex-grow-1 me-2'>
-                                        <a className='text-gray-800 text-hover-primary fs-6 fw-bold'>
-                                            {item.name}
-                                        </a>
-
-                                        <span className='text-muted fw-semibold d-block fs-7'>
-                                            {item.website}
-                                        </span>
-                                    </div>
-
-                                    <a
-                                        href='#'
-                                        className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px'>
-                                        <i className='ki-duotone ki-arrow-right fs-2'>
-                                            <span className='path1'></span>
-                                            <span className='path2'></span>
-                                        </i>{" "}
-                                    </a>
-                                </div>
+                    return (
+                        <DynamicLink
+                            subdomain={item.subdomain}
+                            pathName={`/${item.subdomain}/dashboard`}
+                            className='d-flex flex-stack mb-3 cursor-pointer'>
+                            <div className='symbol symbol-40px me-4'>
+                                <ImageAtom
+                                    src={item.logo}
+                                    className='h-50px w-50px'
+                                    alt={item.name}
+                                />
                             </div>
-                        );
-                    }
+
+                            <div className='d-flex align-items-center flex-row-fluid flex-wrap'>
+                                <div className='flex-grow-1 me-2'>
+                                    <a className='text-gray-800 text-hover-primary fs-6 fw-bold'>
+                                        {item.name}
+                                    </a>
+
+                                    <span className='text-muted fw-semibold d-block fs-7'>
+                                        {item.website}
+                                    </span>
+                                </div>
+
+                                <a
+                                    href='#'
+                                    className='btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px'>
+                                    <i className='ki-duotone ki-arrow-right fs-2'>
+                                        <span className='path1'></span>
+                                        <span className='path2'></span>
+                                    </i>{" "}
+                                </a>
+                            </div>
+                        </DynamicLink>
+                    );
                 })}
 
                 {!isloading && data?.length === 0 && (

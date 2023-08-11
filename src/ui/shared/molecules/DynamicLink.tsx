@@ -33,7 +33,7 @@ const DynamicLink = (props: Iprops) => {
                     )}
                 </>
             ) : (
-                <Link to={pathName} className={className}>
+                <Link to={`/workspace${pathName}`} className={className}>
                     {children}
                 </Link>
             )}
