@@ -1,8 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
 import useWebSetting from "../../../../context/useWebSetting";
 import { ISidebarMenu } from "../../../../types/app.types";
-import { useWindowSize } from "usehooks-ts";
+import { useOnClickOutside, useWindowSize } from "usehooks-ts";
 import { ArrowBarLeft, ArrowBarRight } from "react-bootstrap-icons";
+import { useRef } from "react";
 
 interface IProps {
     sidebarMenuList: ISidebarMenu[];
@@ -11,12 +12,19 @@ interface IProps {
 }
 
 const ProductSideMenu = (props: IProps) => {
-    const { sidebarMenuList, title, backPath } = props;
+    const { sidebarMenuList, title } = props;
     const { width } = useWindowSize();
     const { webSetting, dispatchWebSetting } = useWebSetting();
     const { showProductSidebar } = webSetting;
+    const menuRef = useRef(null);
+    const sidebarClassName = showProductSidebar ? "slide-in " : "slide-out ";
 
-    const sidebarClassName = showProductSidebar ? "slide-in" : "slide-out";
+    useOnClickOutside(menuRef, () => {
+        dispatchWebSetting({
+            type: "SET_PRODUCT_SIDEBAR_APP",
+            payload: { showProductSidebarApp: true },
+        });
+    });
 
     const handleToggleSidebar = () => {
         dispatchWebSetting({
@@ -26,10 +34,17 @@ const ProductSideMenu = (props: IProps) => {
 
     return (
         <div
+            ref={menuRef}
             className={`${
                 width > 768 ? "docs-aside" : "docs-aside-sm"
             } ${sidebarClassName}`}>
-            <div onClick={handleToggleSidebar} className='sidebar_btn'>
+            <div
+                onClick={handleToggleSidebar}
+                className={
+                    showProductSidebar
+                        ? "sidebar_btn sidebar_btn_out"
+                        : "sidebar_btn sidebar_btn_in"
+                }>
                 {showProductSidebar ? (
                     <ArrowBarLeft size={20} />
                 ) : (

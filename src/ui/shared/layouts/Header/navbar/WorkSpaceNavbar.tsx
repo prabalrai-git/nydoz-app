@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuthContext from "../../../../../context/auth/useAuthContext";
 import { NavLink } from "react-router-dom";
 import MyProducts from "./MyProducts";
@@ -8,19 +8,15 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
 import { BoxArrowRight, BuildingAdd, GearWide } from "react-bootstrap-icons";
 import UserCompanyAndProducts from "./products/UserCompanyAndProducts";
+import Images from "../../../../../constants/Images";
+import AllPublicProductsDropdown from "./products/AllPublicProductsDropdown";
 
 const Navbar = () => {
     const productRef = useRef(null);
-
-    const { isLoggedIn, dispatch, userCompanyAndItsProducts } =
-        useAuthContext();
+    const { isLoggedIn, dispatch } = useAuthContext();
     const navigate = useNavigate();
     useOnClickOutside(productRef, () => setShowProducts(false));
-
     const [showProducts, setShowProducts] = useState<boolean>(false);
-
-    const location = useLocation();
-    const [pathName, setPathName] = useState<string[]>([]);
 
     const logoutFn = () => {
         const rememberMeFromLocal = localStorage.getItem("rememberMe");
@@ -33,12 +29,6 @@ const Navbar = () => {
         navigate("/auth/login");
         dispatch({ type: "LOGOUT" });
     };
-    useEffect(() => {
-        const pathnames = location.pathname
-            .split("/")
-            .filter((path) => path !== "");
-        setPathName(pathnames);
-    }, [location.pathname]);
 
     return (
         <nav className=' navbar navbar-expand-lg bg-body-tertiary navbar-wrapper bg-white fixed-top'>
@@ -46,7 +36,11 @@ const Navbar = () => {
                 <div className='inner-container'>
                     <div className='left-container'>
                         <NavLink className='navbar-brand' to='/'>
-                            Navbar
+                            <img
+                                className='navbar-brand-img '
+                                src={Images.CompanyLogo}
+                                alt='Company Logo'
+                            />
                         </NavLink>
                         <div ref={productRef} className='p-relative'>
                             <div className='nav-item '>
@@ -57,14 +51,18 @@ const Navbar = () => {
                                     }>
                                     <i className='ki-outline ki-abstract-26 fs-1 me-3 '></i>
                                     <span className='fw-bold fs-7'>
-                                        Products & Services{" "}
+                                        Products & Services
                                         <i className='fas fa-chevron-down ms-2'></i>
                                     </span>
                                 </div>
                             </div>
                             <div>
                                 <MyProducts showProduct={showProducts}>
-                                    <UserCompanyAndProducts />
+                                    {isLoggedIn ? (
+                                        <UserCompanyAndProducts />
+                                    ) : (
+                                        <AllPublicProductsDropdown />
+                                    )}
                                 </MyProducts>
                             </div>
                         </div>

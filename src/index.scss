@@ -353,3 +353,113 @@ $pimary-color: #70b541;
 .user-company-product-wrapper {
     padding: 0.5rem 1rem;
 }
+
+// css for mobile
+
+@media (max-width: 768px) {
+    .navbar-wrapper {
+        padding: 0.5rem 0.5rem;
+    }
+    .navbar-product-container {
+        transform: translate3d(-241px, 69px, 0px);
+    }
+    .navbar-my-account-dropdown {
+        transform: translate3d(57px, 69px, 0px);
+    }
+    .dropdown-content {
+        width: 100%;
+    }
+    .dropdown-wrapper {
+        min-width: 100%;
+    }
+
+    .doc-content-sm {
+        margin-top: 40px;
+        margin-left: 0px;
+        width: 100%;
+    }
+
+    .docs-aside-sm {
+        box-shadow: 0 0 0.875rem rgb(0 0 0 / 10%);
+        padding-right: 0rem;
+    }
+
+    .sidebar_btn_in {
+        right: -22px;
+    }
+
+    .sidebar_btn_out {
+        right: -10px;
+    }
+    .slide-out {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    .inner-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        height: 100%;
+    }
+    .left-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        width: 70%;
+    }
+    .right-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        width: 30%;
+    }
+    .p-relative {
+        position: relative;
+    }
+    .list-style-none {
+        list-style: none;
+    }
+    .placeholder-hover {
+        position: relative;
+        z-index: 6;
+        background-color: transparent;
+    }
+    .placeholder-hover::placeholder {
+        color: transparent;
+    }
+    .placeholder-hover:focus::placeholder {
+        color: #5dbd65;
+        position: absolute;
+        top: -0.5rem;
+        left: 2rem;
+        font-size: 1.1rem;
+        transition: top 0.2s ease-out;
+        z-index: 666;
+        background-color: #ffffff;
+    }
+    .user-company-product-wrapper {
+        padding: 0.5rem 0.5rem;
+    }
+    .search-table-body {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+    .server-select {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+    .server-select-li {
+        list-style: none;
+        padding: 0.5rem 1rem;
+    }
+    .server-select-li:hover {
+        list-style: none;
+        padding: 0.5rem 1rem;
+        background-color: rgb(215, 215, 215);
+    }
+}
