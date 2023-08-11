@@ -10,13 +10,7 @@ import useHandleShowError from "../../../hooks/useHandleShowError";
 import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
-import {
-    Gear,
-    House,
-    PersonBadge,
-    PersonCheck,
-    PersonLock,
-} from "react-bootstrap-icons";
+import { Gear, House, PersonBadge, PersonCheck } from "react-bootstrap-icons";
 import { useWindowSize } from "usehooks-ts";
 import useWebSetting from "../../../context/useWebSetting";
 
@@ -92,7 +86,7 @@ const CompanyLayout = () => {
             id: 4,
             title: "Software",
             link: "software",
-            icon: <PersonLock size={22} />,
+            icon: <i className='ki-outline ki-abstract-26 fs-2x'></i>,
         },
         {
             id: 2,
@@ -115,25 +109,22 @@ const CompanyLayout = () => {
             {showSplashScreen ? (
                 <CompanyLoader />
             ) : (
-                <div>
-                    <div className='d-flex'>
-                        {/* <NavPills navpills={navpills} /> */}
-                        <ProductSideMenu
-                            title={
-                                companyInfo?.subdomain || companySubdomian || ""
-                            }
-                            sidebarMenuList={sidebarMenu}
-                        />
-                        <div
-                            className={
-                                width > 768 ? "doc-content" : "doc-content-sm "
-                            }
-                            style={{
-                                marginTop: "0px",
-                            }}>
-                            <div className='ps-2'>
-                                <Outlet />
-                            </div>
+                <div className='d-flex'>
+                    {/* <NavPills navpills={navpills} /> */}
+                    <ProductSideMenu
+                        title={companyInfo?.subdomain || companySubdomian || ""}
+                        backPath='/dashboard'
+                        sidebarMenuList={sidebarMenu}
+                    />
+                    <div
+                        className={
+                            width > 768 ? "doc-content" : "doc-content-sm "
+                        }
+                        style={{
+                            marginTop: "0px",
+                        }}>
+                        <div className='ps-2'>
+                            <Outlet />
                         </div>
                     </div>
                 </div>

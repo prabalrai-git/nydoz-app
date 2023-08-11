@@ -1,5 +1,5 @@
 import loadable from "@loadable/component";
-import { Outlet, RouteObject } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
 import ProductRoutes from "./product";
 // import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
 import AdminLayout from "../ui/features/adminSetting/Layout";
@@ -7,6 +7,7 @@ import AdminLayout from "../ui/features/adminSetting/Layout";
 import ProfileLayout from "../ui/features/company/ProfileLayout";
 import softwareRoutes from "./software";
 import AdminRoutes from "./AdminSetting";
+import SoftwareLayout from "../ui/features/software/SoftwareLayout";
 
 // routes
 
@@ -36,7 +37,7 @@ const CompanyRoutes: RouteObject[] = [
 
     {
         path: "software",
-        element: <Outlet />,
+        element: <SoftwareLayout />,
         children: softwareRoutes,
     },
     {

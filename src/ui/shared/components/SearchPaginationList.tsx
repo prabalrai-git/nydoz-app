@@ -362,7 +362,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                         </thead>
                         <tbody className='fw-semibold text-gray-600 min-h-50vh search-table-body'>
                             {isloading ? (
-                                <span className='d-flex h-75vh flex-center'>
+                                <span className='d-flex h-75vh flex-center w-100'>
                                     <Spinner />
                                 </span>
                             ) : (

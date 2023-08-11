@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
-import useWebSetting from "../../../context/useWebSetting";
 import {
     Buildings,
     Gear,
@@ -10,10 +9,15 @@ import {
     PersonCheck,
     PersonLock,
 } from "react-bootstrap-icons";
-import { useWindowSize } from "usehooks-ts";
 
-const CrmLayout = () => {
-    const { width } = useWindowSize();
+interface IProps {
+    softwareName: string;
+}
+
+const CrmLayout = (props: IProps) => {
+    const { softwareName } = props;
+
+    console.log("softwareName from crm", softwareName);
 
     const sidebarMenu: ISidebarMenu[] = [
         {
@@ -53,22 +57,16 @@ const CrmLayout = () => {
             icon: <Gear size={22} />,
         },
     ];
-    const { webSetting } = useWebSetting();
-    const { showProductSidebar } = webSetting;
 
     return (
         <div className='d-flex'>
-            {/* <NavPills navpills={navpills} /> */}
-            <ProductSideMenu sidebarMenuList={sidebarMenu} />
-            <div
-                className={
-                    showProductSidebar && width > 768
-                        ? "doc-content"
-                        : "doc-content-sm "
-                }>
-                <div className='ps-2'>
-                    <Outlet />
-                </div>
+            <ProductSideMenu
+                title='CM'
+                backPath='../'
+                sidebarMenuList={sidebarMenu}
+            />
+            <div className='ps-2 w-100'>
+                <Outlet />
             </div>
         </div>
     );

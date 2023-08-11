@@ -6,7 +6,7 @@ import Layout from "../ui/features/crm/Layout";
 const softwareRoutes: RouteObject[] = [
     {
         path: "cm",
-        element: <Layout />,
+        element: <Layout softwareName='client-management' />,
         children: CMRoutes,
     },
 ];

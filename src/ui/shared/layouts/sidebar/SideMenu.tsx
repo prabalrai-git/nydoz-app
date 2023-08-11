@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useWebSetting from "../../../../context/useWebSetting";
 import { ISidebarMenu } from "../../../../types/app.types";
 import { useWindowSize } from "usehooks-ts";
@@ -7,10 +7,11 @@ import { ArrowBarLeft, ArrowBarRight } from "react-bootstrap-icons";
 interface IProps {
     sidebarMenuList: ISidebarMenu[];
     title: string;
+    backPath: string;
 }
 
 const ProductSideMenu = (props: IProps) => {
-    const { sidebarMenuList, title } = props;
+    const { sidebarMenuList, title, backPath } = props;
     const { width } = useWindowSize();
     const { webSetting, dispatchWebSetting } = useWebSetting();
     const { showProductSidebar } = webSetting;
@@ -42,7 +43,7 @@ const ProductSideMenu = (props: IProps) => {
                     <span className='text-uppercase'>{title}</span>
                 </div>
                 <div
-                    className='app-sidebar-nav flex-grow-1 hover-scroll-overlay-y px-5 pt-2'
+                    className='app-sidebar-nav flex-grow-1 hover-scroll-overlay-y px-5 pt-2 '
                     id='kt_app_sidebar_primary_nav'
                     data-kt-scroll='true'
                     data-kt-scroll-height='auto'
@@ -73,6 +74,16 @@ const ProductSideMenu = (props: IProps) => {
                             );
                         })}
                     </ul>
+                    <div className='app-sidebar-footer d-flex flex-column flex-center '>
+                        <Link
+                            to={"/"}
+                            className='btn btn-icon btn-color-gray-400 btn-active-color-primary'>
+                            <i className='bi bi-arrow-left-square fs-2x text-warning'></i>
+                        </Link>
+                        <span className='pt-2 fs-9 fs-lg-7 fw-bold text-gray-400'>
+                            Back
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
