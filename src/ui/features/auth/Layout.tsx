@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useLocation, Outlet } from "react-router-dom";
 import useAuthContext from "../../../context/auth/useAuthContext";
-import PublicNavbar from "../../shared/layouts/Header/navbar/PublicNavbar";
+import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
 
 const ProtectAuthLayout: React.FC = () => {
     const { isLoggedIn, token } = useAuthContext();
@@ -11,7 +11,7 @@ const ProtectAuthLayout: React.FC = () => {
         <Navigate to={"/"} state={{ from: location }} replace />
     ) : (
         <>
-            <PublicNavbar />
+            <WorkSpaceNavbar />
             <div className='main-container '>
                 <Outlet />
             </div>
