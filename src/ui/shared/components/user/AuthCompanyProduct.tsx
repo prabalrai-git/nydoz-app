@@ -8,6 +8,7 @@ import LoadingSpinner from "../../molecules/LoadingSpinner";
 import NotFound from "../../molecules/NotFound";
 import ImageAtom from "../../atoms/ImageAtom";
 import { useNavigate } from "react-router-dom";
+import UserCompanyAndProducts from "../../layouts/Header/navbar/products/UserCompanyAndProducts";
 
 const ProductList = () => {
     const navigate = useNavigate();
@@ -27,8 +28,7 @@ const ProductList = () => {
     };
 
     return (
-        <div className='py-6 px-3'>
-            <h3 className='my-3'>Products</h3>
+        <div>
             {isloading && <LoadingSpinner title='loading...' />}
             {data && (
                 <div className='row'>
@@ -37,11 +37,11 @@ const ProductList = () => {
                         return (
                             <div
                                 key={companyItem.id}
-                                className='col-12 border-secondary  border-bottom  py-3 my-3'>
+                                className='col-12 border-secondary  border-bottom  py-3 my-3 w-100'>
                                 <h4 className='fs-14 fw-bolder my-3'>
                                     {companyItem.name}
                                 </h4>
-                                <div className='row'>
+                                <div className='d-flex'>
                                     {companyItem?.products?.map(
                                         (productItem) => (
                                             <div
@@ -51,10 +51,10 @@ const ProductList = () => {
                                                         companyItem.subdomain
                                                     );
                                                 }}
-                                                className='col-6 col-md-2 cursor-pointer'
+                                                className='d-flex w-100 '
                                                 key={productItem.id}>
-                                                <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box'>
-                                                    <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light'>
+                                                <div className='rounded-2 border border-secondary shadow shadow-sm m-3 p-2 shadow-sm  rounded text-center product-box'>
+                                                    <div className='symbol symbol-75px symbol-lg-75px symbol-fixed position-relative bg-light'>
                                                         <ImageAtom
                                                             src={
                                                                 productItem.logo
@@ -65,8 +65,8 @@ const ProductList = () => {
                                                             className='img-fluid card-img-top'
                                                         />
                                                     </div>
-                                                    <div className='card-body'>
-                                                        <h5 className='card-title my-3'>
+                                                    <div>
+                                                        <h5>
                                                             {productItem.name}
                                                         </h5>
                                                     </div>

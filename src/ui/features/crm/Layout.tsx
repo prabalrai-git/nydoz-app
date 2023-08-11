@@ -10,15 +10,7 @@ import {
     PersonLock,
 } from "react-bootstrap-icons";
 
-interface IProps {
-    softwareName: string;
-}
-
-const CrmLayout = (props: IProps) => {
-    const { softwareName } = props;
-
-    console.log("softwareName from crm", softwareName);
-
+const CrmLayout = () => {
     const sidebarMenu: ISidebarMenu[] = [
         {
             id: 1,

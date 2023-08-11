@@ -28,7 +28,7 @@ const ProductRoutes: RouteObject[] = [
         ),
     },
     {
-        path: "crm",
+        path: "client-management",
         element: <Layout />,
         children: CRMRoutes,
     },

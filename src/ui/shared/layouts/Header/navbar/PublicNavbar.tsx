@@ -21,8 +21,8 @@ const PublicNavbar = () => {
 
     const productList = [
         {
-            name: "Client Hub",
-            link: "/cm",
+            name: "Client Management",
+            path: "client-management",
             imageLink: Images.ClientHubLogo,
         },
         {

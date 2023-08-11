@@ -1,13 +1,10 @@
 import loadable from "@loadable/component";
 import { RouteObject } from "react-router-dom";
 import ProductRoutes from "./product";
-// import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
 import AdminLayout from "../ui/features/adminSetting/Layout";
 
 import ProfileLayout from "../ui/features/company/ProfileLayout";
-import softwareRoutes from "./software";
 import AdminRoutes from "./AdminSetting";
-import SoftwareLayout from "../ui/features/software/SoftwareLayout";
 
 // routes
 
@@ -30,15 +27,9 @@ const CompanyRoutes: RouteObject[] = [
         element: <ProfileLayout />,
     },
     {
-        path: "products",
+        path: "software",
         element: <ProductLayout />,
         children: ProductRoutes,
-    },
-
-    {
-        path: "software",
-        element: <SoftwareLayout />,
-        children: softwareRoutes,
     },
     {
         path: "settings",

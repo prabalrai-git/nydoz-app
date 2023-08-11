@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import NavPills from "../../shared/molecules/NavPills";
 import { INavPill } from "../../../types/app.types";
+import MenubarUp from "../../shared/layouts/sidebar/MenubarUp";
 
 const Layout = () => {
     const navPills: INavPill[] = [
@@ -12,13 +12,13 @@ const Layout = () => {
         {
             id: 1,
             title: "Client Management",
-            link: "crm",
+            link: "cm/dashboard",
         },
     ];
 
     return (
         <div>
-            {/* <NavPills navpills={navPills} /> */}
+            <MenubarUp menubarList={navPills} />
             <Outlet />
         </div>
     );

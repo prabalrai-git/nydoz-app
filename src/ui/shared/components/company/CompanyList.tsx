@@ -21,11 +21,6 @@ const CompanyListCard = () => {
     }, []);
 
     const handleNavigateToSubDomain = (subdomain: string) => {
-        // if (VITE_HOST === "localhost") {
-        //     window.open(`http://${subdomain}.localhost:3000`, );
-        // } else {
-        //      window.open(`http://${subdomain}.localhost:3000`);
-        // }
         navigate(`${subdomain}/dashboard`);
     };
 

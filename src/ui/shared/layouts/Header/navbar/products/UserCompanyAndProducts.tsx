@@ -1,6 +1,5 @@
 import useAuthContext from "../../../../../../context/auth/useAuthContext";
 import { Link } from "react-router-dom";
-import ImageAtom from "../../../../atoms/ImageAtom";
 
 const UserCompanyAndProducts = () => {
     const { userCompanyAndItsProducts } = useAuthContext();
@@ -19,7 +18,7 @@ const UserCompanyAndProducts = () => {
                         <div className='row'>
                             {companyItem?.products?.map((productItem) => (
                                 <div
-                                    className='col-6 cursor-pointer'
+                                    className='col-12 col-md-6 cursor-pointer'
                                     key={productItem.id}>
                                     <div className='rounded-2 border border-secondary shadow shadow-sm m-1 p-3 shadow-sm  rounded text-center'>
                                         <div className='d-flex align-items-center'>
