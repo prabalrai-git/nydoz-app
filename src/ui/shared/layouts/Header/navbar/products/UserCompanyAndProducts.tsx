@@ -1,10 +1,13 @@
 import useAuthContext from "../../../../../../context/auth/useAuthContext";
 import { Link } from "react-router-dom";
 import useWebSetting from "../../../../../../context/useWebSetting";
+import APP_SETTING from "../../../../../../config/AppSetting";
+import DynamicLink from "../../../../molecules/DynamicLink";
 
 const UserCompanyAndProducts = () => {
     const { userCompanyAndItsProducts } = useAuthContext();
     const { hasSubdomain } = useWebSetting();
+    console.log(APP_SETTING.PROD, "APP_SETTING.PROD");
 
     return (
         <div className='user-company-product-wrapper '>
@@ -31,20 +34,14 @@ const UserCompanyAndProducts = () => {
                                                 />
                                             </div>
                                             <div className='d-flex justify-content-start flex-column'>
-                                                {hasSubdomain ? (
-                                                    <a
-                                                        target='_blank'
-                                                        href={`https://www.${companyItem.subdomain}.nydoz.com/${companyItem.subdomain}/${productItem.slug}/dashboard`}
-                                                        className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                                                        {productItem.name}
-                                                    </a>
-                                                ) : (
-                                                    <Link
-                                                        to={`/${companyItem.subdomain}/${productItem.slug}/dashboard`}
-                                                        className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                                                        {productItem.name}
-                                                    </Link>
-                                                )}
+                                                <DynamicLink
+                                                    className='text-dark fw-bold text-hover-primary mb-1 fs-6'
+                                                    subdomain={
+                                                        companyItem.subdomain
+                                                    }
+                                                    pathName={`/${companyItem.subdomain}/${productItem.slug}/dashboard`}>
+                                                    {productItem.name}
+                                                </DynamicLink>
                                             </div>
                                         </div>
                                     </div>
