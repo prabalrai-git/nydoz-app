@@ -1,11 +1,13 @@
 import useAuthContext from "../../../../../../context/auth/useAuthContext";
 import { Link } from "react-router-dom";
+import useWebSetting from "../../../../../../context/useWebSetting";
 
 const UserCompanyAndProducts = () => {
     const { userCompanyAndItsProducts } = useAuthContext();
+    const { hasSubdomain } = useWebSetting();
 
     return (
-        <>
+        <div className='user-company-product-wrapper '>
             {userCompanyAndItsProducts?.companies?.map((companyItem) => {
                 if (companyItem?.products?.length === 0) return null;
                 return (
@@ -29,12 +31,20 @@ const UserCompanyAndProducts = () => {
                                                 />
                                             </div>
                                             <div className='d-flex justify-content-start flex-column'>
-                                                <Link
-                                                    target='_blank'
-                                                    to={`/${companyItem.subdomain}/${productItem.slug}/dashboard`}
-                                                    className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                                                    {productItem.name}
-                                                </Link>
+                                                {hasSubdomain ? (
+                                                    <a
+                                                        target='_blank'
+                                                        href={`https://www.${companyItem.subdomain}.nydoz.com/${companyItem.subdomain}/${productItem.slug}/dashboard`}
+                                                        className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
+                                                        {productItem.name}
+                                                    </a>
+                                                ) : (
+                                                    <Link
+                                                        to={`/${companyItem.subdomain}/${productItem.slug}/dashboard`}
+                                                        className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
+                                                        {productItem.name}
+                                                    </Link>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -44,7 +54,7 @@ const UserCompanyAndProducts = () => {
                     </div>
                 );
             })}
-        </>
+        </div>
     );
 };
 

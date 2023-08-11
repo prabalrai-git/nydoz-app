@@ -1,5 +1,5 @@
 import CompanyListCard from "../../shared/components/company/CompanyList";
-import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
+// import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
 import UserCompanyAndProducts from "../../shared/layouts/Header/navbar/products/UserCompanyAndProducts";
 
 const Dashboard = () => {
