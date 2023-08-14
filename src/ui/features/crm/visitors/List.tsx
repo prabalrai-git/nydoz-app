@@ -1,10 +1,10 @@
 import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
-import { IAgentResponse } from "../../../../types/products.types";
-import BASE_URL from "../../../../constants/AppSetting";
+import {
+    IVisitorResponse,
+    IAgentResponse,
+} from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AirplaneFill, Flag, People } from "react-bootstrap-icons";
@@ -21,7 +21,7 @@ const VisitorList = () => {
     ];
 
     const handleEditData = useCallback(
-        (item: IAgentResponse) => {
+        (item: IVisitorResponse) => {
             navigate("edit", {
                 state: { data: item },
             });
@@ -29,7 +29,7 @@ const VisitorList = () => {
         [navigate]
     );
 
-    const tableColumns: ColumnDef<IAgentResponse>[] = useMemo(
+    const tableColumns: ColumnDef<IVisitorResponse>[] = useMemo(
         () => [
             {
                 accessorKey: "sn",
@@ -73,7 +73,7 @@ const VisitorList = () => {
                 ),
                 cell: (info) => {
                     return (
-                        <div>
+                        <div className='text-center'>
                             {info.getValue<string>() ? (
                                 <span className='badge badge-success'>YES</span>
                             ) : (
@@ -113,9 +113,48 @@ const VisitorList = () => {
                 ),
                 cell: (info) => {
                     return (
-                        <div>
+                        <div className='text-center'>
                             {info.getValue<string>() ? (
                                 info.getValue<string>()
+                            ) : (
+                                <span className='badge badge-warning px-3'>
+                                    NA
+                                </span>
+                            )}
+                        </div>
+                    );
+                },
+            },
+            {
+                accessorKey: "agent",
+                header: () => (
+                    <div>
+                        <Flag size={16} className='mx-2' />
+                        <span>Agent</span>
+                    </div>
+                ),
+                cell: (info) => {
+                    return (
+                        <div>
+                            {info.getValue<Partial<IAgentResponse>>() ? (
+                                <div>
+                                    <span>
+                                        {" "}
+                                        {
+                                            info.getValue<
+                                                Partial<IAgentResponse>
+                                            >()?.first_name
+                                        }
+                                    </span>
+                                    <span>
+                                        {" "}
+                                        {
+                                            info.getValue<
+                                                Partial<IAgentResponse>
+                                            >()?.last_name
+                                        }
+                                    </span>
+                                </div>
                             ) : (
                                 <span className='badge badge-warning px-3'>
                                     NA
@@ -134,29 +173,19 @@ const VisitorList = () => {
                     </div>
                 ),
                 cell: (info) => (
-                    <div className='text-center'>
-                        <DropdownButton
-                            variant='secondary'
-                            size='sm'
-                            id='dropdown-basic-button'
-                            title='Action'>
-                            <Dropdown.Item>
-                                <div className='menu-link'>
-                                    <span className='mx-2'>View</span>
-                                    <i className='bi bi-box-arrow-up-right text-primary '></i>
-                                </div>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                                <div
-                                    onClick={() =>
-                                        handleEditData(info?.row?.original)
-                                    }
-                                    className='menu-link'>
-                                    <span className='mx-2'>Edit</span>
-                                    <i className='bi bi-pencil-square text-info'></i>
-                                </div>
-                            </Dropdown.Item>
-                        </DropdownButton>
+                    <div className='d-flex justify-content-center'>
+                        {/* <button
+                            title='view'
+                            onClick={() => handleView(info?.row?.original?.id)}
+                            className='btn btn-sm btn-icon btn-primary mx-3'>
+                            <i className='bi bi-box-arrow-up-right '></i>
+                        </button> */}
+                        <button
+                            title='Edit'
+                            onClick={() => handleEditData(info?.row?.original)}
+                            className='btn btn-sm btn-icon btn-info mx-3'>
+                            <i className='bi bi-pencil-square '></i>
+                        </button>
                     </div>
                 ),
                 footer: (info) => info.column.id,

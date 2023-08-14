@@ -56,6 +56,10 @@ const CrmRoutes: RouteObject[] = [
                 path: "add",
                 element: <AddVisitors />,
             },
+            {
+                path: "edit",
+                element: <AddVisitors />,
+            },
         ],
     },
     {

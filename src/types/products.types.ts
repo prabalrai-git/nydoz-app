@@ -30,32 +30,6 @@ export interface IEnrollmentResponse extends IEnrollmentPayload {
     id: string;
 }
 
-// {
-//   "registration_date": "2023-08-14",
-//   "first_name": "string",
-//   "last_name": "string",
-//   "country": "string",
-//   "state": "string",
-//   "street_address": "string",
-//   "agent_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "phone_nos": [
-//     "string"
-//   ],
-//   "visiting_purpose": "string",
-//   "remarks": "string",
-//   "information_channel": "string",
-//   "email": [
-//     "string"
-//   ],
-//   "going_to_foreign": true,
-//   "visa_type_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "visiting_country": "string",
-//   "visiting_country_state": "string",
-//   "deal_amount": 0,
-//   "applied_position": "string",
-//   "expected_salary_pa": 0,
-//   "expected_take_off_date": "2023-08-14"
-// }
 export interface IVisitorPayload {
     registration_date: string;
     information_channel: string;
@@ -102,7 +76,8 @@ export interface IVisitorResponse {
     last_name: string;
     country: string;
     state: string;
-    agent_id: IAgentResponse | undefined;
+    agent: Partial<IAgentResponse>;
+    agent_id: string | undefined;
     visiting_purpose: IVisitingPurposeResponse;
     visa_type_id: IVisaTypeResponse | undefined;
     street_address: string;

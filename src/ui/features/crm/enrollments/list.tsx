@@ -146,7 +146,7 @@ const List = () => {
                 footer: (info) => info.column.id,
             },
         ],
-        []
+        [handleEditData, handleOpening, handleView]
     );
 
     return (
