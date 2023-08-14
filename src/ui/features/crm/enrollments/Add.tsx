@@ -138,8 +138,8 @@ const Add = () => {
             <CompanyBreadcrumb
                 title={
                     location?.state?.data?.id
-                        ? "CM Update Institute"
-                        : "Cm Add Institute"
+                        ? "Update Institute"
+                        : "Add Institute"
                 }
                 showBreadcrumb={true}
                 btnText='Back'

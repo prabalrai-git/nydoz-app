@@ -18,7 +18,6 @@ interface SearchState {
 function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
     const { columns, baseUrl, searchParamsArray } = props;
     const [fetchUrl, setFetchUrl] = useState(baseUrl);
-    console.log(fetchUrl, "fetchUrl");
     const [tableData, setTableData] = useState<T[] | []>([]);
     const { fetchDataById, isloading, data, pagination } = useFetch<T[]>(
         fetchUrl,
