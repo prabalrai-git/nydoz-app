@@ -2,9 +2,10 @@ import CompanyProductList from "../products/CompanyProductList";
 
 import useAuthContext from "../../../context/auth/useAuthContext";
 import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
+import { Link } from "react-router-dom";
 
 const CompanyDashboard = () => {
-    const { companyInfo } = useAuthContext();
+    const { companyInfo, isCompanyOwner } = useAuthContext();
 
     return (
         <div>
@@ -13,15 +14,25 @@ const CompanyDashboard = () => {
                 title='Dashboard'
                 showBreadcrumb={true}
             />
-            <section className='bg-white py-6'>
-                <div className='d-flex align-item-center justify-content-between mb-3 px-3'>
-                    <h4 className='fs-20'>
+            <section className='card '>
+                <div className='card-header'>
+                    <h3 className='card-title'>
                         <span className='text-capitalize'>
                             {companyInfo?.subdomain ?? "company"}'s Products
                         </span>
-                    </h4>
+                    </h3>
+                    <div className='card-toolbar'>
+                        <Link
+                            type='button'
+                            to={`/workspace/${companyInfo?.subdomain}/products/buy`}
+                            className='btn btn-sm btn-primary'>
+                            BUY PRODUCTS
+                        </Link>
+                    </div>
                 </div>
-                <CompanyProductList />
+                <div className='card-body'>
+                    <CompanyProductList />
+                </div>
             </section>
         </div>
     );

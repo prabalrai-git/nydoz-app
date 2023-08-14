@@ -13,7 +13,7 @@ const SingleProduct = loadable(
 const BuyProduct = loadable(() => import("../ui/features/company/BuyProduct"));
 
 import CMRoutes from "./Cm";
-import Layout from "../ui/features/crm/Layout";
+import ClientManagementLayout from "../ui/features/crm/Layout";
 
 import SoftwareAuthRoute from "../ui/features/software/SoftwareAuth";
 
@@ -34,7 +34,7 @@ const softwareRoutes: RouteObject[] = [
         path: "client-management",
         element: (
             <SoftwareAuthRoute softwareSlug='investment-management'>
-                <Layout />
+                <ClientManagementLayout />
             </SoftwareAuthRoute>
         ),
         children: CMRoutes,

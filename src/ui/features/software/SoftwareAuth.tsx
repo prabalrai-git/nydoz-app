@@ -36,6 +36,10 @@ const SoftwareAuthRoute = (props: IProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [companyInfo?.id, softwareSlug]);
 
+    useEffect(() => {
+        console.log("hasSoftwareAccess", hasSoftwareAccess);
+    }, [hasSoftwareAccess]);
+
     return <>{hasSoftwareAccess ? children : <Navigate to='/' />}</>;
 };
 

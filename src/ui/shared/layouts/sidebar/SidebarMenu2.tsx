@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import useWebSetting from "../../../../context/useWebSetting";
 import { ISidebarMenu } from "../../../../types/app.types";
 import CMBoard from "../../../../assets/products/client-logo.png";
+import { useState } from "react";
 
 interface IProps {
     sidebarMenuList: ISidebarMenu[];
@@ -9,11 +10,9 @@ interface IProps {
 
 const ProductSideMenu = (props: IProps) => {
     const { sidebarMenuList } = props;
+    const [showSidebar, setShowSidebar] = useState(true);
 
-    const { webSetting } = useWebSetting();
-    const { showProductSidebar } = webSetting;
-
-    const sidebarClassName = showProductSidebar ? "slide-in" : "slide-out";
+    const sidebarClassName = showSidebar ? "slide-in" : "slide-out";
 
     return (
         <div className={`docs-aside ${sidebarClassName}`}>

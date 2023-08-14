@@ -77,12 +77,6 @@ const CompanyLayout = () => {
         },
 
         {
-            id: 3,
-            title: "Products",
-            link: "products",
-            icon: <PersonCheck size={20} />,
-        },
-        {
             id: 4,
             title: "Software",
             link: "software",

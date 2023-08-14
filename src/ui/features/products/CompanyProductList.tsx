@@ -10,7 +10,6 @@ import ImageAtom from "../../shared/atoms/ImageAtom";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import { Link } from "react-router-dom";
 import LoadingPage from "../utils/LoadingPage";
-import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 const ProductList = () => {
     const { companyInfo, isCompanyOwner } = useAuthContext();
@@ -34,11 +33,6 @@ const ProductList = () => {
 
     return (
         <div>
-            <CompanyBreadcrumb
-                title='Products'
-                showBreadcrumb={true}
-                btnText='Back'
-            />
             {isloading && <LoadingPage />}
             {data && data.length > 0 && (
                 <div className='d-flex'>
@@ -67,15 +61,9 @@ const ProductList = () => {
             )}
             {data && data?.length === 0 && (
                 <div>
-                    <NotFound title='This company is not subscribed to any products .' />
-
-                    {isCompanyOwner && (
-                        <Link
-                            to={`/workspace/${companyInfo?.subdomain}/products/buy`}
-                            className='btn btn-success my-3'>
-                            BUY PRODUCTS
-                        </Link>
-                    )}
+                    <h3 className='text-warning text-center'>
+                        This company is not subscribed to any products .
+                    </h3>
                 </div>
             )}
         </div>
