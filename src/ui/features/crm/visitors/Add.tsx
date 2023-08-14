@@ -16,6 +16,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
     IVisitorPayload,
     IVisitorResponse,
+    IVisitorPayloadNoForeign,
 } from "../../../../types/products.types";
 import { getSelectPropsFromCountry } from "../../../../functions/country";
 import useValidationError from "../../../../hooks/useValidationError";
@@ -219,22 +220,44 @@ const AddVisitor = () => {
                 navigate(-1);
             }
         } else {
-            const tempPostData: IVisitorPayload = {
-                ...data,
-                registration_date: moment(data.registration_date).format(
-                    "YYYY-MM-DD HH:mm:ss"
-                ),
-                expected_take_off_date: moment(
-                    data.expected_take_off_date
-                ).format("YYYY-MM-DD HH:mm:ss"),
-                country: selectedCountry?.value ?? "",
-                visa_type_id: selectedVisaType?.id ?? "",
-                information_channel: selectInformationChannel?.id ?? "",
-                going_to_foreign: goingForeign,
-                visiting_country: selectedVisitingCountry?.value ?? "",
-                agent_id: selectedAgent?.id ?? "",
-            };
-            response = await postData(tempPostData);
+            let payload: IVisitorPayload | IVisitorPayloadNoForeign;
+
+            if (goingForeign) {
+                payload = {
+                    ...data,
+                    registration_date: moment(data.registration_date).format(
+                        "YYYY-MM-DD HH:mm:ss"
+                    ),
+                    expected_take_off_date: moment(
+                        data.expected_take_off_date
+                    ).format("YYYY-MM-DD HH:mm:ss"),
+                    country: selectedCountry?.value ?? "",
+                    visa_type_id: selectedVisaType?.id ?? "",
+                    information_channel: selectInformationChannel?.id ?? "",
+                    going_to_foreign: goingForeign,
+                    visiting_country: selectedVisitingCountry?.value ?? "",
+                    agent_id: selectedAgent?.id ?? "",
+                };
+            } else {
+                payload = {
+                    registration_date: moment(data.registration_date).format(
+                        "YYYY-MM-DD HH:mm:ss"
+                    ),
+                    information_channel: selectInformationChannel?.id ?? "",
+                    first_name: data.first_name,
+                    last_name: data.last_name,
+                    country: selectedCountry?.value ?? "",
+                    state: data.state,
+                    visiting_purpose: data.visiting_purpose,
+                    street_address: data.street_address,
+                    phone_nos: data.phone_nos,
+                    email: data.email,
+                    agent_id: selectedAgent?.id ?? "",
+                    going_to_foreign: goingForeign,
+                    remarks: data.remarks,
+                };
+            }
+            response = await postData(payload);
             if (response?.data?.status === "ok") {
                 toast.success("Visitor Added  Successfully");
                 navigate(-1);
@@ -275,19 +298,21 @@ const AddVisitor = () => {
                                 <div className='row'>
                                     <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6 d-flex align-items-center '>
                                         <div className='fv-row flex-row-fluid fv-plugins-icon-container '>
-                                            <input
-                                                value='true'
-                                                onChange={(e) => {
-                                                    setGoingForeign(
-                                                        e.target.checked
-                                                    );
-                                                }}
-                                                type='checkbox'
-                                                className='form-check-input'
-                                            />
-                                            <label className=' form-label  ms-6'>
-                                                Going for Foreign
-                                            </label>
+                                            <div className='form-check form-switch form-check-custom form-check-solid '>
+                                                <input
+                                                    value='true'
+                                                    onChange={(e) => {
+                                                        setGoingForeign(
+                                                            e.target.checked
+                                                        );
+                                                    }}
+                                                    type='checkbox'
+                                                    className='form-check-input cursor-pointer'
+                                                />
+                                                <label className='form-check-label'>
+                                                    Going for Foreign
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className='col-6 gap-5 gap-md-7 mb-6'>

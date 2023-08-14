@@ -50,6 +50,7 @@ const CountryCode = (props: ICountryCodeProps) => {
         <Select
             options={forCountry ? options2 : options1}
             value={selectValue}
+            className='react-select-container'
             placeholder={placeholder}
             onChange={handleChange}
             isClearable
