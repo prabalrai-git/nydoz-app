@@ -18,6 +18,7 @@ interface SearchState {
 function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
     const { columns, baseUrl, searchParamsArray } = props;
     const [fetchUrl, setFetchUrl] = useState(baseUrl);
+    console.log(fetchUrl, "fetchUrl");
     const [tableData, setTableData] = useState<T[] | []>([]);
     const { fetchDataById, isloading, data, pagination } = useFetch<T[]>(
         fetchUrl,
@@ -146,7 +147,8 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
         setFetchAgain(true);
     };
 
-    const changePage = (pageNumber: number) => {
+    const handleChangePage = (pageNumber: number) => {
+        if (pageNumber === pagination?.current_page) return;
         setSearchState((prevState) => ({
             ...prevState,
             page: pageNumber.toString(),
@@ -301,7 +303,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                                     <li key={index + 1} className='page-item'>
                                         <button
                                             onClick={() =>
-                                                changePage(index + 1)
+                                                handleChangePage(index + 1)
                                             }
                                             className={
                                                 pagination.current_page ===

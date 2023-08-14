@@ -1,14 +1,9 @@
 import useAuthContext from "../../../../../../context/auth/useAuthContext";
-import { Link } from "react-router-dom";
-import useWebSetting from "../../../../../../context/useWebSetting";
-import APP_SETTING from "../../../../../../config/AppSetting";
 import DynamicLink from "../../../../molecules/DynamicLink";
 
 const UserCompanyAndProducts = () => {
     const { userCompanyAndItsProducts } = useAuthContext();
-    const { hasSubdomain } = useWebSetting();
-    console.log(APP_SETTING.PROD, "APP_SETTING.PROD");
-
+    // console.log(userCompanyAndItsProducts);
     return (
         <div className='user-company-product-wrapper '>
             {userCompanyAndItsProducts?.companies?.map((companyItem) => {
