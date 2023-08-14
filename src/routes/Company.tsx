@@ -1,8 +1,8 @@
 import loadable from "@loadable/component";
 import { RouteObject } from "react-router-dom";
-import softwareRoutes from "./software";
+import productRoutes from "./products";
 import AdminLayout from "../ui/features/adminSetting/Layout";
-
+import productSettingRoutes from "./productSetting";
 import ProfileLayout from "../ui/features/company/ProfileLayout";
 import AdminRoutes from "./AdminSetting";
 
@@ -13,7 +13,7 @@ const CompanyDashboard = loadable(
 );
 
 const ProductLayout = loadable(
-    () => import("../ui/features/products/ProductLayout")
+    () => import("../ui/features/productsSetting/ProductLayout")
 );
 
 const CompanyRoutes: RouteObject[] = [
@@ -27,9 +27,14 @@ const CompanyRoutes: RouteObject[] = [
         element: <ProfileLayout />,
     },
     {
-        path: "software",
+        path: "products",
         element: <ProductLayout />,
-        children: softwareRoutes,
+        children: productRoutes,
+    },
+    {
+        path: "product-settings",
+        element: <ProductLayout />,
+        children: productSettingRoutes,
     },
     {
         path: "settings",

@@ -1,5 +1,4 @@
-import CompanyProductList from "../products/CompanyProductList";
-
+import MyProductList from "../../shared/components/products/MyProducts";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 import { Link } from "react-router-dom";
@@ -22,16 +21,18 @@ const CompanyDashboard = () => {
                         </span>
                     </h3>
                     <div className='card-toolbar'>
-                        <Link
-                            type='button'
-                            to={`/workspace/${companyInfo?.subdomain}/products/buy`}
-                            className='btn btn-sm btn-primary'>
-                            BUY PRODUCTS
-                        </Link>
+                        {isCompanyOwner && (
+                            <Link
+                                type='button'
+                                to={`/workspace/${companyInfo?.subdomain}/product-settings/buy`}
+                                className='btn btn-sm btn-primary'>
+                                PURCHASE PRODUCTS
+                            </Link>
+                        )}
                     </div>
                 </div>
                 <div className='card-body'>
-                    <CompanyProductList />
+                    <MyProductList partialPath='../products/' />
                 </div>
             </section>
         </div>

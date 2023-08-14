@@ -21,7 +21,7 @@ const ProductList = () => {
     }, []);
 
     return (
-        <div className=' bg-white  p-6'>
+        <div>
             {isloading && <LoadingPage />}
             <section className=' container'>
                 <div className='d-flex'>

@@ -10,7 +10,7 @@ import useHandleShowError from "../../../hooks/useHandleShowError";
 import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
-import { Gear, House, PersonBadge, PersonCheck } from "react-bootstrap-icons";
+import { Boxes, Gear, House, PersonBadge } from "react-bootstrap-icons";
 import { useWindowSize } from "usehooks-ts";
 import useWebSetting from "../../../context/useWebSetting";
 
@@ -77,13 +77,19 @@ const CompanyLayout = () => {
         },
 
         {
-            id: 4,
-            title: "Software",
-            link: "software",
+            id: 2,
+            title: "Products",
+            link: "products/dashboard",
             icon: <i className='ki-outline ki-abstract-26 fs-2x'></i>,
         },
         {
             id: 2,
+            title: "Products Settings",
+            link: "product-settings/view",
+            icon: <Boxes size={20} />,
+        },
+        {
+            id: 3,
             title: "Profile",
             link: `profile/${companyInfo?.id}`,
             icon: <PersonBadge size={20} />,
@@ -92,7 +98,7 @@ const CompanyLayout = () => {
             id: 6,
             title: "Settings",
             link: "settings",
-            icon: <Gear size={22} />,
+            icon: <Gear size={20} />,
         },
     ];
 

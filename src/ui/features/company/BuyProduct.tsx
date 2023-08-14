@@ -1,4 +1,3 @@
-// @ desc Products list component in dashbaord
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
@@ -7,8 +6,6 @@ import Modal2 from "../../shared/components/Modal2";
 import { IProductResponse } from "../../../types/payload.type";
 import LoadingPage from "../../features/utils/LoadingPage";
 import ImageAtom from "../../shared/atoms/ImageAtom";
-import Breadcrumb from "../../shared/molecules/Breadcrumb";
-import Heading from "../../shared/molecules/Heading";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import useMutation from "../../../hooks/useMutation";
 import { toast } from "react-toastify";
@@ -16,10 +13,6 @@ import { Spinner } from "react-bootstrap";
 import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 const BuyProduct = () => {
-    // const surl =
-    //     "https://api.dev.nydoz.com/api/v1/companies/99a0d2c3-22a9-4ddf-8970-a1a7637cffdb/social-links";
-    // const reactUrl =
-    //     "https://api.dev.nydoz.com/v1/companies/99a0d2c3-22a9-4ddf-8970-a1a7637cffdb/social-links";
     const { companyInfo } = useAuthContext();
     const companyId = companyInfo?.id;
     const [show, setShow] = useState(false);
@@ -237,9 +230,8 @@ const BuyProduct = () => {
                                                                     )
                                                                 }
                                                                 title='Remove from cart'
-                                                                className='btn btn-warning min-w-150px btn-sm '>
-                                                                Already
-                                                                Purchased
+                                                                className='btn btn-light-danger min-w-150px btn-sm '>
+                                                                Remove From Cart
                                                             </button>
                                                         ) : (
                                                             <button
@@ -296,11 +288,11 @@ const BuyProduct = () => {
                     </tbody>
                 </table>
                 <div className='row'>
-                    <div className='col-12'>
+                    <div className='d-grid gap-2 col-12 col-md-4  mx-auto'>
                         <button
                             onClick={handleProductBuy}
                             disabled={isLoadingBuyProduct}
-                            className='btn btn-primary btn-lg my-6 mx-auto float-end'>
+                            className='btn btn-success btn-block my-6'>
                             {isLoadingBuyProduct ? (
                                 <>
                                     <span className='ms-2'>Please Wait...</span>

@@ -12,7 +12,7 @@ interface IProps {
     softwareSlug: string;
 }
 
-const SoftwareAuthRoute = (props: IProps) => {
+const ProductAuthRoute = (props: IProps) => {
     const { children, softwareSlug } = props;
     const { companyInfo, userCompanyAndItsProducts } = useAuthContext();
     const [hasSoftwareAccess, setSoftwareAccess] = useState<boolean>(false);
@@ -43,4 +43,4 @@ const SoftwareAuthRoute = (props: IProps) => {
     return <>{hasSoftwareAccess ? children : <Navigate to='/' />}</>;
 };
 
-export default SoftwareAuthRoute;
+export default ProductAuthRoute;
