@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import useFetch from "../../../../hooks/useFetch";
+import { useState } from "react";
 import API_ROUTE from "../../../../service/api";
 import { IAgentResponse } from "../../../../types/products.types";
 import BASE_URL from "../../../../constants/AppSetting";
@@ -17,7 +16,7 @@ import SearchPaginationList from "../../../shared/components/SearchPaginationLis
 const AgentList2 = () => {
     const navigate = useNavigate();
     const { id: companyId } = useParams<string>();
-    const baseUrl = `${API_ROUTE.GET_CLIENT_MANAGEMENT_AGENTS}`;
+
     const [show, setShow] = useState<boolean>(false);
 
     const [selectedData, setSelectedData] = useState<

@@ -7,7 +7,6 @@ import {
 } from "@tanstack/react-table";
 import { ISearchPaginationListProps } from "../../../types/axios.type";
 import { Spinner } from "react-bootstrap";
-import NotFound from "../molecules/NotFound";
 import { capitalizeText } from "../../../functions/TextMuatations";
 import useFetch from "../../../hooks/useFetch";
 
@@ -25,6 +24,10 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
         true
     );
     const [fetchAgain, setFetchAgain] = useState(false);
+
+    const handleRefresh = () => {
+        setFetchAgain(true);
+    };
 
     useEffect(() => {
         if (fetchAgain) {
@@ -394,7 +397,14 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                 </div>
             )}
             {data?.length === 0 && isloading === false && (
-                <NotFound title='No data found' />
+                <div className='text-center my-6 px-3'>
+                    <h1 className='text-warning'>Data Not Found. </h1>
+                    <button
+                        onClick={handleRefresh}
+                        className='btn btn-secondary my-3 btn-sm'>
+                        Refresh
+                    </button>
+                </div>
             )}
         </div>
     );

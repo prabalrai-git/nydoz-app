@@ -83,19 +83,19 @@ const CompanyLayout = () => {
             icon: <i className='ki-outline ki-abstract-26 fs-2x'></i>,
         },
         {
-            id: 2,
+            id: 3,
             title: "Products Settings",
             link: "product-settings/view",
             icon: <Boxes size={20} />,
         },
         {
-            id: 3,
+            id: 4,
             title: "Profile",
             link: `profile/${companyInfo?.id}`,
             icon: <PersonBadge size={20} />,
         },
         {
-            id: 6,
+            id: 5,
             title: "Settings",
             link: "settings",
             icon: <Gear size={20} />,

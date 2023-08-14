@@ -242,11 +242,6 @@ const DocumentList = () => {
                             ]}
                         />
                     )}
-                    {!data?.length && !isloading && (
-                        <div className='bg-white flex-center h-75vh'>
-                            <NotFound title='Someting Went Wrong. Agent Not Found. ' />
-                        </div>
-                    )}
                 </div>
             </section>
             <Modal2
