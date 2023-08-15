@@ -12,7 +12,6 @@ import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
 import { Boxes, Gear, House, PersonBadge } from "react-bootstrap-icons";
 import { useWindowSize } from "usehooks-ts";
-import useWebSetting from "../../../context/useWebSetting";
 
 const CompanyLayout = () => {
     const { dispatch, companyInfo, userInfo } = useAuthContext();
@@ -102,8 +101,6 @@ const CompanyLayout = () => {
         },
     ];
 
-    const { webSetting } = useWebSetting();
-    // const { showCompanySidebar } = webSetting;
     return (
         <div>
             {showSplashScreen ? (
@@ -113,7 +110,7 @@ const CompanyLayout = () => {
                     {/* <NavPills navpills={navpills} /> */}
                     <ProductSideMenu
                         title={companyInfo?.subdomain || companySubdomian || ""}
-                        backPath='/dashboard'
+                        backPath='/'
                         sidebarMenuList={sidebarMenu}
                     />
                     <div

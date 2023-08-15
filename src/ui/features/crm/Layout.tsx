@@ -54,7 +54,7 @@ const CrmLayout = () => {
         <div className='d-flex'>
             <ProductSideMenu
                 title='CM'
-                backPath='../'
+                backPath='../../dashboard'
                 sidebarMenuList={sidebarMenu}
             />
             <div className='ps-2 w-100'>

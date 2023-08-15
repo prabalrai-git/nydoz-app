@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const ProductSideMenu = (props: IProps) => {
-    const { sidebarMenuList, title } = props;
+    const { sidebarMenuList, title, backPath } = props;
     const { width } = useWindowSize();
     const { webSetting, dispatchWebSetting } = useWebSetting();
     const { showProductSidebar } = webSetting;
@@ -91,7 +91,7 @@ const ProductSideMenu = (props: IProps) => {
                     </ul>
                     <div className='app-sidebar-footer d-flex flex-column flex-center '>
                         <Link
-                            to={"/"}
+                            to={backPath ?? "/"}
                             className='btn btn-icon btn-color-gray-400 btn-active-color-primary'>
                             <i className='bi bi-arrow-left-square fs-2x text-warning'></i>
                         </Link>
