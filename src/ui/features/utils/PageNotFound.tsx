@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
-import PublicNavbar from "../../shared/layouts/Header/navbar/PublicNavbar";
+// import PublicNavbar from "../../shared/layouts/Header/navbar/PublicNavbar";
+import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
 
 const PageNotFound = () => {
     const navigate = useNavigate();
     return (
         <div className=''>
-            <PublicNavbar />
+            {/* <PublicNavbar /> */}
+            <WorkSpaceNavbar />
             <div className='d-flex align-items-center justify-content-center h-75vh'>
                 <div className='text-center bg-white p-6 card shadow shadow-sm'>
                     <h1 className='display-1 fw-bold'>404</h1>

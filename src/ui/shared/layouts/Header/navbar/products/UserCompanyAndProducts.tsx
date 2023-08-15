@@ -34,7 +34,7 @@ const UserCompanyAndProducts = () => {
                                                     subdomain={
                                                         companyItem.subdomain
                                                     }
-                                                    pathName={`/${companyItem.subdomain}/${productItem.slug}/dashboard`}>
+                                                    pathName={`/${companyItem.subdomain}/products/${productItem.slug}/dashboard`}>
                                                     {productItem.name}
                                                 </DynamicLink>
                                             </div>
