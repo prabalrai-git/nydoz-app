@@ -36,19 +36,20 @@ import {
 } from "../../../../types/products.types";
 
 interface IFormData {
-    registration_date: Date;
+    registration_date: string;
     first_name: string;
     last_name: string;
     state: string;
     street_address: string;
     phone_nos: string[];
     email: string[];
+    information_channel: string;
     visiting_purpose: string;
     remarks: string | undefined;
     deal_amount: number | undefined;
     applied_position: string | undefined;
     expected_salary_pa: number | undefined;
-    expected_take_off_date: Date | undefined;
+    expected_take_off_date: string | undefined;
     visiting_country_state: string | undefined;
 }
 
@@ -57,7 +58,7 @@ const AddVisitor = () => {
     const location = useLocation();
     const [goingForeign, setGoingForeign] = useState(false);
     const [selectInformationChannel, setSelectInformationChannel] = useState<
-        string | undefined
+        InformationChannelResponse | undefined
     >();
     const [selectCommonVisitingPurpose, setSelectCommonVisitingPurpose] =
         useState<IVisitingPurposeResponse | undefined>();
@@ -65,6 +66,8 @@ const AddVisitor = () => {
     const [selectedVisaType, setSelectedVisaType] = useState<
         IVisaTypeResponse | undefined
     >();
+    const [selectedVisaTypeText, setSelectedVisaTypeText] =
+        useState<string>("");
     const [selectedAgent, setSelectedAgent] = useState<
         IAgentResponse | undefined
     >();
@@ -110,6 +113,15 @@ const AddVisitor = () => {
         }
     }, [reset, selectCommonVisitingPurpose, watch]);
 
+    useEffect(() => {
+        if (selectInformationChannel) {
+            reset({
+                ...watch(),
+                information_channel: selectInformationChannel?.description,
+            });
+        }
+    }, [reset, selectInformationChannel, watch]);
+
     const { fields, append, remove } = useFieldArray({
         control,
         name: "phone_nos" as never,
@@ -136,28 +148,22 @@ const AddVisitor = () => {
         const visitingCountry = getSelectPropsFromCountry(
             dataDetails?.visiting_country
         );
-        const registrationDateObj = moment(
-            dataDetails.registration_date,
-            "YYYY-MM-DD HH:mm:ss"
-        );
-        const expectedTakeUpDateObj = moment(
-            dataDetails.expected_take_off_date,
-            "YYYY-MM-DD HH:mm:ss"
-        );
+        const registrationDateObj = moment(dataDetails.registration_date)
+            .format()
+            .split("T")[0];
+        const expectedTakeUpDateObj = moment(dataDetails.expected_take_off_date)
+            .format()
+            .split("T")[0];
 
         setSelectedCountry(country);
         setSelectedVisitingCountry(visitingCountry);
-        setSelectInformationChannel(
-            dataDetails?.information_channel?.description
-        );
-        setSelectCommonVisitingPurpose(dataDetails?.visiting_purpose);
         setSelectedVisaType(dataDetails?.visa_type_id);
-
+        setSelectedVisaTypeText(dataDetails?.visa_type?.description ?? "");
         reset({
             ...dataDetails,
-            registration_date: registrationDateObj.toDate(),
-            expected_take_off_date: expectedTakeUpDateObj.toDate(),
-            visiting_purpose: dataDetails?.visiting_purpose?.description,
+            registration_date: registrationDateObj,
+            expected_take_off_date: expectedTakeUpDateObj,
+            visiting_purpose: dataDetails?.visiting_purpose,
         });
     }, [location?.state?.data, reset]);
 
@@ -178,10 +184,10 @@ const AddVisitor = () => {
             return;
         }
 
-        if (!selectInformationChannel) {
-            toast.error("Please select information channel");
-            return;
-        }
+        // if (!selectInformationChannel) {
+        //     toast.error("Please select information channel");
+        //     return;
+        // }
 
         if (goingForeign) {
             if (!selectedVisitingCountry) {
@@ -197,25 +203,46 @@ const AddVisitor = () => {
         let response;
 
         if (location?.state?.data?.id) {
-            const tempPostData: IVisitorPayload = {
-                ...data,
-                registration_date: moment(data.registration_date).format(
-                    "YYYY-MM-DD HH:mm:ss"
-                ),
-                expected_take_off_date: moment(
-                    data.expected_take_off_date
-                ).format("YYYY-MM-DD HH:mm:ss"),
-                country: selectedCountry?.value ?? "",
-                visiting_country: selectedVisitingCountry?.value ?? "",
-                visa_type_id: selectedVisaType?.id,
-                information_channel: selectInformationChannel?.id ?? "",
-                agent_id: selectedAgent?.id ?? "",
-                going_to_foreign: goingForeign,
-            };
+            let updatePayload: IVisitorPayload | IVisitorPayloadNoForeign;
+            if (goingForeign) {
+                updatePayload = {
+                    ...data,
+                    registration_date: moment(data.registration_date).format(
+                        "YYYY-MM-DD HH:mm:ss"
+                    ),
+                    expected_take_off_date: moment(
+                        data.expected_take_off_date
+                    ).format("YYYY-MM-DD HH:mm:ss"),
+                    country: selectedCountry?.value ?? "",
+                    visa_type_id: selectedVisaType?.id ?? "",
+
+                    going_to_foreign: goingForeign,
+                    visiting_country: selectedVisitingCountry?.value ?? "",
+                    agent_id: selectedAgent?.id ?? "",
+                };
+            } else {
+                updatePayload = {
+                    registration_date: moment(data.registration_date).format(
+                        "YYYY-MM-DD HH:mm:ss"
+                    ),
+                    information_channel: data.information_channel,
+                    first_name: data.first_name,
+                    last_name: data.last_name,
+                    country: selectedCountry?.value ?? "",
+                    state: data.state,
+                    visiting_purpose: data.visiting_purpose,
+                    street_address: data.street_address,
+                    phone_nos: data.phone_nos,
+                    email: data.email,
+                    agent_id: selectedAgent?.id ?? "",
+                    going_to_foreign: goingForeign,
+                    remarks: data.remarks,
+                };
+            }
 
             response = await updateData(
                 location?.state?.data?.id,
-                tempPostData
+                updatePayload
             );
             if (response?.data?.status === "ok") {
                 toast.success("Visitor updated Successfully");
@@ -235,8 +262,7 @@ const AddVisitor = () => {
                     ).format("YYYY-MM-DD HH:mm:ss"),
                     country: selectedCountry?.value ?? "",
                     visa_type_id: selectedVisaType?.id ?? "",
-                    information_channel:
-                        selectInformationChannel?.description ?? "",
+
                     going_to_foreign: goingForeign,
                     visiting_country: selectedVisitingCountry?.value ?? "",
                     agent_id: selectedAgent?.id ?? "",
@@ -246,8 +272,7 @@ const AddVisitor = () => {
                     registration_date: moment(data.registration_date).format(
                         "YYYY-MM-DD HH:mm:ss"
                     ),
-                    information_channel:
-                        selectInformationChannel?.description ?? "",
+                    information_channel: data.information_channel,
                     first_name: data.first_name,
                     last_name: data.last_name,
                     country: selectedCountry?.value ?? "",
@@ -345,6 +370,26 @@ const AddVisitor = () => {
                                             <label className='required form-label'>
                                                 Information Channel:
                                             </label>
+                                            <input
+                                                className='form-control'
+                                                placeholder='Enter your visiting purpose.'
+                                                {...register(
+                                                    "information_channel"
+                                                )}
+                                            />
+                                            <div className='fv-plugins-message-container invalid-feedback'>
+                                                {
+                                                    errors.information_channel
+                                                        ?.message
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='col-6 gap-5 gap-md-7 mb-6'>
+                                        <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                            <label className='required form-label'>
+                                                Information Channel:
+                                            </label>
                                             <AsyncReactSelect
                                                 placeholder='Search..'
                                                 baseUrl={
@@ -356,8 +401,10 @@ const AddVisitor = () => {
                                                 selectValue={
                                                     selectInformationChannel
                                                 }
-                                                dataId='id'
-                                                showDataLabel='description'
+                                                dataId={"id" as never}
+                                                showDataLabel={
+                                                    "description" as never
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -376,6 +423,12 @@ const AddVisitor = () => {
                                                 }
                                                 showDataLabel={
                                                     "first_name" as never
+                                                }
+                                                selectedItemText={
+                                                    selectedVisaTypeText
+                                                }
+                                                setSelectedItemText={
+                                                    setSelectedVisaTypeText
                                                 }
                                             />
                                         </div>

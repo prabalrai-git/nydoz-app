@@ -8,7 +8,7 @@ export const enrollmentSchema = yup.object().shape({
 });
 
 export const visitorsNotGoingOutSchema = yup.object().shape({
-    registration_date: yup.date().required(),
+    registration_date: yup.string().required(),
     first_name: yup.string().required("First Name is required."),
     last_name: yup.string().required("Last Name is required."),
     state: yup.string().required("State is required."),
@@ -24,7 +24,7 @@ export const visitorsNotGoingOutSchema = yup.object().shape({
                     "Atleast one phone number /mobile number is required."
                 )
         ),
-    // information_channel-from-component
+    information_channel: yup.string().required("Visiting purpose is required."),
     email: yup
         .array()
         .of(
@@ -35,7 +35,7 @@ export const visitorsNotGoingOutSchema = yup.object().shape({
         ),
 });
 export const visitorsGoingOutSchema = yup.object().shape({
-    registration_date: yup.date().required(),
+    registration_date: yup.string().required(),
     first_name: yup.string().required("First Name is required."),
     last_name: yup.string().required("Last Name is required."),
     state: yup.string().required("State is required."),
@@ -50,6 +50,7 @@ export const visitorsGoingOutSchema = yup.object().shape({
                     "Atleast one phone number /mobile number is required."
                 )
         ),
+    information_channel: yup.string().required("Visiting purpose is required."),
     visiting_purpose: yup.string().required("Visiting purpose is required."),
     remarks: yup.string(),
     // information_channel-from-component
@@ -77,7 +78,7 @@ export const visitorsGoingOutSchema = yup.object().shape({
         }
         return value;
     }),
-    expected_take_off_date: yup.date(),
+    expected_take_off_date: yup.string(),
 });
 
 export const agentSchema = yup.object().shape({

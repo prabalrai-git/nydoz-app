@@ -16,6 +16,8 @@ interface IProps<T> {
     selectedListItem: T | undefined;
     setselectedListItem: Dispatch<SetStateAction<T | undefined>>;
     placeholder: string;
+    selectedItemText: string;
+    setSelectedItemText: Dispatch<SetStateAction<string>>;
     showDataLabel: keyof T;
     showDataLabel2?: keyof T;
     showDataLabelFromArray?: keyof T;
@@ -28,8 +30,10 @@ function ServerSelect<T>(props: IProps<T>) {
         placeholder,
         showDataLabel,
         showDataLabel2,
+        selectedItemText,
+        setSelectedItemText,
     } = props;
-    const [selectedItemText, setSelectedItemText] = useState<string>("");
+    // const [selectedItemText, setSelectedItemText] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [fetchUrl, setfetchUrl] = useState<string>(
         `${baseUrl}?page=${currentPage}&per_page=${RESULT_PER_PAGE}`

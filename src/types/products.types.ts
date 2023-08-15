@@ -71,15 +71,16 @@ export interface IVisitorPayloadNoForeign {
 export interface IVisitorResponse {
     id: string;
     registration_date: string;
-    information_channel: InformationChannelResponse;
+    information_channel: string;
     first_name: string;
     last_name: string;
     country: string;
     state: string;
     agent: Partial<IAgentResponse>;
     agent_id: string | undefined;
-    visiting_purpose: IVisitingPurposeResponse;
+    visiting_purpose: string;
     visa_type_id: IVisaTypeResponse | undefined;
+    visa_type: Partial<IVisaTypeResponse> | null;
     street_address: string;
     phone_nos: string[];
     remarks: string | undefined;

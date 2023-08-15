@@ -84,7 +84,9 @@ const Add = () => {
 
         setSelectVisaType(visa_type);
         setSelectCurrencyValue({
+            name: "",
             code: currency,
+            symbol: "",
         });
     }, [location?.state?.data, reset]);
 
