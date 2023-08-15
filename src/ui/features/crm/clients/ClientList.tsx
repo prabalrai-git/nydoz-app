@@ -1,215 +1,203 @@
-import { useEffect, useState } from "react";
-import useFetch from "../../../../hooks/useFetch";
+import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
-import { IClientResponse } from "../../../../types/products.types";
-import BASE_URL from "../../../../constants/AppSetting";
+import {
+    IVisitorResponse,
+    IAgentResponse,
+} from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import { useNavigate, useParams } from "react-router-dom";
-import useMutation from "../../../../hooks/useMutation";
-import Modal2 from "../../../shared/components/Modal2";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Flag, People } from "react-bootstrap-icons";
-import PaginationTable from "../../../shared/components/PaginationTable";
+import { AirplaneFill, Flag, People } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
+import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 
 const ClientList = () => {
     const navigate = useNavigate();
-    const { id: companyId } = useParams<string>();
-    const baseUrl = `${API_ROUTE.CM_CLIENTS}`;
-    const searchParams = new URLSearchParams(window.location.search);
-    const pageFromUrl = searchParams.get("page");
-    const pageSizeFromUrl = searchParams.get("page_size");
-    const page = pageFromUrl ? parseInt(pageFromUrl) : 1;
-    const pageSize = pageSizeFromUrl ? parseInt(pageSizeFromUrl) : 15;
-
-    const [fetchUrl, setFetchUrl] = useState(
-        `${baseUrl}?page=${page}&page_size=${pageSize}`
-    );
-    const [show, setShow] = useState<boolean>(false);
-    const [fetchAgain, setFetchAgain] = useState<boolean>(false);
-    const [selectedData, setSelectedData] = useState<
-        IClientResponse | undefined
-    >();
-
-    const { data, fetchDataById, pagination, isloading } = useFetch<
-        IClientResponse[]
-    >(baseUrl, true);
-
-    const { deleteData } = useMutation(API_ROUTE.CM_AGENTS, true);
-
-    useEffect(() => {
-        fetchDataById(fetchUrl);
-        setFetchAgain(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (fetchAgain) {
-            console.log("fetch again");
-            fetchDataById(fetchUrl);
-            setFetchAgain(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchAgain]);
-
-    // function for pagination
-
-    // functions for edit data
-    const handleEditData = (item: IClientResponse) => {
-        navigate("edit", {
-            state: { data: item },
-        });
-    };
-
-    const tableColumns: ColumnDef<IClientResponse>[] = [
-        {
-            accessorKey: "sn",
-            header: () => <div>S.N</div>,
-            cell: (info) => info.row.index + 1,
-        },
-        {
-            accessorKey: "Name",
-            header: () => (
-                <div>
-                    <People size={16} className='mx-2' />
-                    <span>Name</span>
-                </div>
-            ),
-            cell: (info) => {
-                const url = `${BASE_URL}${info?.row?.original?.profile_picture}`;
-                return (
-                    <div className='d-flex align-items-center'>
-                        <div className='symbol symbol-40px me-3'>
-                            <img src={url} className='' alt='profile picture' />
-                        </div>
-                        <div className='d-flex justify-content-start flex-column'>
-                            <a
-                                href='#'
-                                className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                                {info?.row?.original?.first_name}{" "}
-                                {info?.row?.original?.last_name}
-                            </a>
-                            <span className='text-muted fw-semibold d-block fs-7'>
-                                {info?.row?.original?.email}
-                            </span>
-                        </div>
-                    </div>
-                );
-            },
-        },
-
-        {
-            accessorKey: "mobile",
-            header: () => (
-                <div>
-                    <i className='bi bi-telephone me-2 fs-7'></i>
-                    <span>Mobile Number</span>
-                </div>
-            ),
-            cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
-            },
-        },
-
-        {
-            accessorKey: "country",
-            header: () => (
-                <div>
-                    <Flag size={16} className='mx-2' />
-                    <span>Country</span>
-                </div>
-            ),
-            cell: (info) => {
-                return <div>{info.getValue<string>()}</div>;
-            },
-        },
-
-        {
-            accessorKey: "action",
-            header: () => (
-                <div className='text-center'>
-                    <span>Actions</span>
-                </div>
-            ),
-            cell: (info) => (
-                <div className='text-center'>
-                    <DropdownButton
-                        variant='secondary'
-                        size='sm'
-                        id='dropdown-basic-button'
-                        title='Action'>
-                        <Dropdown.Item>
-                            <div className='menu-link'>
-                                <span className='mx-2'>View</span>
-                                <i className='bi bi-box-arrow-up-right text-primary '></i>
-                            </div>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <div
-                                onClick={() =>
-                                    handleEditData(info?.row?.original)
-                                }
-                                className='menu-link'>
-                                <span className='mx-2'>Edit</span>
-                                <i className='bi bi-pencil-square text-info'></i>
-                            </div>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <div
-                                onClick={() =>
-                                    handleDeleteModal(info?.row?.original)
-                                }
-                                className='menu-link'>
-                                <span className='mx-2'>Delete</span>
-                                <i className='bi bi-trash text-danger'></i>
-                            </div>
-                        </Dropdown.Item>
-                    </DropdownButton>
-                </div>
-            ),
-            footer: (info) => info.column.id,
-        },
+    const searchFilter: string[] = [
+        "first_name",
+        "last_name",
+        "email",
+        "mobile",
     ];
 
-    // functions for delete modal
+    const handleEditData = useCallback(
+        (item: IVisitorResponse) => {
+            navigate("edit", {
+                state: { data: item },
+            });
+        },
+        [navigate]
+    );
 
-    const handleDeleteModal = (item: IClientResponse) => {
-        setSelectedData(item);
-        handleShow();
-        console.log(item);
-    };
+    const tableColumns: ColumnDef<IVisitorResponse>[] = useMemo(
+        () => [
+            {
+                accessorKey: "sn",
+                header: () => <div>S.N</div>,
+                cell: (info) => info.row.index + 1,
+            },
+            {
+                accessorKey: "Name",
+                header: () => (
+                    <div>
+                        <People size={16} className='mx-2' />
+                        <span>Name</span>
+                    </div>
+                ),
+                cell: (info) => {
+                    return (
+                        <div className='d-flex align-items-center'>
+                            <div className='d-flex justify-content-start flex-column'>
+                                <a
+                                    href='#'
+                                    className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
+                                    {info?.row?.original?.first_name}{" "}
+                                    {info?.row?.original?.last_name}
+                                </a>
+                                <span className='text-muted fw-semibold d-block fs-7'>
+                                    {info?.row?.original?.email}
+                                </span>
+                            </div>
+                        </div>
+                    );
+                },
+            },
 
-    const handleDeleteItem = async () => {
-        const id = selectedData?.id;
-        const payload = `${companyId}/documents/${id}}`;
-        if (id) {
-            try {
-                const response = await deleteData(payload);
-                console.log(response);
-                if (response) {
-                    setFetchAgain(true);
-                    toast.success("Documents deleted successfully");
-                } else {
-                    toast.error("Something went wrong");
-                }
-            } catch (error) {
-                toast.error("Something went wrong");
-            } finally {
-                handleClose();
-            }
-        }
-    };
+            {
+                accessorKey: "going_to_foreign",
+                header: () => (
+                    <div>
+                        <AirplaneFill size={16} className='mx-2' />
+                        <span>Going Aboard</span>
+                    </div>
+                ),
+                cell: (info) => {
+                    return (
+                        <div className='text-center'>
+                            {info.getValue<string>() ? (
+                                <span className='badge badge-success'>YES</span>
+                            ) : (
+                                <span className='badge badge-danger px-3'>
+                                    NO
+                                </span>
+                            )}
+                        </div>
+                    );
+                },
+            },
+            {
+                accessorKey: "phone_nos",
+                header: () => (
+                    <div>
+                        <i className='bi bi-telephone me-2 fs-7'></i>
+                        <span>Mobile Number</span>
+                    </div>
+                ),
+                cell: (info) => {
+                    return (
+                        <div>
+                            {info.getValue<string>()?.length > 0 &&
+                                info.getValue<string>()[0]}
+                        </div>
+                    );
+                },
+            },
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+            {
+                accessorKey: "visiting_country",
+                header: () => (
+                    <div>
+                        <Flag size={16} className='mx-2' />
+                        <span>Visiting Country</span>
+                    </div>
+                ),
+                cell: (info) => {
+                    return (
+                        <div className='text-center'>
+                            {info.getValue<string>() ? (
+                                info.getValue<string>()
+                            ) : (
+                                <span className='badge badge-warning px-3'>
+                                    NA
+                                </span>
+                            )}
+                        </div>
+                    );
+                },
+            },
+            {
+                accessorKey: "agent",
+                header: () => (
+                    <div>
+                        <Flag size={16} className='mx-2' />
+                        <span>Agent</span>
+                    </div>
+                ),
+                cell: (info) => {
+                    return (
+                        <div>
+                            {info.getValue<Partial<IAgentResponse>>() ? (
+                                <div>
+                                    <span>
+                                        {" "}
+                                        {
+                                            info.getValue<
+                                                Partial<IAgentResponse>
+                                            >()?.first_name
+                                        }
+                                    </span>
+                                    <span>
+                                        {" "}
+                                        {
+                                            info.getValue<
+                                                Partial<IAgentResponse>
+                                            >()?.last_name
+                                        }
+                                    </span>
+                                </div>
+                            ) : (
+                                <span className='badge badge-warning px-3'>
+                                    NA
+                                </span>
+                            )}
+                        </div>
+                    );
+                },
+            },
+
+            {
+                accessorKey: "action",
+                header: () => (
+                    <div className='text-center'>
+                        <span>Actions</span>
+                    </div>
+                ),
+                cell: (info) => (
+                    <div className='d-flex justify-content-center'>
+                        {/* <button
+                            title='view'
+                            onClick={() => handleView(info?.row?.original?.id)}
+                            className='btn btn-sm btn-icon btn-primary mx-3'>
+                            <i className='bi bi-box-arrow-up-right '></i>
+                        </button> */}
+                        <button
+                            title='Edit'
+                            onClick={() => handleEditData(info?.row?.original)}
+                            className='btn btn-sm btn-icon btn-info mx-3'>
+                            <i className='bi bi-pencil-square '></i>
+                        </button>
+                    </div>
+                ),
+                footer: (info) => info.column.id,
+            },
+        ],
+        [handleEditData]
+    );
 
     return (
         <div className='my-6 px-3'>
             <CompanyBreadcrumb
-                title='Client Details'
+                title='Client List'
                 btnText='Back'
                 showBreadcrumb={true}
             />
@@ -223,31 +211,15 @@ const ClientList = () => {
                             </Link>
                         </div>
                     </div>
-                    {data && (
-                        <PaginationTable
-                            pagination={pagination}
-                            setFetchAgain={setFetchAgain}
-                            columns={tableColumns as ColumnDef<unknown>[]}
-                            data={data}
-                            isLoading={isloading}
-                            baseUrl={baseUrl}
-                            setFetchUrl={setFetchUrl}
+                    <div className='card-body'>
+                        <SearchPaginationList
+                            searchParamsArray={searchFilter}
+                            baseUrl={API_ROUTE.CM_CLIENTS}
+                            columns={tableColumns}
                         />
-                    )}
+                    </div>
                 </div>
             </section>
-            <Modal2
-                title='Are you sure you want to delete this agent ?'
-                showChildren={true}
-                cancelText='Cancel'
-                confirmText='Delete'
-                show={show}
-                handleConfirm={handleDeleteItem}
-                handleClose={handleClose}>
-                <div>
-                    <h3>{selectedData?.email}</h3>
-                </div>
-            </Modal2>
         </div>
     );
 };

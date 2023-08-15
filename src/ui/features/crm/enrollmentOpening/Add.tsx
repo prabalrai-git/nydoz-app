@@ -17,20 +17,8 @@ import {
     IVisaTypeResponse,
     ICurrencysResponse,
 } from "../../../../types/payload.type";
-import SeverSelect from "../../../shared/components/ServerSelect";
 import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
-
-// {}        {
-//   "institute_id": 0,
-//   "enroll_start_date": "string",
-//   "enroll_end_date": "string",
-//   "position": "string",
-//   "total_opening": 0,
-//   "visa_type_id": 0,
-//   "currency": "string",
-//   "offered_salary": 0,
-//   "description": "string"
-// }
+import moment from "moment";
 
 interface IFormData {
     enroll_start_date: Date;
@@ -42,26 +30,24 @@ interface IFormData {
 }
 
 const Add = () => {
+    const { institueId } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
-    const { instituteId } = useParams<string>();
     const { updateData, postData, isLoading, error, errList } = useMutation(
-        API_ROUTE.CM_ENROLLMENT,
+        API_ROUTE.CM_ENROLLMENT_OPENINGS,
         true
     );
-    const showDataLabel: keyof IVisaTypeResponse = "id";
+    const visaTypeId: keyof IVisaTypeResponse = "id";
+    const showDataLabel: keyof IVisaTypeResponse = "name";
     const currencyCode: keyof ICurrencysResponse = "code";
     const currencyCountry: keyof ICurrencysResponse = "name";
-    const [selectedListItem, setselectedListItem] = useState<
-        IVisaTypeResponse | undefined
-    >();
     const [selectCurrencyValue, setSelectCurrencyValue] = useState<
         ICurrencysResponse | undefined
     >();
 
-    const [selectedItemText, setSelectedItemText] = useState<string>(
-        " medical Insureance"
-    );
+    const [selectVisaType, setSelectVisaType] = useState<
+        IVisaTypeResponse | undefined
+    >();
 
     const {
         register,
@@ -78,11 +64,28 @@ const Add = () => {
 
     const handleResetForm = useCallback(() => {
         const dataDetails: IEnrollmentOpeningsResponse = location?.state?.data;
-        // console.log(companyDetails, "companyDetails");
-
-        const { _id, institute_id, currency, visa_type_id, ...rest } =
-            dataDetails;
-        reset(rest);
+        const {
+            _id,
+            institute_id,
+            currency,
+            visa_type_id,
+            enroll_start_date,
+            enroll_end_date,
+            ...rest
+        } = dataDetails;
+        const enrollStartDateObj = moment(
+            dataDetails.enroll_start_date,
+            "YYYY-MM-DD HH:mm:ss"
+        );
+        const enrollEndDateObj = moment(
+            dataDetails.enroll_end_date,
+            "YYYY-MM-DD HH:mm:ss"
+        );
+        reset({
+            ...rest,
+            enroll_start_date: enrollStartDateObj.toDate(),
+            enroll_end_date: enrollEndDateObj.toDate(),
+        });
     }, [location?.state?.data, reset]);
 
     useEffect(() => {
@@ -98,12 +101,32 @@ const Add = () => {
 
     const onFormSubmit = handleSubmit(async (data: IFormData) => {
         let response;
+        if (!institueId) {
+            toast.error("Enrollment Institute is required");
+            return;
+        }
+        if (!selectCurrencyValue?.code) {
+            toast.error("Please select currency");
+            return;
+        }
+
+        if (!selectVisaType?.id) {
+            toast.error("Please select visa type");
+            return;
+        }
 
         if (location?.state?.data?.id) {
             const tempPostData: IEnrollmentOpeningsPayload = {
                 ...data,
-                visa_type_id: location?.state?.data?.visa_type_id,
-                institute_id: location?.state?.data?.institute_id,
+                visa_type_id: selectVisaType?.id,
+                institute_id: institueId,
+                currency: selectCurrencyValue?.code,
+                enroll_end_date: moment(data.enroll_end_date).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                ),
+                enroll_start_date: moment(data.enroll_start_date).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                ),
             };
 
             response = await updateData(
@@ -117,8 +140,15 @@ const Add = () => {
         } else {
             const tempPostData: IEnrollmentOpeningsPayload = {
                 ...data,
-                visa_type_id: location?.state?.data?.visa_type_id,
-                institute_id: instituteId,
+                visa_type_id: selectVisaType?.id,
+                institute_id: institueId,
+                currency: selectCurrencyValue?.code,
+                enroll_end_date: moment(data.enroll_end_date).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                ),
+                enroll_start_date: moment(data.enroll_start_date).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                ),
             };
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
@@ -154,7 +184,7 @@ const Add = () => {
             <div className='card-body'>
                 <form className='form w-100 ' onSubmit={onFormSubmit}>
                     <div className='row'>
-                        <div className='col-6 gap-5 gap-md-7  mb-6'>
+                        <div className='col-12 col-md-6 gap-5 gap-md-7  mb-6'>
                             <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                 <label className='required form-label'>
                                     Opening Start Date
@@ -170,7 +200,7 @@ const Add = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-6 gap-5 gap-md-7   mb-6'>
+                        <div className='col-12 col-md-6 gap-5 gap-md-7   mb-6'>
                             <div>
                                 <label className='required form-label'>
                                     Opening End Date
@@ -186,30 +216,31 @@ const Add = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-6 gap-5 gap-md-7  mb-6'>
+                        <div className='col-12 col-md-6 gap-5 gap-md-7  mb-6'>
                             <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                 <label className='required form-label'>
                                     Select Visa Type
                                 </label>
-                                <SeverSelect
-                                    showDataLabel={showDataLabel}
-                                    selectedListItem={selectedListItem}
-                                    setselectedListItem={setselectedListItem}
-                                    selectedItemText={selectedItemText}
-                                    setSelectedItemText={setSelectedItemText}
-                                    placeholder='Search visa Type'
-                                    baseUrl={API_ROUTE.CM_AGENTS}
+
+                                <AsyncReactSelect
+                                    baseUrl={API_ROUTE.GET_VISA_TYPES}
+                                    placeholder='Select Visa'
+                                    dataId={visaTypeId as never}
+                                    showDataLabel={showDataLabel as never}
+                                    selectValue={selectVisaType}
+                                    setSelectValue={setSelectVisaType}
                                 />
                             </div>
                         </div>
 
-                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                        <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                             <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                 <label className='required form-label'>
                                     Total Opening
                                 </label>
                                 <input
                                     className='form-control'
+                                    type='number'
                                     placeholder='Enter the total opening'
                                     {...register("total_opening")}
                                 />
@@ -218,10 +249,27 @@ const Add = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+
+                        <div className='col-12 gap-5 gap-md-7 mb-6'>
                             <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                 <label className='required form-label'>
-                                    Currency
+                                    Postion/Course
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    placeholder='Enter the course name'
+                                    {...register("position")}
+                                />
+                                <div className='fv-plugins-message-container invalid-feedback'>
+                                    {errors.position?.message}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
+                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
+                                <label className='required form-label'>
+                                    Salary Currency
                                 </label>
                                 <AsyncReactSelect
                                     baseUrl={API_ROUTE.GET_CURRENCY}
@@ -233,27 +281,13 @@ const Add = () => {
                                 />
                             </div>
                         </div>
-                        <div className='col-12 gap-5 gap-md-7 mb-6'>
-                            <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
-                                <label className='required form-label'>
-                                    Postion/Course
-                                </label>
-                                <input
-                                    className='form-control'
-                                    placeholder='Enter the course name'
-                                    {...register("position")}
-                                />
-                                <div className='fv-plugins-message-container invalid-feedback'>
-                                    {errors.position?.message}
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-6 gap-5 gap-md-7 mb-6'>
+                        <div className='col-12 col-md-6 gap-5 gap-md-7 mb-6'>
                             <div className='fv-row flex-row-fluid fv-plugins-icon-container'>
                                 <label className='required form-label'>
                                     Salary Offered
                                 </label>
                                 <input
+                                    type='number'
                                     className='form-control'
                                     placeholder='Enter the offered salary'
                                     {...register("offered_salary")}

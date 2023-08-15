@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useState,
+} from "react";
 import useFetch from "../../../hooks/useFetch";
 import Select from "react-select";
 
@@ -58,20 +64,23 @@ function AsyncSelect<T>(props: IProps<T>) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    const handleChange = (selectedOption: IOption | null) => {
-        if (selectedOption == null) {
-            setSelectedOption(null);
-            setSelectValue(undefined);
-        } else {
-            setSelectedOption(selectedOption);
-            const temp = data?.find(
-                (item: T) => item[dataId] === selectedOption.value
-            );
-            if (temp) {
-                setSelectValue(temp);
+    const handleChange = useCallback(
+        (selectedOption: IOption | null) => {
+            if (selectedOption == null) {
+                setSelectedOption(null);
+                setSelectValue(undefined);
+            } else {
+                setSelectedOption(selectedOption);
+                const temp = data?.find(
+                    (item: T) => item[dataId] === selectedOption.value
+                );
+                if (temp) {
+                    setSelectValue(temp);
+                }
             }
-        }
-    };
+        },
+        [data, dataId, setSelectValue]
+    );
 
     return (
         <Select

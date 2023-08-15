@@ -95,8 +95,8 @@ export interface IVisitorResponse {
 
 export interface IEnrollmentOpeningsPayload {
     institute_id: string;
-    enroll_start_date: Date;
-    enroll_end_date: Date;
+    enroll_start_date: string;
+    enroll_end_date: string;
     position: string;
     total_opening: number;
     visa_type_id: string;
@@ -108,6 +108,8 @@ export interface IEnrollmentOpeningsPayload {
 export interface IEnrollmentOpeningsResponse
     extends IEnrollmentOpeningsPayload {
     id: string;
+    visa_type: Partial<IVisaTypeResponse>;
+    enroll_institute: Partial<IEnrollmentResponse>;
 }
 
 export interface IVisitingPurposePayload {

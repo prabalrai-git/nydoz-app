@@ -28,7 +28,6 @@ function ServerSelect<T>(props: IProps<T>) {
         placeholder,
         showDataLabel,
         showDataLabel2,
-        showDataLabelFromArray,
     } = props;
     const [selectedItemText, setSelectedItemText] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);

@@ -248,13 +248,15 @@ const AddClient = () => {
     return (
         <div>
             <CompanyBreadcrumb
-                title='Customer Manangement Enrollments'
+                title={
+                    location?.state?.data?.id ? "Update Client" : "Add Client"
+                }
                 showBreadcrumb={true}
                 btnText='Back'
             />
             <div className='card shadow-sm '>
                 <div className='card-header'>
-                    <h2 className='card-title fw-bold'>Add Visitor Details</h2>
+                    <h2 className='card-title fw-bold'>Add Client Details</h2>
                     <div className='card-toolbar'>
                         <button
                             className='btn btn-sm btn-secondary'

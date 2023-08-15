@@ -57,7 +57,7 @@ const AddVisitor = () => {
     const location = useLocation();
     const [goingForeign, setGoingForeign] = useState(false);
     const [selectInformationChannel, setSelectInformationChannel] = useState<
-        InformationChannelResponse | undefined
+        string | undefined
     >();
     const [selectCommonVisitingPurpose, setSelectCommonVisitingPurpose] =
         useState<IVisitingPurposeResponse | undefined>();
@@ -147,7 +147,9 @@ const AddVisitor = () => {
 
         setSelectedCountry(country);
         setSelectedVisitingCountry(visitingCountry);
-        setSelectInformationChannel(dataDetails?.information_channel);
+        setSelectInformationChannel(
+            dataDetails?.information_channel?.description
+        );
         setSelectCommonVisitingPurpose(dataDetails?.visiting_purpose);
         setSelectedVisaType(dataDetails?.visa_type_id);
 
@@ -233,7 +235,8 @@ const AddVisitor = () => {
                     ).format("YYYY-MM-DD HH:mm:ss"),
                     country: selectedCountry?.value ?? "",
                     visa_type_id: selectedVisaType?.id ?? "",
-                    information_channel: selectInformationChannel?.id ?? "",
+                    information_channel:
+                        selectInformationChannel?.description ?? "",
                     going_to_foreign: goingForeign,
                     visiting_country: selectedVisitingCountry?.value ?? "",
                     agent_id: selectedAgent?.id ?? "",
@@ -243,7 +246,8 @@ const AddVisitor = () => {
                     registration_date: moment(data.registration_date).format(
                         "YYYY-MM-DD HH:mm:ss"
                     ),
-                    information_channel: selectInformationChannel?.id ?? "",
+                    information_channel:
+                        selectInformationChannel?.description ?? "",
                     first_name: data.first_name,
                     last_name: data.last_name,
                     country: selectedCountry?.value ?? "",
