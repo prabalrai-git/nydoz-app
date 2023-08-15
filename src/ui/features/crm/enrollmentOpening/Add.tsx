@@ -21,8 +21,8 @@ import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
 import moment from "moment";
 
 interface IFormData {
-    enroll_start_date: Date;
-    enroll_end_date: Date;
+    enroll_start_date: string;
+    enroll_end_date: string;
     position: string;
     total_opening: number;
     offered_salary: number;
@@ -40,15 +40,13 @@ const Add = () => {
     const visaTypeId: keyof IVisaTypeResponse = "id";
     const showDataLabel: keyof IVisaTypeResponse = "name";
     const currencyCode: keyof ICurrencysResponse = "code";
-    const currencyCountry: keyof ICurrencysResponse = "name";
+
     const [selectCurrencyValue, setSelectCurrencyValue] = useState<
         ICurrencysResponse | undefined
     >();
-
     const [selectVisaType, setSelectVisaType] = useState<
-        IVisaTypeResponse | undefined
+        Partial<IVisaTypeResponse> | undefined
     >();
-
     const {
         register,
         reset,
@@ -56,35 +54,37 @@ const Add = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<IFormData>({
+        defaultValues: {
+            total_opening: 4340,
+        },
         resolver: yupResolver(enrollmentOpeningsSchema),
     });
-
     useValidationError({ errList, setError });
     useHandleShowError(error);
-
     const handleResetForm = useCallback(() => {
         const dataDetails: IEnrollmentOpeningsResponse = location?.state?.data;
+        console.log(dataDetails, "dataDetails");
         const {
-            _id,
-            institute_id,
             currency,
-            visa_type_id,
+            visa_type,
             enroll_start_date,
             enroll_end_date,
             ...rest
         } = dataDetails;
-        const enrollStartDateObj = moment(
-            dataDetails.enroll_start_date,
-            "YYYY-MM-DD HH:mm:ss"
-        );
-        const enrollEndDateObj = moment(
-            dataDetails.enroll_end_date,
-            "YYYY-MM-DD HH:mm:ss"
-        );
+        const enrollStartDateObj = moment(enroll_start_date)
+            .format()
+            .split("T")[0];
+        const enrollEndDateObj = moment(enroll_end_date).format().split("T")[0];
+
         reset({
             ...rest,
-            enroll_start_date: enrollStartDateObj.toDate(),
-            enroll_end_date: enrollEndDateObj.toDate(),
+            enroll_start_date: enrollStartDateObj,
+            enroll_end_date: enrollEndDateObj,
+        });
+
+        setSelectVisaType(visa_type);
+        setSelectCurrencyValue({
+            code: currency,
         });
     }, [location?.state?.data, reset]);
 
@@ -100,12 +100,13 @@ const Add = () => {
     };
 
     const onFormSubmit = handleSubmit(async (data: IFormData) => {
+        console.log(data, "data");
         let response;
         if (!institueId) {
             toast.error("Enrollment Institute is required");
             return;
         }
-        if (!selectCurrencyValue?.code) {
+        if (!selectCurrencyValue) {
             toast.error("Please select currency");
             return;
         }
@@ -120,13 +121,7 @@ const Add = () => {
                 ...data,
                 visa_type_id: selectVisaType?.id,
                 institute_id: institueId,
-                currency: selectCurrencyValue?.code,
-                enroll_end_date: moment(data.enroll_end_date).format(
-                    "YYYY-MM-DD HH:mm:ss"
-                ),
-                enroll_start_date: moment(data.enroll_start_date).format(
-                    "YYYY-MM-DD HH:mm:ss"
-                ),
+                currency: selectCurrencyValue.code,
             };
 
             response = await updateData(
@@ -142,13 +137,9 @@ const Add = () => {
                 ...data,
                 visa_type_id: selectVisaType?.id,
                 institute_id: institueId,
-                currency: selectCurrencyValue?.code,
-                enroll_end_date: moment(data.enroll_end_date).format(
-                    "YYYY-MM-DD HH:mm:ss"
-                ),
-                enroll_start_date: moment(data.enroll_start_date).format(
-                    "YYYY-MM-DD HH:mm:ss"
-                ),
+                currency: selectCurrencyValue.code,
+                enroll_start_date: data.enroll_start_date,
+                enroll_end_date: data.enroll_end_date,
             };
             response = await postData(tempPostData);
             if (response?.data?.status === "ok") {
@@ -193,7 +184,6 @@ const Add = () => {
                                     type='date'
                                     className='form-control'
                                     {...register("enroll_start_date")}
-                                    placeholder='website url'
                                 />
                                 <div className='fv-plugins-message-container invalid-feedback'>
                                     {errors.enroll_start_date?.message}
@@ -275,7 +265,7 @@ const Add = () => {
                                     baseUrl={API_ROUTE.GET_CURRENCY}
                                     placeholder='Select Currency'
                                     dataId={currencyCode as never}
-                                    showDataLabel={currencyCountry as never}
+                                    showDataLabel={currencyCode as never}
                                     selectValue={selectCurrencyValue}
                                     setSelectValue={setSelectCurrencyValue}
                                 />

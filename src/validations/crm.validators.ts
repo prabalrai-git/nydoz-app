@@ -95,8 +95,8 @@ export const agentSchema = yup.object().shape({
 });
 
 export const enrollmentOpeningsSchema = yup.object().shape({
-    enroll_start_date: yup.date().required(),
-    enroll_end_date: yup.date().required(),
+    enroll_start_date: yup.string().required(),
+    enroll_end_date: yup.string().required(),
     position: yup.string().required(),
     total_opening: yup.number(),
     offered_salary: yup.number(),
@@ -106,26 +106,6 @@ export const enrollmentOpeningsSchema = yup.object().shape({
 export const informationChannelSchema = yup.object().shape({
     description: yup.string().required(),
 });
-
-// {
-//     "first_name": "Ian",
-//     "last_name": "Blankenship",
-//     "state": "Eum impedit aliqua",
-//     "phone_nos": [
-//         "+1 (907) 769-7639"
-//     ],
-//     "email": [
-//         "dohuqejik@mailinator.com"
-//     ],
-//     "registration_date": "1989-10-11",
-//     "street_address": "Velit similique odi",
-//     "visiting_country_state": "Magni reprehenderit ",
-//     "deal_amount": 94,
-//     "applied_position": "Vitae nemo reprehend",
-//     "expected_salary_pa": 80,
-//     "expected_take_off_date": "1987-10-22",
-//     "remarks": "Eos magna itaque ha"
-// }
 
 export const clientSchema = yup.object().shape({
     registration_date: yup.date().required(),
