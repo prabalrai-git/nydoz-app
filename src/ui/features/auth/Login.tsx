@@ -11,7 +11,7 @@ import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
 import { toast } from "react-toastify";
 // import { AuthContext } from "../../../context/AuthContext";
-import { ILoginResponse } from "../../../types/payload.type";
+import { ILoginResponse } from "../../../types/auth.type";
 import AuthContext from "../../../context/auth/AuthContext";
 // import useSubdomain from "../../../hooks/useSubdomain";
 // import APP_SETTING from "../../../config/AppSetting";
@@ -76,15 +76,17 @@ const LoginPage = () => {
         <div className='container pt-4' id='kt_app_root '>
             <div className='row '>
                 <div className='col-12  col-md-8 col-lg-6  offset-0 offset-md-2 offset-lg-3 '>
-                    <div className='card shadow shadwo-sm p-3 mt-4'>
+                    <div className='card shadow shadow-sm p-3 mt-4'>
                         <div className='card-body'>
                             <div className='row mb-3'>
                                 <div className='col-12 text-center mb-6'>
-                                    <img
-                                        className='mb-2'
-                                        src={CompanyLogo}
-                                        alt='Company Logo'
-                                    />
+                                    <Link to={"/"}>
+                                        <img
+                                            className='mb-2'
+                                            src={CompanyLogo}
+                                            alt='Company Logo'
+                                        />
+                                    </Link>
                                 </div>
                                 <div className='col-12'>
                                     <h5 className='text-dark fw-bolder'>

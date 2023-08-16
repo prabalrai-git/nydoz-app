@@ -9,8 +9,14 @@ import XlsIcon from "../assets/media/icons/xls.png";
 import XmlIcon from "../assets/media/icons/xml.png";
 import Folder from "../assets/media/icons/folder.png";
 import FolderSm from "../assets/media/icons/folder-sm.png";
-
 import BlackImg from "../assets/media/svg/blank-image.svg";
+
+//products
+import ClientHub from "../assets/products/clienthub.png";
+import InvestmentManagement from "../assets/products/investmentmanagement.png";
+import ClientHubLogo from "../assets/products/clienthub-fabicon.png";
+import InvestmentManagementLogo from "../assets/products/investment-fabicon.png";
+
 const Images = {
     CompanyLogo,
     Facebook,
@@ -23,6 +29,10 @@ const Images = {
     BlackImg,
     Folder,
     FolderSm,
+    ClientHub,
+    InvestmentManagement,
+    ClientHubLogo,
+    InvestmentManagementLogo,
 };
 
 export default Images;

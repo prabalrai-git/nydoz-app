@@ -38,7 +38,10 @@ const CountryCode = (props: ICountryCodeProps) => {
     }, []);
 
     const handleChange = (selectedOption: ISelectProps | null) => {
-        if (selectedOption) {
+        console.log(selectedOption, "selectedOption");
+        if (selectedOption == null) {
+            setSelectValue(undefined);
+        } else {
             setSelectValue(selectedOption);
         }
     };
@@ -47,8 +50,10 @@ const CountryCode = (props: ICountryCodeProps) => {
         <Select
             options={forCountry ? options2 : options1}
             value={selectValue}
+            className='react-select-container'
             placeholder={placeholder}
             onChange={handleChange}
+            isClearable
         />
     );
 };

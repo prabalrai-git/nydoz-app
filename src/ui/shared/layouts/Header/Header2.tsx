@@ -33,8 +33,8 @@ const Header2 = () => {
     return (
         <Navbar
             id='admin-navbar'
-            className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm fw-bolder'>
-            <div className='container'>
+            className='navbar navbar-expand-lg bg-white min-h-80px shadow shadow-sm fw-bolder fixed-top'>
+            <div className='container-fluid'>
                 <Hamburger />
                 <Link to='/' className='navbar-brand'>
                     <img

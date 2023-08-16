@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import useWebSetting from "../context/useWebSetting";
 
 // public Routes
 import App from "../App";
@@ -8,10 +9,13 @@ import LandingHomePage from "../ui/features/home/Home";
 
 import AuthRoutes from "./auth";
 import PageNotFound from "../ui/features/utils/PageNotFound";
-import UserLayout from "../ui/features/user/UserLayout";
+import WorkspaceLayout from "../ui/features/workspace/WorkspaceLayout";
 import WorkspaceRoutes from "./workspace.route";
+// company
+import CompanyLayout from "../ui/features/company/Layout";
+import CompanyRoutes from "./Company";
 
-const router = createBrowserRouter([
+const MainRouter = createBrowserRouter([
     {
         path: "/",
         element: <App />,
@@ -28,7 +32,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "workspace",
-                element: <UserLayout />,
+                element: <WorkspaceLayout />,
                 children: WorkspaceRoutes,
             },
             {
@@ -45,4 +49,49 @@ const router = createBrowserRouter([
     },
 ]);
 
-export default router;
+const CompanyRouter = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />,
+        children: [
+            {
+                path: "",
+                element: <MainLayout />,
+                children: [
+                    {
+                        path: "",
+                        element: <LandingHomePage />,
+                    },
+                ],
+            },
+            {
+                path: ":companySubdomian",
+                element: <CompanyLayout />,
+                children: CompanyRoutes,
+            },
+            {
+                path: "auth",
+                element: <AuthLayout />,
+                children: AuthRoutes,
+            },
+
+            {
+                path: "*",
+                element: <PageNotFound />,
+            },
+        ],
+    },
+]);
+
+const Routes = () => {
+    const { webSetting } = useWebSetting();
+    const { urlData } = webSetting;
+
+    return (
+        <RouterProvider
+            router={urlData.hasSubdomain ? CompanyRouter : MainRouter}
+        />
+    );
+};
+
+export default Routes;

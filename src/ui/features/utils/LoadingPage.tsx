@@ -2,7 +2,7 @@ import { Spinner } from "react-bootstrap";
 
 const LoadingPage = () => {
     return (
-        <div className='d-flex align-items-center justify-content-center vh-100'>
+        <div className='d-flex align-items-center justify-content-center h-50vh'>
             <div className='text-center'>
                 <Spinner
                     className='mx-2'

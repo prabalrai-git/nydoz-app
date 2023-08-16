@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
+import APP_SETTING from "../../../constants/AppSetting";
 import Images from "../../../constants/Images";
 import UploadFile from "../../shared/components/Upload";
-import Heading from "../../shared/molecules/Heading";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,11 +14,11 @@ import { toast } from "react-toastify";
 import CountryCode from "../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../types/react-select.type";
 import { ICompanyResponse } from "../../../types/payload.type";
-import Breadcrumb from "../../shared/molecules/Breadcrumb";
 import {
     getSelectPropsFromCountry,
     getSelectPropsFromCountryCallingCode,
 } from "../../../functions/country";
+import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 interface IAddCompanyForm {
     name: string;
@@ -38,6 +38,8 @@ interface IAddCompanyForm {
 const AddCompany = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+
     const [oldThumbnil, setOldThumbnil] = useState<string | undefined>();
     const [oldCoverImg, setOldCoverImg] = useState<string | undefined>();
     const [thumbnilImg, setThumbnilImg] = useState<string[] | undefined>([]);
@@ -49,7 +51,6 @@ const AddCompany = () => {
         ISelectProps | undefined
     >(undefined);
 
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
     const { postData, updateData, isLoading, error, errList } =
         useMutation<ICompanyResponse>(API_ROUTE.POST_COMPANIES, true);
 
@@ -137,7 +138,7 @@ const AddCompany = () => {
             );
             if (response?.data?.status === "ok") {
                 toast.success("Company updated Successfully");
-                navigate(-1);
+                navigate(-1, { replace: true });
             }
         } else {
             if (thumbnilImg?.length === 0) {
@@ -159,33 +160,22 @@ const AddCompany = () => {
             // console.log("response", response);
             if (response?.data?.status === "ok") {
                 toast.success("Company Added Successfully");
-                navigate("/workspace");
+                navigate("/workspace", { replace: true });
             }
         }
     });
 
     return (
-        <div>
-            <div className='py-6 px-3'>
-                <Heading
-                    title={
-                        location?.state?.data?.id
-                            ? "Edit Company Details"
-                            : "Create Company"
-                    }
-                    btnText='Back'
-                    showBreadcrumb={true}>
-                    <Breadcrumb
-                        parent={
-                            location?.state?.data?.id
-                                ? `${location?.state?.data?.subdomain}`
-                                : "company"
-                        }
-                        parentLink='/account/company/list'
-                        child={location?.state?.data?.id ? "Edit" : "Add"}
-                    />
-                </Heading>
-            </div>
+        <div className='container'>
+            <CompanyBreadcrumb
+                title={
+                    location?.state?.data?.id
+                        ? "Edit Company Details"
+                        : "Create Company"
+                }
+                btnText='Back'
+                showBreadcrumb={true}
+            />
 
             <section>
                 <form className='form w-100 ' onSubmit={onFormSubmit}>
@@ -218,7 +208,7 @@ const AddCompany = () => {
                                                                     ? "img-fluid rounded opacity-20 "
                                                                     : "img-fluid rounded"
                                                             }
-                                                            src={`${BASE_URL}${oldThumbnil}`}
+                                                            src={`${APP_SETTING}${oldThumbnil}`}
                                                             alt='Company"s logo'
                                                         />
                                                     ) : (
@@ -235,7 +225,7 @@ const AddCompany = () => {
                                                     <div className='image-input-wrapper w-100px h-100px p-2'>
                                                         <img
                                                             className='img-fluid rounded'
-                                                            src={`${BASE_URL}${thumbnilImg[0]}`}
+                                                            src={`${APP_SETTING}${thumbnilImg[0]}`}
                                                             alt='company logo'
                                                         />
                                                     </div>
@@ -303,7 +293,7 @@ const AddCompany = () => {
                                                                     ? "img-thumbnail  img-fluid img-thumbnil h-100px rounded opacity-20 "
                                                                     : "img-thumbnail img-fluid rounded"
                                                             }
-                                                            src={`${BASE_URL}${oldCoverImg}`}
+                                                            src={`${APP_SETTING}${oldCoverImg}`}
                                                             alt='Company"s logo'
                                                         />
                                                     ) : (
@@ -320,7 +310,7 @@ const AddCompany = () => {
                                                     <div className='cover-image-wrapper h-100px m-2'>
                                                         <img
                                                             className='img-thumbnail img-fluid rounded'
-                                                            src={`${BASE_URL}${coverImg[0]}`}
+                                                            src={`${APP_SETTING}${coverImg[0]}`}
                                                             alt='cover Image'
                                                         />
                                                     </div>

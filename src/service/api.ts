@@ -58,6 +58,20 @@ const API_ROUTE = {
     GET_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
     POST_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
     UPDATE_CLIENT_MANAGEMENT_AGENTS: "/api/v1/client-management/agents",
+
+    //  Client Management institutes routes
+    CM_ENROLLMENT: "/api/v1/client-management/enroll-institutes",
+    CM_VISITORS: "/api/v1/client-management/visitors",
+    CM_AGENTS: "/api/v1/client-management/agents",
+    CM_ENROLLMENT_OPENINGS: "/api/v1/client-management/enrollment-openings",
+    CM_INFORMATION_CHANNEL:
+        "/api/v1/client-management/common-information-channels",
+    CM_VISITING_PURPOSES: "/api/v1/client-management/common-visiting-purposes",
+
+    // user
+    USER: "/api/v1/users",
+    GET_CURRENCY: "/api/v1/currencies",
+    CM_CLIENTS: "/api/v1/client-management/clients",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

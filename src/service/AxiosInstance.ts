@@ -30,7 +30,8 @@ PublicAxios.interceptors.request.use((config) => {
     const baseUrl = VITE_BASE_URL;
     if (subdomain) {
         const subdomain = getSubdomain();
-        const newURL = baseUrl.replace("api", subdomain + ".api");
+        // const newURL = baseUrl.replace("api", subdomain + ".api");
+        const newURL = baseUrl;
         config.baseURL = newURL;
         return config;
     }
@@ -42,7 +43,9 @@ PublicAxios.interceptors.request.use((config) => {
 PrivateAxios.interceptors.request.use((config) => {
     const subdomain = getSubdomain();
     const token = localStorage.getItem("token");
-    const baseUrl = VITE_BASE_URL;
+    // const baseUrl = VITE_BASE_URL;
+    const baseUrl = "https://sabkura.api.dev.nydoz.com";
+
     if (subdomain) {
         const subdomain = getSubdomain();
         const newURL = baseUrl.replace("api", subdomain + ".api");

@@ -64,16 +64,6 @@ export interface IUserState {
     permissions: string[];
 }
 
-export interface ILoginResponse {
-    user: IUserState;
-    token: string;
-}
-
-export interface ILoginPayload {
-    email: string;
-    password: string;
-}
-
 export interface ICompanyResponse {
     id: string;
     name: string;
@@ -132,23 +122,6 @@ export interface IUserCompanyProductsResponse {
 
 // Agent
 
-export interface IAgentPayload {
-    first_name: string;
-    last_name: string;
-    email: string;
-    mobile: string;
-    country: string;
-    state: string;
-    city: string;
-    street_address: string;
-    profile_picture: string;
-    postal_code: string;
-}
-
-export interface IAgentResponse extends IAgentPayload {
-    id: string;
-}
-
 // SOCIAL_LINKS
 export interface ISocialLinksPayload {
     title: string;
@@ -160,3 +133,9 @@ export interface ISocialLinksResponse extends ISocialLinksPayload {
 }
 
 // -----SOCIAL_LINKS-----ENDS-----
+
+export interface ICurrencysResponse {
+    name: string;
+    code: string;
+    symbol: string;
+}

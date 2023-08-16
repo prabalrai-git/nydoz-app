@@ -78,3 +78,20 @@ export const CompanySocialLinkSchema = yup.object().shape({
             "Invalid URL format. URL should be like:-  https://www.example.com"
         ),
 });
+
+// Add user to Company Schema
+
+export const userToCompanySchema = yup.object().shape({
+    first_name: yup.string().required("First Name is required."),
+    last_name: yup.string().required("Last Name is required."),
+    email: yup
+        .string()
+        .email("Email must be valid.")
+        .required("Email is required."),
+    mobile: yup.string().required("Mobile Number is required."),
+    password: yup.string().required("Password is required."),
+    password_confirmation: yup
+        .string()
+        .required("Password confirmation is required.")
+        .oneOf([yup.ref("password")], "Passwords must match"),
+});

@@ -1,31 +1,19 @@
 import loadable from "@loadable/component";
 import { RouteObject } from "react-router-dom";
-import ProductRoutes from "./product";
-import ProtectCompanyOwner from "../ui/features/protectRoute/OnlyCompanyOwnerRoute";
+import productRoutes from "./products";
+import AdminLayout from "../ui/features/adminSetting/Layout";
+import productSettingRoutes from "./productSetting";
 import ProfileLayout from "../ui/features/company/ProfileLayout";
+import AdminRoutes from "./AdminSetting";
 
 // routes
-const EditCompany = loadable(() => import("../ui/features/company/AddCompany"));
 
 const CompanyDashboard = loadable(
     () => import("../ui/features/company/CompanyDashboard")
 );
 
 const ProductLayout = loadable(
-    () => import("../ui/features/products/ProductLayout")
-);
-
-const DocumentsList = loadable(
-    () => import("../ui/features/documents/DocumentsList")
-);
-
-const RoleList = loadable(() => import("../ui/features/roles/RoleList"));
-const SocialLinkList = loadable(
-    () => import("../ui/features/socialLinks/SocialLinkList")
-);
-
-const VisaTypeList = loadable(
-    () => import("../ui/features/visaType/VisaTypeList")
+    () => import("../ui/features/productsSetting/ProductLayout")
 );
 
 const CompanyRoutes: RouteObject[] = [
@@ -33,22 +21,7 @@ const CompanyRoutes: RouteObject[] = [
         path: "dashboard",
         element: <CompanyDashboard />,
     },
-    {
-        path: "edit",
-        element: (
-            <ProtectCompanyOwner>
-                <EditCompany />
-            </ProtectCompanyOwner>
-        ),
-    },
-    {
-        path: "documents",
-        element: (
-            <ProtectCompanyOwner>
-                <DocumentsList />
-            </ProtectCompanyOwner>
-        ),
-    },
+
     {
         path: "profile/:id",
         element: <ProfileLayout />,
@@ -56,31 +29,17 @@ const CompanyRoutes: RouteObject[] = [
     {
         path: "products",
         element: <ProductLayout />,
-        children: ProductRoutes,
+        children: productRoutes,
     },
     {
-        path: "roles",
-        element: (
-            <ProtectCompanyOwner>
-                <RoleList />
-            </ProtectCompanyOwner>
-        ),
+        path: "product-settings",
+        element: <ProductLayout />,
+        children: productSettingRoutes,
     },
     {
-        path: "social-links",
-        element: (
-            <ProtectCompanyOwner>
-                <SocialLinkList />
-            </ProtectCompanyOwner>
-        ),
-    },
-    {
-        path: "visa-types",
-        element: (
-            <ProtectCompanyOwner>
-                <VisaTypeList />
-            </ProtectCompanyOwner>
-        ),
+        path: "settings",
+        element: <AdminLayout />,
+        children: AdminRoutes,
     },
 ];
 
