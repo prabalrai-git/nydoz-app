@@ -30,6 +30,11 @@ const Layout = () => {
             title: "Social Links",
             link: "social-links",
         },
+        {
+            id: 6,
+            title: "Payment Methods",
+            link: "payments/list",
+        },
     ];
     return (
         <div>

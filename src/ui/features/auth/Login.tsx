@@ -101,43 +101,6 @@ const LoginPage = () => {
                                 className='form w-100 '
                                 id='kt_sign_up_form'
                                 onSubmit={onFormSubmit}>
-                                {/* <div className='row g-3 mb-3'>
-                                    <div className='col-12'>
-                                        <a
-                                            href='#'
-                                            className='btn text-dark p-2  bg-light w-100 shadow shadow-sm w-100'>
-                                            <img
-                                                alt='Facebook Logo'
-                                                src={FacebookLogo}
-                                                className='h-25px me-3 '
-                                            />
-                                            <span className='text-dark'>
-                                                {" "}
-                                                Sign in with Facebook
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div className='col-12'>
-                                        <a
-                                            href='#'
-                                            className='btn text-dark p-2  bg-light w-100 shadow shadow-sm w-100'>
-                                            <img
-                                                alt='Google Logo'
-                                                src={GoogleLogo}
-                                                className='h-25px me-3'
-                                            />
-                                            <span className='text-dark'>
-                                                Sign in with Google
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className='separator separator-content my-6'>
-                                    <span className='w-125px text-gray-500 fw-semibold fs-7'>
-                                        Or with email
-                                    </span>
-                                </div> */}
-
                                 <div className='fv-row mb-6'>
                                     <label
                                         className='required mb-2'
