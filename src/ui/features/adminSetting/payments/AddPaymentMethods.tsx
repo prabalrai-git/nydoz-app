@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
 const DynamicForm = () => {
@@ -31,6 +32,12 @@ const DynamicForm = () => {
     };
 
     const typeValues = watch(`custom_fields`);
+    const formName = watch(`name`);
+    const formRequired = watch(`is_account_required`);
+
+    useEffect(() => {
+        console.log("formRequired", formRequired);
+    }, [formRequired]);
 
     return (
         <div className='row'>
@@ -52,7 +59,10 @@ const DynamicForm = () => {
                             <input
                                 className='form-check-input'
                                 type='checkbox'
-                                {...register("is_account_required")}
+                                value='true'
+                                {...register("is_account_required", {
+                                    setValueAs: (value) => value === true,
+                                })}
                             />
                         </div>
 
@@ -135,7 +145,7 @@ const DynamicForm = () => {
                                 </div>
                             );
                         })}
-                        <pre>{JSON.stringify(typeValues, null, 2)}</pre>
+                        {/* <pre>{JSON.stringify(typeValues, null, 2)}</pre> */}
                         <div className='d-flex justify-content-between'>
                             <button
                                 type='button'
@@ -161,80 +171,108 @@ const DynamicForm = () => {
                     </form>
                 </div>
             </div>
-            <div className='col-6'>
-                <form>
-                    {typeValues.map((field, index) => {
-                        return (
-                            <div className='mb-3' key={index}>
-                                <label
-                                    className={
-                                        field.is_required
-                                            ? "form-label required"
-                                            : "form-label"
-                                    }>
-                                    {field.name}
-                                </label>
-                                {field.type === "text" && (
-                                    <input
-                                        className='form-control'
-                                        {...register("is_account_required")}
-                                        type='text'
-                                    />
-                                )}
-                                {field.type === "select" && (
-                                    <select
-                                        className='form-select'
-                                        {...register("is_account_required")}>
-                                        {field.options
-                                            .split(",")
-                                            .map((option, index) => {
-                                                return (
-                                                    <option key={index}>
-                                                        {option}
-                                                    </option>
-                                                );
-                                            })}
-                                    </select>
-                                )}
-                                {field.type === "checkbox" &&
-                                    field.options
-                                        .split(",")
-                                        .map((option, index) => {
-                                            return (
-                                                <div
-                                                    className='form-checkbox'
-                                                    key={index}>
-                                                    <input type='checkbox' />
-                                                    <label>{option}</label>
-                                                </div>
-                                            );
-                                        })}
-                                {field.type === "radio" &&
-                                    field.options
-                                        .split(",")
-                                        .map((option, index) => {
-                                            return (
-                                                <div key={index}>
-                                                    <input
-                                                        className='form-radio'
-                                                        type='radio'
-                                                    />
-                                                    <label>{option}</label>
-                                                </div>
-                                            );
-                                        })}
-                                {field.type === "textarea" && (
-                                    <textarea></textarea>
-                                )}
+            <div className='col-6 '>
+                <div className='form-container'>
+                    <div className='card form-view-container p-6'>
+                        <div className='card-header mb-2'>
+                            <h3 className='card-title'>
+                                {formName ? formName : "Form Name"}
+                            </h3>
+                            <div className='card-toolbar'>
+                                <button
+                                    type='button'
+                                    className='btn btn-sm btn-light'>
+                                    {formRequired
+                                        ? formRequired.toString()
+                                        : "Required"}
+                                </button>
                             </div>
-                        );
-                    })}
-                    <div className='d-flex justify-content-end'>
-                        <button className='btn btn-success'>
-                            <span>Submit</span>
-                        </button>
+                        </div>
+                        <form className='min-h-225px'>
+                            {typeValues.map((field, index) => {
+                                return (
+                                    <div className=' my-3 ' key={index}>
+                                        <label
+                                            className={
+                                                field.is_required
+                                                    ? "form-label required"
+                                                    : "form-label"
+                                            }>
+                                            {field.name
+                                                ? field.name
+                                                : "Field Name"}
+                                        </label>
+                                        {field.type === "text" && (
+                                            <input
+                                                className='form-control'
+                                                {...register(
+                                                    "is_account_required"
+                                                )}
+                                                type='text'
+                                            />
+                                        )}
+                                        {field.type === "select" && (
+                                            <select
+                                                className='form-select'
+                                                {...register(
+                                                    "is_account_required"
+                                                )}>
+                                                {field.options
+                                                    .split(",")
+                                                    .map((option, index) => {
+                                                        return (
+                                                            <option key={index}>
+                                                                {option}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
+                                        )}
+                                        {field.type === "checkbox" &&
+                                            field.options
+                                                .split(",")
+                                                .map((option, index) => {
+                                                    return (
+                                                        <div
+                                                            className='form-checkbox'
+                                                            key={index}>
+                                                            <input type='checkbox' />
+                                                            <label>
+                                                                {option}
+                                                            </label>
+                                                        </div>
+                                                    );
+                                                })}
+                                        {field.type === "radio" &&
+                                            field.options
+                                                .split(",")
+                                                .map((option, index) => {
+                                                    return (
+                                                        <div key={index}>
+                                                            <input
+                                                                className='form-radio'
+                                                                type='radio'
+                                                            />
+                                                            <label>
+                                                                {option}
+                                                            </label>
+                                                        </div>
+                                                    );
+                                                })}
+                                        {field.type === "textarea" && (
+                                            <textarea></textarea>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                            <div className='d-flex justify-content-end'>
+                                <button className='btn btn-success'>
+                                    <span>Submit</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );
