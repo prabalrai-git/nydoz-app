@@ -72,15 +72,13 @@ function ServerSelect<T>(props: IProps<T>) {
         setShowListBox(false);
     };
 
-    const handleInputClick = (
-        e: MouseEvent<HTMLLIElement, MouseEvent<Element, MouseEvent>>,
-        item: T
-    ) => {
-        e.stopPropagation();
-        setselectedListItem(item);
-        setSelectedItemText(e?.currentTarget?.innerText ?? "");
-        setShowListBox(false);
-    };
+    const handleInputClick =
+        (item: T) => (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+            e.stopPropagation();
+            setselectedListItem(item);
+            setSelectedItemText(e?.currentTarget?.innerText ?? "");
+            setShowListBox(false);
+        };
 
     useEffect(() => {
         if (data && data?.length > 0 && fetchNewData) {
@@ -128,7 +126,7 @@ function ServerSelect<T>(props: IProps<T>) {
                 {allValue?.map((item, index: number) => (
                     <li
                         key={index}
-                        onClick={(e) => handleInputClick(e, item)}
+                        onClick={() => handleInputClick(item)}
                         className='server-select-li cursor-pointer'>
                         &nbsp; {item[showDataLabel] as string} &nbsp;
                         {showDataLabel2 && (item[showDataLabel2] as string)}

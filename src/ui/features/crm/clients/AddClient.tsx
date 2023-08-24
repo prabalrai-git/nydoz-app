@@ -151,7 +151,7 @@ const AddClient = () => {
         setSelectedVisaType(dataDetails?.visa_type_id);
         setSelectedAgent(dataDetails?.agent_id);
         setSelectedVistor(dataDetails?.visitor_id);
-        setSelectCurrencyCode(dataDetails?.salary_currency_code);
+        // setSelectCurrencyCode(dataDetails?.salary_currency_code);
         setSelectEnrollmentInstitute(dataDetails?.enrollment_institute_id);
         setSelectEnrollmentOpening(dataDetails?.enrollment_opening_id);
 

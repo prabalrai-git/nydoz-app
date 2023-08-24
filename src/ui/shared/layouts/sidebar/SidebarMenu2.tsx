@@ -1,5 +1,3 @@
-import React from "react";
-
 const SidebarMenu2 = () => {
     return <div>SidebarMenu2</div>;
 };
