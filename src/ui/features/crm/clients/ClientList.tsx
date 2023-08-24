@@ -13,18 +13,20 @@ import SearchPaginationList from "../../../shared/components/SearchPaginationLis
 
 const ClientList = () => {
     const navigate = useNavigate();
-    const searchFilter: string[] = [
-        "first_name",
-        "last_name",
-        "email",
-        "mobile",
-    ];
+    const searchFilter: string[] = ["first_name", "last_name"];
 
     const handleEditData = useCallback(
         (item: IVisitorResponse) => {
             navigate("edit", {
                 state: { data: item },
             });
+        },
+        [navigate]
+    );
+
+    const handleView = useCallback(
+        (id: string) => {
+            navigate(`./${id}`);
         },
         [navigate]
     );
@@ -174,12 +176,12 @@ const ClientList = () => {
                 ),
                 cell: (info) => (
                     <div className='d-flex justify-content-center'>
-                        {/* <button
+                        <button
                             title='view'
                             onClick={() => handleView(info?.row?.original?.id)}
                             className='btn btn-sm btn-icon btn-primary mx-3'>
                             <i className='bi bi-box-arrow-up-right '></i>
-                        </button> */}
+                        </button>
                         <button
                             title='Edit'
                             onClick={() => handleEditData(info?.row?.original)}
