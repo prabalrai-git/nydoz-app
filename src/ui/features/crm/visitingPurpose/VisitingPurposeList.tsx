@@ -10,7 +10,6 @@ import Modal2 from "../../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import AddVisaType from "./AddVisitingPurpose";
 import useAuthContext from "../../../../context/auth/useAuthContext";
-import PaginationTable from "../../../shared/components/PaginationTable";
 import TanStackTable from "../../../shared/molecules/TanStackTable";
 
 const VisaTypeList = () => {
@@ -30,12 +29,11 @@ const VisaTypeList = () => {
     const pageSizeFromUrl = searchParams.get("page_size");
     const page = pageFromUrl ? parseInt(pageFromUrl) : 1;
     const pageSize = pageSizeFromUrl ? parseInt(pageSizeFromUrl) : 15;
-    const [fetchUrl, setFetchUrl] = useState(
-        `${basUrl}?page=${page}&page_size=${pageSize}`
+    const fetchUrl = `${basUrl}?page=${page}&page_size=${pageSize}`;
+    const { data, fetchDataById } = useFetch<IVisitingPurposeResponse[]>(
+        basUrl,
+        true
     );
-    const { data, isloading, fetchDataById, pagination } = useFetch<
-        IVisitingPurposeResponse[]
-    >(basUrl, true);
 
     const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 

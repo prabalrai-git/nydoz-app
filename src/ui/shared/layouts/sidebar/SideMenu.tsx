@@ -11,7 +11,7 @@ interface IProps {
     backPath: string;
 }
 
-const ProductSideMenu = (props: IProps) => {
+const SideMenu = (props: IProps) => {
     const { sidebarMenuList, title, backPath } = props;
     const { width } = useWindowSize();
     const { webSetting, dispatchWebSetting } = useWebSetting();
@@ -105,4 +105,4 @@ const ProductSideMenu = (props: IProps) => {
     );
 };
 
-export default ProductSideMenu;
+export default SideMenu;

@@ -8,7 +8,6 @@ import LoadingSpinner from "../../molecules/LoadingSpinner";
 import NotFound from "../../molecules/NotFound";
 import ImageAtom from "../../atoms/ImageAtom";
 import { useNavigate } from "react-router-dom";
-import UserCompanyAndProducts from "../../layouts/Header/navbar/products/UserCompanyAndProducts";
 
 const ProductList = () => {
     const navigate = useNavigate();

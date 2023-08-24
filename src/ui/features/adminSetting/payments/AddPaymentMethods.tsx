@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { IDynamicForm } from "../../../../types/payload.type";
 
 const DynamicForm = () => {
-    const defaultValues = {
+    const defaultValues: IDynamicForm = {
         name: "",
         is_account_required: false,
         custom_fields: [
@@ -27,7 +28,7 @@ const DynamicForm = () => {
         name: "custom_fields",
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: IDynamicForm) => {
         console.log(data);
     };
 

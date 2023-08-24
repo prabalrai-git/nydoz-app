@@ -29,7 +29,7 @@ PublicAxios.interceptors.request.use((config) => {
 
     const baseUrl = VITE_BASE_URL;
     if (subdomain) {
-        const subdomain = getSubdomain();
+        // const subdomain = getSubdomain();
         // const newURL = baseUrl.replace("api", subdomain + ".api");
         const newURL = baseUrl;
         config.baseURL = newURL;

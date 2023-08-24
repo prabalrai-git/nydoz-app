@@ -38,7 +38,7 @@ interface IAddCompanyForm {
 const AddCompany = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
+    // const BASE_URL = import.meta.env.VITE_BASE_URL;
 
     const [oldThumbnil, setOldThumbnil] = useState<string | undefined>();
     const [oldCoverImg, setOldCoverImg] = useState<string | undefined>();
@@ -138,7 +138,7 @@ const AddCompany = () => {
             );
             if (response?.data?.status === "ok") {
                 toast.success("Company updated Successfully");
-                navigate(-1, { replace: true });
+                navigate("/", { replace: true });
             }
         } else {
             if (thumbnilImg?.length === 0) {

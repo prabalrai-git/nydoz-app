@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
 import { IData, IErrorData, IPagination } from "../types/axios.type";
@@ -20,17 +20,18 @@ function useFetch<T>(
     url: string,
     isRequestPrivate: boolean
 ): FetchDataResponse<T> {
-    const paginationConst: IPagination = {
-        total: 0,
-        per_page: RESULT_PER_PAGE,
-        last_page: 0,
-        current_page: 1,
-        from: 0,
-        to: 0,
-    };
-    const [pagination, setPagination] = useState<IPagination | undefined>(
-        paginationConst
-    );
+    const paginationConst: IPagination = useMemo(() => {
+        return {
+            total: 0,
+            per_page: RESULT_PER_PAGE,
+            last_page: 0,
+            current_page: 1,
+            from: 0,
+            to: 0,
+        };
+    }, []);
+
+    const [pagination, setPagination] = useState<IPagination>(paginationConst);
     const [data, setData] = useState<T | undefined>();
     const [isloading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -46,9 +47,12 @@ function useFetch<T>(
             }
 
             setData(response.data?.payload);
-            setPagination(
-                response.data?.meta_data?.pagination ?? paginationConst
-            );
+            if (response.data?.meta_data?.pagination) {
+                setPagination(response.data?.meta_data?.pagination);
+            } else {
+                setPagination(paginationConst);
+            }
+
             return response;
         } catch (error: AxiosError | unknown) {
             const axiosError = error as AxiosError<IErrorData>;
@@ -79,9 +83,11 @@ function useFetch<T>(
                 }
 
                 setData(response.data?.payload);
-                setPagination(
-                    response.data?.meta_data?.pagination ?? paginationConst
-                );
+                if (response.data?.meta_data?.pagination) {
+                    setPagination(response.data?.meta_data?.pagination);
+                } else {
+                    setPagination(paginationConst);
+                }
                 return response;
             } catch (error: AxiosError | unknown) {
                 const axiosError = error as AxiosError<IErrorData>;
@@ -98,7 +104,7 @@ function useFetch<T>(
                 setIsLoading(false);
             }
         },
-        [isRequestPrivate]
+        [isRequestPrivate, paginationConst]
     );
 
     return { fetchData, data, isloading, error, pagination, fetchDataById };

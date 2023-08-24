@@ -15,7 +15,6 @@ const AgentLayout = loadable(
     () => import("../ui/features/crm/agent/AgentLayout")
 );
 const AddAgent = loadable(() => import("../ui/features/crm/agent/AddAgent"));
-const AgentList = loadable(() => import("../ui/features/crm/agent/AgentList"));
 const Dashboard = loadable(() => import("../ui/features/crm/Dashboard"));
 
 // Enrollment Openings Routes

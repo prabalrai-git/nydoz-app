@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
 import { userToCompanySchema } from "../../../../validations/company.validator";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Field, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import useAuthContext from "../../../../context/auth/useAuthContext";
 import Button from "react-bootstrap/Button";
 import useMutation from "../../../../hooks/useMutation";
