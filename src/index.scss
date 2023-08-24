@@ -463,3 +463,15 @@ $pimary-color: #70b541;
         background-color: rgb(215, 215, 215);
     }
 }
+
+.form-container {
+    position: relative;
+}
+.form-view-container {
+    position: sticky;
+    top: 0px;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.4rem;
+    box-shadow: 0 0 0.875rem rgb(0 0 0 / 10%);
+}

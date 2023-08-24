@@ -16,8 +16,7 @@ interface IProps<T extends CommonItem> {
 }
 
 function ServerSelect<T extends CommonItem>(props: IProps<T>) {
-    const { baseUrl, selectedListItem, setselectedListItem, placeholder } =
-        props;
+    const { baseUrl, setselectedListItem, placeholder } = props;
     const [selectedItemText, setSelectedItemText] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [fetchUrl, setfetchUrl] = useState<string>(
@@ -44,7 +43,7 @@ function ServerSelect<T extends CommonItem>(props: IProps<T>) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchUrl]);
 
-    const handleScroll = (e: UIEvent<HTMLDivElement, UIEvent>) => {
+    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         console.log("handleScroll");
         const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
         if (scrollHeight - scrollTop === clientHeight) {
@@ -86,7 +85,7 @@ function ServerSelect<T extends CommonItem>(props: IProps<T>) {
                     value={selectedItemText}
                     onChange={(e) => setSelectedItemText(e.target.value)}
                     className='form-control'
-                    placeholder='search...'
+                    placeholder={placeholder}
                 />
                 <span
                     onClick={() => handleOpenList()}
@@ -100,7 +99,9 @@ function ServerSelect<T extends CommonItem>(props: IProps<T>) {
                         ? "list-box-container list-box-show"
                         : "list-box-container list-box-hide"
                 }
-                onScroll={(e) => handleScroll(e)}>
+                onScroll={(e: React.UIEvent<HTMLDivElement>) =>
+                    handleScroll(e)
+                }>
                 {allValue?.map((item, index: number) => (
                     <li
                         key={index}

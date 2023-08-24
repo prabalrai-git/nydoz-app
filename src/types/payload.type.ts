@@ -139,3 +139,17 @@ export interface ICurrencysResponse {
     code: string;
     symbol: string;
 }
+
+interface ICustomFields {
+    name: string;
+    type: string;
+    options: string;
+    is_required: boolean;
+    multiple_value: boolean;
+}
+
+export interface IDynamicForm {
+    name: string;
+    is_account_required: boolean;
+    custom_fields: ICustomFields[];
+}

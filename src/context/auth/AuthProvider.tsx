@@ -55,8 +55,8 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         true
     );
     const [webSetting, dispatchWebSetting] = useReducer(webSettingReducer, {
-        showProductSidebar: width > 768 ? true : false,
-        showProductSidebarApp: false,
+        showProductSidebar: true,
+        showProductSidebarApp: true,
         showCompanySidebar: true,
         urlData: {
             url: "",
@@ -140,12 +140,12 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     ]);
 
     useLayoutEffect(() => {
+        console.log("layout effect", width);
         let hasSubdomain = false;
         const subDomainName = window.location.hostname.split(".")[0];
         if (subDomainName && subDomainName !== "localhost") {
             hasSubdomain = true;
         }
-        console.log(subDomainName, "subDomainName");
 
         dispatchWebSetting({
             type: "SET_URL_DATA",

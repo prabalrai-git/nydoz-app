@@ -9,6 +9,9 @@ import RoleList from "../ui/features/roles/RoleList";
 import SocialLinkList from "../ui/features/socialLinks/SocialLinkList";
 import VisaTypeList from "../ui/features/visaType/VisaTypeList";
 import Dashboard from "../ui/features/adminSetting/Dashboard";
+import PaymentMethodsList from "../ui/features/adminSetting/payments/PaymentMethodsList";
+import PaymentLayout from "../ui/features/adminSetting/payments/PaymentLayout";
+import AddPaymentMethods from "../ui/features/adminSetting/payments/AddPaymentMethods";
 
 const AdminRoutes: RouteObject[] = [
     {
@@ -42,6 +45,20 @@ const AdminRoutes: RouteObject[] = [
     {
         path: "visa-types",
         element: <VisaTypeList />,
+    },
+    {
+        path: "payments",
+        element: <PaymentLayout />,
+        children: [
+            {
+                path: "list",
+                element: <PaymentMethodsList />,
+            },
+            {
+                path: "add",
+                element: <AddPaymentMethods />,
+            },
+        ],
     },
 ];
 

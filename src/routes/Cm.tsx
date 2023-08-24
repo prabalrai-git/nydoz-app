@@ -8,13 +8,13 @@ import View from "../ui/features/crm/enrollments/View";
 import AddClient from "../ui/features/crm/clients/AddClient";
 import ClientList from "../ui/features/crm/clients/ClientList";
 import AgentList2 from "../ui/features/crm/agent/AgentList2";
+import ClientLayout from "../ui/features/crm/clients/ClientLayout";
 
 // Agents Routes
 const AgentLayout = loadable(
     () => import("../ui/features/crm/agent/AgentLayout")
 );
 const AddAgent = loadable(() => import("../ui/features/crm/agent/AddAgent"));
-const AgentList = loadable(() => import("../ui/features/crm/agent/AgentList"));
 const Dashboard = loadable(() => import("../ui/features/crm/Dashboard"));
 
 // Enrollment Openings Routes
@@ -73,6 +73,20 @@ const CrmRoutes: RouteObject[] = [
             {
                 path: "add",
                 element: <AddClient />,
+            },
+            {
+                path: "edit",
+                element: <AddClient />,
+            },
+            {
+                path: ":clientId",
+                element: <ClientLayout />,
+                children: [
+                    {
+                        path: "openings",
+                        element: <Outlet />,
+                    },
+                ],
             },
         ],
     },

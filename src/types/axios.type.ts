@@ -14,7 +14,7 @@ export interface IData<T> {
     message: string;
     payload: T | undefined;
     status: string;
-    meta_data?: {
+    meta_data: {
         pagination: IPagination;
     };
 }

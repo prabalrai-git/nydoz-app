@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import MyProducts from "./MyProducts";
 import { useOnClickOutside } from "usehooks-ts";
@@ -10,24 +9,15 @@ const PublicNavbar = () => {
     useOnClickOutside(productRef, () => setShowProducts(false));
     const [showProducts, setShowProducts] = useState<boolean>(false);
 
-    const location = useLocation();
-    const [pathName, setPathName] = useState<string[]>([]);
-    useEffect(() => {
-        const pathnames = location.pathname
-            .split("/")
-            .filter((path) => path !== "");
-        setPathName(pathnames);
-    }, [location.pathname]);
-
     const productList = [
         {
             name: "Client Management",
-            path: "client-management",
+            link: "client-management",
             imageLink: Images.ClientHubLogo,
         },
         {
             name: "Investment Management",
-            link: "/im",
+            link: "investment-management",
             imageLink: Images.InvestmentManagementLogo,
         },
     ];

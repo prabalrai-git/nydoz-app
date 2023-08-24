@@ -199,15 +199,12 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
             ...prevState,
             page_size: e.target.value,
         }));
-
         const queryParams = {
             ...searchState,
             page_size: e.target.value,
         };
-
         const searchParams = setQueryParams(queryParams);
         const newUrl = `${baseUrl}?${searchParams.toString()}`;
-
         setFetchUrl(newUrl);
         setFetchAgain(true);
     };
@@ -405,6 +402,11 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                         className='btn btn-secondary my-3 btn-sm'>
                         Refresh
                     </button>
+                </div>
+            )}
+            {isloading && (
+                <div className='text-center my-6 px-3'>
+                    <Spinner variant='warning' />
                 </div>
             )}
         </div>

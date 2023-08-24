@@ -59,6 +59,9 @@ const AddClient = () => {
         IVisitorResponse | undefined
     >();
 
+    const [selectedVisaTypeText, setSelectedVisaTypeText] =
+        useState<string>("");
+    const [selectedVisitorText, setSelectedVisitorText] = useState<string>("");
     const [selectedVisaType, setSelectedVisaType] = useState<
         IVisaTypeResponse | undefined
     >();
@@ -83,10 +86,16 @@ const AddClient = () => {
 
     const [selectedEnrollmentInstitute, setSelectEnrollmentInstitute] =
         useState<IEnrollmentResponse | undefined>();
+    const [
+        selectedEnrollmentInstituteText,
+        setSelectedEnrollmentInstituteText,
+    ] = useState<string>("");
 
     const [selectedEnrollmentOpening, setSelectEnrollmentOpening] = useState<
         IEnrollmentOpeningsResponse | undefined
     >();
+    const [selectedEnrollmentOpeningText, setSelectedEnrollmentOpeningText] =
+        useState<string>("");
 
     const {
         register,
@@ -142,7 +151,7 @@ const AddClient = () => {
         setSelectedVisaType(dataDetails?.visa_type_id);
         setSelectedAgent(dataDetails?.agent_id);
         setSelectedVistor(dataDetails?.visitor_id);
-        setSelectCurrencyCode(dataDetails?.salary_currency_code);
+        // setSelectCurrencyCode(dataDetails?.salary_currency_code);
         setSelectEnrollmentInstitute(dataDetails?.enrollment_institute_id);
         setSelectEnrollmentOpening(dataDetails?.enrollment_opening_id);
 
@@ -313,6 +322,12 @@ const AddClient = () => {
                                                 setselectedListItem={
                                                     setSelectedVistor
                                                 }
+                                                selectedItemText={
+                                                    selectedVisitorText
+                                                }
+                                                setSelectedItemText={
+                                                    setSelectedVisitorText
+                                                }
                                                 showDataLabel={
                                                     firstName as never
                                                 }
@@ -336,6 +351,12 @@ const AddClient = () => {
                                                 selectedListItem={selectedAgent}
                                                 setselectedListItem={
                                                     setSelectedAgent
+                                                }
+                                                selectedItemText={
+                                                    selectedVisaTypeText
+                                                }
+                                                setSelectedItemText={
+                                                    setSelectedVisaTypeText
                                                 }
                                                 showDataLabel={
                                                     firstName as never
@@ -743,6 +764,12 @@ const AddClient = () => {
                                                 baseUrl={
                                                     API_ROUTE.CM_ENROLLMENT
                                                 }
+                                                selectedItemText={
+                                                    selectedEnrollmentInstituteText
+                                                }
+                                                setSelectedItemText={
+                                                    setSelectedEnrollmentInstituteText
+                                                }
                                                 selectedListItem={
                                                     selectedEnrollmentInstitute
                                                 }
@@ -768,6 +795,12 @@ const AddClient = () => {
                                                     }
                                                     setselectedListItem={
                                                         setSelectEnrollmentOpening
+                                                    }
+                                                    selectedItemText={
+                                                        selectedEnrollmentOpeningText
+                                                    }
+                                                    setSelectedItemText={
+                                                        setSelectedEnrollmentOpeningText
                                                     }
                                                     showDataLabel={
                                                         "position" as never

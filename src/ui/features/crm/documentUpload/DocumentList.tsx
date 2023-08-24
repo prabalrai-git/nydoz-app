@@ -9,7 +9,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import useMutation from "../../../../hooks/useMutation";
 import Modal2 from "../../../shared/components/Modal2";
 import { toast } from "react-toastify";
-import AddDocuments from "./AddDocuments";
+import AddDocuments from "../../../features/documents/AddDocuments";
 import Images from "../../../../constants/Images";
 import useAuthContext from "../../../../context/auth/useAuthContext";
 import NotFound from "../../../shared/molecules/NotFound";

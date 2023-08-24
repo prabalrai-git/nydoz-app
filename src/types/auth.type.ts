@@ -1,3 +1,5 @@
+import { IUserState } from "./payload.type";
+
 export interface IUserRegisterResponse {
     id: string;
     first_name: string;

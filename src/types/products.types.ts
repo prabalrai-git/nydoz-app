@@ -127,33 +127,6 @@ export interface InformationChannelResponse extends InformationChannelPayload {
     id: string;
 }
 
-// {
-//   "registration_date": "2023-08-04",
-//   "first_name": "string",
-//   "last_name": "string",
-//   "country": "string",
-//   "state": "string",
-//   "street_address": "string",
-//   "phone_nos": [
-//     "string"
-//   ],
-//   "visitor_id": "string",
-//   "remarks": "string",
-//   "email": [
-//     "user@example.com"
-//   ],
-//   "visa_type_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "visiting_country": "string",
-//   "deal_amount": 0,
-//   "applied_position": "string",
-//   "expected_salary_pa": 0,
-//   "expected_take_off_date": "2023-08-04",
-//   "salary_currency_code": "string",
-//   "agent_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "visiting_country_state": "string",
-//   "enrollment_institute_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "enrollment_opening_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-// }
 export interface IClientPayload {
     registration_date: string;
     first_name: string;

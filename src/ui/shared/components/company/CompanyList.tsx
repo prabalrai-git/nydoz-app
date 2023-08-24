@@ -3,14 +3,14 @@ import API_ROUTE from "../../../../service/api";
 import useFetch from "../../../../hooks/useFetch";
 import { ICompanyResponse } from "../../../../types/payload.type";
 import ImageAtom from "../../atoms/ImageAtom";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useWebSetting from "../../../../context/useWebSetting";
 import DynamicLink from "../../molecules/DynamicLink";
 // import AppSetting from "../../../../config/AppSetting";
 
 const CompanyListCard = () => {
     // const { VITE_HOST } = AppSetting;
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { hasSubdomain } = useWebSetting();
 
     const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
@@ -24,9 +24,9 @@ const CompanyListCard = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleNavigateToSubDomain = (subdomain: string) => {
-        navigate(`${subdomain}/dashboard`);
-    };
+    // const handleNavigateToSubDomain = (subdomain: string) => {
+    //     navigate(`${subdomain}/dashboard`);
+    // };
 
     return (
         <div className='card h-xl-100'>

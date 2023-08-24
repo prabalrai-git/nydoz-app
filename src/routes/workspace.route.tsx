@@ -1,5 +1,5 @@
 import loadable from "@loadable/component";
-import { RouteObject, createBrowserRouter } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
 import CompanyRoutes from "./Company";
 
 const WorkSpaceDashboard = loadable(

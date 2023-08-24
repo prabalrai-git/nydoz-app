@@ -1,4 +1,4 @@
-import { IAgentResponse } from "../../../../types/payload.type";
+import { IAgentResponse } from "../../../../types/products.types";
 import Accordion from "react-bootstrap/Accordion";
 
 const ViewModal = (props: IAgentResponse) => {

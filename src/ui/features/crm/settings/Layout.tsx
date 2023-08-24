@@ -1,10 +1,8 @@
 import { Outlet } from "react-router-dom";
 import { IMenubar2 } from "../../../../types/app.types";
 import MenubarUp from "../../../shared/layouts/sidebar/MenubarUp";
-import { useWindowSize } from "usehooks-ts";
 
 const Layout = () => {
-    const { width, height } = useWindowSize();
     const settingsMenubarList: IMenubar2[] = [
         {
             title: "Visiting Purposes",
@@ -27,7 +25,6 @@ const Layout = () => {
     return (
         <div>
             <MenubarUp menubarList={settingsMenubarList} />
-
             <Outlet />
         </div>
     );
