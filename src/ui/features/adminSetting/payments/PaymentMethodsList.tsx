@@ -122,10 +122,12 @@ const PaymentList = () => {
                             id='dropdown-basic-button'
                             title='Action'>
                             <Dropdown.Item>
-                                <div className='menu-link'>
+                                <Link
+                                    to={`../view/${info?.row?.original?.id}`}
+                                    className='menu-link'>
                                     <span className='mx-2'>View</span>
                                     <i className='bi bi-box-arrow-up-right text-primary '></i>
-                                </div>
+                                </Link>
                             </Dropdown.Item>
                             <Dropdown.Item>
                                 <div

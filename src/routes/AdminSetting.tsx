@@ -12,6 +12,7 @@ import Dashboard from "../ui/features/adminSetting/Dashboard";
 import PaymentMethodsList from "../ui/features/adminSetting/payments/PaymentMethodsList";
 import PaymentLayout from "../ui/features/adminSetting/payments/PaymentLayout";
 import AddPaymentMethods from "../ui/features/adminSetting/payments/AddPaymentMethods";
+import ViewPaymentMethod from "../ui/features/adminSetting/payments/ViewPaymentMethod";
 
 const AdminRoutes: RouteObject[] = [
     {
@@ -57,6 +58,10 @@ const AdminRoutes: RouteObject[] = [
             {
                 path: "add",
                 element: <AddPaymentMethods />,
+            },
+            {
+                path: "view/:id",
+                element: <ViewPaymentMethod />,
             },
         ],
     },
