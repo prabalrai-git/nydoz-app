@@ -33,7 +33,8 @@ const API_ROUTE = {
 
     // company product
     BUY_COMPANY_PRODUCT_BY_ID: "/api/v1/companies",
-
+    // company statuses
+    STATUSES: "/api/v1/statuses",
     // company documents
     GET_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",
     POST_DOCUMENTS_BY_COMPANY_ID: "/api/v1/companies",

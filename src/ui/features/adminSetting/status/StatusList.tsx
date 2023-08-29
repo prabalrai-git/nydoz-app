@@ -1,30 +1,17 @@
 import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
 import { IAgentResponse } from "../../../../types/products.types";
+import BASE_URL from "../../../../constants/AppSetting";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Flag, People } from "react-bootstrap-icons";
+import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 
-// {
-//   "name": "string",
-//   "is_account_required": true,
-//   "custom_fields": [
-//     {
-//       "name": "string",
-//       "type": "text",
-//       "options": [
-//         "string"
-//       ],
-//       "is_required": true,
-//       "multiple_value": false
-//     }
-//   ]
-// }
-
-const PaymentList = () => {
+const AgentList2 = () => {
     const navigate = useNavigate();
     const searchFilter: string[] = ["first_name", "email", "mobile"];
 
@@ -45,21 +32,59 @@ const PaymentList = () => {
                 cell: (info) => info.row.index + 1,
             },
             {
-                accessorKey: "name",
+                accessorKey: "Name",
                 header: () => (
                     <div>
+                        <People size={16} className='mx-2' />
                         <span>Name</span>
+                    </div>
+                ),
+                cell: (info) => {
+                    const url = `${BASE_URL}${info?.row?.original?.profile_picture}`;
+                    return (
+                        <div className='d-flex align-items-center'>
+                            <div className='symbol symbol-40px me-3'>
+                                <img
+                                    src={url}
+                                    className=''
+                                    alt='profile picture'
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start flex-column'>
+                                <a
+                                    href='#'
+                                    className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
+                                    {info?.row?.original?.first_name}{" "}
+                                    {info?.row?.original?.last_name}
+                                </a>
+                                <span className='text-muted fw-semibold d-block fs-7'>
+                                    {info?.row?.original?.email}
+                                </span>
+                            </div>
+                        </div>
+                    );
+                },
+            },
+
+            {
+                accessorKey: "mobile",
+                header: () => (
+                    <div>
+                        <i className='bi bi-telephone me-2 fs-7'></i>
+                        <span>Mobile Number</span>
                     </div>
                 ),
                 cell: (info) => {
                     return <div>{info.getValue<string>()}</div>;
                 },
             },
+
             {
-                accessorKey: "is_account_required",
+                accessorKey: "country",
                 header: () => (
                     <div>
-                        <span>Account Required</span>
+                        <Flag size={16} className='mx-2' />
+                        <span>Country</span>
                     </div>
                 ),
                 cell: (info) => {
@@ -82,12 +107,10 @@ const PaymentList = () => {
                             id='dropdown-basic-button'
                             title='Action'>
                             <Dropdown.Item>
-                                <Link
-                                    to={`../view/${info?.row?.original?.id}`}
-                                    className='menu-link'>
+                                <div className='menu-link'>
                                     <span className='mx-2'>View</span>
                                     <i className='bi bi-box-arrow-up-right text-primary '></i>
-                                </Link>
+                                </div>
                             </Dropdown.Item>
                             <Dropdown.Item>
                                 <div
@@ -110,23 +133,30 @@ const PaymentList = () => {
 
     return (
         <div className='my-6 px-3'>
-            <div className='card'>
-                <div className='card-header'>
-                    <h3 className='card-title'>Payment Method's List</h3>
-                    <div className='card-toolbar'>
-                        <Link to={"../add"} className='btn btn-success btn-sm'>
-                            <span className='mx-2'>Add Payment Method</span>
-                        </Link>
+            <CompanyBreadcrumb
+                title='Agents'
+                btnText='Back'
+                showBreadcrumb={true}
+            />
+            <section>
+                <div className='card'>
+                    <div className='card-header'>
+                        <h3 className='card-title'>Agent's List</h3>
+                        <div className='card-toolbar'>
+                            <Link to={`add`} className='btn btn-success btn-sm'>
+                                <span className='mx-2'>Add Agent</span>
+                            </Link>
+                        </div>
                     </div>
+                    <SearchPaginationList
+                        searchParamsArray={searchFilter}
+                        baseUrl={API_ROUTE.CM_AGENTS}
+                        columns={tableColumns}
+                    />
                 </div>
-                <SearchPaginationList
-                    searchParamsArray={searchFilter}
-                    baseUrl={API_ROUTE.PAYMENT_METHODS}
-                    columns={tableColumns}
-                />
-            </div>
+            </section>
         </div>
     );
 };
 
-export default PaymentList;
+export default AgentList2;

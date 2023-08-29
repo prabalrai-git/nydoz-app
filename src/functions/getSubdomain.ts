@@ -6,4 +6,20 @@ function getSubdomain(url: string) {
     return match ? match[1] : undefined;
 }
 
+export const getSubdomainV2 = () => {
+    const DOMAIN = "https://app.dev.nydoz.com";
+    const fullDomainFromUrl = "https://sabkura.app.dev.nydoz.com";
+    const [httpPart, mainDomainPart] = DOMAIN.split("://");
+    console.log({ httpPart, mainDomainPart });
+    const parts = fullDomainFromUrl.split(mainDomainPart);
+    console.log(parts, "parts");
+    const subdomainAndHttp = parts[0];
+    const subdomainByPart = subdomainAndHttp.split("://");
+    console.log(subdomainByPart, "subdomainByPart");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_httpPart, subdomain] = subdomainByPart;
+
+    return subdomain;
+};
+
 export default getSubdomain;

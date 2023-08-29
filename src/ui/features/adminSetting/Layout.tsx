@@ -32,6 +32,11 @@ const Layout = () => {
         },
         {
             id: 6,
+            title: "Status",
+            link: "statuses",
+        },
+        {
+            id: 7,
             title: "Payment Methods",
             link: "payments/list",
         },

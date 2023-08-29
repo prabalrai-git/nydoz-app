@@ -15,7 +15,7 @@ import API_ROUTE from "../../service/api";
 import LoadingPage from "../../ui/features/utils/LoadingPage";
 import { toast } from "react-toastify";
 import webSettingReducer from "./webSettingReducer";
-import { useWindowSize } from "usehooks-ts";
+import { getSubdomainV2 } from "../../functions/getSubdomain";
 
 const intialState: IState = {
     isLoggedIn: false,
@@ -45,8 +45,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         localStorage.getItem("token") ||
         sessionStorage.getItem("token") ||
         null;
-    // const [token, setToken] = useState<string | null>(tokenFromLocal);
-    const { width } = useWindowSize();
     const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
     const [auth, dispatch] = useReducer(authReducer, intialState);
     const { fetchData } = useFetch<IUseMeData>(API_ROUTE.LOGGED_IN_USER, true);
@@ -140,19 +138,15 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     ]);
 
     useLayoutEffect(() => {
-        console.log("layout effect", width);
-        let hasSubdomain = false;
-        const subDomainName = window.location.hostname.split(".")[0];
-        if (subDomainName && subDomainName !== "localhost") {
-            hasSubdomain = true;
-        }
+        const subDomain = getSubdomainV2();
+        const hasSubdomain = subDomain ? true : false;
 
         dispatchWebSetting({
             type: "SET_URL_DATA",
             payload: {
                 urlData: {
                     url: window.location.href,
-                    subdomain: window.location.hostname.split(".")[0],
+                    subdomain: subDomain.slice(0, -1),
                     path: window.location.pathname,
                     hasSubdomain: hasSubdomain,
                 },

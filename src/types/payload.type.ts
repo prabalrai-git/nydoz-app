@@ -153,3 +153,29 @@ export interface IDynamicForm {
     is_account_required: boolean;
     custom_fields: ICustomFields[];
 }
+
+// company Status
+
+// {
+//   "title": "string",
+//   "code": "string",
+//   "background_color_class": "string",
+//   "text_color_class": "string",
+//   "action_api_url": "string",
+//   "group_code": "string",
+//   "is_group_default": true
+// }
+
+export interface IStatusPayload {
+    title: string;
+    code: string;
+    background_color_class: string | undefined;
+    text_color_class: string | undefined;
+    action_api_url: string | undefined;
+    group_code: string;
+    is_group_default: boolean;
+}
+
+export interface IStatusResponse extends IStatusPayload {
+    id: string;
+}
