@@ -1,21 +1,21 @@
 FROM node:19
 
-WORKDIR /app
+LABEL maintainer="Vesh Raj Joshi<veshraj.joshi1@gmail.com>"
 
-COPY package*.json ./
+WORKDIR /var/www/nydoz-react/
 
-RUN npm install
+ENV DEBIAN_FRONTEND noninteractive4
+ENV TZ=UTC
 
-COPY . .
+RUN apt-get update \
+    && apt-get install -y npm
 
-# Build the React app
-RUN npm run build
+COPY start-container /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/start-container
 
-ENV NODE_ENV=production
+ENV NODE_ENV=dev
 
-EXPOSE 4200
+ENTRYPOINT ["start-container"]
 
-CMD [ "npm", "start" ]
-
-
+EXPOSE 9000
 

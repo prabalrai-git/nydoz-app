@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+if [[ ! -f "/var/www/nydoz-react/node_modules" ]]; then
+    cd /var/www/nydoz-react && npm install;
+    cd /var/www/nydoz-react && npm install vite;
+fi
+
+cd /var/www/nydoz-react && npm run dev;
+
