@@ -1,0 +1,21 @@
+variables:
+  CUR_DATE: $( date +"%s%3N" )
+stages:
+  - deploy
+before_script:
+#  - composer clear-cache
+#  - composer dump-autoload
+#  - npm install
+#  # Update packages
+#  - apt-get update -yqq
+#  # Prep for Node
+#  - apt-get install gnupg -yqq
+deploy_dev:
+  stage: deploy
+  script:
+    - cp -R ./*  /var/www/frontend"
+    - cp /etc/ci-cd/react-dev.env /var/www/frontend/.env
+    - cd /var/www/frontend && npm install
+    - cd /var/www/frontend && npm run build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
