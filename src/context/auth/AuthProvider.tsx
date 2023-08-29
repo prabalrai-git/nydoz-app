@@ -41,6 +41,11 @@ interface IUseMeData {
 }
 
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
+    const subdomainStr = "https://sabkura.app.dev.nydoz.com";
+    const str = "https://app.dev.nydoz.com";
+    const parts = str.split(".");
+
+    console.log(parts, "parts");
     const tokenFromLocal =
         localStorage.getItem("token") ||
         sessionStorage.getItem("token") ||

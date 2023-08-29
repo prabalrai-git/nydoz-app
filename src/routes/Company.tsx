@@ -36,6 +36,7 @@ const CompanyRoutes: RouteObject[] = [
         element: <ProductLayout />,
         children: productSettingRoutes,
     },
+
     {
         path: "settings",
         element: <AdminLayout />,

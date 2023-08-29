@@ -13,6 +13,8 @@ import PaymentMethodsList from "../ui/features/adminSetting/payments/PaymentMeth
 import PaymentLayout from "../ui/features/adminSetting/payments/PaymentLayout";
 import AddPaymentMethods from "../ui/features/adminSetting/payments/AddPaymentMethods";
 import ViewPaymentMethod from "../ui/features/adminSetting/payments/ViewPaymentMethod";
+import StatusLayout from "../ui/features/adminSetting/status/StatusLayout";
+import AddStatus from "../ui/features/adminSetting/status/AddStatus";
 
 const AdminRoutes: RouteObject[] = [
     {
@@ -42,6 +44,20 @@ const AdminRoutes: RouteObject[] = [
     {
         path: "social-links",
         element: <SocialLinkList />,
+    },
+    {
+        path: "statuses",
+        element: <StatusLayout />,
+        children: [
+            {
+                path: "list",
+                element: <StatusLayout />,
+            },
+            {
+                path: "add",
+                element: <AddStatus />,
+            },
+        ],
     },
     {
         path: "visa-types",

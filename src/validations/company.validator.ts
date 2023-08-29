@@ -95,3 +95,38 @@ export const userToCompanySchema = yup.object().shape({
         .required("Password confirmation is required.")
         .oneOf([yup.ref("password")], "Passwords must match"),
 });
+
+// {
+//   "message": "The title field is required. (and 2 more errors)",
+//   "errors": {
+//     "title": [
+//       "The title field is required."
+//     ],
+//     "code": [
+//       "The code field is required."
+//     ],
+//     "group_code": [
+//       "The group code field is required."
+//     ]
+//   }
+// }
+
+// {
+//   "title": "string",
+//   "code": "string",
+//   "background_color_class": "string",
+//   "text_color_class": "string",
+//   "action_api_url": "string",
+//   "group_code": "string",
+//   "is_group_default": true
+// }
+
+export const statusSchema = yup.object().shape({
+    title: yup.string().required("Title is required."),
+    code: yup.string().required("Code is required."),
+    background_color_class: yup.string(),
+    text_color_class: yup.string(),
+    action_api_url: yup.string(),
+    group_code: yup.string().required("Group Code is required."),
+    is_group_default: yup.boolean(),
+});
