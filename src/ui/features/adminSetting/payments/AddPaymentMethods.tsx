@@ -10,7 +10,7 @@ import useHandleShowError from "../../../../hooks/useHandleShowError";
 
 const DynamicForm = () => {
     const navigate = useNavigate();
-    const { isLoading, data, postData, errList, error } = useMutation(
+    const { postData, errList, error } = useMutation(
         API_ROUTE.PAYMENT_METHODS,
         true
     );
@@ -75,7 +75,7 @@ const DynamicForm = () => {
     };
 
     const typeValues = watch(`custom_fields`);
-    const formName = watch(`name`);
+    // const formName = watch(`name`);
     const formRequired = watch(`is_account_required`);
 
     useEffect(() => {

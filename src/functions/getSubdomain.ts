@@ -1,6 +1,3 @@
-import APP_SETTING from "../config/AppSetting.ts";
-const { VITE_BASE_URL } = APP_SETTING;
-
 function getSubdomain(url: string) {
     // Regular expression pattern to match the subdomain
     // eslint-disable-next-line no-useless-escape
