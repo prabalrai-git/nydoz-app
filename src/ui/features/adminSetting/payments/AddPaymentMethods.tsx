@@ -5,6 +5,8 @@ import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useValidationError from "../../../../hooks/useValidationError";
+import useHandleShowError from "../../../../hooks/useHandleShowError";
 
 const DynamicForm = () => {
     const navigate = useNavigate();
@@ -29,9 +31,12 @@ const DynamicForm = () => {
 
     const forMultipleValues = ["select", "checkbox", "radio"];
 
-    const { watch, handleSubmit, control, register } = useForm({
+    const { watch, handleSubmit, control, register, setError } = useForm({
         defaultValues: defaultValues,
     });
+
+    useValidationError({ errList, setError });
+    useHandleShowError(error);
 
     const { fields, append, remove } = useFieldArray({
         control,

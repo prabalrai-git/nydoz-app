@@ -5,10 +5,7 @@ import API_ROUTE from "../../../../service/api";
 
 const ViewPaymentMethod = () => {
     const { id } = useParams<{ id: string }>();
-    const { data, loading, error, fetchDataById } = useFetch(
-        API_ROUTE.PAYMENT_METHODS,
-        true
-    );
+    const { fetchDataById } = useFetch(API_ROUTE.PAYMENT_METHODS, true);
 
     useEffect(() => {
         if (id) fetchDataById(`${API_ROUTE.PAYMENT_METHODS}/${id}}`);
