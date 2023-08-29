@@ -1,3 +1,6 @@
+import APP_SETTING from "../config/AppSetting.ts";
+const { DOMAIN, PROD } = APP_SETTING;
+
 function getSubdomain(url: string) {
     // Regular expression pattern to match the subdomain
     // eslint-disable-next-line no-useless-escape
@@ -7,18 +10,18 @@ function getSubdomain(url: string) {
 }
 
 export const getSubdomainV2 = () => {
-    const DOMAIN = "https://app.dev.nydoz.com";
-    const fullDomainFromUrl = "https://sabkura.app.dev.nydoz.com";
-    const [httpPart, mainDomainPart] = DOMAIN.split("://");
-    console.log({ httpPart, mainDomainPart });
+    const fullDomainFromUrl = PROD
+        ? window.location.hostname
+        : "https://sabkura.app.dev.nydoz.com";
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_httpPart2, mainDomainPart] = DOMAIN.split("://");
     const parts = fullDomainFromUrl.split(mainDomainPart);
-    console.log(parts, "parts");
     const subdomainAndHttp = parts[0];
     const subdomainByPart = subdomainAndHttp.split("://");
-    console.log(subdomainByPart, "subdomainByPart");
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_httpPart, subdomain] = subdomainByPart;
-
+    console.log({ subdomain });
     return subdomain;
 };
 
