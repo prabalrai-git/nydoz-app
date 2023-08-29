@@ -1,13 +1,11 @@
 import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
 import { IAgentResponse } from "../../../../types/products.types";
-import BASE_URL from "../../../../constants/AppSetting";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Flag, People } from "react-bootstrap-icons";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 
 // {
@@ -47,59 +45,21 @@ const PaymentList = () => {
                 cell: (info) => info.row.index + 1,
             },
             {
-                accessorKey: "Name",
+                accessorKey: "name",
                 header: () => (
                     <div>
-                        <People size={16} className='mx-2' />
                         <span>Name</span>
-                    </div>
-                ),
-                cell: (info) => {
-                    const url = `${BASE_URL}${info?.row?.original?.profile_picture}`;
-                    return (
-                        <div className='d-flex align-items-center'>
-                            <div className='symbol symbol-40px me-3'>
-                                <img
-                                    src={url}
-                                    className=''
-                                    alt='profile picture'
-                                />
-                            </div>
-                            <div className='d-flex justify-content-start flex-column'>
-                                <a
-                                    href='#'
-                                    className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                                    {info?.row?.original?.first_name}{" "}
-                                    {info?.row?.original?.last_name}
-                                </a>
-                                <span className='text-muted fw-semibold d-block fs-7'>
-                                    {info?.row?.original?.email}
-                                </span>
-                            </div>
-                        </div>
-                    );
-                },
-            },
-
-            {
-                accessorKey: "mobile",
-                header: () => (
-                    <div>
-                        <i className='bi bi-telephone me-2 fs-7'></i>
-                        <span>Mobile Number</span>
                     </div>
                 ),
                 cell: (info) => {
                     return <div>{info.getValue<string>()}</div>;
                 },
             },
-
             {
-                accessorKey: "country",
+                accessorKey: "is_account_required",
                 header: () => (
                     <div>
-                        <Flag size={16} className='mx-2' />
-                        <span>Country</span>
+                        <span>Account Required</span>
                     </div>
                 ),
                 cell: (info) => {
