@@ -5,15 +5,16 @@ import { IRoleResponse } from "../../../types/payload.type";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import AddRoles from "./AddRole";
 import TanStackTable from "../../shared/molecules/TanStackTable";
+import useAuthContext from "../../../context/auth/useAuthContext";
 
-const DocumentList = () => {
-    const { id: companyId } = useParams<string>();
+const RoleList = () => {
+    const { companyInfo } = useAuthContext();
+    const companyId = companyInfo?.id;
 
     const [selectedData, setSelectedData] = useState<
         IRoleResponse | undefined
@@ -95,12 +96,12 @@ const DocumentList = () => {
                         size='sm'
                         id='dropdown-basic-button'
                         title='Action'>
-                        <Dropdown.Item>
+                        {/* <Dropdown.Item>
                             <div className='menu-link'>
                                 <span className='mx-2'>View</span>
                                 <i className='bi bi-box-arrow-up-right text-primary '></i>
                             </div>
-                        </Dropdown.Item>
+                        </Dropdown.Item> */}
                         <Dropdown.Item>
                             <div
                                 onClick={() =>
@@ -160,12 +161,17 @@ const DocumentList = () => {
     const handleAddDocumentClose = () => setOpenAddDocument(false);
     const handleAddDocumentOpen = () => setOpenAddDocument(true);
 
+    const handleOpenNewModal = () => {
+        setSelectedData(undefined);
+        handleAddDocumentOpen();
+    };
+
     return (
         <div>
             <div className='d-flex justify-content-between align-items-center mb-6'>
                 <h4>Roles List</h4>
                 <button
-                    onClick={handleAddDocumentOpen}
+                    onClick={handleOpenNewModal}
                     className='btn btn-success btn-sm'>
                     <span className='mx-2'>Add Roles</span>
                 </button>
@@ -201,4 +207,4 @@ const DocumentList = () => {
     );
 };
 
-export default DocumentList;
+export default RoleList;

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 interface IHeadingProps {
     title: string;
-    btnText: string;
+    btnText?: string;
     showBreadcrumb?: boolean;
     children?: React.ReactNode;
 }
@@ -19,13 +19,15 @@ const Heading = (props: IHeadingProps) => {
                 {showBreadcrumb && children}
             </div>
 
-            <div className='d-flex align-items-center gap-2 gap-lg-3'>
-                <button
-                    onClick={() => navigate(-1)}
-                    className='btn btn-flex btn-secondary   fs-7 fw-bold btn-sm'>
-                    {btnText}
-                </button>
-            </div>
+            {btnText && (
+                <div className='d-flex align-items-center gap-2 gap-lg-3'>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className='btn btn-flex btn-secondary   fs-7 fw-bold btn-sm'>
+                        {btnText}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

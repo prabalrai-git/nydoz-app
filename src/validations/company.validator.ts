@@ -33,6 +33,11 @@ export const companyRolesSchema = yup.object().shape({
     description: yup.string(),
 });
 
+export const VisaTypeSchema = yup.object().shape({
+    name: yup.string().required(),
+    description: yup.string(),
+});
+
 export const agentSchema = yup.object().shape({
     first_name: yup.string().required(),
     last_name: yup.string().required(),
@@ -52,4 +57,41 @@ export const agentSchema = yup.object().shape({
             "The postal code field must not be greater than 10 characters."
         )
         .required(),
+});
+
+// CompanySocialLinks Schema
+
+export const CompanySocialLinkSchema = yup.object().shape({
+    title: yup
+        .string()
+        .required("Title is required")
+        .trim()
+        .strict(true)
+        .matches(
+            /^\S+$/,
+            "Title should not contain spaces.Eg:- Facebook.com, Twitter, etc"
+        ),
+    link: yup
+        .string()
+        .required("Link is required")
+        .url(
+            "Invalid URL format. URL should be like:-  https://www.example.com"
+        ),
+});
+
+// Add user to Company Schema
+
+export const userToCompanySchema = yup.object().shape({
+    first_name: yup.string().required("First Name is required."),
+    last_name: yup.string().required("Last Name is required."),
+    email: yup
+        .string()
+        .email("Email must be valid.")
+        .required("Email is required."),
+    mobile: yup.string().required("Mobile Number is required."),
+    password: yup.string().required("Password is required."),
+    password_confirmation: yup
+        .string()
+        .required("Password confirmation is required.")
+        .oneOf([yup.ref("password")], "Passwords must match"),
 });

@@ -4,12 +4,14 @@ import ProductList from "../../shared/components/products/ProductList";
 
 const Home = () => {
     return (
-        <div>
+        <div className='bg-white h-100vh'>
             <section className='container-fluid my-3'>
                 <div className='container my-3'>
-                    <h3 className='py-6'>Welcom to Nydoz</h3>
+                    <h3 className='py-6'>Welcome to Nydoz</h3>
                 </div>
-
+                <div className='container '>
+                    <h3>Product List</h3>
+                </div>
                 <ProductList />
             </section>
         </div>

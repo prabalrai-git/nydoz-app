@@ -7,16 +7,22 @@ export interface IProductResponse {
     is_for_self_use: boolean;
 }
 
-export interface IRoleResponse {
-    id: string;
-    name: string;
-    company_id: number;
-    description: string;
-}
-
 export interface IRolePayload {
     name: string;
     description: string;
+}
+
+export interface IRoleResponse extends IRolePayload {
+    id: string;
+}
+
+export interface IVisaTypePayload {
+    name: string;
+    description: string;
+}
+
+export interface IVisaTypeResponse extends IVisaTypePayload {
+    id: string;
 }
 
 export interface IDocumentResponse {
@@ -56,16 +62,6 @@ export interface IUserState {
     mobile_verified_at: unknown;
     isAdmin: boolean;
     permissions: string[];
-}
-
-export interface ILoginResponse {
-    user: IUserState;
-    token: string;
-}
-
-export interface ILoginPayload {
-    email: string;
-    password: string;
 }
 
 export interface ICompanyResponse {
@@ -126,19 +122,34 @@ export interface IUserCompanyProductsResponse {
 
 // Agent
 
-export interface IAgentPayload {
-    first_name: string;
-    last_name: string;
-    email: string;
-    mobile: string;
-    country: string;
-    state: string;
-    city: string;
-    street_address: string;
-    profile_picture: string;
-    postal_code: string;
+// SOCIAL_LINKS
+export interface ISocialLinksPayload {
+    title: string;
+    link: string;
 }
 
-export interface IAgentResponse extends IAgentPayload {
+export interface ISocialLinksResponse extends ISocialLinksPayload {
     id: string;
+}
+
+// -----SOCIAL_LINKS-----ENDS-----
+
+export interface ICurrencysResponse {
+    name: string;
+    code: string;
+    symbol: string;
+}
+
+interface ICustomFields {
+    name: string;
+    type: string;
+    options: string;
+    is_required: boolean;
+    multiple_value: boolean;
+}
+
+export interface IDynamicForm {
+    name: string;
+    is_account_required: boolean;
+    custom_fields: ICustomFields[];
 }

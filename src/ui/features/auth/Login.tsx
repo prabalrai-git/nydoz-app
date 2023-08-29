@@ -11,10 +11,10 @@ import Spinner from "react-bootstrap/Spinner";
 import useMutation from "../../../hooks/useMutation";
 import { toast } from "react-toastify";
 // import { AuthContext } from "../../../context/AuthContext";
-import { ILoginResponse } from "../../../types/payload.type";
+import { ILoginResponse } from "../../../types/auth.type";
 import AuthContext from "../../../context/auth/AuthContext";
-import useSubdomain from "../../../hooks/useSubdomain";
-import APP_SETTING from "../../../config/AppSetting";
+// import useSubdomain from "../../../hooks/useSubdomain";
+// import APP_SETTING from "../../../config/AppSetting";
 interface FormData {
     email: string;
     password: string;
@@ -22,11 +22,11 @@ interface FormData {
 
 const LoginPage = () => {
     const { dispatch } = useContext(AuthContext);
-    const subdomain = useSubdomain();
+    // const subdomain = useSubdomain();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const navigate = useNavigate();
-    const { MODE, VITE_HOST } = APP_SETTING;
+    // const { MODE, VITE_HOST } = APP_SETTING;
     const { postData, isLoading, error } = useMutation<ILoginResponse>(
         API_ROUTE.LOGIN,
         false
@@ -68,33 +68,7 @@ const LoginPage = () => {
                 payload: { userInfo: payload.user, token: payload.token },
             });
 
-            console.log("subdomain", subdomain);
-            console.log(" MODE", MODE);
-            console.log(" VITE_HOST", VITE_HOST);
-            if (
-                (VITE_HOST === "LOCALHOST" && !subdomain) ||
-                subdomain === "localhost"
-            ) {
-                navigate("/home", { replace: true });
-            }
-
-            if (VITE_HOST === "LOCALHOST" && subdomain) {
-                navigate(`/home/${subdomain}/dashboard`, { replace: true });
-            }
-
-            if (
-                VITE_HOST !== "LOCALHOST" &&
-                subdomain &&
-                subdomain !== "localhost"
-            ) {
-                navigate(`/home/${subdomain}/dashboard`, {
-                    replace: true,
-                });
-            }
-
-            if (VITE_HOST !== "LOCALHOST" && !subdomain) {
-                navigate("/home", { replace: true });
-            }
+            navigate("/workspace", { replace: true });
         }
     });
 
@@ -102,15 +76,17 @@ const LoginPage = () => {
         <div className='container pt-4' id='kt_app_root '>
             <div className='row '>
                 <div className='col-12  col-md-8 col-lg-6  offset-0 offset-md-2 offset-lg-3 '>
-                    <div className='card shadow shadwo-sm p-3 mt-4'>
+                    <div className='card shadow shadow-sm p-3 mt-4'>
                         <div className='card-body'>
                             <div className='row mb-3'>
                                 <div className='col-12 text-center mb-6'>
-                                    <img
-                                        className='mb-2'
-                                        src={CompanyLogo}
-                                        alt='Company Logo'
-                                    />
+                                    <Link to={"/"}>
+                                        <img
+                                            className='mb-2'
+                                            src={CompanyLogo}
+                                            alt='Company Logo'
+                                        />
+                                    </Link>
                                 </div>
                                 <div className='col-12'>
                                     <h5 className='text-dark fw-bolder'>
@@ -125,43 +101,6 @@ const LoginPage = () => {
                                 className='form w-100 '
                                 id='kt_sign_up_form'
                                 onSubmit={onFormSubmit}>
-                                {/* <div className='row g-3 mb-3'>
-                                    <div className='col-12'>
-                                        <a
-                                            href='#'
-                                            className='btn text-dark p-2  bg-light w-100 shadow shadow-sm w-100'>
-                                            <img
-                                                alt='Facebook Logo'
-                                                src={FacebookLogo}
-                                                className='h-25px me-3 '
-                                            />
-                                            <span className='text-dark'>
-                                                {" "}
-                                                Sign in with Facebook
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div className='col-12'>
-                                        <a
-                                            href='#'
-                                            className='btn text-dark p-2  bg-light w-100 shadow shadow-sm w-100'>
-                                            <img
-                                                alt='Google Logo'
-                                                src={GoogleLogo}
-                                                className='h-25px me-3'
-                                            />
-                                            <span className='text-dark'>
-                                                Sign in with Google
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className='separator separator-content my-6'>
-                                    <span className='w-125px text-gray-500 fw-semibold fs-7'>
-                                        Or with email
-                                    </span>
-                                </div> */}
-
                                 <div className='fv-row mb-6'>
                                     <label
                                         className='required mb-2'

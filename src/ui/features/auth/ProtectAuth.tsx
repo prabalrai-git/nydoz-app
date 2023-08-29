@@ -12,7 +12,7 @@ const ProtectAuth: React.FC<Props> = ({ children }) => {
     const location = useLocation().pathname;
 
     return isLoggedIn && token ? (
-        <Navigate to={"/page-not-found"} state={{ from: location }} replace />
+        <Navigate to={"/"} state={{ from: location }} replace />
     ) : (
         children
     );

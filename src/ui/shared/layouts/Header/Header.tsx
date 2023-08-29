@@ -1,19 +1,41 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
+import Images from "../../../../constants/Images";
 
 const Header = () => {
     return (
-        <Navbar bg='white' data-bs-theme='light'>
-            <Container>
-                <Navbar.Brand href='#home'>Navbar</Navbar.Brand>
-                <Nav className='ms-auto'>
-                    <Nav.Link href='#home'>Home</Nav.Link>
-                    <Nav.Link href='#features'>Features</Nav.Link>
-                    <Nav.Link href='#pricing'>Pricing</Nav.Link>
-                </Nav>
-            </Container>
-        </Navbar>
+        <nav className='navbar navbar-expand-sm text-white bg-primary h-60px'>
+            <div className='container'>
+                <Link to='/' className='navbar-brand'>
+                    <img
+                        className='navbar-brand-img '
+                        src={Images.CompanyLogo}
+                        alt='Company Logo'
+                    />
+                </Link>
+                <button
+                    className='navbar-toggler'
+                    type='button'
+                    data-bs-toggle='collapse'
+                    data-bs-target='#navbarNav'
+                    aria-controls='navbarNav'
+                    aria-expanded='false'
+                    aria-label='Toggle navigation'>
+                    <span className='navbar-toggler-icon'></span>
+                </button>
+                <div className='collapse navbar-collapse ' id='navbarNav'>
+                    <ul className='navbar-nav ms-auto'>
+                        <li className='nav-item'>
+                            <Link
+                                className='nav-link active text-white'
+                                aria-current='page'
+                                to='support'>
+                                Support
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     );
 };
 

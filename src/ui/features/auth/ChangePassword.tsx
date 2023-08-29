@@ -64,7 +64,7 @@ const ChangePassword = () => {
                 response?.data?.message || "Password Changed Successfully"
             );
 
-            navigate("/home", { replace: true });
+            navigate("/workspace", { replace: true });
         }
     });
 

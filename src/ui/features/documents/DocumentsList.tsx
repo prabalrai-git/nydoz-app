@@ -6,15 +6,17 @@ import TanStackTable from "../../shared/molecules/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { useParams } from "react-router-dom";
 import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import AddDocuments from "./AddDocuments";
 import Images from "../../../constants/Images";
+import useAuthContext from "../../../context/auth/useAuthContext";
+import NotFound from "../../shared/molecules/NotFound";
 
 const DocumentList = () => {
-    const { id: companyId } = useParams<string>();
+    const { companyInfo } = useAuthContext();
+    const companyId = companyInfo?.id;
 
     const [selectedData, setSelectedData] = useState<
         IDocumentResponse | undefined
@@ -200,13 +202,22 @@ const DocumentList = () => {
                         setSelectedData(undefined);
                         handleAddDocumentOpen();
                     }}
-                    className='btn btn-primary btn-sm'>
+                    className='btn btn-success btn-sm'>
                     <span className='mx-2'>Add Documents</span>
                 </button>
             </div>
             <section>
                 <div className='card'>
-                    <TanStackTable columns={tableColumns} data={data ?? []} />
+                    {data && data?.length === 0 ? (
+                        <div>
+                            <NotFound title='Documents Not Available ' />
+                        </div>
+                    ) : (
+                        <TanStackTable
+                            columns={tableColumns}
+                            data={data ?? []}
+                        />
+                    )}
                 </div>
             </section>
             <Modal2

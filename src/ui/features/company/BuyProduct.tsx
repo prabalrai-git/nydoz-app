@@ -1,4 +1,3 @@
-// @ desc Products list component in dashbaord
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
@@ -7,12 +6,11 @@ import Modal2 from "../../shared/components/Modal2";
 import { IProductResponse } from "../../../types/payload.type";
 import LoadingPage from "../../features/utils/LoadingPage";
 import ImageAtom from "../../shared/atoms/ImageAtom";
-import Breadcrumb from "../../shared/molecules/Breadcrumb";
-import Heading from "../../shared/molecules/Heading";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import useMutation from "../../../hooks/useMutation";
 import { toast } from "react-toastify";
 import { Spinner } from "react-bootstrap";
+import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 
 const BuyProduct = () => {
     const { companyInfo } = useAuthContext();
@@ -117,7 +115,7 @@ const BuyProduct = () => {
         const response = await postData(payload);
         if (response?.status === 201) {
             toast.success("Product bought successfully");
-            navigate(`/home/${companyInfo?.subdomain}/dashboard`);
+            navigate(`/workspace/${companyInfo?.subdomain}/dashboard`);
         } else {
             toast.error("Something went wrong");
         }
@@ -137,13 +135,12 @@ const BuyProduct = () => {
 
     return (
         <div className=' mt-3 p-6'>
-            <Heading title='Buy Products' btnText='Back' showBreadcrumb={true}>
-                <Breadcrumb
-                    parent='products'
-                    parentLink='/account/company/list'
-                    child='Buy'
-                />
-            </Heading>
+            <CompanyBreadcrumb
+                title='Buy Products'
+                showBreadcrumb={true}
+                btnText='Back'
+            />
+
             {isloading && <LoadingPage />}
             <section className='p-6 bg-white my-6'>
                 <table className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer border-bottom  '>
@@ -233,9 +230,8 @@ const BuyProduct = () => {
                                                                     )
                                                                 }
                                                                 title='Remove from cart'
-                                                                className='btn btn-warning min-w-150px btn-sm '>
-                                                                Already
-                                                                Purchased
+                                                                className='btn btn-light-danger min-w-150px btn-sm '>
+                                                                Remove From Cart
                                                             </button>
                                                         ) : (
                                                             <button
@@ -292,32 +288,23 @@ const BuyProduct = () => {
                     </tbody>
                 </table>
                 <div className='row'>
-                    <div className='col-12 col-md-9 my-6 '>
-                        <h5>
-                            Total Price: <span> 777</span>
-                        </h5>
-                    </div>
-                    <div className='col-12 col-md-3'>
-                        <div className='float-end my-6 border-top'>
-                            <button
-                                onClick={handleProductBuy}
-                                disabled={isLoadingBuyProduct}
-                                className='btn btn-primary btn-lg'>
-                                {isLoadingBuyProduct ? (
-                                    <>
-                                        <span className='ms-2'>
-                                            Please Wait...
-                                        </span>
-                                        <Spinner
-                                            size='sm'
-                                            animation='border'
-                                            role='status'></Spinner>
-                                    </>
-                                ) : (
-                                    <span> Buy Now</span>
-                                )}
-                            </button>
-                        </div>
+                    <div className='d-grid gap-2 col-12 col-md-4  mx-auto'>
+                        <button
+                            onClick={handleProductBuy}
+                            disabled={isLoadingBuyProduct}
+                            className='btn btn-success btn-block my-6'>
+                            {isLoadingBuyProduct ? (
+                                <>
+                                    <span className='ms-2'>Please Wait...</span>
+                                    <Spinner
+                                        size='sm'
+                                        animation='border'
+                                        role='status'></Spinner>
+                                </>
+                            ) : (
+                                <span> Buy Now</span>
+                            )}
+                        </button>
                     </div>
                 </div>
             </section>

@@ -16,8 +16,6 @@ const authReducer = (state: IState, action: TAction): IState => {
                 isLoggedIn: true,
             };
         case "SET_USER_INFO":
-            // console.log("SET_USER_INFO", action.payload);
-
             return {
                 ...state,
                 userInfo: action.payload.userInfo,
@@ -25,8 +23,20 @@ const authReducer = (state: IState, action: TAction): IState => {
                 token: action.payload.token,
             };
 
+        case "SET_TOKEN":
+            return {
+                ...state,
+                token: action.payload.token,
+            };
+        case "SET_USER_COMPANY_AND_PRODUCTS":
+            return {
+                ...state,
+                userInfo: state.userInfo,
+                userCompanyAndItsProducts:
+                    action.payload.userCompanyAndItsProduct,
+            };
+
         case "SET_COMPANY_INFO":
-            // console.log("SET_COMPANY_INFO", action.payload);
             return {
                 ...state,
                 companyInfo: action.payload.companyInfo,
@@ -43,6 +53,7 @@ const authReducer = (state: IState, action: TAction): IState => {
                 isCompanyOwner: false,
                 companyInfo: undefined,
                 subdomain: undefined,
+                userCompanyAndItsProducts: undefined,
             };
         default:
             return state;
