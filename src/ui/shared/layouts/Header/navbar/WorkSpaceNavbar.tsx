@@ -73,7 +73,7 @@ const Navbar = () => {
                                 <NavDropdown.Item>
                                     <LinkContainer
                                         className='btn btn-light-info btn-sm w-100'
-                                        to='profile'>
+                                        to='my-account'>
                                         <div>
                                             <span className='me-3'>
                                                 <BuildingAdd
@@ -81,7 +81,7 @@ const Navbar = () => {
                                                     color='#1e40d6'
                                                 />
                                             </span>
-                                            <span>My Profile</span>
+                                            <span>My Account</span>
                                         </div>
                                     </LinkContainer>
                                 </NavDropdown.Item>

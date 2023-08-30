@@ -47,7 +47,7 @@ const CompanyListCard = () => {
                 <hr className='bg-light' />
             </div>
             <div className='card-body pt6'>
-                <h3>hasSubdomain :{hasSubdomain.toString()}</h3>
+                {/* <h3>hasSubdomain :{hasSubdomain.toString()}</h3> */}
                 {data?.map((item: ICompanyResponse) => {
                     return (
                         <DynamicLink
