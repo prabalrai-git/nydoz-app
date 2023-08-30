@@ -1,24 +1,7 @@
 import axios from "axios";
 import APP_SETTING from "../config/AppSetting.ts";
-const { VITE_BASE_URL, DOMAIN, PROD } = APP_SETTING;
-
-export const getSubdomainV2 = () => {
-    const fullDomainFromUrl = PROD
-        ? window.location.hostname
-        : "https://sabkura.app.dev.nydoz.com";
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_httpPart2, mainDomainPart] = DOMAIN.split("://");
-    const parts = fullDomainFromUrl.split(mainDomainPart);
-    const subdomainAndHttp = parts[0];
-    const subdomainByPart = subdomainAndHttp.split("://");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_httpPart, subdomain] = subdomainByPart;
-    console.log({ subdomain });
-    return subdomain;
-};
-
-// const token = localStorage.getItem("token");
+const { VITE_BASE_URL } = APP_SETTING;
+import { getSubdomain } from "../functions/getSubdomain.ts";
 
 const PublicAxios = axios.create({
     timeout: 10000,
@@ -32,10 +15,10 @@ const PrivateAxios = axios.create({
 });
 
 PublicAxios.interceptors.request.use((config) => {
-    const subdomain = getSubdomainV2();
+    const subdomain = getSubdomain();
     const baseUrl = VITE_BASE_URL;
     if (subdomain) {
-        const subdomain = getSubdomainV2();
+        const subdomain = getSubdomain();
         const newURL = baseUrl.replace("api", subdomain + "api");
         config.baseURL = newURL;
         return config;
@@ -46,11 +29,11 @@ PublicAxios.interceptors.request.use((config) => {
 });
 
 PrivateAxios.interceptors.request.use((config) => {
-    const subdomain = getSubdomainV2();
+    const subdomain = getSubdomain();
     const token = localStorage.getItem("token");
     const baseUrl = VITE_BASE_URL;
     if (subdomain) {
-        const subdomain = getSubdomainV2();
+        const subdomain = getSubdomain();
         const newURL = baseUrl.replace("api", subdomain + "api");
         config.baseURL = newURL;
         return config;

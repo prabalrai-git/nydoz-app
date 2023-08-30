@@ -15,7 +15,7 @@ import API_ROUTE from "../../service/api";
 import LoadingPage from "../../ui/features/utils/LoadingPage";
 import { toast } from "react-toastify";
 import webSettingReducer from "./webSettingReducer";
-import { getSubdomainV2 } from "../../functions/getSubdomain";
+import { getSubdomain } from "../../functions/getSubdomain";
 
 const intialState: IState = {
     isLoggedIn: false,
@@ -41,6 +41,8 @@ interface IUseMeData {
 }
 
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
+    const subdomainMain = getSubdomain();
+    console.log(subdomainMain, "subdomainMain");
     const tokenFromLocal =
         localStorage.getItem("token") ||
         sessionStorage.getItem("token") ||
@@ -109,7 +111,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
             const response = await fetchDataById(
                 API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS
             );
-            console.log(response, "response in auth provider user company");
+
             if (response?.data?.payload) {
                 const userCompanyProduct = response?.data?.payload;
                 dispatch({
@@ -138,7 +140,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     ]);
 
     useLayoutEffect(() => {
-        const subDomain = getSubdomainV2();
+        const subDomain = getSubdomain();
         const hasSubdomain = subDomain ? true : false;
 
         dispatchWebSetting({
@@ -146,7 +148,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
             payload: {
                 urlData: {
                     url: window.location.href,
-                    subdomain: subDomain.slice(0, -1),
+                    subdomain: subDomain,
                     path: window.location.pathname,
                     hasSubdomain: hasSubdomain,
                 },
