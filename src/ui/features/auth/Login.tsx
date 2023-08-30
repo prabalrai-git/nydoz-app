@@ -24,7 +24,7 @@ const LoginPage = () => {
     const { dispatch } = useContext(AuthContext);
     // const subdomain = useSubdomain();
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [rememberMe, setRememberMe] = useState<boolean>(false);
+    const rememberMe = true;
     const navigate = useNavigate();
     // const { MODE, VITE_HOST } = APP_SETTING;
     const { postData, isLoading, error } = useMutation<ILoginResponse>(
@@ -164,24 +164,6 @@ const LoginPage = () => {
                                             className='btn text-info w-semibold px-2'>
                                             Forgot Password ?
                                         </Link>
-                                    </div>
-                                    <div className='float-end'>
-                                        <label className='form-check form-check-inline me-0'>
-                                            <input
-                                                className='form-check-input'
-                                                type='checkbox'
-                                                value='true'
-                                                checked={rememberMe}
-                                                onChange={() => {
-                                                    setRememberMe(
-                                                        (prev) => !prev
-                                                    );
-                                                }}
-                                            />
-                                            <span className='form-check-label fw-semibold text-gray-700 fs-base mx-1'>
-                                                Remember Me
-                                            </span>
-                                        </label>
                                     </div>
                                 </div>
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import CompanyLogo from "../../../assets/media/svg/CompanyLogo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
 import { UserRegisterSchema } from "../../../validations/auth.validators";
@@ -81,17 +80,10 @@ const Register = () => {
                                 data-kt-redirect-url='../../demo31/dist/authentication/layouts/corporate/sign-in.html'
                                 action='#'>
                                 <div className='row mb-6'>
-                                    <div className='col-12 col-md-2'>
-                                        <img
-                                            className='mb-4'
-                                            src={CompanyLogo}
-                                            alt='Company Logo'
-                                        />
-                                    </div>
-                                    <div className='col-12 col-md-10'>
-                                        <h3 className='text-dark fw-bolder mb-2'>
+                                    <div className='col-12 col-md-12'>
+                                        <h2 className='text-dark fw-bolder'>
                                             Create Your Account First
-                                        </h3>
+                                        </h2>
                                         <p className='text-muted '>
                                             Start your trial for 10 more days
                                         </p>
