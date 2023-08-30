@@ -1,5 +1,5 @@
 import APP_SETTING from "../config/AppSetting.ts";
-const { DOMAIN, LOCALHOST } = APP_SETTING;
+const { DOMAIN, ENVIRONMENT } = APP_SETTING;
 
 const getBaseUrl = (url: string) => {
     const parsedUrl = new URL(url);
@@ -8,11 +8,12 @@ const getBaseUrl = (url: string) => {
 
 export const getSubdomain = () => {
     const baseUrl = getBaseUrl(window.location.href);
-    console.log(baseUrl, "baseUrl");
-    if (LOCALHOST || baseUrl === DOMAIN) return "";
+    console.log("url from browser", baseUrl);
+    if (ENVIRONMENT === "development" || baseUrl === DOMAIN) return "";
     const domainWithSubdomain = baseUrl;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_httpPartMain, mainDomainPart] = DOMAIN.split("://");
+
     const removeDomainFromSubDomain = domainWithSubdomain.replace(
         `.${mainDomainPart}`,
         ""
@@ -20,7 +21,15 @@ export const getSubdomain = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_httpPartSubDomain, subDomain] =
         removeDomainFromSubDomain.split("://");
-    console.log("subDomain", subDomain);
+    console.log("subDomain from Function", {
+        domianFromEnv: DOMAIN,
+        domainWithSubdomain,
+        _httpPartMain,
+        mainDomainPart,
+        removeDomainFromSubDomain,
+        _httpPartSubDomain,
+        subDomain,
+    });
     return subDomain;
 };
 

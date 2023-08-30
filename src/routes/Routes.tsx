@@ -40,7 +40,6 @@ const MainRouter = createBrowserRouter([
                 element: <AuthLayout />,
                 children: AuthRoutes,
             },
-
             {
                 path: "*",
                 element: <PageNotFound />,
