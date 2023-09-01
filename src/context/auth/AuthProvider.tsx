@@ -63,6 +63,8 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
             subdomain: "",
             path: "",
             hasSubdomain: false,
+            protocol: "",
+            domainBase: "",
         },
     });
 
@@ -140,17 +142,19 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     ]);
 
     useLayoutEffect(() => {
-        const subDomain = getSubdomain();
-        const hasSubdomain = subDomain ? true : false;
+        const subDomainInfo = getSubdomain();
+        const hasSubdomain = subDomainInfo?.subDomain ? true : false;
 
         dispatchWebSetting({
             type: "SET_URL_DATA",
             payload: {
                 urlData: {
                     url: window.location.href,
-                    subdomain: subDomain,
+                    subdomain: subDomainInfo?.subDomain,
                     path: window.location.pathname,
                     hasSubdomain: hasSubdomain,
+                    protocol: window.location.protocol,
+                    domainBase: subDomainInfo?.domainBase,
                 },
             },
         });

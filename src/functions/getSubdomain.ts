@@ -9,7 +9,12 @@ const getBaseUrl = (url: string) => {
 export const getSubdomain = () => {
     const baseUrl = getBaseUrl(window.location.href);
     console.log("url from browser", baseUrl);
-    if (ENVIRONMENT === "development" || baseUrl === DOMAIN) return "";
+    if (ENVIRONMENT === "development" || baseUrl === DOMAIN)
+        return {
+            subDomain: "",
+            protocol: "",
+            domainBase: "",
+        };
     const domainWithSubdomain = baseUrl;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_httpPartMain, mainDomainPart] = DOMAIN.split("://");
@@ -30,7 +35,11 @@ export const getSubdomain = () => {
         _httpPartSubDomain,
         subDomain,
     });
-    return subDomain;
+    return {
+        subDomain,
+        protocol: _httpPartMain,
+        domainBase: mainDomainPart,
+    };
 };
 
 export default getSubdomain;
