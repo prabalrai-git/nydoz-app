@@ -11,14 +11,15 @@ interface Iprops {
 }
 
 const DynamicLink = (props: Iprops) => {
-    const appEnvironment = APP_SETTING.PROD;
-    const domain = APP_SETTING.DOMAIN;
+    const appEnvironment = APP_SETTING.ENVIRONMENT;
     const { subdomain, pathName, children, className } = props;
-    const { hasSubdomain } = useWebSetting();
+    const { hasSubdomain, domainBase, protocol } = useWebSetting();
+
+    // const clientManagement = `http://localhost:5173/workspace/mozilla/products/client-management/dashboard`;
 
     return (
         <>
-            {appEnvironment ? (
+            {appEnvironment !== "development" ? (
                 <>
                     {hasSubdomain ? (
                         <Link to={pathName} className={className}>
@@ -26,14 +27,17 @@ const DynamicLink = (props: Iprops) => {
                         </Link>
                     ) : (
                         <a
-                            href={`https://www.${subdomain}.${domain}/${subdomain}${pathName}`}
+                            href={`${protocol}://www.${subdomain}.${domainBase}/${pathName}`}
                             className={className}>
                             {children}
+                            <h6>
+                                {`${protocol}://www.${subdomain}.${domainBase}/${pathName}`}
+                            </h6>
                         </a>
                     )}
                 </>
             ) : (
-                <Link to={`/workspace${pathName}`} className={className}>
+                <Link to={`/workspace/${pathName}`} className={className}>
                     {children}
                 </Link>
             )}

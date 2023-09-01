@@ -69,68 +69,73 @@ const Navbar = () => {
                     </div>
                     <div className='right-container'>
                         {isLoggedIn ? (
-                            <NavDropdown title='My Account' id='nav-dropdown'>
-                                <NavDropdown.Item>
-                                    <LinkContainer
-                                        className='btn btn-light-info btn-sm w-100'
-                                        to='my-account'>
-                                        <div>
-                                            <span className='me-3'>
-                                                <BuildingAdd
-                                                    size={16}
-                                                    color='#1e40d6'
-                                                />
-                                            </span>
-                                            <span>My Account</span>
-                                        </div>
-                                    </LinkContainer>
-                                </NavDropdown.Item>
-                                <NavDropdown.Item>
-                                    <LinkContainer
-                                        className='btn btn-light-primary btn-sm'
-                                        to='create-company'>
-                                        <div>
-                                            <span className='me-3'>
-                                                <BuildingAdd
-                                                    size={16}
-                                                    color='#1ed63d'
-                                                />
-                                            </span>
-                                            <span>Create New Company</span>
-                                        </div>
-                                    </LinkContainer>
-                                </NavDropdown.Item>
-                                <NavDropdown.Item>
-                                    <LinkContainer
-                                        className='btn btn-light-warning btn-sm w-100'
-                                        to='change-password'>
-                                        <div>
-                                            <span className='me-3'>
-                                                <GearWide
-                                                    size={16}
-                                                    color='#000000'
-                                                />
-                                            </span>
-                                            <span>Change Password</span>
-                                        </div>
-                                    </LinkContainer>
-                                </NavDropdown.Item>
-                                <NavDropdown.Item>
-                                    <div className='text-center'>
-                                        <div
-                                            className='btn btn-light-danger btn-sm w-100'
-                                            onClick={() => logoutFn()}>
-                                            <span className='me-3'>Logout</span>
-                                            <span>
-                                                <BoxArrowRight
-                                                    size={16}
-                                                    color='#0b0b0b'
-                                                />
-                                            </span>
-                                        </div>
+                            <>
+                                <LinkContainer
+                                    className='cursor-pointer me-2'
+                                    to='/workspace'>
+                                    <div>
+                                        <span className='me-3'>
+                                            <BuildingAdd
+                                                size={16}
+                                                color='#1e40d6'
+                                            />
+                                        </span>
+                                        <span>Workspace</span>
                                     </div>
-                                </NavDropdown.Item>
-                            </NavDropdown>
+                                </LinkContainer>
+
+                                <NavDropdown
+                                    title='My Account'
+                                    id='nav-dropdown'>
+                                    <NavDropdown.Item>
+                                        <LinkContainer
+                                            className='btn btn-light-primary btn-sm'
+                                            to='create-company'>
+                                            <div>
+                                                <span className='me-3'>
+                                                    <BuildingAdd
+                                                        size={16}
+                                                        color='#1ed63d'
+                                                    />
+                                                </span>
+                                                <span>Create New Company</span>
+                                            </div>
+                                        </LinkContainer>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <LinkContainer
+                                            className='btn btn-light-warning btn-sm w-100'
+                                            to='change-password'>
+                                            <div>
+                                                <span className='me-3'>
+                                                    <GearWide
+                                                        size={16}
+                                                        color='#000000'
+                                                    />
+                                                </span>
+                                                <span>Change Password</span>
+                                            </div>
+                                        </LinkContainer>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <div className='text-center'>
+                                            <div
+                                                className='btn btn-light-danger btn-sm w-100'
+                                                onClick={() => logoutFn()}>
+                                                <span className='me-3'>
+                                                    Logout
+                                                </span>
+                                                <span>
+                                                    <BoxArrowRight
+                                                        size={16}
+                                                        color='#0b0b0b'
+                                                    />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </>
                         ) : (
                             <div>
                                 <NavLink

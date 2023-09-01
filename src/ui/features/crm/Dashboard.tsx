@@ -8,7 +8,15 @@ const Dashboard = () => {
                 btnText='Back'
                 showBreadcrumb={true}
             />
-            <section></section>
+            <section>
+                <div className='card card-custom'>
+                    <div className='card-header'>
+                        <h3 className='card-title'>Dashboard</h3>
+                        <div className='card-toolbar'></div>
+                    </div>
+                    <div className='card-body'></div>
+                </div>
+            </section>
         </div>
     );
 };

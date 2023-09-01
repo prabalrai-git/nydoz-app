@@ -85,6 +85,7 @@ const CompanyRouter = createBrowserRouter([
 const Routes = () => {
     const { webSetting } = useWebSetting();
     const { urlData } = webSetting;
+    console.log("urlData in routes", urlData);
 
     return (
         <RouterProvider

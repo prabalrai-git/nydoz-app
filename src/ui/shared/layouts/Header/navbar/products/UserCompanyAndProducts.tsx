@@ -4,6 +4,7 @@ import DynamicLink from "../../../../molecules/DynamicLink";
 const UserCompanyAndProducts = () => {
     const { userCompanyAndItsProducts } = useAuthContext();
     // console.log(userCompanyAndItsProducts);
+
     return (
         <div className='user-company-product-wrapper '>
             {userCompanyAndItsProducts?.companies?.map((companyItem) => {
@@ -12,9 +13,9 @@ const UserCompanyAndProducts = () => {
                     <div
                         key={companyItem.id}
                         className=' border-secondary  border-bottom  py-2'>
-                        <h6 className='fs-14 fw-bolder my-2'>
-                            {companyItem.name}
-                        </h6>
+                        <div className='text-center'>
+                            <h5 className=' mb-3'>{companyItem.name}</h5>
+                        </div>
                         <div className='row'>
                             {companyItem?.products?.map((productItem) => (
                                 <div
@@ -25,7 +26,7 @@ const UserCompanyAndProducts = () => {
                                             <div className='symbol symbol-50px me-3'>
                                                 <img
                                                     src={productItem.logo}
-                                                    alt={productItem.name}
+                                                    alt={"Logo"}
                                                 />
                                             </div>
                                             <div className='d-flex justify-content-start flex-column'>
@@ -34,7 +35,7 @@ const UserCompanyAndProducts = () => {
                                                     subdomain={
                                                         companyItem.subdomain
                                                     }
-                                                    pathName={`/${companyItem.subdomain}/products/${productItem.slug}/dashboard`}>
+                                                    pathName={`${companyItem.subdomain}/products/${productItem.slug}/dashboard`}>
                                                     {productItem.name}
                                                 </DynamicLink>
                                             </div>
@@ -69,7 +70,7 @@ const UserCompanyAndProducts = () => {
                         </span>
                     </span>
                     <div className='d-flex flex-column'>
-                        <h5 className='mb-1'>No Company or Products Found.</h5>
+                        <h5 className='mb-1'>No Company's products Found.</h5>
                     </div>
                 </div>
             )}

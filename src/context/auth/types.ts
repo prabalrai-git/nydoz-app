@@ -40,6 +40,8 @@ export interface IWebSetting {
         subdomain: string;
         path: string;
         hasSubdomain: boolean;
+        protocol: string;
+        domainBase: string;
     };
 }
 

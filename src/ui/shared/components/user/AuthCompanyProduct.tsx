@@ -11,16 +11,15 @@ import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
     const navigate = useNavigate();
-    const { data, fetchData, isloading } =
+    const { data, fetchDataById, isloading } =
         useFetch<IUserCompanyProductsResponse>(
             API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS,
             true
         );
 
     useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        fetchDataById(API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS);
+    }, [fetchDataById]);
 
     const handleProductClick = (productId: string, subdomain: string) => {
         navigate(`/workspace/${subdomain}/products/${productId}`);

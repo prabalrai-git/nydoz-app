@@ -42,7 +42,7 @@ const CompanyListCard = () => {
                     return (
                         <DynamicLink
                             subdomain={item.subdomain}
-                            pathName={`/${item.subdomain}/dashboard`}
+                            pathName={`${item.subdomain}/dashboard`}
                             className='d-flex flex-stack mb-3 cursor-pointer'>
                             <div className='symbol symbol-40px me-4'>
                                 <ImageAtom

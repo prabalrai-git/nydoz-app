@@ -9,28 +9,52 @@ const getBaseUrl = (url: string) => {
 export const getSubdomain = () => {
     const baseUrl = getBaseUrl(window.location.href);
     console.log("url from browser", baseUrl);
-    if (ENVIRONMENT === "development" || baseUrl === DOMAIN) return "";
-    const domainWithSubdomain = baseUrl;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    console.log({ DOMAIN, ENVIRONMENT, baseUrl });
+
     const [_httpPartMain, mainDomainPart] = DOMAIN.split("://");
 
-    const removeDomainFromSubDomain = domainWithSubdomain.replace(
-        `.${mainDomainPart}`,
-        ""
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_httpPartSubDomain, subDomain] =
-        removeDomainFromSubDomain.split("://");
-    console.log("subDomain from Function", {
-        domianFromEnv: DOMAIN,
-        domainWithSubdomain,
-        _httpPartMain,
-        mainDomainPart,
-        removeDomainFromSubDomain,
-        _httpPartSubDomain,
-        subDomain,
-    });
-    return subDomain;
+    if (ENVIRONMENT === "development") {
+        console.log("development condition running");
+        return {
+            subDomain: "",
+            protocol: "",
+            domainBase: "",
+        };
+    }
+
+    if (ENVIRONMENT !== "development" && baseUrl === DOMAIN) {
+        console.log("deployed and no subdomain  condition running");
+        return {
+            subDomain: mainDomainPart,
+            protocol: "",
+            domainBase: "",
+        };
+    }
+
+    if (ENVIRONMENT !== "development" && baseUrl !== DOMAIN) {
+        const domainWithSubdomain = baseUrl;
+
+        const removeDomainFromSubDomain = domainWithSubdomain.replace(
+            `.${mainDomainPart}`,
+            ""
+        );
+        const [_httpPartSubDomain, subDomain] =
+            removeDomainFromSubDomain.split("://");
+        console.log("deployed with subdomain  condition running", {
+            domianFromEnv: DOMAIN,
+            domainWithSubdomain,
+            _httpPartMain,
+            mainDomainPart,
+            removeDomainFromSubDomain,
+            _httpPartSubDomain,
+            subDomain,
+        });
+        return {
+            subDomain,
+            protocol: _httpPartMain,
+            domainBase: mainDomainPart,
+        };
+    }
 };
 
 export default getSubdomain;
