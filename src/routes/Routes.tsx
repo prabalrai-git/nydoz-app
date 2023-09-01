@@ -83,13 +83,13 @@ const CompanyRouter = createBrowserRouter([
 ]);
 
 const Routes = () => {
-    const { webSetting } = useWebSetting();
-    const { urlData } = webSetting;
-    console.log("urlData in routes", urlData);
+    // const { webSetting } = useWebSetting();
+    // const { urlData } = webSetting;
 
     return (
         <RouterProvider
-            router={urlData.hasSubdomain ? CompanyRouter : MainRouter}
+            // router={urlData.hasSubdomain ? CompanyRouter : MainRouter}
+            router={MainRouter}
         />
     );
 };
