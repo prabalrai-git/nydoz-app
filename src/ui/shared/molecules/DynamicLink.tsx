@@ -12,7 +12,6 @@ interface Iprops {
 
 const DynamicLink = (props: Iprops) => {
     const appEnvironment = APP_SETTING.ENVIRONMENT;
-    const domain = APP_SETTING.DOMAIN;
     const { subdomain, pathName, children, className } = props;
     const { hasSubdomain, domainBase, protocol } = useWebSetting();
 
