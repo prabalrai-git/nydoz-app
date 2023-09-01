@@ -31,7 +31,7 @@ import {
     IEnrollmentOpeningsResponse,
     IEnrollmentResponse,
 } from "../../../../types/products.types";
-import ServerSelect from "../../../shared/components/ServerSelect";
+import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
 
 interface IFormData {
     registration_date: Date;
@@ -53,15 +53,11 @@ const AddClient = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const firstName: keyof IVisitorResponse = "first_name";
-    const lastName: keyof IVisitorResponse = "last_name";
 
     const [selectedVistor, setSelectedVistor] = useState<
         IVisitorResponse | undefined
     >();
 
-    const [selectedVisaTypeText, setSelectedVisaTypeText] =
-        useState<string>("");
-    const [selectedVisitorText, setSelectedVisitorText] = useState<string>("");
     const [selectedVisaType, setSelectedVisaType] = useState<
         IVisaTypeResponse | undefined
     >();
@@ -86,16 +82,10 @@ const AddClient = () => {
 
     const [selectedEnrollmentInstitute, setSelectEnrollmentInstitute] =
         useState<IEnrollmentResponse | undefined>();
-    const [
-        selectedEnrollmentInstituteText,
-        setSelectedEnrollmentInstituteText,
-    ] = useState<string>("");
 
     const [selectedEnrollmentOpening, setSelectEnrollmentOpening] = useState<
         IEnrollmentOpeningsResponse | undefined
     >();
-    const [selectedEnrollmentOpeningText, setSelectedEnrollmentOpeningText] =
-        useState<string>("");
 
     const {
         register,
@@ -203,11 +193,11 @@ const AddClient = () => {
             const tempPostData: IClientPayload = {
                 ...data,
                 registration_date: moment(data.registration_date).format(
-                    "YYYY-MM-DD HH:mm:ss"
+                    "YYYY-MM-DD"
                 ),
                 expected_take_off_date: moment(
                     data.expected_take_off_date
-                ).format("YYYY-MM-DD HH:mm:ss"),
+                ).format("YYYY-MM-DD"),
 
                 country: selectedCountry?.value ?? "",
                 visiting_country: selectedVisitingCountry?.value ?? "",
@@ -231,11 +221,11 @@ const AddClient = () => {
             const tempPostData: IClientPayload = {
                 ...data,
                 registration_date: moment(data.registration_date).format(
-                    "YYYY-MM-DD HH:mm:ss"
+                    "YYYY-MM-DD"
                 ),
                 expected_take_off_date: moment(
                     data.expected_take_off_date
-                ).format("YYYY-MM-DD HH:mm:ss"),
+                ).format("YYYY-MM-DD"),
 
                 country: selectedCountry?.value ?? "",
                 visiting_country: selectedVisitingCountry?.value ?? "",
@@ -313,28 +303,18 @@ const AddClient = () => {
                                             <label className='form-label'>
                                                 Visitor:
                                             </label>
-                                            <ServerSelect
+
+                                            <AsyncReactSelect
                                                 placeholder='Search..'
                                                 baseUrl={API_ROUTE.CM_VISITORS}
-                                                selectedListItem={
-                                                    selectedVistor
-                                                }
-                                                setselectedListItem={
+                                                setSelectValue={
                                                     setSelectedVistor
                                                 }
-                                                selectedItemText={
-                                                    selectedVisitorText
-                                                }
-                                                setSelectedItemText={
-                                                    setSelectedVisitorText
-                                                }
+                                                selectValue={selectedVistor}
+                                                dataId={"id" as never}
                                                 showDataLabel={
                                                     firstName as never
                                                 }
-                                                showDataLabel2={
-                                                    lastName as never
-                                                }
-                                                showDataLabelFromArray='phone_nos'
                                             />
                                         </div>
                                     </div>
@@ -345,24 +325,16 @@ const AddClient = () => {
                                                 Agent:
                                             </label>
 
-                                            <ServerSelect
+                                            <AsyncReactSelect
                                                 placeholder='Search..'
                                                 baseUrl={API_ROUTE.CM_AGENTS}
-                                                selectedListItem={selectedAgent}
-                                                setselectedListItem={
+                                                setSelectValue={
                                                     setSelectedAgent
                                                 }
-                                                selectedItemText={
-                                                    selectedVisaTypeText
-                                                }
-                                                setSelectedItemText={
-                                                    setSelectedVisaTypeText
-                                                }
+                                                selectValue={selectedAgent}
+                                                dataId={"id" as never}
                                                 showDataLabel={
                                                     firstName as never
-                                                }
-                                                showDataLabel2={
-                                                    lastName as never
                                                 }
                                             />
                                         </div>
@@ -759,23 +731,18 @@ const AddClient = () => {
                                                 Enrollment Institute:
                                             </label>
 
-                                            <ServerSelect
+                                            <AsyncReactSelect
                                                 placeholder='Search..'
                                                 baseUrl={
                                                     API_ROUTE.CM_ENROLLMENT
                                                 }
-                                                selectedItemText={
-                                                    selectedEnrollmentInstituteText
-                                                }
-                                                setSelectedItemText={
-                                                    setSelectedEnrollmentInstituteText
-                                                }
-                                                selectedListItem={
-                                                    selectedEnrollmentInstitute
-                                                }
-                                                setselectedListItem={
+                                                setSelectValue={
                                                     setSelectEnrollmentInstitute
                                                 }
+                                                selectValue={
+                                                    selectedEnrollmentInstitute
+                                                }
+                                                dataId={"id" as never}
                                                 showDataLabel={"name" as never}
                                             />
                                         </div>
@@ -787,7 +754,7 @@ const AddClient = () => {
                                             </label>
 
                                             <div>
-                                                <ServerSelect
+                                                {/* <ServerSelect
                                                     placeholder='Search..'
                                                     baseUrl={`${API_ROUTE.CM_ENROLLMENT_OPENINGS}?enroll_institute_id=${selectedEnrollmentInstitute}`}
                                                     selectedListItem={
@@ -807,6 +774,21 @@ const AddClient = () => {
                                                     }
                                                     showDataLabel2={
                                                         "total_opening" as never
+                                                    }
+                                                /> */}
+
+                                                <AsyncReactSelect
+                                                    placeholder='Search..'
+                                                    baseUrl={`${API_ROUTE.CM_ENROLLMENT_OPENINGS}?enroll_institute_id=${selectedEnrollmentInstitute}`}
+                                                    setSelectValue={
+                                                        setSelectEnrollmentOpening
+                                                    }
+                                                    selectValue={
+                                                        selectedEnrollmentOpening
+                                                    }
+                                                    dataId={"id" as never}
+                                                    showDataLabel={
+                                                        "position" as never
                                                     }
                                                 />
                                             </div>

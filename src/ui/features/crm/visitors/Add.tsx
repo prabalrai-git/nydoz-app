@@ -27,7 +27,7 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import { XCircle } from "react-bootstrap-icons";
 import { IVisaTypeResponse } from "../../../../types/payload.type";
 import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
-import ServerSelect from "../../../shared/components/ServerSelect";
+// import ServerSelect from "../../../shared/components/ServerSelect";
 
 import {
     InformationChannelResponse,
@@ -66,8 +66,8 @@ const AddVisitor = () => {
     const [selectedVisaType, setSelectedVisaType] = useState<
         IVisaTypeResponse | undefined
     >();
-    const [selectedVisaTypeText, setSelectedVisaTypeText] =
-        useState<string>("");
+    // const [selectedVisaTypeText, setSelectedVisaTypeText] =
+    //     useState<string>("");
     const [selectedAgent, setSelectedAgent] = useState<
         IAgentResponse | undefined
     >();
@@ -158,7 +158,6 @@ const AddVisitor = () => {
         setSelectedCountry(country);
         setSelectedVisitingCountry(visitingCountry);
         setSelectedVisaType(dataDetails?.visa_type_id);
-        setSelectedVisaTypeText(dataDetails?.visa_type?.description ?? "");
         reset({
             ...dataDetails,
             registration_date: registrationDateObj,
@@ -414,21 +413,17 @@ const AddVisitor = () => {
                                             <label className='form-label'>
                                                 Agent:
                                             </label>
-                                            <ServerSelect
+
+                                            <AsyncReactSelect
                                                 placeholder='Search..'
                                                 baseUrl={API_ROUTE.CM_AGENTS}
-                                                selectedListItem={selectedAgent}
-                                                setselectedListItem={
+                                                setSelectValue={
                                                     setSelectedAgent
                                                 }
+                                                selectValue={selectedAgent}
+                                                dataId={"id" as never}
                                                 showDataLabel={
                                                     "first_name" as never
-                                                }
-                                                selectedItemText={
-                                                    selectedVisaTypeText
-                                                }
-                                                setSelectedItemText={
-                                                    setSelectedVisaTypeText
                                                 }
                                             />
                                         </div>

@@ -1,5 +1,5 @@
 import APP_SETTING from "../config/AppSetting.ts";
-const { DOMAIN, ENVIRONMENT } = APP_SETTING;
+const { DOMAIN, ENVIRONMENT, LOCAL_SUBDOMAIN } = APP_SETTING;
 
 const getBaseUrl = (url: string) => {
     const parsedUrl = new URL(url);
@@ -16,7 +16,7 @@ export const getSubdomain = () => {
     if (ENVIRONMENT === "development") {
         console.log("development condition running");
         return {
-            subDomain: "",
+            subDomain: LOCAL_SUBDOMAIN,
             protocol: "",
             domainBase: "",
         };
