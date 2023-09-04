@@ -6,7 +6,7 @@ services:
       context: ./docker/runtimes/19
       dockerfile: Dockerfile
     ports:
-      - '127.0.0.1:9000:80'
+      - '127.0.0.1:9000:5174'
     volumes:
       - '.:/var/www/nydoz-react/'
       # - '../apps/backend/docker/runtimes/8.2/nginx/sites-enabled:/etc/nginx/sites-enabled'
