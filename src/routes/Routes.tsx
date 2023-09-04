@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import useWebSetting from "../context/useWebSetting";
+// import useWebSetting from "../context/useWebSetting";
 
 // public Routes
 import App from "../App";
@@ -12,8 +12,8 @@ import PageNotFound from "../ui/features/utils/PageNotFound";
 import WorkspaceLayout from "../ui/features/workspace/WorkspaceLayout";
 import WorkspaceRoutes from "./workspace.route";
 // company
-import CompanyLayout from "../ui/features/company/Layout";
-import CompanyRoutes from "./Company";
+// import CompanyLayout from "../ui/features/company/Layout";
+// import CompanyRoutes from "./Company";
 
 const MainRouter = createBrowserRouter([
     {
@@ -48,39 +48,39 @@ const MainRouter = createBrowserRouter([
     },
 ]);
 
-const CompanyRouter = createBrowserRouter([
-    {
-        path: "/",
-        element: <App />,
-        children: [
-            {
-                path: "",
-                element: <MainLayout />,
-                children: [
-                    {
-                        path: "",
-                        element: <LandingHomePage />,
-                    },
-                ],
-            },
-            {
-                path: ":companySubdomian",
-                element: <CompanyLayout />,
-                children: CompanyRoutes,
-            },
-            {
-                path: "auth",
-                element: <AuthLayout />,
-                children: AuthRoutes,
-            },
+// const CompanyRouter = createBrowserRouter([
+//     {
+//         path: "/",
+//         element: <App />,
+//         children: [
+//             {
+//                 path: "",
+//                 element: <MainLayout />,
+//                 children: [
+//                     {
+//                         path: "",
+//                         element: <LandingHomePage />,
+//                     },
+//                 ],
+//             },
+//             {
+//                 path: ":companySubdomian",
+//                 element: <CompanyLayout />,
+//                 children: CompanyRoutes,
+//             },
+//             {
+//                 path: "auth",
+//                 element: <AuthLayout />,
+//                 children: AuthRoutes,
+//             },
 
-            {
-                path: "*",
-                element: <PageNotFound />,
-            },
-        ],
-    },
-]);
+//             {
+//                 path: "*",
+//                 element: <PageNotFound />,
+//             },
+//         ],
+//     },
+// ]);
 
 const Routes = () => {
     // const { webSetting } = useWebSetting();
