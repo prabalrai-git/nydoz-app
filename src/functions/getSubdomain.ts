@@ -8,9 +8,7 @@ const getBaseUrl = (url: string) => {
 
 export const getSubdomain = () => {
     const baseUrl = getBaseUrl(window.location.href);
-    console.log("url from browser", baseUrl);
     console.log({ DOMAIN, ENVIRONMENT, baseUrl });
-
     const [_httpPartMain, mainDomainPart] = DOMAIN.split("://");
 
     if (ENVIRONMENT === "development") {
