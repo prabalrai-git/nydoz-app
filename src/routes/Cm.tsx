@@ -12,166 +12,166 @@ import ClientLayout from "../ui/features/crm/clients/ClientLayout";
 
 // Agents Routes
 const AgentLayout = loadable(
-    () => import("../ui/features/crm/agent/AgentLayout")
+  () => import("../ui/features/crm/agent/AgentLayout")
 );
 const AddAgent = loadable(() => import("../ui/features/crm/agent/AddAgent"));
 const Dashboard = loadable(() => import("../ui/features/crm/Dashboard"));
 
 // Enrollment Openings Routes
 const AddEnrollmentOpenings = loadable(
-    () => import("../ui/features/crm/enrollmentOpening/Add")
+  () => import("../ui/features/crm/enrollmentOpening/Add")
 );
 const EnrollmentOpeningsList = loadable(
-    () => import("../ui/features/crm/enrollmentOpening/List")
+  () => import("../ui/features/crm/enrollmentOpening/List")
 );
 
 //settings Routes
 const SettingsLayout = loadable(
-    () => import("../ui/features/crm/settings/Layout")
+  () => import("../ui/features/crm/settings/Layout")
 );
 
 const InformationChannelList = loadable(
-    () => import("../ui/features/crm/InformationChannel/InformationChannelList")
+  () => import("../ui/features/crm/InformationChannel/InformationChannelList")
 );
 const VisaType = loadable(() => import("../ui/features/visaType/VisaTypeList"));
 const VisitingPurposesList = loadable(
-    () => import("../ui/features/crm/visitingPurpose/VisitingPurposeList")
+  () => import("../ui/features/crm/visitingPurpose/VisitingPurposeList")
 );
 
 const CrmRoutes: RouteObject[] = [
-    {
-        path: "dashboard",
-        element: <Dashboard />,
-    },
+  {
+    path: "dashboard",
+    element: <Dashboard />,
+  },
 
-    {
-        path: "visitors",
-        element: <Outlet />,
+  {
+    path: "visitors",
+    element: <Outlet />,
+    children: [
+      {
+        path: "",
+        element: <VisitorList />,
+      },
+      {
+        path: "add",
+        element: <AddVisitors />,
+      },
+      {
+        path: "edit",
+        element: <AddVisitors />,
+      },
+    ],
+  },
+  {
+    path: "clients",
+    element: <Outlet />,
+    children: [
+      {
+        path: "",
+        element: <ClientList />,
+      },
+      {
+        path: "add",
+        element: <AddClient />,
+      },
+      {
+        path: "edit",
+        element: <AddClient />,
+      },
+      {
+        path: ":clientId",
+        element: <ClientLayout />,
         children: [
-            {
-                path: "",
-                element: <VisitorList />,
-            },
-            {
-                path: "add",
-                element: <AddVisitors />,
-            },
-            {
-                path: "edit",
-                element: <AddVisitors />,
-            },
+          {
+            path: "openings",
+            element: <Outlet />,
+          },
         ],
-    },
-    {
-        path: "clients",
-        element: <Outlet />,
+      },
+    ],
+  },
+  {
+    path: "agents",
+    element: <AgentLayout />,
+    children: [
+      {
+        path: "",
+        element: <AgentList2 />,
+      },
+      {
+        path: "add",
+        element: <AddAgent />,
+      },
+      {
+        path: "edit",
+        element: <AddAgent />,
+      },
+    ],
+  },
+  {
+    path: "enrolled-institutes",
+    element: <Outlet />,
+    children: [
+      {
+        path: "list",
+        element: <EnrollmentList />,
+      },
+      {
+        path: "add",
+        element: <AddEnrollment />,
+      },
+      {
+        path: "edit",
+        element: <AddEnrollment />,
+      },
+      {
+        path: "view/:institueId",
+        element: <View />,
         children: [
-            {
-                path: "",
-                element: <ClientList />,
-            },
-            {
-                path: "add",
-                element: <AddClient />,
-            },
-            {
-                path: "edit",
-                element: <AddClient />,
-            },
-            {
-                path: ":clientId",
-                element: <ClientLayout />,
-                children: [
-                    {
-                        path: "openings",
-                        element: <Outlet />,
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        path: "agents",
-        element: <AgentLayout />,
-        children: [
-            {
-                path: "",
-                element: <AgentList2 />,
-            },
-            {
-                path: "add",
-                element: <AddAgent />,
-            },
-            {
-                path: "edit",
-                element: <AddAgent />,
-            },
-        ],
-    },
-    {
-        path: "enrolled-institutes",
-        element: <Outlet />,
-        children: [
-            {
+          {
+            path: "openings",
+            element: <Outlet />,
+            children: [
+              {
+                path: "view",
+                element: <EnrollmentOpeningsList />,
+              },
+              {
                 path: "list",
-                element: <EnrollmentList />,
-            },
-            {
+                element: <EnrollmentOpeningsList />,
+              },
+              {
                 path: "add",
-                element: <AddEnrollment />,
-            },
-            {
+                element: <AddEnrollmentOpenings />,
+              },
+              {
                 path: "edit",
-                element: <AddEnrollment />,
-            },
-            {
-                path: "view/:institueId",
-                element: <View />,
-                children: [
-                    {
-                        path: "openings",
-                        element: <Outlet />,
-                        children: [
-                            {
-                                path: "view",
-                                element: <EnrollmentOpeningsList />,
-                            },
-                            {
-                                path: "list",
-                                element: <EnrollmentOpeningsList />,
-                            },
-                            {
-                                path: "add",
-                                element: <AddEnrollmentOpenings />,
-                            },
-                            {
-                                path: "edit",
-                                element: <AddEnrollmentOpenings />,
-                            },
-                        ],
-                    },
-                ],
-            },
+                element: <AddEnrollmentOpenings />,
+              },
+            ],
+          },
         ],
-    },
-    {
-        path: "settings",
-        element: <SettingsLayout />,
-        children: [
-            {
-                path: "visa-types",
-                element: <VisaType />,
-            },
-            {
-                path: "information-channels",
-                element: <InformationChannelList />,
-            },
-            {
-                path: "visiting-purposes",
-                element: <VisitingPurposesList />,
-            },
-        ],
-    },
+      },
+    ],
+  },
+  {
+    path: "settings",
+    element: <SettingsLayout />,
+    children: [
+      {
+        path: "visa-types",
+        element: <VisaType />,
+      },
+      {
+        path: "information-channels",
+        element: <InformationChannelList />,
+      },
+      {
+        path: "visiting-purposes",
+        element: <VisitingPurposesList />,
+      },
+    ],
+  },
 ];
 
 export default CrmRoutes;

@@ -4,63 +4,67 @@
   --bs-font-sans-serif: Inter, Helvetica, "sans-serif";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #admin-navbar {
-    font-family: var(--bs-font-montserrat);
-    font-weight: 500;
+  font-family: var(--bs-font-montserrat);
+  font-weight: 500;
 }
 
 .navbar-brand-img {
-    height: 25px;
+  height: 25px;
 }
 
 #admin-navbar .nav-item {
-    position: relative;
-    margin: 0px 0.5rem;
-    font-weight: 700 !important;
+  position: relative;
+  margin: 0px 0.5rem;
+  font-weight: 700 !important;
 }
 
 .nav-link {
-    cursor: pointer;
-    padding: 0;
-    flex: 0 0 100%;
-    padding: 0.65rem 1rem;
-    transition: none;
+  cursor: pointer;
+  padding: 0;
+  flex: 0 0 100%;
+  padding: 0.65rem 1rem;
+  transition: none;
 
-    outline: none !important;
+  outline: none !important;
 }
 
 .profile-avatar {
-    vertical-align: middle;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-position: center;
-    background-size: cover;
-    object-fit: cover;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  object-fit: cover;
 }
 
 .menu-profile-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .menu-item-notification-container {
-    position: relative;
-    cursor: pointer;
+  position: relative;
+  cursor: pointer;
 }
 .menu-item-notification-number {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #ff858d;
-    color: #ffffff;
-    right: -9px;
-    top: -9px;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ff858d;
+  color: #ffffff;
+  right: -9px;
+  top: -9px;
 }
 
 .bg-gradient-company {
-    /* background: #70b541; */
+  /* background: #70b541; */
 }
 
 /* nydoz_logo 1 */
