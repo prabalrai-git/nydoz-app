@@ -2,7 +2,8 @@ import { Link, NavLink } from "react-router-dom";
 import useWebSetting from "../../../../context/useWebSetting";
 import { ISidebarMenu } from "../../../../types/app.types";
 import { useOnClickOutside, useWindowSize } from "usehooks-ts";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { MdArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 
 interface IProps {
   sidebarMenuList: ISidebarMenu[];
@@ -17,6 +18,7 @@ const SideMenu = (props: IProps) => {
   const { showProductSidebar } = webSetting;
   const menuRef = useRef(null);
   const sidebarClassName = showProductSidebar ? "slide-in " : "slide-out ";
+  const [opened, setOpened] = useState(false);
 
   useOnClickOutside(menuRef, () => {
     dispatchWebSetting({
@@ -31,12 +33,15 @@ const SideMenu = (props: IProps) => {
     });
   };
 
+  console.log(opened, "opened");
+
   return (
     <div
       ref={menuRef}
+      style={{ width: opened ? 150 : 100 }}
       className={`${
         width > 768 ? "docs-aside" : "docs-aside-sm"
-      } ${sidebarClassName}`}
+      } ${sidebarClassName} tw-w-1/12 tw-h-full tw-overflow-auto tw-transition tw-ease-in-out tw-delay-150 tw-duration-300  `}
     >
       {/* <div
         onClick={handleToggleSidebar}
@@ -53,6 +58,16 @@ const SideMenu = (props: IProps) => {
         )}
       </div> */}
       <div className="app-sidebar-primary h-100vh">
+        <div
+          onClick={() => setOpened((prev) => !prev)}
+          className="tw-absolute tw-bottom-[70px] tw-w-full tw-z-50 tw-h-[55px] tw-bg-btnPrimary tw-flex tw-justify-center tw-items-center"
+        >
+          {opened ? (
+            <MdOutlineArrowBackIos color="white" size={30} />
+          ) : (
+            <MdArrowForwardIos color="white" size={30} />
+          )}
+        </div>
         <div
           className="d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-3 mt-6"
           id="kt_app_sidebar_primary_header"
@@ -82,7 +97,7 @@ const SideMenu = (props: IProps) => {
                     role="tab"
                   >
                     <span>{item.icon}</span>
-                    {showProductSidebar && (
+                    {showProductSidebar && opened && (
                       <span className="pt-2 fs-9 fs-lg-7 fw-bold">
                         {item.title}
                       </span>
@@ -100,7 +115,7 @@ const SideMenu = (props: IProps) => {
               <i className="bi bi-arrow-left-square fs-2x  "></i>
             </Link>
             <span className="pt-2 fs-9 fs-lg-7 fw-bold text-gray-400">
-              Back
+              {opened && "Back"}
             </span>
           </div>
         </div>

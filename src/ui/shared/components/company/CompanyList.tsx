@@ -24,7 +24,7 @@ const CompanyListCard = () => {
         <h3 className="card-title align-items-start flex-column">
           <span className="card-label fw-bold text-dark">Company Details</span>
 
-          <span className="text-muted mt-1 fw-semibold fs-7">
+          <span className="text-muted mt-2 fw-semibold fs-7">
             {data?.length ?? "NA"} company in total
           </span>
         </h3>
@@ -39,8 +39,10 @@ const CompanyListCard = () => {
         {data?.map((item: ICompanyResponse) => {
           return (
             <DynamicLink
+              key={item.id}
               subdomain={item.subdomain}
-              pathName={`${item.subdomain}/dashboard`}
+              pathName={`company/dashboard`}
+              // pathName={`dashboard`}
               className="d-flex flex-stack mb-3 cursor-pointer"
             >
               <div className="symbol symbol-40px me-4">

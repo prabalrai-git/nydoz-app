@@ -24,28 +24,34 @@ PublicAxios.interceptors.request.use((config) => {
       "api" + "." + subdomainInfo?.subDomain
     );
     config.baseURL = newURL;
-    console.log(config.baseURL, "config.baseURL");
+    // console.log(config.baseURL, "config.baseURL");
     return config;
   }
   config.baseURL = baseUrl;
 
   return config;
 });
-
 PrivateAxios.interceptors.request.use((config) => {
   const subdomainInfo = getSubdomain();
   const token = localStorage.getItem("token");
   const baseUrl = VITE_BASE_URL;
+  console.log(window.location.href, "hreffff");
+  const subDomainFromHref = window.location.href.split(".")[0].split("//")[1];
+
+  config.baseURL = subDomainFromHref + baseUrl;
+  const finalUrl = `http://${subDomainFromHref}.${baseUrl.split("://")[1]}`;
+
   if (subdomainInfo?.subDomain) {
     // const newURL = baseUrl.replace("api", subdomainInfo?.subDomain + ".api");
-    const newURL = baseUrl.replace(
-      "api.dev",
-      "api" + "." + subdomainInfo?.subDomain
-    );
-    config.baseURL = newURL;
+    // const newURL = baseUrl.replace(
+    //   "api.dev",
+    //   "api" + "." + subdomainInfo?.subDomain
+    // );
+    config.baseURL = finalUrl;
     return config;
   }
-  config.baseURL = baseUrl;
+
+  config.baseURL = finalUrl;
   config.headers["Authorization"] = `Bearer ${token}`;
   return config;
 });

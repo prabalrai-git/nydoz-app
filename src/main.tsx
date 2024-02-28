@@ -8,11 +8,17 @@ import Routes from "./routes/Routes.tsx";
 import "./i18n/Lang.tsx";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./context/auth/AuthProvider.tsx";
+import CustomForm from "./CustomForm.tsx";
+import { ConfigProvider } from "antd";
+import { enUSIntl } from "@ant-design/pro-components";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-    <React.StrictMode>
-        <AuthProvider>
-            <Routes />
-        </AuthProvider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <ConfigProvider locale={enUSIntl}>
+      <AuthProvider>
+        <Routes />
+        {/* <CustomForm /> */}
+      </AuthProvider>
+    </ConfigProvider>
+  </React.StrictMode>
 );

@@ -12,11 +12,18 @@ import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
 import { Boxes, Gear, House, PersonBadge } from "react-bootstrap-icons";
 import { useWindowSize } from "usehooks-ts";
+import useWebSetting from "../../../context/useWebSetting";
 
 const CompanyLayout = () => {
   const { dispatch, companyInfo, userInfo } = useAuthContext();
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
-  const { companySubdomian } = useParams<string>();
+  // const { companySubdomian } = useParams<string>();
+
+  const { url } = useWebSetting();
+
+  const companySubdomian = url.split(".")[0].split("//")[1];
+
+  // console.log(companySubdomian, "hello world");
   const { fetchDataById, error } = useFetch<ICompanyResponse>(
     API_ROUTE.GET_COMPANY_BY_SUBDOMAIN,
     true

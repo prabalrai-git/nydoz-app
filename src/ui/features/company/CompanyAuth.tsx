@@ -8,63 +8,73 @@ import useAuthContext from "../../../context/auth/useAuthContext";
 import useHandleShowError from "../../../hooks/useHandleShowError";
 
 interface IProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const CompanyLayout = (props: IProps) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const { children } = props;
-    const { dispatch, companyInfo, userInfo } = useAuthContext();
-    const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
-    const { companySubdomian } = useParams<string>();
-    const { fetchDataById, error } = useFetch<ICompanyResponse>(
-        API_ROUTE.GET_COMPANY_BY_SUBDOMAIN,
-        true
-    );
-    useHandleShowError(error);
+  const { children } = props;
+  const { dispatch, companyInfo, userInfo } = useAuthContext();
+  const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
+  const { companySubdomian } = useParams<string>();
+  const { fetchDataById, error } = useFetch<ICompanyResponse>(
+    API_ROUTE.GET_COMPANY_BY_SUBDOMAIN,
+    true
+  );
+  useHandleShowError(error);
 
-    const fetchCompanyInfo = useCallback(async () => {
-        try {
-            setShowSplashScreen(true);
-            const url = `${API_ROUTE.GET_COMPANY_BY_SUBDOMAIN}/${companySubdomian}`;
-            const response = await fetchDataById(url);
-            if (response?.data?.payload) {
-                const { payload } = response.data;
-                const companyInfo = {
-                    id: payload.id,
-                    name: payload.name,
-                    subdomain: payload.subdomain,
-                    company_owner_id: payload.company_owner_id,
-                    status_id: payload.status_id,
-                };
-                const isCompanyAdmin =
-                    userInfo?.id === payload.company_owner_id;
-                dispatch({
-                    type: "SET_COMPANY_INFO",
-                    payload: {
-                        companyInfo,
-                        isCompanyOwner: isCompanyAdmin,
-                    },
-                });
-            }
-        } catch (error) {
-            navigate("/");
-            // console.log(error);
-        } finally {
-            setShowSplashScreen(false);
-        }
-    }, [companySubdomian, fetchDataById, userInfo?.id, dispatch, navigate]);
+  const fetchCompanyInfo = useCallback(async () => {
+    try {
+      setShowSplashScreen(true);
+      const url = `${API_ROUTE.GET_COMPANY_BY_SUBDOMAIN}/${companySubdomian}`;
+      const response = await fetchDataById(url);
+      console.log(response, "this is the payload");
+      if (response?.data?.payload) {
+        const { payload } = response.data;
+        const companyInfo = {
+          id: payload.id,
+          name: payload.name,
+          subdomain: payload.subdomain,
+          company_owner_id: payload.company_owner_id,
+          status_id: payload.status_id,
+        };
+        const isCompanyAdmin = userInfo?.id === payload.company_owner_id;
+        dispatch({
+          type: "SET_COMPANY_INFO",
+          payload: {
+            companyInfo,
+            isCompanyOwner: isCompanyAdmin,
+          },
+        });
+      }
+    } catch (error) {
+      navigate("/");
+      // console.log(error);
+    } finally {
+      setShowSplashScreen(false);
+    }
+  }, [companySubdomian, fetchDataById, userInfo?.id, dispatch, navigate]);
 
-    useEffect(() => {
-        if (companySubdomian !== companyInfo?.subdomain) {
-            fetchCompanyInfo();
-        } else {
-            setShowSplashScreen(false);
-        }
-    }, [fetchCompanyInfo, companySubdomian, companyInfo?.subdomain]);
+  useEffect(() => {
+    if (companySubdomian !== companyInfo?.subdomain) {
+      fetchCompanyInfo();
+    } else {
+      setShowSplashScreen(false);
+    }
+  }, [fetchCompanyInfo, companySubdomian, companyInfo?.subdomain]);
 
-    return <div>{showSplashScreen ? <CompanyLoader /> : <>{children}</>}</div>;
+  return (
+    <div>
+      {showSplashScreen ? (
+        <>
+          <CompanyLoader />
+        </>
+      ) : (
+        <>{children}</>
+      )}
+    </div>
+  );
 };
 
 export default CompanyLayout;

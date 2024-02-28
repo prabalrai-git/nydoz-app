@@ -31,8 +31,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" navbar navbar-expand-lg bg-body-tertiary navbar-wrapper bg-white fixed-top">
-      <div className="container-lg">
+    <nav className=" navbar navbar-expand-lg bg-body-tertiary navbar-wrapper bg-white fixed-top ">
+      <div className="tw-w-11/12  tw-mx-auto">
         <div className="inner-container">
           <div className="left-container">
             <NavLink className="navbar-brand" to="/">

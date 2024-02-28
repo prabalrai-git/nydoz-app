@@ -15,6 +15,7 @@ import { GoPersonFill } from "react-icons/go";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsPersonFillCheck } from "react-icons/bs";
 import CustomBadge from "../../../shared/components/CustomBadge";
+import CommonTable from "../../../shared/components/CommonTable";
 
 const VisitorList = () => {
   const navigate = useNavigate();
@@ -202,7 +203,6 @@ const VisitorList = () => {
     ],
     [handleEditData]
   );
-
   return (
     <div className="my-6 px-3">
       <CompanyBreadcrumb
@@ -221,11 +221,12 @@ const VisitorList = () => {
             </div>
           </div>
           <div className="card-body">
-            <SearchPaginationList
+            {/* <SearchPaginationList
               searchParamsArray={searchFilter}
               baseUrl={API_ROUTE.CM_VISITORS}
               columns={tableColumns}
-            />
+            /> */}
+            <CommonTable />
           </div>
         </div>
       </section>
