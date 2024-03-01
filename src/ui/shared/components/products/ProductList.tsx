@@ -27,8 +27,8 @@ const ProductList = () => {
         <div className="d-flex justify-content-start tw-flex tw-w-full ">
           {data?.map((product: IProductResponse) => (
             <div key={product.id} className="flex-wrap cursor-pointer">
-              <div className="rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box mx-3">
-                <div className="symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light">
+              <div className="rounded-2 border border-secondary  m-3 p-6  rounded text-center product-box mx-3 tw-shadow-sm hover:tw-shadow-md  tw-drop-shadow-sm">
+                <div className="symbol symbol-100px symbol-lg-100px symbol-fixed position-relative tw-bg-gray-100 tw-w-full">
                   <ImageAtom
                     src={product.logo}
                     alt={product.name}
@@ -36,7 +36,9 @@ const ProductList = () => {
                   />
                 </div>
                 <div className="card-body">
-                  <h5 className="card-title mt-6 mb-4">{product.name}</h5>
+                  <h5 className="card-title tw-text-lg tw-font-medium">
+                    {product.name}
+                  </h5>
                 </div>
               </div>
             </div>

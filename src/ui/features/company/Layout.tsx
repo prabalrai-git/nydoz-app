@@ -13,6 +13,8 @@ import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 import { Boxes, Gear, House, PersonBadge } from "react-bootstrap-icons";
 import { useWindowSize } from "usehooks-ts";
 import useWebSetting from "../../../context/useWebSetting";
+import { MdSpaceDashboard } from "react-icons/md";
+import { RiFolderSettingsFill } from "react-icons/ri";
 
 const CompanyLayout = () => {
   const { dispatch, companyInfo, userInfo } = useAuthContext();
@@ -78,20 +80,23 @@ const CompanyLayout = () => {
       id: 1,
       title: "Dashboard",
       link: "dashboard",
-      icon: <House size={20} />,
+      // icon: <House size={20} />,
+      icon: <MdSpaceDashboard size={24} />,
     },
 
     {
       id: 2,
       title: "Products",
       link: "products/dashboard",
-      icon: <i className="ki-outline ki-abstract-26 fs-2x"></i>,
+      // icon: <i className="ki-outline ki-abstract-26 fs-2x"></i>,
+      icon: <Boxes size={20} />,
     },
     {
       id: 3,
       title: "Products Settings",
       link: "product-settings/view",
-      icon: <Boxes size={20} />,
+      // icon: <Boxes size={20} />,
+      icon: <RiFolderSettingsFill size={22} />,
     },
     {
       id: 4,

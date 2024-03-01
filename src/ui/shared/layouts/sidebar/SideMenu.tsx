@@ -4,6 +4,7 @@ import { ISidebarMenu } from "../../../../types/app.types";
 import { useOnClickOutside, useWindowSize } from "usehooks-ts";
 import { useRef, useState } from "react";
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
+import { IoMdExit } from "react-icons/io";
 
 interface IProps {
   sidebarMenuList: ISidebarMenu[];
@@ -18,7 +19,7 @@ const SideMenu = (props: IProps) => {
   const { showProductSidebar } = webSetting;
   const menuRef = useRef(null);
   const sidebarClassName = showProductSidebar ? "slide-in " : "slide-out ";
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState(true);
 
   useOnClickOutside(menuRef, () => {
     dispatchWebSetting({
@@ -32,8 +33,6 @@ const SideMenu = (props: IProps) => {
       type: "TOGGLE_PRODUCT_SIDEBAR",
     });
   };
-
-  console.log(opened, "opened");
 
   return (
     <div
@@ -57,8 +56,8 @@ const SideMenu = (props: IProps) => {
           <ArrowBarRight size={20} />
         )}
       </div> */}
-      <div className="app-sidebar-primary h-100vh">
-        <div
+      <div className="app-sidebar-primary h-100vh tw-pb-[150px] ">
+        {/* <div
           onClick={() => setOpened((prev) => !prev)}
           className="tw-absolute tw-bottom-[70px] tw-w-full tw-z-50 tw-h-[55px] tw-bg-btnPrimary tw-flex tw-justify-center tw-items-center"
         >
@@ -67,12 +66,12 @@ const SideMenu = (props: IProps) => {
           ) : (
             <MdArrowForwardIos color="white" size={30} />
           )}
-        </div>
+        </div> */}
         <div
           className="d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-3 mt-6"
           id="kt_app_sidebar_primary_header"
         >
-          <span className="text-uppercase tw-text-sm tw-text-center">
+          <span className="text-uppercase tw-text-sm tw-text-center tw-font-mono">
             {title}
           </span>
         </div>
@@ -107,17 +106,19 @@ const SideMenu = (props: IProps) => {
               );
             })}
           </ul>
-          <div className="app-sidebar-footer d-flex flex-column flex-center border-0 ">
-            <Link
-              to={backPath ?? "/"}
-              className="btn btn-icon btn-color-gray-400 btn-active-color-primary"
-            >
-              <i className="bi bi-arrow-left-square fs-2x  "></i>
-            </Link>
-            <span className="pt-2 fs-9 fs-lg-7 fw-bold text-gray-400">
-              {opened && "Back"}
-            </span>
-          </div>
+          <Link to={backPath ?? "/"} className="">
+            <div className="app-sidebar-footer  tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover  border-0 mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-center tw-px-4 tw-py-3 tw-rounded-lg  ">
+              {/* <i className="bi bi-arrow-left-square fs-2x  "></i>
+              <IoMdExit
+                className="tw-transform -tw-scale-x-100"
+                size={20}
+                color="white"
+              /> */}
+              <p className="   tw-text-white tw-font-bold tw-text-lg">
+                {opened && "Back"}
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

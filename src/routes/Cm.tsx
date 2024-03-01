@@ -155,6 +155,10 @@ const CrmRoutes: RouteObject[] = [
     ],
   },
   {
+    path: "transactions",
+    element: <h1>hello world</h1>,
+  },
+  {
     path: "settings",
     element: <SettingsLayout />,
     children: [

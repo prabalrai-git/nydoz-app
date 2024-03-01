@@ -33,26 +33,40 @@ PublicAxios.interceptors.request.use((config) => {
 });
 PrivateAxios.interceptors.request.use((config) => {
   const subdomainInfo = getSubdomain();
+  // console.log(subdomainInfo, "subdomaininfo");
   const token = localStorage.getItem("token");
   const baseUrl = VITE_BASE_URL;
-  console.log(window.location.href, "hreffff");
+  // console.log(window.location.href, "hreffff");
   const subDomainFromHref = window.location.href.split(".")[0].split("//")[1];
 
-  config.baseURL = subDomainFromHref + baseUrl;
+  // config.baseURL = subDomainFromHref + baseUrl;
+  const subDomainFromHrefArray = window.location.href.split(".");
+
   const finalUrl = `http://${subDomainFromHref}.${baseUrl.split("://")[1]}`;
+
+  if (subDomainFromHrefArray.length > 1) {
+    config.baseURL = finalUrl;
+    return config;
+  }
+  config.headers["Authorization"] = `Bearer ${token}`;
+
+  config.baseURL = baseUrl;
+
+  return config;
 
   if (subdomainInfo?.subDomain) {
     // const newURL = baseUrl.replace("api", subdomainInfo?.subDomain + ".api");
-    // const newURL = baseUrl.replace(
-    //   "api.dev",
-    //   "api" + "." + subdomainInfo?.subDomain
-    // );
-    config.baseURL = finalUrl;
+    const newURL = baseUrl.replace(
+      "api.dev",
+      "api" + "." + subdomainInfo?.subDomain
+    );
+
+    console.log(subDomainFromHrefArray.length, subDomainFromHrefArray);
+    config.baseURL = newURL;
     return config;
   }
 
   config.baseURL = finalUrl;
-  config.headers["Authorization"] = `Bearer ${token}`;
   return config;
 });
 

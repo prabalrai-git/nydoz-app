@@ -5,23 +5,23 @@ import BuyProduct from "../ui/features/company/BuyProduct";
 import ViewAllProducts from "../ui/features/productsSetting/ViewAllProducts";
 
 const productsSettingRoutes: RouteObject[] = [
-    {
-        path: "view",
-        element: <ViewAllProducts />,
-    },
+  {
+    path: "view",
+    element: <ViewAllProducts />,
+  },
 
-    {
-        path: "buy",
-        element: (
-            <ProtectCompanyOwner>
-                <BuyProduct />,
-            </ProtectCompanyOwner>
-        ),
-    },
-    {
-        path: ":productId",
-        element: <SingleProduct />,
-    },
+  {
+    path: "buy",
+    element: (
+      <ProtectCompanyOwner>
+        <BuyProduct />,
+      </ProtectCompanyOwner>
+    ),
+  },
+  {
+    path: ":productId",
+    element: <SingleProduct />,
+  },
 ];
 
 export default productsSettingRoutes;

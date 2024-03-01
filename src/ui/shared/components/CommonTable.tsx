@@ -1,19 +1,21 @@
 import React, { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import type { GetRef, TableColumnsType, TableColumnType } from "antd";
-import { Button, Input, Space, Table, Tag } from "antd";
+import { Button, Input, Space, Table, Tag, Tooltip } from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
 import { IoMdPerson } from "react-icons/io";
 import { FaEdit, FaPlane } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
-import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
+import { RiDeleteBin5Line, RiDeleteBin6Fill, RiFlagFill } from "react-icons/ri";
 import { BsPersonFillCheck } from "react-icons/bs";
+import { Select } from "antd";
+import { MdDeleteForever } from "react-icons/md";
 
 type InputRef = GetRef<typeof Input>;
 
 interface DataType {
-  key: string;
+  key: number;
   name: string;
   goingAbroad: boolean;
   mobile: string;
@@ -25,7 +27,7 @@ type DataIndex = keyof DataType;
 
 const data: DataType[] = [
   {
-    key: "1",
+    key: 1,
     name: "John Brown",
     goingAbroad: true,
     mobile: "9818158172",
@@ -33,7 +35,7 @@ const data: DataType[] = [
     agent: "Nydoz",
   },
   {
-    key: "1",
+    key: 2,
     name: "John Brown",
     goingAbroad: false,
     mobile: "9818158172",
@@ -41,7 +43,7 @@ const data: DataType[] = [
     agent: "Nydoz",
   },
   {
-    key: "1",
+    key: 3,
     name: "John Brown",
     goingAbroad: true,
     mobile: "9818158172",
@@ -49,7 +51,7 @@ const data: DataType[] = [
     agent: "Nydoz",
   },
   {
-    key: "1",
+    key: 4,
     name: "John Brown",
     goingAbroad: false,
     mobile: "9818158172",
@@ -57,7 +59,7 @@ const data: DataType[] = [
     agent: "Nydoz",
   },
   {
-    key: "1",
+    key: 5,
     name: "John Brown",
     goingAbroad: true,
     mobile: "9818158172",
@@ -65,7 +67,7 @@ const data: DataType[] = [
     agent: "Nydoz",
   },
   {
-    key: "1",
+    key: 6,
     name: "John Brown",
     goingAbroad: true,
     mobile: "9818158172",
@@ -186,14 +188,12 @@ const CommonTable: React.FC = () => {
       ),
   });
 
-  let sn = 1;
-
   const columns: TableColumnsType<DataType> = [
     {
       title: "S.N",
-      dataIndex: "S.N",
-      key: "S.N",
-      render: (a, b, c) => c + 1,
+      dataIndex: "key",
+      key: "key",
+      sorter: (a, b) => a.key - b.key,
     },
     {
       title: () => {
@@ -221,7 +221,7 @@ const CommonTable: React.FC = () => {
       title: () => {
         return (
           <div className="tw-flex tw-justify-left tw-items-center tw-gap-2 ">
-            <FaPlane />
+            <FaPlane size={14} />
             <p>Going Abroad</p>
           </div>
         );
@@ -238,14 +238,13 @@ const CommonTable: React.FC = () => {
       title: () => {
         return (
           <div className="tw-flex tw-justify-left tw-items-center tw-gap-2 ">
-            <FaPhone />
+            <FaPhone size={12} />
             <p>Mobile Number</p>
           </div>
         );
       },
       dataIndex: "mobile",
       key: "mobile",
-      ...getColumnSearchProps("mobile"),
     },
     {
       title: () => {
@@ -258,55 +257,81 @@ const CommonTable: React.FC = () => {
       },
       dataIndex: "visitingCountry",
       key: "visitingCountry",
-      ...getColumnSearchProps("visitingCountry"),
     },
     {
       title: () => {
         return (
           <div className="tw-flex tw-justify-left tw-items-center tw-gap-2 ">
-            <BsPersonFillCheck />
+            <BsPersonFillCheck size={16} />
             <p>Agent</p>
           </div>
         );
       },
       dataIndex: "agent",
       key: "agent",
-      ...getColumnSearchProps("agent"),
     },
     {
       title: "Action",
       dataIndex: "goingAbroad",
       key: "goingAbroad",
       render: () => (
-        <div className="tw-flex tw-gap-3 tw-justify-start">
-          <div className="tw-bg-violet-500 tw-w-[35px] tw-flex tw-justify-center tw-p-2 tw-rounded-lg hover:tw-bg-violet-700 tw-cursor-pointer">
-            <FaEdit color="white" size={14} />
-          </div>
-          <div className="tw-bg-red-500 tw-w-[35px] tw-flex tw-justify-center tw-p-2 tw-rounded-lg hover:tw-bg-red-700 tw-cursor-pointer">
-            <RiDeleteBin5Line color="white" size={15} />
-          </div>
+        <div className="tw-flex tw-gap-3 tw-justify-center">
+          <Tooltip title="Edit">
+            <div className="tw-bg-appBlue tw-w-[35px] tw-flex tw-justify-center tw-p-2 tw-rounded-lg hover:tw-bg-appBlueHover tw-cursor-pointer">
+              <FaEdit color="white" size={15} />
+            </div>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <div className="tw-bg-red-500 tw-w-[35px] tw-flex tw-justify-center tw-p-2 tw-rounded-lg hover:tw-bg-red-700 tw-cursor-pointer">
+              <MdDeleteForever color="white" size={18} />
+            </div>
+          </Tooltip>
         </div>
       ),
     },
-    // {
-    //   title: "Age",
-    //   dataIndex: "age",
-    //   key: "age",
-    //   // width: "20%",
-    //   ...getColumnSearchProps("age"),
-    // },
-    // {
-    //   title: "Address",
-    //   dataIndex: "address",
-    //   key: "address",
-    //   ...getColumnSearchProps("address"),
-    //   sorter: (a, b) => a.address.length - b.address.length,
-    //   sortDirections: ["descend", "ascend"],
-    // },
   ];
 
   return (
-    <Table className="tw-uppercase " columns={columns} dataSource={data} />
+    <>
+      <div className="tw-flex tw-mb-5 tw-justify-end tw-gap-5 tw-h-[40px] tw-absolute tw-right-10 tw-z-50 ">
+        <Select
+          showSearch
+          allowClear
+          style={{ width: 350, height: 40 }}
+          placeholder="Search by"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").includes(input)
+          }
+          options={[
+            {
+              value: "1",
+              label: "Name",
+            },
+            {
+              value: "2",
+              label: "Mobile Number",
+            },
+          ]}
+        />
+
+        <Input allowClear style={{ width: 350 }} placeholder="Search value" />
+        <button className="tw-bg-appBlue hover:tw-bg-appBlueHover tw-text-white tw-font-bold tw-px-6 tw-rounded-lg">
+          Search
+        </button>
+      </div>
+      <Table
+        bordered={true}
+        className="tw-uppercase "
+        columns={columns}
+        dataSource={data}
+        pagination={{
+          position: ["topLeft"],
+          pageSize: 5,
+          total: 100,
+        }}
+      />
+    </>
   );
 };
 

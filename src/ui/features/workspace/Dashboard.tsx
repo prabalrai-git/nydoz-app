@@ -1,8 +1,11 @@
+import useRemoveSubdomain from "../../../hooks/useRemoveSubdomain";
 import CompanyListCard from "../../shared/components/company/CompanyList";
 // import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
 import UserCompanyAndProducts from "../../shared/layouts/Header/navbar/products/UserCompanyAndProducts";
 
 const Dashboard = () => {
+  useRemoveSubdomain();
+
   return (
     <div className=" h-100vh py-3">
       <div className="container">

@@ -9,6 +9,9 @@ import {
   PersonCheck,
   PersonLock,
 } from "react-bootstrap-icons";
+import { FaMoneyBill1 } from "react-icons/fa6";
+import { MdSpaceDashboard } from "react-icons/md";
+import { BsPersonVcard, BsPersonVcardFill } from "react-icons/bs";
 
 const CrmLayout = () => {
   const sidebarMenu: ISidebarMenu[] = [
@@ -16,34 +19,42 @@ const CrmLayout = () => {
       id: 1,
       title: "Dashboard",
       link: "dashboard",
-      icon: <House size={20} />,
+      // icon: <House size={20} />,
+      icon: <MdSpaceDashboard size={24} />,
     },
     {
       id: 2,
       title: "Visitors",
       link: "visitors",
-      icon: <PersonBadge size={20} />,
+      icon: <BsPersonVcard size={22} />,
+      // icon: <PersonBadge size={20} />,
     },
     {
       id: 3,
       title: "Clients",
       link: "clients",
-      icon: <PersonCheck size={20} />,
+      icon: <PersonCheck size={23} />,
     },
     {
       id: 4,
+      title: "Transactions",
+      link: "transactions",
+      icon: <FaMoneyBill1 size={20} />,
+    },
+    {
+      id: 5,
       title: "Agents",
       link: "agents",
       icon: <PersonLock size={22} />,
     },
     {
-      id: 5,
+      id: 6,
       title: "Institutions",
       link: "enrolled-institutes/list",
       icon: <Buildings size={20} />,
     },
     {
-      id: 6,
+      id: 7,
       title: "Settings",
       link: "settings/visiting-purposes",
       icon: <Gear size={22} />,

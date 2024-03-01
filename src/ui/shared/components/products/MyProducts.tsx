@@ -40,15 +40,15 @@ const MyProductList = (props: IProps) => {
       <section className="card ">
         {isloading && <LoadingPage />}
         {data && data.length > 0 && (
-          <div className="d-flex">
+          <div className="d-flex ">
             {data.map((product) => (
               <Link
                 to={`${partialPath}${product.slug}/dashboard`}
                 key={product.id}
-                className="flex-wrap cursor-pointer"
+                className="flex-wrap cursor-pointer "
               >
-                <div className="rounded-2 border border-secondary shadow shadow-sm m-3 p-6 shadow-sm  rounded text-center product-box mx-3">
-                  <div className="symbol symbol-100px symbol-lg-100px symbol-fixed position-relative bg-light">
+                <div className="rounded-2 border border-secondary  m-3 p-6 rounded text-center product-box mx-3 tw-shadow-sm hover:tw-shadow-md tw-drop-shadow-sm ">
+                  <div className="symbol symbol-100px symbol-lg-100px symbol-fixed position-relative tw-bg-gray-100 tw-w-full ">
                     {/* <ImageAtom
                       src={ClientMgmtImage}
                       alt={product.name}
@@ -61,7 +61,7 @@ const MyProductList = (props: IProps) => {
                     />
                   </div>
                   <div className="card-body">
-                    <h5 className="card-title mt-6 mb-4 text-primary">
+                    <h5 className="card-title text-primary tw-text-lg tw-font-semibold">
                       {product.name}
                     </h5>
                   </div>

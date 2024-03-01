@@ -215,7 +215,10 @@ const VisitorList = () => {
           <div className="card-header">
             <h3 className="card-title">Visitor's List</h3>
             <div className="card-toolbar">
-              <Link to={`add`} className="btn btn-success btn-sm">
+              <Link
+                to={`add`}
+                className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover tw-text-white hover:tw-text-white tw-font-bold btn-sm"
+              >
                 <span className="mx-2">Add Visitor</span>
               </Link>
             </div>
@@ -226,6 +229,7 @@ const VisitorList = () => {
               baseUrl={API_ROUTE.CM_VISITORS}
               columns={tableColumns}
             /> */}
+            {/* <input type="text" /> */}
             <CommonTable />
           </div>
         </div>
