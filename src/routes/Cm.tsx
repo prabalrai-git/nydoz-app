@@ -9,6 +9,7 @@ import AddClient from "../ui/features/crm/clients/AddClient";
 import ClientList from "../ui/features/crm/clients/ClientList";
 import AgentList2 from "../ui/features/crm/agent/AgentList2";
 import ClientLayout from "../ui/features/crm/clients/ClientLayout";
+import TransactionList from "../ui/features/crm/transactions/TransactionsList";
 
 // Agents Routes
 const AgentLayout = loadable(
@@ -156,7 +157,7 @@ const CrmRoutes: RouteObject[] = [
   },
   {
     path: "transactions",
-    element: <h1>hello world</h1>,
+    element: <TransactionList />,
   },
   {
     path: "settings",

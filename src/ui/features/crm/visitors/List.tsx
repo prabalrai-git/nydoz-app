@@ -224,13 +224,13 @@ const VisitorList = () => {
             </div>
           </div>
           <div className="card-body">
-            {/* <SearchPaginationList
+            <SearchPaginationList
               searchParamsArray={searchFilter}
               baseUrl={API_ROUTE.CM_VISITORS}
               columns={tableColumns}
-            /> */}
+            />
             {/* <input type="text" /> */}
-            <CommonTable />
+            {/* <CommonTable /> */}
           </div>
         </div>
       </section>
