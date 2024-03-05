@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { IDynamicForm } from "../../../../types/payload.type";
 import API_ROUTE from "../../../../service/api";
@@ -9,12 +9,15 @@ import useValidationError from "../../../../hooks/useValidationError";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
 
 const DynamicForm = () => {
+  const [isAccountRequired, setIsAccountRequired] = useState(false);
   const navigate = useNavigate();
   const { postData, errList, error } = useMutation(
     API_ROUTE.PAYMENT_METHODS,
     true
   );
-
+  const handleCheckboxChange = () => {
+    setIsAccountRequired(!isAccountRequired);
+  };
   const defaultValues: IDynamicForm = {
     name: "",
     is_account_required: false,
@@ -63,6 +66,7 @@ const DynamicForm = () => {
     try {
       const response = await postData({
         ...data,
+        isAccountRequired: isAccountRequired,
         custom_fields: payload,
       });
       if (response?.status === 201) {
@@ -100,13 +104,19 @@ const DynamicForm = () => {
             </div>
             <div className="mb-6">
               <label className="form-label mx-3">Is Account Required</label>
+              {/* <input
+                className="form-check-input"
+                type="checkbox"
+                // value="true"
+                {...register("is_account_required", {
+                  setValueAs: (value) => (value === true ? true : false),
+                })}
+              /> */}
               <input
                 className="form-check-input"
                 type="checkbox"
-                value="true"
-                {...register("is_account_required", {
-                  setValueAs: (value) => value === true,
-                })}
+                checked={isAccountRequired}
+                onChange={handleCheckboxChange}
               />
             </div>
             <div>

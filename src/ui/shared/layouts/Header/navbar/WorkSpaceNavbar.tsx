@@ -10,6 +10,9 @@ import { BoxArrowRight, BuildingAdd, GearWide } from "react-bootstrap-icons";
 import UserCompanyAndProducts from "./products/UserCompanyAndProducts";
 import Images from "../../../../../constants/Images";
 import AllPublicProductsDropdown from "./products/AllPublicProductsDropdown";
+import { RiLockPasswordFill, RiLogoutBoxRLine } from "react-icons/ri";
+import { FaBuildingCircleCheck } from "react-icons/fa6";
+import { BsBuildingAdd } from "react-icons/bs";
 
 const Navbar = () => {
   const productRef = useRef(null);
@@ -91,11 +94,13 @@ const Navbar = () => {
                         <p>Create New Company</p>
                       </div> */}
                       <div className="tw-flex gap-3">
-                        <BuildingAdd
+                        {/* <BuildingAdd
                           size={16}
                           color="#1ed63d"
                           className="tw-self-center"
-                        />
+                        /> */}
+
+                        <BsBuildingAdd size={16} color="black" />
 
                         <p className="tw-w-full">Create New Company</p>
                       </div>
@@ -107,7 +112,8 @@ const Navbar = () => {
                       to="change-password"
                     >
                       <div className="tw-flex gap-3">
-                        <GearWide size={16} color="#000000" />
+                        {/* <GearWide size={16} color="#000000" /> */}
+                        <RiLockPasswordFill size={16} color="black" />
 
                         <p>Change Password</p>
                       </div>
@@ -119,7 +125,8 @@ const Navbar = () => {
                         className="btn btn-light-danger btn-sm w-100 tw-flex gap-3"
                         onClick={() => logoutFn()}
                       >
-                        <BoxArrowRight size={16} color="#0b0b0b" />
+                        {/* <BoxArrowRight  /> */}
+                        <RiLogoutBoxRLine size={16} color="#0b0b0b" />
                         <p className="me-3">Logout</p>
                       </div>
                     </div>

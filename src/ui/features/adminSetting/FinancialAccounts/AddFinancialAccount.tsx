@@ -24,9 +24,9 @@ const AddFinancialAccount = () => {
     IDynamicForm | undefined
   >(undefined);
 
-  const [payMethodsIdsArray, setPaymentMethodIdsArray] = useState<
+  const [payementMethodIds, setPaymentMethodIds] = useState<
     string[] | undefined
-  >([]);
+  >();
 
   const defaultValues: IFinancialAccountFields = {
     institute_name: "",
@@ -49,15 +49,15 @@ const AddFinancialAccount = () => {
   const onSubmit = async (data: IFinancialAccountFields) => {
     // console.log(data);
 
-    console.log(
-      { ...data, payment_method_ids: [paymentMethods?.id] },
-      "payload"
-    );
+    // return console.log(
+    //   { ...data, payment_method_ids: payementMethodIds },
+    //   "payload"
+    // );
 
     try {
       const response = await postData({
         ...data,
-        payment_method_ids: [paymentMethods?.id],
+        payment_method_ids: payementMethodIds,
       });
       if (response?.status === 201) {
         toast.success("Financial Account Added Successfully");
@@ -150,8 +150,8 @@ const AddFinancialAccount = () => {
                 selectValue={paymentMethods}
                 dataId="id"
                 showDataLabel="name"
+                setMultipleValues={setPaymentMethodIds}
                 isMulti={true}
-                setMultipleValue={setPaymentMethodIdsArray}
               />
             </div>
 

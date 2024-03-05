@@ -1,45 +1,76 @@
+import { Link } from "react-router-dom";
 import useAuthContext from "../../../../../../context/auth/useAuthContext";
 import DynamicLink from "../../../../molecules/DynamicLink";
+import ClientMgmtImage from "../../../../../../assets/products/clienthub.png";
 
 const UserCompanyAndProducts = () => {
   const { userCompanyAndItsProducts } = useAuthContext();
   // console.log(userCompanyAndItsProducts);
 
   return (
-    <div className="user-company-product-wrapper ">
+    <div className="user-company-product-wrapper  ">
+      <h1 className="tw-font-semibold tw-text-xl">
+        Companies & Their Products
+      </h1>
+      <hr className="tw-my-7 " />
       {userCompanyAndItsProducts?.companies?.map((companyItem) => {
         if (companyItem?.products?.length === 0) return null;
+
         return (
           <div
             key={companyItem.id}
-            className=" border-secondary  border-bottom  py-2"
+            className=" border-secondary  border-bottom  py-4 tw-mb-4"
           >
-            <div className="text-center">
-              <h5 className=" mb-3">{companyItem.name}</h5>
+            <div className="text-left tw-mb-4">
+              <h5 className=" mb-3 tw-text-md tw-font-medium tw-uppercase">
+                {companyItem.name}
+              </h5>
             </div>
-            <div className="row">
+            <div className="tw-flex tw-gap-4">
               {companyItem?.products?.map((productItem) => (
-                <div
-                  className="col-12 col-md-6 cursor-pointer tw-flex tw-items-center tw-gap-4"
+                <Link
+                  to={`company/products/${productItem.slug}/dashboard`}
                   key={productItem.id}
+                  className="flex-wrap  cursor-pointer tw-w-[200px] tw-border-solid tw-border-gray-300 tw-border-2 tw-text-center tw-p-3 tw-rounded-lg hover:tw-bg-gray-100   "
                 >
-                  <div className="rounded-2 border border-secondary shadow shadow-sm m-1 p-3 shadow-sm  rounded text-center">
-                    <div className="d-flex align-items-center ">
-                      <div className="symbol symbol-50px me-3 ">
-                        <img src={productItem.logo} alt={"Logo"} />
-                      </div>
+                  {/* <div className="rounded-2 border border-secondary   p-6 rounded text-center product-box mx-3 tw-shadow-sm hover:tw-shadow-md tw-drop-shadow-sm ">
+                    <div className="symbol symbol-100px symbol-lg-100px symbol-fixed position-relative tw-bg-gray-100 tw-w-full ">
+                      <img
+                        src={ClientMgmtImage}
+                        alt=""
+                        className="img-fluid card-img-top tw-object-contain tw-w-[50px]"
+                      />
                     </div>
-                  </div>
-                  <div className="d-flex justify-content-start flex-column tw-self-center">
-                    <DynamicLink
-                      className="text-dark fw-bold text-hover-primary mb-1 fs-6"
-                      subdomain={companyItem.subdomain}
-                      pathName={`company/products/${productItem.slug}/dashboard`}
-                    >
-                      {productItem.name}
-                    </DynamicLink>
-                  </div>
-                </div>
+                  </div> */}
+
+                  <h5 className="card-title text-primary tw-text-medium tw-font-semibold  ">
+                    {productItem.name}
+                  </h5>
+                </Link>
+                // <div
+                //   className="col-12 col-md-6 cursor-pointer tw-flex tw-items-center tw-gap-4"
+                //   key={productItem.id}
+                // >
+                //   <div className="rounded-2 border border-secondary shadow shadow-sm m-1 p-3 shadow-sm  rounded text-center">
+                //     <div className="d-flex align-items-center ">
+                //       <div className="symbol symbol-50px me-3 ">
+                //         <img
+                //           src={`http://localhost${companyItem.logo}`}
+                //           alt={"Logo"}
+                //         />
+                //       </div>
+                //     </div>
+                //   </div>
+                //   <div className="d-flex justify-content-start flex-column tw-self-center">
+                //     <DynamicLink
+                //       className="text-dark fw-bold text-hover-primary mb-1 fs-6"
+                //       subdomain={companyItem.subdomain}
+                //       pathName={`company/products/${productItem.slug}/dashboard`}
+                //     >
+                //       {productItem.name}
+                //     </DynamicLink>
+                //   </div>
+                // </div>
               ))}
             </div>
           </div>

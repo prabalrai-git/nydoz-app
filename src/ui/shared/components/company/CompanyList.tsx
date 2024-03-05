@@ -5,6 +5,9 @@ import { ICompanyResponse } from "../../../../types/payload.type";
 import ImageAtom from "../../atoms/ImageAtom";
 import { Link } from "react-router-dom";
 import DynamicLink from "../../molecules/DynamicLink";
+import { PiArrowRightBold } from "react-icons/pi";
+import { SlArrowRight } from "react-icons/sl";
+import { FaArrowRightToBracket } from "react-icons/fa6";
 
 const CompanyListCard = () => {
   const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
@@ -24,26 +27,30 @@ const CompanyListCard = () => {
         <h3 className="card-title align-items-start flex-column">
           <span className="card-label fw-bold text-dark">Company Details</span>
 
-          <span className="text-muted mt-2 fw-semibold fs-7">
-            {data?.length ?? "NA"} company in total
+          <span className="text-muted mt-2 fw-semibold fs-7 tw-capitalize">
+            {data?.length > 0
+              ? `${data?.length} companies in total`
+              : "0 company in total"}
           </span>
         </h3>
-
         {/* <div className='card-toolbar'>
                     <a className='btn btn-sm btn-light'>View All</a>
                 </div> */}
+      </div>
+      <div className="tw-w-[87%] tw-mx-auto">
         <hr className="bg-light" />
       </div>
-      <div className="card-body pt6">
+      <div className="card-body pt6 ">
         {/* <h3>hasSubdomain :{hasSubdomain.toString()}</h3> */}
         {data?.map((item: ICompanyResponse) => {
+          console.log(item);
           return (
             <DynamicLink
               key={item.id}
               subdomain={item.subdomain}
               pathName={`company/dashboard`}
               // pathName={`dashboard`}
-              className="d-flex flex-stack mb-3 cursor-pointer"
+              className="d-flex flex-stack mb-3 cursor-pointer tw-bg-gray-100 tw-py-4 tw-px-4  hover:tw-shadow-md"
             >
               <div className="symbol symbol-40px me-4">
                 <ImageAtom
@@ -54,29 +61,26 @@ const CompanyListCard = () => {
               </div>
 
               <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                <div className="flex-grow-1 me-2">
-                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold">
+                <div className="flex-grow-1 me-2 tw-flex tw-flex-col">
+                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold tw-uppercase">
                     {item.name.length > 15
                       ? item.name.slice(0, 15) + "..."
                       : item.name}
                   </a>
-
-                  <span className="text-muted fw-semibold d-block fs-7">
-                    {item.website.length > 20
-                      ? item.website.slice(0, 20) + "..."
+                  <a
+                    href={item.website}
+                    target="_blank"
+                    className="  hover:tw-text-btnPrimary tw-text-gray-500  tw-pb-3 "
+                  >
+                    {item.website.length > 35
+                      ? item.website.slice(0, 35) + "..."
                       : item.website}
-                  </span>
+                  </a>
                 </div>
 
-                <a
-                  href="#"
-                  className="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px"
-                >
-                  <i className="ki-duotone ki-arrow-right fs-2">
-                    <span className="path1"></span>
-                    <span className="path2"></span>
-                  </i>{" "}
-                </a>
+                <div className="btn btn-sm btn-icon  w-40px h-40px tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover">
+                  <FaArrowRightToBracket color="white" size={16} />
+                </div>
               </div>
             </DynamicLink>
           );

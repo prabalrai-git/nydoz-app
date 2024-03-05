@@ -15,7 +15,7 @@ const Dashboard = () => {
               <CompanyListCard />
             </div>
           </div>
-          <div className="col-12 col-md-8 mb-6  bg-white p-6 ">
+          <div className="col-12 col-md-8 mb-6  bg-white p-6 tw-rounded-xl ">
             {/* <AuthCompanyProduct /> */}
             <UserCompanyAndProducts />
           </div>
