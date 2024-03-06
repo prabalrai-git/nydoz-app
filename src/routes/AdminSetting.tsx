@@ -19,6 +19,7 @@ import TransactionTypesList from "../ui/features/adminSetting/transactionTypes/T
 import AddTransactionTypes from "../ui/features/adminSetting/transactionTypes/AddTransactionTypes";
 import FinancialAccountsList from "../ui/features/adminSetting/FinancialAccounts/FinancialAccountsList";
 import AddFinancialAccount from "../ui/features/adminSetting/FinancialAccounts/AddFinancialAccount";
+import StatusList from "../ui/features/adminSetting/status/StatusList";
 
 const AdminRoutes: RouteObject[] = [
   {
@@ -26,13 +27,23 @@ const AdminRoutes: RouteObject[] = [
     element: <Dashboard />,
   },
   {
-    path: "user-list",
-    element: <UserList />,
+    path: "users",
+    element: <Outlet />,
+    children: [
+      {
+        path: "list",
+        element: <UserList />,
+      },
+      {
+        path: "add",
+        element: <AddUser />,
+      },
+    ],
   },
-  {
-    path: "add-user",
-    element: <AddUser />,
-  },
+  // {
+  //   path: "add-user",
+  //   element: <AddUser />,
+  // },
   {
     path: "edit-company",
     element: <EditCompany />,
@@ -55,7 +66,7 @@ const AdminRoutes: RouteObject[] = [
     children: [
       {
         path: "list",
-        element: <StatusLayout />,
+        element: <StatusList />,
       },
       {
         path: "add",

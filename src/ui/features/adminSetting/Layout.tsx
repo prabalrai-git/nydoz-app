@@ -13,7 +13,7 @@ const Layout = () => {
     {
       id: 2,
       title: "Users",
-      link: "user-list",
+      link: "users/list",
     },
     {
       id: 3,
@@ -33,7 +33,7 @@ const Layout = () => {
     {
       id: 6,
       title: "Status",
-      link: "statuses",
+      link: "statuses/list",
     },
     {
       id: 7,

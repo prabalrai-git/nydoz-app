@@ -1,22 +1,24 @@
 import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
-import { IAgentResponse } from "../../../../types/products.types";
-import BASE_URL from "../../../../constants/AppSetting";
+import {
+  IAgentResponse,
+  IStatusReponse,
+} from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Flag, People } from "react-bootstrap-icons";
-import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
-import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 
-const AgentList2 = () => {
+import SearchPaginationList from "../../../shared/components/SearchPaginationList";
+import { Tag } from "antd";
+
+const StatusList = () => {
   const navigate = useNavigate();
   const searchFilter: string[] = ["first_name", "email", "mobile"];
 
   const handleEditData = useCallback(
-    (item: IAgentResponse) => {
+    (item: IStatusReponse) => {
       navigate("edit", {
         state: { data: item },
       });
@@ -24,7 +26,7 @@ const AgentList2 = () => {
     [navigate]
   );
 
-  const tableColumns: ColumnDef<IAgentResponse>[] = useMemo(
+  const tableColumns: ColumnDef<IStatusReponse>[] = useMemo(
     () => [
       {
         accessorKey: "sn",
@@ -32,60 +34,88 @@ const AgentList2 = () => {
         cell: (info) => info.row.index + 1,
       },
       {
-        accessorKey: "Name",
+        accessorKey: "title",
         header: () => (
           <div>
-            <People size={16} className="mx-2" />
-            <span>Name</span>
+            <span>Title</span>
           </div>
         ),
         cell: (info) => {
-          const url = `${BASE_URL}${info?.row?.original?.profile_picture}`;
+          return <div>{info.getValue<string>()}</div>;
+        },
+      },
+      {
+        accessorKey: "code",
+        header: () => (
+          <div>
+            <span>Code</span>
+          </div>
+        ),
+        cell: (info) => {
+          return <div>{info.getValue<string>()}</div>;
+        },
+      },
+      {
+        accessorKey: "background_color_class",
+        header: () => (
+          <div>
+            <span>Background Color Class</span>
+          </div>
+        ),
+        cell: (info) => {
+          return <div>{info.getValue<string>()}</div>;
+        },
+      },
+      {
+        accessorKey: "text_color_class",
+        header: () => (
+          <div>
+            <span>Text Color Class</span>
+          </div>
+        ),
+        cell: (info) => {
+          return <div>{info.getValue<string>()}</div>;
+        },
+      },
+      {
+        accessorKey: "action_api_url",
+        header: () => (
+          <div>
+            <span>Action Api URL</span>
+          </div>
+        ),
+        cell: (info) => {
+          return <div>{info.getValue<string>()}</div>;
+        },
+      },
+      {
+        accessorKey: "group_code",
+        header: () => (
+          <div>
+            <span>Group Code</span>
+          </div>
+        ),
+        cell: (info) => {
+          return <div>{info.getValue<string>()}</div>;
+        },
+      },
+      {
+        accessorKey: "is_group_default",
+        header: () => (
+          <div>
+            <span>Is Group Default</span>
+          </div>
+        ),
+        cell: (info) => {
           return (
-            <div className="d-flex align-items-center">
-              <div className="symbol symbol-40px me-3">
-                <img src={url} className="" alt="profile picture" />
-              </div>
-              <div className="d-flex justify-content-start flex-column">
-                <a
-                  href="#"
-                  className="text-dark fw-bold text-hover-primary mb-1 fs-6"
-                >
-                  {info?.row?.original?.first_name}{" "}
-                  {info?.row?.original?.last_name}
-                </a>
-                <span className="text-muted fw-semibold d-block fs-7">
-                  {info?.row?.original?.email}
-                </span>
-              </div>
+            <div>
+              {info.getValue<boolean>() === false ? (
+                <Tag color="red">False</Tag>
+              ) : (
+                <Tag color="green">True</Tag>
+              )}
             </div>
           );
-        },
-      },
-
-      {
-        accessorKey: "mobile",
-        header: () => (
-          <div>
-            <i className="bi bi-telephone me-2 fs-7"></i>
-            <span>Mobile Number</span>
-          </div>
-        ),
-        cell: (info) => {
-          return <div>{info.getValue<string>()}</div>;
-        },
-      },
-
-      {
-        accessorKey: "country",
-        header: () => (
-          <div className="tw-flex ">
-            <Flag size={16} className="mx-2" />
-            <span>Country</span>
-          </div>
-        ),
-        cell: (info) => {
-          return <div>{info.getValue<string>()}</div>;
         },
       },
 
@@ -105,10 +135,13 @@ const AgentList2 = () => {
               title="Action"
             >
               <Dropdown.Item>
-                <div className="menu-link">
+                <Link
+                  to={`../view/${info?.row?.original?.id}`}
+                  className="menu-link"
+                >
                   <span className="mx-2">View</span>
                   <i className="bi bi-box-arrow-up-right text-primary "></i>
-                </div>
+                </Link>
               </Dropdown.Item>
               <Dropdown.Item>
                 <div
@@ -130,20 +163,19 @@ const AgentList2 = () => {
 
   return (
     <div className="my-6 px-3">
-      <CompanyBreadcrumb title="Agents" btnText="Back" showBreadcrumb={true} />
       <section>
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Agent's List</h3>
+            <h3 className="card-title">Status's List</h3>
             <div className="card-toolbar">
-              <Link to={`add`} className="btn btn-success btn-sm">
-                <span className="mx-2">Add Agent</span>
+              <Link to={`../add`} className="btn btn-success btn-sm">
+                <span className="mx-2">Add Status</span>
               </Link>
             </div>
           </div>
           <SearchPaginationList
             searchParamsArray={searchFilter}
-            baseUrl={API_ROUTE.CM_AGENTS}
+            baseUrl={API_ROUTE.STATUSES}
             columns={tableColumns}
           />
         </div>
@@ -152,4 +184,4 @@ const AgentList2 = () => {
   );
 };
 
-export default AgentList2;
+export default StatusList;

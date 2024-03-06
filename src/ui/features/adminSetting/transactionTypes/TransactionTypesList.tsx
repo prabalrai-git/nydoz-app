@@ -59,7 +59,6 @@ const TransactionTypesList = () => {
           </div>
         ),
         cell: (info) => {
-          console.log(info, "this is info");
           return (
             <div>
               {info.getValue<string>().toLowerCase() === "debit" ? (

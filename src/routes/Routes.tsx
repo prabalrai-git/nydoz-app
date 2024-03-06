@@ -11,9 +11,14 @@ import AuthRoutes from "./auth";
 import PageNotFound from "../ui/features/utils/PageNotFound";
 import WorkspaceLayout from "../ui/features/workspace/WorkspaceLayout";
 import WorkspaceRoutes from "./workspace.route";
+import loadable from "@loadable/component";
 // company
 // import CompanyLayout from "../ui/features/company/Layout";
 // import CompanyRoutes from "./Company";
+
+const WorkSpaceDashboard = loadable(
+  () => import("../ui/features/workspace/Dashboard")
+);
 
 const MainRouter = createBrowserRouter([
   {
@@ -22,11 +27,11 @@ const MainRouter = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <MainLayout />,
+        element: <WorkspaceLayout />,
         children: [
           {
             path: "",
-            element: <LandingHomePage />,
+            element: <WorkSpaceDashboard />,
           },
         ],
       },
