@@ -9,34 +9,32 @@ import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar"
 import { IUserCompanyProductsResponse } from "../../../types/payload.type";
 
 const ProtectedUserLayout: React.FC = () => {
-    const { isLoggedIn, token } = useAuthContext();
-    const location = useLocation().pathname;
+  const { isLoggedIn, token } = useAuthContext();
+  const location = useLocation().pathname;
 
-    const { fetchDataById } = useFetch<IUserCompanyProductsResponse>(
-        API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS,
-        true
-    );
+  const { fetchDataById } = useFetch<IUserCompanyProductsResponse>(
+    API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS,
+    true
+  );
 
-    useEffect(() => {
-        fetchDataById(API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS);
-    }, [fetchDataById]);
+  useEffect(() => {
+    fetchDataById(API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS);
+  }, [fetchDataById]);
 
-    return (
-        <div>
+  return (
+    <div>
+      <div className="main-container">
+        {isLoggedIn && token ? (
+          <>
             <WorkSpaceNavbar />
-            <div className='main-container'>
-                {isLoggedIn && token ? (
-                    <Outlet />
-                ) : (
-                    <Navigate
-                        to={"/auth/login"}
-                        state={{ from: location }}
-                        replace
-                    />
-                )}
-            </div>
-        </div>
-    );
+            <Outlet />
+          </>
+        ) : (
+          <Navigate to={"/auth/login"} state={{ from: location }} replace />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default ProtectedUserLayout;

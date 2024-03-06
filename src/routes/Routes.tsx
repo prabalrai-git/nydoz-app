@@ -16,36 +16,36 @@ import WorkspaceRoutes from "./workspace.route";
 // import CompanyRoutes from "./Company";
 
 const MainRouter = createBrowserRouter([
-    {
-        path: "/",
-        element: <App />,
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "",
+        element: <MainLayout />,
         children: [
-            {
-                path: "",
-                element: <MainLayout />,
-                children: [
-                    {
-                        path: "",
-                        element: <LandingHomePage />,
-                    },
-                ],
-            },
-            {
-                path: "workspace",
-                element: <WorkspaceLayout />,
-                children: WorkspaceRoutes,
-            },
-            {
-                path: "auth",
-                element: <AuthLayout />,
-                children: AuthRoutes,
-            },
-            {
-                path: "*",
-                element: <PageNotFound />,
-            },
+          {
+            path: "",
+            element: <LandingHomePage />,
+          },
         ],
-    },
+      },
+      {
+        path: "workspace",
+        element: <WorkspaceLayout />,
+        children: WorkspaceRoutes,
+      },
+      {
+        path: "auth",
+        element: <AuthLayout />,
+        children: AuthRoutes,
+      },
+      {
+        path: "*",
+        element: <PageNotFound />,
+      },
+    ],
+  },
 ]);
 
 // const CompanyRouter = createBrowserRouter([
@@ -83,15 +83,15 @@ const MainRouter = createBrowserRouter([
 // ]);
 
 const Routes = () => {
-    // const { webSetting } = useWebSetting();
-    // const { urlData } = webSetting;
+  // const { webSetting } = useWebSetting();
+  // const { urlData } = webSetting;
 
-    return (
-        <RouterProvider
-            // router={urlData.hasSubdomain ? CompanyRouter : MainRouter}
-            router={MainRouter}
-        />
-    );
+  return (
+    <RouterProvider
+      // router={urlData.hasSubdomain ? CompanyRouter : MainRouter}
+      router={MainRouter}
+    />
+  );
 };
 
 export default Routes;
