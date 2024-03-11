@@ -102,32 +102,34 @@ const Navbar = () => {
 
                         <BsBuildingAdd size={16} color="black" />
 
-                        <p className="tw-w-full">Create New Company</p>
+                        <p className="tw-w-full tw-text-gray-600">
+                          Create New Company
+                        </p>
                       </div>
                     </LinkContainer>
                   </NavDropdown.Item>
                   <NavDropdown.Item>
                     <LinkContainer
-                      className="btn btn-light-warning btn-sm w-100"
+                      className="btn btn-light-primary btn-sm w-100"
                       to="change-password"
                     >
                       <div className="tw-flex gap-3">
                         {/* <GearWide size={16} color="#000000" /> */}
                         <RiLockPasswordFill size={16} color="black" />
 
-                        <p>Change Password</p>
+                        <p className="tw-text-gray-600">Change Password</p>
                       </div>
                     </LinkContainer>
                   </NavDropdown.Item>
                   <NavDropdown.Item>
                     <div className="text-center">
                       <div
-                        className="btn btn-light-danger btn-sm w-100 tw-flex gap-3"
+                        className="btn btn-light-primary btn-sm w-100 tw-flex gap-3"
                         onClick={() => logoutFn()}
                       >
                         {/* <BoxArrowRight  /> */}
                         <RiLogoutBoxRLine size={16} color="#0b0b0b" />
-                        <p className="me-3">Logout</p>
+                        <p className="me-3 tw-text-gray-600">Logout</p>
                       </div>
                     </div>
                   </NavDropdown.Item>

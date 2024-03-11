@@ -23,7 +23,7 @@ const ProtectedUserLayout: React.FC = () => {
 
   return (
     <div>
-      <div className="main-container">
+      <div className="main-container ">
         {isLoggedIn && token ? (
           <>
             <WorkSpaceNavbar />

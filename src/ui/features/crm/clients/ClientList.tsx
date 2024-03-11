@@ -10,10 +10,12 @@ import { Link } from "react-router-dom";
 import { AirplaneFill, Flag, People } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
-import { GoPersonFill } from "react-icons/go";
-import { FaPhoneAlt } from "react-icons/fa";
+import { GoEye, GoPersonFill } from "react-icons/go";
+import { FaEdit, FaPhoneAlt } from "react-icons/fa";
 import { RiFlagFill } from "react-icons/ri";
 import { BsPersonFillCheck } from "react-icons/bs";
+import { FaEye } from "react-icons/fa6";
+import { Tag } from "antd";
 
 const ClientList = () => {
   const navigate = useNavigate();
@@ -82,9 +84,11 @@ const ClientList = () => {
           return (
             <div className="text-center tw-flex tw-justify-start">
               {info.getValue<string>() ? (
-                <span className="badge badge-success">YES</span>
+                // <span className="badge badge-success">YES</span>
+                <Tag color="green">Yes</Tag>
               ) : (
-                <span className="badge badge-danger px-3">NO</span>
+                <Tag color="red">No</Tag>
+                // <span className="badge badge-danger px-3">NO</span>
               )}
             </div>
           );
@@ -154,7 +158,8 @@ const ClientList = () => {
                   </span>
                 </div>
               ) : (
-                <span className="badge badge-warning px-3">NA</span>
+                <Tag>NA</Tag>
+                // <span className="badge badge-warning px-3">NA</span>
               )}
             </div>
           );
@@ -175,14 +180,14 @@ const ClientList = () => {
               onClick={() => handleView(info?.row?.original?.id)}
               className="btn btn-sm btn-icon btn-primary mx-3 hover:tw-bg-btnPrimaryHover"
             >
-              <i className="bi bi-box-arrow-up-right "></i>
+              <GoEye color={"white"} size={18} />
             </button>
             <button
               title="Edit"
               onClick={() => handleEditData(info?.row?.original)}
-              className="btn btn-sm btn-icon btn-info mx-3"
+              className="btn btn-sm btn-icon tw-bg-appBlue hover:tw-bg-appBlueHover mx-3"
             >
-              <i className="bi bi-pencil-square "></i>
+              <FaEdit color="white" size={15} />
             </button>
           </div>
         ),
@@ -204,8 +209,11 @@ const ClientList = () => {
           <div className="card-header">
             <h3 className="card-title">Client's List</h3>
             <div className="card-toolbar">
-              <Link to={`add`} className="btn btn-success btn-sm">
-                <span className="mx-2">Add Client</span>
+              <Link
+                to={`add`}
+                className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+              >
+                <span className="mx-2 tw-text-white">Add Client</span>
               </Link>
             </div>
           </div>

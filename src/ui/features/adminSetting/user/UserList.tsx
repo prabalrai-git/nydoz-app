@@ -129,8 +129,11 @@ const UserList = () => {
           <div className="card-header">
             <h3 className="card-title">User's List</h3>
             <div className="card-toolbar">
-              <Link to={`../add`} className="btn btn-success btn-sm">
-                <span className="mx-2">Add User</span>
+              <Link
+                to={`../add`}
+                className="btn tw-bg-btnPrimary btn-sm hover:tw-bg-btnPrimaryHover"
+              >
+                <span className="mx-2 tw-text-white">Add User</span>
               </Link>
             </div>
           </div>

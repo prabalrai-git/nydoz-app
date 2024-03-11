@@ -167,9 +167,9 @@ const VisaTypeList = () => {
             <div className="card-toolbar">
               <button
                 onClick={handleOpenNewModal}
-                className="btn btn-success btn-sm"
+                className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
               >
-                <span className="mx-2">Add Visiting Purpose</span>
+                <span className="mx-2 tw-text-white">Add Visiting Purpose</span>
               </button>
             </div>
           </div>

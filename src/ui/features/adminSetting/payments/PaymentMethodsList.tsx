@@ -25,108 +25,112 @@ import SearchPaginationList from "../../../shared/components/SearchPaginationLis
 // }
 
 const PaymentList = () => {
-    const navigate = useNavigate();
-    const searchFilter: string[] = ["first_name", "email", "mobile"];
+  const navigate = useNavigate();
+  const searchFilter: string[] = ["first_name", "email", "mobile"];
 
-    const handleEditData = useCallback(
-        (item: IAgentResponse) => {
-            navigate("edit", {
-                state: { data: item },
-            });
+  const handleEditData = useCallback(
+    (item: IAgentResponse) => {
+      navigate("edit", {
+        state: { data: item },
+      });
+    },
+    [navigate]
+  );
+
+  const tableColumns: ColumnDef<IAgentResponse>[] = useMemo(
+    () => [
+      {
+        accessorKey: "sn",
+        header: () => <div>S.N</div>,
+        cell: (info) => info.row.index + 1,
+      },
+      {
+        accessorKey: "name",
+        header: () => (
+          <div>
+            <span>Name</span>
+          </div>
+        ),
+        cell: (info) => {
+          return <div>{info.getValue<string>()}</div>;
         },
-        [navigate]
-    );
+      },
+      {
+        accessorKey: "is_account_required",
+        header: () => (
+          <div>
+            <span>Account Required</span>
+          </div>
+        ),
+        cell: (info) => {
+          return <div>{info.getValue<string>()}</div>;
+        },
+      },
 
-    const tableColumns: ColumnDef<IAgentResponse>[] = useMemo(
-        () => [
-            {
-                accessorKey: "sn",
-                header: () => <div>S.N</div>,
-                cell: (info) => info.row.index + 1,
-            },
-            {
-                accessorKey: "name",
-                header: () => (
-                    <div>
-                        <span>Name</span>
-                    </div>
-                ),
-                cell: (info) => {
-                    return <div>{info.getValue<string>()}</div>;
-                },
-            },
-            {
-                accessorKey: "is_account_required",
-                header: () => (
-                    <div>
-                        <span>Account Required</span>
-                    </div>
-                ),
-                cell: (info) => {
-                    return <div>{info.getValue<string>()}</div>;
-                },
-            },
-
-            {
-                accessorKey: "action",
-                header: () => (
-                    <div className='text-center'>
-                        <span>Actions</span>
-                    </div>
-                ),
-                cell: (info) => (
-                    <div className='text-center'>
-                        <DropdownButton
-                            variant='secondary'
-                            size='sm'
-                            id='dropdown-basic-button'
-                            title='Action'>
-                            <Dropdown.Item>
-                                <Link
-                                    to={`../view/${info?.row?.original?.id}`}
-                                    className='menu-link'>
-                                    <span className='mx-2'>View</span>
-                                    <i className='bi bi-box-arrow-up-right text-primary '></i>
-                                </Link>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                                <div
-                                    onClick={() =>
-                                        handleEditData(info?.row?.original)
-                                    }
-                                    className='menu-link'>
-                                    <span className='mx-2'>Edit</span>
-                                    <i className='bi bi-pencil-square text-info'></i>
-                                </div>
-                            </Dropdown.Item>
-                        </DropdownButton>
-                    </div>
-                ),
-                footer: (info) => info.column.id,
-            },
-        ],
-        [handleEditData]
-    );
-
-    return (
-        <div className='my-6 px-3'>
-            <div className='card'>
-                <div className='card-header'>
-                    <h3 className='card-title'>Payment Method's List</h3>
-                    <div className='card-toolbar'>
-                        <Link to={"../add"} className='btn btn-success btn-sm'>
-                            <span className='mx-2'>Add Payment Method</span>
-                        </Link>
-                    </div>
+      {
+        accessorKey: "action",
+        header: () => (
+          <div className="text-center">
+            <span>Actions</span>
+          </div>
+        ),
+        cell: (info) => (
+          <div className="text-center">
+            <DropdownButton
+              variant="secondary"
+              size="sm"
+              id="dropdown-basic-button"
+              title="Action"
+            >
+              <Dropdown.Item>
+                <Link
+                  to={`../view/${info?.row?.original?.id}`}
+                  className="menu-link"
+                >
+                  <span className="mx-2">View</span>
+                  <i className="bi bi-box-arrow-up-right text-primary "></i>
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <div
+                  onClick={() => handleEditData(info?.row?.original)}
+                  className="menu-link"
+                >
+                  <span className="mx-2">Edit</span>
+                  <i className="bi bi-pencil-square text-info"></i>
                 </div>
-                <SearchPaginationList
-                    searchParamsArray={searchFilter}
-                    baseUrl={API_ROUTE.PAYMENT_METHODS}
-                    columns={tableColumns}
-                />
-            </div>
+              </Dropdown.Item>
+            </DropdownButton>
+          </div>
+        ),
+        footer: (info) => info.column.id,
+      },
+    ],
+    [handleEditData]
+  );
+
+  return (
+    <div className="my-6 px-3">
+      <div className="card">
+        <div className="card-header">
+          <h3 className="card-title">Payment Method's List</h3>
+          <div className="card-toolbar">
+            <Link
+              to={"../add"}
+              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+            >
+              <span className="mx-2 tw-text-white">Add Payment Method</span>
+            </Link>
+          </div>
         </div>
-    );
+        <SearchPaginationList
+          searchParamsArray={searchFilter}
+          baseUrl={API_ROUTE.PAYMENT_METHODS}
+          columns={tableColumns}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default PaymentList;

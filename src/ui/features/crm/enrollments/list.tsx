@@ -10,6 +10,8 @@ import BASE_URL from "../../../../constants/AppSetting";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { RiFlagFill } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
+import { GoEye } from "react-icons/go";
 
 const List = () => {
   const navigate = useNavigate();
@@ -137,14 +139,16 @@ const List = () => {
               onClick={() => handleView(info?.row?.original?.id)}
               className="btn btn-sm btn-icon btn-primary hover:tw-bg-btnPrimaryHover "
             >
-              <i className="bi bi-box-arrow-up-right "></i>
+              {/* <i className="bi bi-box-arrow-up-right "></i> */}
+              <GoEye color={"white"} size={18} />
             </button>
             <button
               title="Edit"
               onClick={() => handleEditData(info?.row?.original)}
-              className="btn btn-sm btn-icon btn-info "
+              className="btn btn-sm btn-icon tw-bg-appBlue hover:tw-bg-appBlueHover "
             >
-              <i className="bi bi-pencil-square "></i>
+              {/* <i className="bi bi-pencil-square "></i> */}
+              <FaEdit size={18} color="white" />
             </button>
           </div>
         ),
@@ -166,8 +170,11 @@ const List = () => {
           <div className="card-header">
             <h3 className="card-title">Institute's List</h3>
             <div className="card-toolbar">
-              <Link to={"../add"} className="btn btn-success btn-sm">
-                <span className="mx-2">Add Institute</span>
+              <Link
+                to={"../add"}
+                className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+              >
+                <span className="mx-2 tw-text-white">Add Institute</span>
               </Link>
             </div>
           </div>

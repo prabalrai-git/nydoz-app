@@ -8,6 +8,7 @@ import DynamicLink from "../../molecules/DynamicLink";
 import { PiArrowRightBold } from "react-icons/pi";
 import { SlArrowRight } from "react-icons/sl";
 import { FaArrowRightToBracket } from "react-icons/fa6";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const CompanyListCard = () => {
   const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
@@ -79,7 +80,7 @@ const CompanyListCard = () => {
                 </div>
 
                 <div className="btn btn-sm btn-icon  w-40px h-40px tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover">
-                  <FaArrowRightToBracket color="white" size={16} />
+                  <MdKeyboardDoubleArrowRight color="white" size={20} />
                 </div>
               </div>
             </DynamicLink>

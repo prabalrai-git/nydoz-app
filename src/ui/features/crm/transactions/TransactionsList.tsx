@@ -12,10 +12,11 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { GoPersonFill } from "react-icons/go";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaEdit, FaPhoneAlt } from "react-icons/fa";
 import { BsPersonFillCheck } from "react-icons/bs";
 import CustomBadge from "../../../shared/components/CustomBadge";
 import CommonTable from "../../../shared/components/CommonTable";
+import { Tag } from "antd";
 
 const TransactionList = () => {
   const navigate = useNavigate();
@@ -78,10 +79,12 @@ const TransactionList = () => {
             <div className="text-center tw-flex tw-justify-start">
               {info.getValue<string>() ? (
                 <>
-                  <span className="badge badge-success ">YES</span>
+                  <Tag color="green">YES</Tag>
+                  {/* <span className="badge badge-success ">YES</span> */}
                 </>
               ) : (
-                <span className="badge badge-danger px-3">NO</span>
+                // <span className="badge badge-danger px-3">NO</span>
+                <Tag color="red">NO</Tag>
               )}
             </div>
           );
@@ -121,7 +124,7 @@ const TransactionList = () => {
               {info.getValue<string>() ? (
                 info.getValue<string>()
               ) : (
-                <span className="badge badge-warning px-3">NA</span>
+                <Tag>NA</Tag>
               )}
             </div>
           );
@@ -151,7 +154,7 @@ const TransactionList = () => {
                   </span>
                 </div>
               ) : (
-                <span className="badge badge-warning px-3">NA</span>
+                <Tag>NA</Tag>
               )}
             </div>
           );
@@ -181,7 +184,7 @@ const TransactionList = () => {
                   </span>
                 </div>
               ) : (
-                <span className="badge badge-warning px-3">NA</span>
+                <Tag>NA</Tag>
               )}
             </div>
           );
@@ -207,9 +210,9 @@ const TransactionList = () => {
               <button
                 title="Edit"
                 onClick={() => handleEditData(info?.row?.original)}
-                className="btn btn-sm btn-icon btn-info mx-3"
+                className="btn tw-bg-appBlue hover:tw-bg-appBlueHover btn-sm  btn-icon  mx-3"
               >
-                <i className="bi bi-pencil-square "></i>
+                <FaEdit color="white" size={15} />
               </button>
             </div>
             <div className="d-flex justify-content-center">

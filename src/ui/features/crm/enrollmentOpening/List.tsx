@@ -11,6 +11,9 @@ import Modal2 from "../../../shared/components/Modal2";
 import moment from "moment";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import useMutation from "../../../../hooks/useMutation";
+import { GoEye } from "react-icons/go";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 const List = () => {
   const navigate = useNavigate();
@@ -144,23 +147,26 @@ const List = () => {
           <div className="d-flex justify-content-center">
             <div
               title="view"
-              className="menu-link cursor-pointer bg-primary p-2 px-3"
+              className="menu-link cursor-pointer bg-primary p-2 px-3 tw-rounded-lg tw-flex tw-items-center"
             >
-              <i className="bi bi-box-arrow-up-right text-white"></i>
+              {/* <i className="bi bi-box-arrow-up-right text-white"></i> */}
+              <GoEye color="white" size={18} />
             </div>
             <div
               title="Edit"
               onClick={() => handleEditData(info?.row?.original)}
-              className="menu-link cursor-pointer bg-info p-2 px-3 mx-3"
+              className="menu-link cursor-pointer bg-info p-2 px-3 mx-3 tw-rounded-lg"
             >
-              <i className="bi bi-pencil-square text-white"></i>
+              {/* <i className="bi bi-pencil-square text-white"></i> */}
+              <FaEdit color="white" size={16} />
             </div>
             <div
               title="Delete"
               onClick={() => handleDeleteModal(info?.row?.original)}
-              className="menu-link cursor-pointer bg-danger p-2 px-3 "
+              className="menu-link cursor-pointer bg-danger p-2 px-3 tw-rounded-lg"
             >
-              <i className="bi bi-trash text-white"></i>
+              {/* <i className="bi bi-trash text-white"></i> */}
+              <RiDeleteBin5Line color="white" size={17} />
             </div>
           </div>
         ),
@@ -176,8 +182,11 @@ const List = () => {
         <div className="card-header">
           <h3 className="card-title">Institution's Openings List</h3>
           <div className="card-toolbar">
-            <Link to="../add" className="btn btn-success btn-sm">
-              <span className="mx-2">Add Openings</span>
+            <Link
+              to="../add"
+              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm "
+            >
+              <span className="mx-2 tw-text-white">Add Openings</span>
             </Link>
           </div>
         </div>

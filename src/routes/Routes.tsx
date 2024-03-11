@@ -31,7 +31,7 @@ const MainRouter = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <WorkSpaceDashboard />,
+            element: <h1>hello</h1>,
           },
         ],
       },

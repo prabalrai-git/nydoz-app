@@ -33,7 +33,7 @@ const ProfileLayout = () => {
           <LoadingSpinner />
         </div>
       ) : (
-        <div className="card-single-row">
+        <div className="card-single-row tw-text-white">
           <div className="card mb-5 mb-xxl-8 mt-5">
             <div className="card-body pt-9 pb-0">
               <div className="d-flex flex-wrap flex-sm-nowrap">
@@ -52,7 +52,7 @@ const ProfileLayout = () => {
                     <div>
                       <button
                         onClick={handleEditCompany}
-                        className="btn btn-info btn-sm float-end"
+                        className="btn tw-bg-appBlue tw-text-white hover:tw-text-white  hover:tw-bg-appBlueHover btn-sm float-end"
                       >
                         Edit
                       </button>

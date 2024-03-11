@@ -9,6 +9,7 @@ import { ISearchPaginationListProps } from "../../../types/axios.type";
 import { Spinner } from "react-bootstrap";
 import { capitalizeText } from "../../../functions/TextMuatations";
 import useFetch from "../../../hooks/useFetch";
+import { IoSearch } from "react-icons/io5";
 
 interface SearchState {
   [key: string]: string;
@@ -211,7 +212,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
   return (
     <div className="search-table-container">
       {data && data?.length > 0 && (
-        <div className="min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden p-6">
+        <div className="min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden p-6 tw-mx-8">
           <div
             className={
               searchParamsArray.length > 1
@@ -247,9 +248,10 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
               ))}
               <span
                 onClick={handleSearch}
-                className="btn btn-info btn-sm input-group-text tw-flex tw-items-center tw-justify-center"
+                className="btn tw-bg-appBlue btn-sm input-group-text tw-flex tw-items-center hover:tw-bg-appBlueHover tw-justify-center"
               >
-                <i className="bi bi-search"></i>
+                {/* <i className="bi bi-search tw-text-white"></i> */}
+                <IoSearch color="white" size={20} />
               </span>
             </div>
           </div>
