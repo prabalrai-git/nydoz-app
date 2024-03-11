@@ -4,10 +4,18 @@ import { useEffect } from "react";
 
 const useRemoveSubdomain = () => {
   useEffect(() => {
-    const { protocol, hostname, pathname, search, hash } = window.location;
+    const { protocol, hostname, pathname, search, hash, href } =
+      window.location;
+
+    // console.log(window.location, "window.location", href);
+
     const subdomain = hostname.split(".")[0];
 
     // Check if subdomain exists and is not 'localhost'
+
+    // if (href) {
+    //   window.location.replace(href);
+    // }
     if (subdomain && subdomain !== "localhost") {
       // Construct new URL without subdomain
       const newUrl = `${protocol}//localhost:5174${pathname}${search}${hash}`;

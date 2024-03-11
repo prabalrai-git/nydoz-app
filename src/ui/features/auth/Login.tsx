@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 // import { AuthContext } from "../../../context/AuthContext";
 import { ILoginResponse } from "../../../types/auth.type";
 import AuthContext from "../../../context/auth/AuthContext";
+import useRemoveSubdomain from "../../../hooks/useRemoveSubdomain";
 // import useSubdomain from "../../../hooks/useSubdomain";
 // import APP_SETTING from "../../../config/AppSetting";
 interface FormData {
@@ -40,6 +41,7 @@ const LoginPage = () => {
     resolver: yupResolver(LoginSchema),
   });
 
+  // useRemoveSubdomain();
   useEffect(() => {
     if (error) toast.error(error);
   }, [error]);
