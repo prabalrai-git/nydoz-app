@@ -125,7 +125,6 @@ const VisaTypeList = () => {
   const handleDeleteModal = (item: InformationChannelResponse) => {
     setSelectedData(item);
     handleShow();
-    console.log(item);
   };
 
   const handleDeleteItem = async () => {
@@ -134,7 +133,6 @@ const VisaTypeList = () => {
     if (id) {
       try {
         const response = await deleteData(payload);
-        console.log(response);
         if (response) {
           setFetchAgain(true);
           toast.success("Documents deleted successfully");

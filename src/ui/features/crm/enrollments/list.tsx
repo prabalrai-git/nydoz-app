@@ -1,7 +1,6 @@
 import { useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Flag } from "react-bootstrap-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import API_ROUTE from "../../../../service/api";
 import { IEnrollmentResponse } from "../../../../types/products.types";

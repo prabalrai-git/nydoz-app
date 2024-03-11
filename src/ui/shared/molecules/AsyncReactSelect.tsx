@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import useFetch from "../../../hooks/useFetch";
-import Select, { ActionMeta, MultiValue } from "react-select";
+import Select, { ActionMeta } from "react-select";
 
 interface IProps<T> {
   baseUrl: string;
@@ -116,7 +116,6 @@ function AsyncSelect<T>(props: IProps<T>) {
             const temp = data?.find(
               (item: T) => item[dataId] === selectedOption.value
             );
-            console.log(selectedOption, temp, "hey yooo");
             if (temp) {
               setSelectValue(temp);
             }

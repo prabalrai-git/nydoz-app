@@ -127,10 +127,6 @@ const AddVisitor = () => {
     name: "phone_nos" as never,
   });
 
-  // useEffect(() => {
-  //     console.log("fields", fields);
-  // }, [fields]);
-
   const {
     fields: emailFields,
     append: appendEmail,

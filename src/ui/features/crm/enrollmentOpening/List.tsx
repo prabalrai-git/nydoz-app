@@ -44,7 +44,6 @@ const List = () => {
     if (id) {
       try {
         const response = await deleteData(payload);
-        // console.log(response);
         if (response) {
           toast.success("Deleted successfully");
         } else {

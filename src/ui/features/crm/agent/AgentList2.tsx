@@ -7,7 +7,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Flag, People } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { GoPersonFill } from "react-icons/go";

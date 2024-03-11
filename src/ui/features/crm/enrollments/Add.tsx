@@ -57,7 +57,6 @@ const Add = () => {
 
   const handleResetForm = useCallback(() => {
     const companyDetails: IEnrollmentResponse = location?.state?.data;
-    // console.log(companyDetails, "companyDetails");
 
     const { logo, country, ...rest } = companyDetails;
 
@@ -69,7 +68,6 @@ const Add = () => {
   }, [location?.state?.data, reset]);
 
   useEffect(() => {
-    console.log(location?.state);
     if (location?.state?.data && location?.state?.data?.id) {
       handleResetForm();
     }

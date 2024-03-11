@@ -11,7 +11,6 @@ export const getSubdomain = () => {
   const [_httpPartMain, mainDomainPart] = DOMAIN.split("://");
 
   if (ENVIRONMENT === "development") {
-    // console.log("development condition running");
     return {
       subDomain: LOCAL_SUBDOMAIN,
       protocol: "",
@@ -20,7 +19,6 @@ export const getSubdomain = () => {
   }
 
   if (ENVIRONMENT !== "development" && baseUrl === DOMAIN) {
-    // console.log("deployed and no subdomain  condition running");
     return {
       subDomain: mainDomainPart,
       protocol: "",
@@ -37,15 +35,7 @@ export const getSubdomain = () => {
     );
     const [_httpPartSubDomain, subDomain] =
       removeDomainFromSubDomain.split("://");
-    // console.log("deployed with subdomain  condition running", {
-    //     domianFromEnv: DOMAIN,
-    //     domainWithSubdomain,
-    //     _httpPartMain,
-    //     mainDomainPart,
-    //     removeDomainFromSubDomain,
-    //     _httpPartSubDomain,
-    //     subDomain,
-    // });
+
     return {
       subDomain,
       protocol: _httpPartMain,

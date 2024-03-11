@@ -7,15 +7,14 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { AirplaneFill, Flag, People } from "react-bootstrap-icons";
+import { AirplaneFill } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { GoPersonFill } from "react-icons/go";
 import { FaEdit, FaPhoneAlt } from "react-icons/fa";
 import { BsPersonFillCheck } from "react-icons/bs";
-import CustomBadge from "../../../shared/components/CustomBadge";
-import CommonTable from "../../../shared/components/CommonTable";
+
 import { Tag } from "antd";
 
 const TransactionList = () => {

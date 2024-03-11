@@ -94,7 +94,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         });
       }
     } catch (error) {
-      // console.log(error, "error in auth provider");
       toast.error("Something went wrong");
       dispatch({
         type: "LOGOUT",

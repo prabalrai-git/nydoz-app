@@ -57,7 +57,6 @@ const AddUser = () => {
 
   const onFormSubmit = handleSubmit(async (data: IFormData) => {
     const response = await postData(data);
-    // console.log(response);
 
     if (response?.status === 201) {
       toast.success("User Added Successfully");

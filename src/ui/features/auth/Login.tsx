@@ -63,7 +63,6 @@ const LoginPage = () => {
         token: token,
       };
       // loginFn(payload, rememberMe);
-      // console.log(payload, "payload");
       dispatch({
         type: "LOGIN",
         payload: { userInfo: payload.user, token: payload.token },

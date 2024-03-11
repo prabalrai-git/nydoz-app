@@ -47,8 +47,6 @@ const DynamicForm = () => {
   });
 
   const onSubmit = async (data: IDynamicForm) => {
-    // console.log(data);
-
     const payload = data.custom_fields.map((field) => {
       const optionArry = field.options.split(",");
 
@@ -61,8 +59,6 @@ const DynamicForm = () => {
       };
     });
 
-    // console.log(payload, "payload");
-
     try {
       const response = await postData({
         ...data,
@@ -73,18 +69,14 @@ const DynamicForm = () => {
         toast.success("Payment Method Added Successfully");
         navigate(-1);
       }
-    } catch (error) {
-      // console.log(error);
-    }
+    } catch (error) {}
   };
 
   const typeValues = watch(`custom_fields`);
   // const formName = watch(`name`);
   const formRequired = watch(`is_account_required`);
 
-  useEffect(() => {
-    // console.log("formRequired", formRequired);
-  }, [formRequired]);
+  useEffect(() => {}, [formRequired]);
 
   return (
     <div className="card p-6 row">

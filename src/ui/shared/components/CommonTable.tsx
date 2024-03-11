@@ -229,7 +229,6 @@ const CommonTable: React.FC = () => {
       dataIndex: "goingAbroad",
       key: "goingAbroad",
       render: (text, a) => {
-        console.log(text, a);
         // return <h1>hello</h1>;
         return !text ? <Tag color="red">No</Tag> : <Tag color="green">Yes</Tag>;
       },

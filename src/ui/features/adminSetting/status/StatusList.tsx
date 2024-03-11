@@ -1,9 +1,6 @@
 import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
-import {
-  IAgentResponse,
-  IStatusReponse,
-} from "../../../../types/products.types";
+import { IStatusReponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";

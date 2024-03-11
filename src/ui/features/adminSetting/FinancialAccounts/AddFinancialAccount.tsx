@@ -1,8 +1,7 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   IDynamicForm,
   IFinancialAccountFields,
-  ITransactionTypeFields,
 } from "../../../../types/payload.type";
 import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
@@ -47,13 +46,6 @@ const AddFinancialAccount = () => {
   useHandleShowError(error);
 
   const onSubmit = async (data: IFinancialAccountFields) => {
-    // console.log(data);
-
-    // return console.log(
-    //   { ...data, payment_method_ids: payementMethodIds },
-    //   "payload"
-    // );
-
     try {
       const response = await postData({
         ...data,
@@ -63,9 +55,7 @@ const AddFinancialAccount = () => {
         toast.success("Financial Account Added Successfully");
         navigate(-1);
       }
-    } catch (error) {
-      // console.log(error);
-    }
+    } catch (error) {}
   };
 
   // const formName = watch(`name`);

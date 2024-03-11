@@ -4,8 +4,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // public Routes
 import App from "../App";
 import AuthLayout from "../ui/features/auth/Layout";
-import MainLayout from "../ui/features/home/MainLayout";
-import LandingHomePage from "../ui/features/home/Home";
 
 import AuthRoutes from "./auth";
 import PageNotFound from "../ui/features/utils/PageNotFound";

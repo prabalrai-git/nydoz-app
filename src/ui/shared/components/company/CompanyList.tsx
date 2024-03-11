@@ -44,7 +44,6 @@ const CompanyListCard = () => {
       <div className="card-body pt6 ">
         {/* <h3>hasSubdomain :{hasSubdomain.toString()}</h3> */}
         {data?.map((item: ICompanyResponse) => {
-          console.log(item);
           return (
             <DynamicLink
               key={item.id}

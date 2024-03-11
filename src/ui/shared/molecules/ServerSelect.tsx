@@ -31,7 +31,6 @@ function ServerSelect<T extends CommonItem>(props: IProps<T>) {
   );
 
   const handleChangeUrl = () => {
-    console.log("handleChangeUrl");
     setfetchNewData(true);
 
     setfetchUrl(`${baseUrl}?page=${currentPage + 1}&per_page=15`);
@@ -44,7 +43,6 @@ function ServerSelect<T extends CommonItem>(props: IProps<T>) {
   }, [fetchUrl]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    console.log("handleScroll");
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
     if (scrollHeight - scrollTop === clientHeight) {
       handleChangeUrl();
@@ -66,7 +64,6 @@ function ServerSelect<T extends CommonItem>(props: IProps<T>) {
   }, [data]);
 
   const handleOpenList = () => {
-    console.log("handleOpenList");
     setfetchNewData(!fetchNewData);
     setShowListBox(!showListBox);
   };

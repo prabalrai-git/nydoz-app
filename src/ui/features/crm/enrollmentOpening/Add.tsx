@@ -63,7 +63,6 @@ const Add = () => {
   useHandleShowError(error);
   const handleResetForm = useCallback(() => {
     const dataDetails: IEnrollmentOpeningsResponse = location?.state?.data;
-    // console.log(dataDetails, "dataDetails");
     const { currency, visa_type, enroll_start_date, enroll_end_date, ...rest } =
       dataDetails;
     const enrollStartDateObj = moment(enroll_start_date).format().split("T")[0];
@@ -84,7 +83,6 @@ const Add = () => {
   }, [location?.state?.data, reset]);
 
   useEffect(() => {
-    // console.log(location?.state);
     if (location?.state?.data && location?.state?.data?.id) {
       handleResetForm();
     }
@@ -95,7 +93,6 @@ const Add = () => {
   };
 
   const onFormSubmit = handleSubmit(async (data: IFormData) => {
-    // console.log(data, "data");
     let response;
     if (!institueId) {
       toast.error("Enrollment Institute is required");

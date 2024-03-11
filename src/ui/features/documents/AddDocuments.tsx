@@ -59,10 +59,8 @@ const AddDocuments = (props: IModalProps) => {
         is_restricted: selectedData.is_restricted,
         visible_to: selectedData.visible_to,
       };
-      //   return console.log(payload, "yo");
 
       const response = await updateData(selectedData?.id, payload);
-      console.log(response, "response");
       if (response?.status === 200) {
         toast.success("Document updated successfully");
         setFetchAgain(true);

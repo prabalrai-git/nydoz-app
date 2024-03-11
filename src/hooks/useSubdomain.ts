@@ -6,7 +6,6 @@ function useSubdomain() {
 
   const getSubdomain = (webUrl: Location) => {
     const subdomain = webUrl.hostname.split(".")[0];
-    // console.log(subdomain, "subdomain fro URL");
     if (subdomain === "localhost") return setSubdomain(undefined);
     setSubdomain(subdomain);
   };

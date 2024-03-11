@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ITransactionTypeFields } from "../../../../types/payload.type";
 import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
@@ -28,10 +28,6 @@ const AddTransactionTypes = () => {
   useHandleShowError(error);
 
   const onSubmit = async (data: ITransactionTypeFields) => {
-    // console.log(data);
-
-    // console.log(payload, "payload");
-
     try {
       const response = await postData({
         ...data,
@@ -40,9 +36,7 @@ const AddTransactionTypes = () => {
         toast.success("Transaction Type Added Successfully");
         navigate(-1);
       }
-    } catch (error) {
-      // console.log(error);
-    }
+    } catch (error) {}
   };
 
   // const formName = watch(`name`);

@@ -7,7 +7,6 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
-import { Tag } from "antd";
 
 const FinancialAccountsList = () => {
   const navigate = useNavigate();

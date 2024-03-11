@@ -24,7 +24,6 @@ PublicAxios.interceptors.request.use((config) => {
       "api" + "." + subdomainInfo?.subDomain
     );
     config.baseURL = newURL;
-    // console.log(config.baseURL, "config.baseURL");
     return config;
   }
   config.baseURL = baseUrl;
@@ -33,10 +32,8 @@ PublicAxios.interceptors.request.use((config) => {
 });
 PrivateAxios.interceptors.request.use((config) => {
   const subdomainInfo = getSubdomain();
-  // console.log(subdomainInfo, "subdomaininfo");
   const token = localStorage.getItem("token");
   const baseUrl = VITE_BASE_URL;
-  // console.log(window.location.href, "hreffff");
   const subDomainFromHref = window.location.href.split(".")[0].split("//")[1];
 
   // config.baseURL = subDomainFromHref + baseUrl;
@@ -61,7 +58,6 @@ PrivateAxios.interceptors.request.use((config) => {
       "api" + "." + subdomainInfo?.subDomain
     );
 
-    console.log(subDomainFromHrefArray.length, subDomainFromHrefArray);
     config.baseURL = newURL;
     return config;
   }

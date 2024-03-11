@@ -4,14 +4,12 @@ import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 import {
   Buildings,
   Gear,
-  House,
-  PersonBadge,
   PersonCheck,
   PersonLock,
 } from "react-bootstrap-icons";
 import { FaMoneyBill1 } from "react-icons/fa6";
 import { MdSpaceDashboard } from "react-icons/md";
-import { BsPersonVcard, BsPersonVcardFill } from "react-icons/bs";
+import { BsPersonVcard } from "react-icons/bs";
 
 const CrmLayout = () => {
   const sidebarMenu: ISidebarMenu[] = [

@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
@@ -10,7 +9,7 @@ import useHandleShowError from "../../../hooks/useHandleShowError";
 import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
-import { Boxes, Gear, House, PersonBadge } from "react-bootstrap-icons";
+import { Boxes, Gear, PersonBadge } from "react-bootstrap-icons";
 import { useWindowSize } from "usehooks-ts";
 import useWebSetting from "../../../context/useWebSetting";
 import { MdSpaceDashboard } from "react-icons/md";
@@ -25,7 +24,6 @@ const CompanyLayout = () => {
 
   const companySubdomian = url.split(".")[0].split("//")[1];
 
-  // console.log(companySubdomian, "hello world");
   const { fetchDataById, error } = useFetch<ICompanyResponse>(
     API_ROUTE.GET_COMPANY_BY_SUBDOMAIN,
     true
@@ -61,7 +59,6 @@ const CompanyLayout = () => {
         });
       }
     } catch (error) {
-      // console.log(error);
     } finally {
       setShowSplashScreen(false);
     }

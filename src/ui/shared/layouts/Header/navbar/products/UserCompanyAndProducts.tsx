@@ -5,7 +5,6 @@ import ClientMgmtImage from "../../../../../../assets/products/clienthub.png";
 
 const UserCompanyAndProducts = () => {
   const { userCompanyAndItsProducts } = useAuthContext();
-  // console.log(userCompanyAndItsProducts);
 
   return (
     <div className="user-company-product-wrapper  ">

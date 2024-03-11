@@ -29,7 +29,6 @@ const CompanyLayout = (props: IProps) => {
       setShowSplashScreen(true);
       const url = `${API_ROUTE.GET_COMPANY_BY_SUBDOMAIN}/${companySubdomian}`;
       const response = await fetchDataById(url);
-      console.log(response, "this is the payload");
       if (response?.data?.payload) {
         const { payload } = response.data;
         const companyInfo = {
@@ -50,7 +49,6 @@ const CompanyLayout = (props: IProps) => {
       }
     } catch (error) {
       navigate("/");
-      // console.log(error);
     } finally {
       setShowSplashScreen(false);
     }

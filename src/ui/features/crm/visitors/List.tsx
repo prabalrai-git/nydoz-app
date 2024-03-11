@@ -14,8 +14,7 @@ import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { GoPersonFill } from "react-icons/go";
 import { FaPhoneAlt, FaRegEdit } from "react-icons/fa";
 import { BsPersonFillCheck } from "react-icons/bs";
-import CustomBadge from "../../../shared/components/CustomBadge";
-import CommonTable from "../../../shared/components/CommonTable";
+
 import { Tag } from "antd";
 
 const VisitorList = () => {

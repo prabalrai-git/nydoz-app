@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import NavPills from "../../shared/molecules/NavPills";
 import { INavPill } from "../../../types/app.types";
-import BreadcrumbAndBack from "../../shared/molecules/BreadcrumbAndBack";
 
 const Layout = () => {
   const navpills: INavPill[] = [

@@ -63,8 +63,6 @@ const AddVisaType = (props: IModalProps) => {
   }, [reset, selectedData]);
 
   useEffect(() => {
-    console.log(errList);
-
     if (errList?.description) {
       setError("description", {
         type: "manual",

@@ -38,7 +38,6 @@ const CompanyList = () => {
   const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
   const handleEditData = (item: ICompanyResponse) => {
-    console.log(item);
     navigate(`/home/company/add`, {
       state: { data: item },
     });
@@ -62,12 +61,10 @@ const CompanyList = () => {
   useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
-      console.log("initial render");
     } else {
       const tempURL = `${API_ROUTE.GET_COMPANIES}?page=${paginationState.currentPage}&per_page=${paginationState.perPage}&name=${searchTerm}`;
       window.scrollTo(0, 0);
       setFetchUrl(tempURL);
-      console.log("next render");
     }
   }, [paginationState.currentPage, paginationState.perPage, searchTerm]);
 
@@ -195,7 +192,6 @@ const CompanyList = () => {
   const handleDeleteModal = (item: ICompanyResponse) => {
     setSelectedData(item);
     handleShow();
-    console.log(item);
   };
 
   const handleDeleteItem = async () => {
@@ -203,7 +199,6 @@ const CompanyList = () => {
     if (id) {
       try {
         const response = await deleteData(id);
-        console.log(response);
         if (response) {
           setFetchAgain(true);
           toast.success("Company deleted successfully");

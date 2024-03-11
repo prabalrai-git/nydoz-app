@@ -17,7 +17,6 @@ const MyProductList = (props: IProps) => {
   const { partialPath } = props;
   const { companyInfo } = useAuthContext();
 
-  // console.log(companyInfo, "yo");
   const companyId = companyInfo?.id;
   const proudctListUrl = `${API_ROUTE.GET_COMPANIES}/${companyId}/products`;
 

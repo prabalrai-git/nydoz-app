@@ -93,7 +93,6 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
     } else {
       setSearchState(getQueryParams());
       const newUrl = `${baseUrl}${window.location.search}`;
-      console.log(newUrl, "sdsd");
       setFetchUrl(newUrl);
       setFetchAgain(true);
     }
