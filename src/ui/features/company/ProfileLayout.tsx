@@ -23,7 +23,7 @@ const ProfileLayout = () => {
   }, []);
 
   const handleEditCompany = () => {
-    navigate(`/workspace/company/edit`, { state: { data } });
+    navigate(`/company/edit`, { state: { data } });
   };
 
   return (

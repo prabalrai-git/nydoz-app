@@ -24,7 +24,7 @@ const CompanyDashboard = () => {
             {isCompanyOwner && (
               <Link
                 type="button"
-                to={`/workspace/company/product-settings/buy`}
+                to={`/company/product-settings/buy`}
                 className="btn btn-sm btn-primary"
               >
                 PURCHASE PRODUCTS

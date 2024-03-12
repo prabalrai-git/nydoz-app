@@ -156,7 +156,7 @@ const AddCompany = () => {
       response = await postData(tempPostData);
       if (response?.data?.status === "ok") {
         toast.success("Company Added Successfully");
-        navigate("/workspace", { replace: true });
+        navigate("/", { replace: true });
       }
     }
   });

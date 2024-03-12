@@ -39,7 +39,19 @@ PrivateAxios.interceptors.request.use((config) => {
   // config.baseURL = subDomainFromHref + baseUrl;
   const subDomainFromHrefArray = window.location.href.split(".");
 
+  // check if there is no subdomain
+  const includes = baseUrl.includes(subDomainFromHref);
   const finalUrl = `http://${subDomainFromHref}.${baseUrl.split("://")[1]}`;
+
+  // console.log(
+  //   finalUrl,
+  //   "this is final api url",
+  //   subDomainFromHref,
+  //   "hello",
+  //   includes,
+  //   baseUrl,
+  //   subDomainFromHrefArray
+  // );
 
   if (subDomainFromHrefArray.length > 1) {
     config.baseURL = finalUrl;

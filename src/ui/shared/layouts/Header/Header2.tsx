@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BoxArrowRight } from "react-bootstrap-icons";
 import useAuthContext from "../../../../context/auth/useAuthContext";
 import useSubdomain from "../../../../hooks/useSubdomain";
+import APP_SETTING from "../../../../config/AppSetting";
 
 const Header2 = () => {
   const urlSubdomain = useSubdomain();
@@ -15,7 +16,7 @@ const Header2 = () => {
   const { isLoggedIn, dispatch } = useAuthContext();
   const navigate = useNavigate();
   const handleNavigateCreateCompany = () => {
-    navigate("/workspace/create-company");
+    navigate("/create-company");
   };
 
   const logoutFn = () => {
@@ -26,7 +27,7 @@ const Header2 = () => {
     } else {
       sessionStorage.removeItem("token");
     }
-    navigate("/auth/login");
+    navigate(APP_SETTING.LOGIN_URL);
     dispatch({ type: "LOGOUT" });
   };
 
@@ -67,7 +68,7 @@ const Header2 = () => {
                     Dashboard
                   </Link>
                 ) : (
-                  <Link to={"/workspace"} className="nav-link fs-7">
+                  <Link to={"/"} className="nav-link fs-7">
                     Workspace
                   </Link>
                 )}
@@ -127,7 +128,7 @@ const Header2 = () => {
                   </NavDropdown.Item>
                   <NavDropdown.Item>
                     {" "}
-                    <LinkContainer className="py-1" to="/workspace">
+                    <LinkContainer className="py-1" to="/">
                       <div>
                         <span className="me-3">
                           <PersonGear size={16} color="#000000" />

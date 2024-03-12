@@ -33,6 +33,8 @@ const LoginPage = () => {
     false
   );
 
+  // useRemoveSubdomain();
+
   const {
     register,
     handleSubmit,
@@ -70,7 +72,7 @@ const LoginPage = () => {
         payload: { userInfo: payload.user, token: payload.token },
       });
 
-      navigate("/workspace", { replace: true });
+      navigate("/", { replace: true });
     }
   });
 

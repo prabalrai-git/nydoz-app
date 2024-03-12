@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 // import useWebSetting from "../context/useWebSetting";
 
 // public Routes
@@ -26,18 +26,13 @@ const MainRouter = createBrowserRouter([
       {
         path: "",
         element: <WorkspaceLayout />,
-        children: [
-          {
-            path: "",
-            element: <h1>hello</h1>,
-          },
-        ],
-      },
-      {
-        path: "workspace",
-        element: <WorkspaceLayout />,
         children: WorkspaceRoutes,
       },
+      // {
+      //   path: "workspace",
+      //   element: <WorkspaceLayout />,
+      //   children: WorkspaceRoutes,
+      // },
       {
         path: "auth",
         element: <AuthLayout />,

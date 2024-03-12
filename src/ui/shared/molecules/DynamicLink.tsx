@@ -39,7 +39,7 @@ const DynamicLink = (props: Iprops) => {
         </>
       ) : (
         <Link
-          to={`http://${subdomain}.localhost:5174/workspace/${pathName}`}
+          to={`http://${subdomain}.localhost:5174/${pathName}`}
           className={className}
         >
           {children}

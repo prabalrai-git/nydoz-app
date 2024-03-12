@@ -7,9 +7,21 @@ const useRemoveSubdomain = () => {
     const { protocol, hostname, pathname, search, hash, href } =
       window.location;
 
-    // console.log(window.location, "window.location", href);
-
     const subdomain = hostname.split(".")[0];
+    // return console.log(
+    //   "ran",
+    //   "ran",
+    //   protocol,
+    //   hostname,
+    //   pathname,
+    //   search,
+    //   "search",
+    //   hash,
+    //   "hash",
+    //   href,
+    //   "window.location",
+    //   subdomain
+    // );
 
     // Check if subdomain exists and is not 'localhost'
 
@@ -20,12 +32,14 @@ const useRemoveSubdomain = () => {
       // Construct new URL without subdomain
       const newUrl = `${protocol}//localhost:5174${pathname}${search}${hash}`;
 
+      // return console.log(newUrl);
+
       // Redirect to the new URL
       window.location.replace(newUrl);
     }
   }, []);
 
-  return null;
+  return true;
 };
 
 export default useRemoveSubdomain;

@@ -1,10 +1,16 @@
+import { Spinner } from "react-bootstrap";
 import useRemoveSubdomain from "../../../hooks/useRemoveSubdomain";
 import CompanyListCard from "../../shared/components/company/CompanyList";
 // import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
 import UserCompanyAndProducts from "../../shared/layouts/Header/navbar/products/UserCompanyAndProducts";
+import useSubdomainRemoval from "../../../hooks/useSubdomainRemoval";
 
 const Dashboard = () => {
-  useRemoveSubdomain();
+  const shouldRender = useRemoveSubdomain();
+
+  if (!shouldRender) {
+    return <Spinner size="sm" animation="border" role="status"></Spinner>; // or any other fallback UI
+  }
 
   return (
     <div className=" h-100vh py-3">

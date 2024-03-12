@@ -3,17 +3,17 @@ import { Navigate } from "react-router-dom";
 import useSubdomain from "../../hooks/useSubdomain";
 
 const ProtectHomeRoute: FC<{ children: React.ReactNode }> = ({ children }) => {
-    const subDomainFromUrl = useSubdomain();
+  const subDomainFromUrl = useSubdomain();
 
-    return (
-        <div>
-            {subDomainFromUrl ? (
-                <Navigate to={`/workspace/${subDomainFromUrl}`} />
-            ) : (
-                <div>{children}</div>
-            )}
-        </div>
-    );
+  return (
+    <div>
+      {subDomainFromUrl ? (
+        <Navigate to={`/${subDomainFromUrl}`} />
+      ) : (
+        <div>{children}</div>
+      )}
+    </div>
+  );
 };
 
 export default ProtectHomeRoute;

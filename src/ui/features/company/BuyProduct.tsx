@@ -107,7 +107,7 @@ const BuyProduct = () => {
     const response = await postData(payload);
     if (response?.status === 201) {
       toast.success("Product bought successfully");
-      navigate(`/workspace/company/dashboard`);
+      navigate(`/company/dashboard`);
     } else {
       toast.error("Something went wrong");
     }

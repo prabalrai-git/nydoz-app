@@ -60,7 +60,7 @@ const ChangePassword = () => {
     if (response?.data?.message) {
       toast.success(response?.data?.message || "Password Changed Successfully");
 
-      navigate("/workspace", { replace: true });
+      navigate("/", { replace: true });
     }
   });
 

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const MainLayout = () => {
   useEffect(() => {
     // Redirect to '/login' without any transition using the browser API
-    window.location.href = "/workspace";
+    window.location.href = "/";
   }, []);
 
   return (

@@ -13,6 +13,7 @@ import AllPublicProductsDropdown from "./products/AllPublicProductsDropdown";
 import { RiLockPasswordFill, RiLogoutBoxRLine } from "react-icons/ri";
 import { FaBuildingCircleCheck } from "react-icons/fa6";
 import { BsBuildingAdd } from "react-icons/bs";
+import APP_SETTING from "../../../../../config/AppSetting";
 
 const Navbar = () => {
   const productRef = useRef(null);
@@ -29,7 +30,8 @@ const Navbar = () => {
     } else {
       sessionStorage.removeItem("token");
     }
-    navigate("/auth/login");
+    // return console.log(APP_SETTING.LOGIN_URL);
+    window.location.replace(APP_SETTING.LOGIN_URL);
     dispatch({ type: "LOGOUT" });
   };
 
@@ -72,7 +74,7 @@ const Navbar = () => {
           <div className="right-container">
             {isLoggedIn ? (
               <>
-                <LinkContainer className="cursor-pointer me-2" to="/workspace">
+                <LinkContainer className="cursor-pointer me-2" to="/">
                   <div className="tw-flex tw-flex-row tw-items-center  ">
                     <p className="me-3">
                       <BuildingAdd size={16} color="#1e40d6" />
