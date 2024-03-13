@@ -38,99 +38,97 @@ const TransactionList = () => {
         cell: (info) => info.row.index + 1,
       },
       {
-        accessorKey: "Name",
+        accessorKey: "payment_method_id",
         header: () => (
           <div className="tw-flex tw-gap-2">
             <GoPersonFill size={16} />
-            <p>Financial account</p>
+            <p>Payment Method Id</p>
           </div>
         ),
         cell: (info) => {
           return (
             <div className="d-flex align-items-center ">
-              <div className="d-flex justify-content-start flex-column ">
-                <a
-                  href="#"
-                  className="text-dark fw-bold text-hover-primary mb-1 fs-6"
-                >
-                  {info?.row?.original?.first_name}
-                  {info?.row?.original?.last_name}
-                </a>
-                <span className="text-muted fw-semibold d-block fs-7">
-                  {info?.row?.original?.email}
-                </span>
-              </div>
+              {info.getValue<string>()}
             </div>
           );
         },
       },
 
       {
-        accessorKey: "going_to_foreign",
+        accessorKey: "financial_account_id",
         header: () => (
           <div className="tw-flex tw-gap-2">
             <AirplaneFill size={14} />
-            <p>Bill Number</p>
+            <p>Financial Account Id</p>
           </div>
         ),
         cell: (info) => {
           return (
             <div className="text-center tw-flex tw-justify-start">
-              {info.getValue<string>() ? (
-                <>
-                  <Tag color="green">YES</Tag>
-                  {/* <span className="badge badge-success ">YES</span> */}
-                </>
-              ) : (
-                // <span className="badge badge-danger px-3">NO</span>
-                <Tag color="red">NO</Tag>
-              )}
+              {info.getValue<string>()}
             </div>
           );
         },
       },
       {
-        accessorKey: "phone_nos",
+        accessorKey: "bill_number",
         header: () => (
           <div className="tw-flex tw-gap-2">
             {/* <i className="bi bi-telephone me-2 fs-7"></i> */}
             <FaPhoneAlt size={14} />
-            <span>Physical bill number</span>
+            <span>Bill Number</span>
           </div>
         ),
         cell: (info) => {
-          return (
-            <div>
-              {info.getValue<string>()?.length > 0 &&
-                info.getValue<string>()[0]}
-            </div>
-          );
+          return <div>{info.getValue<string>()}</div>;
         },
       },
 
       {
-        accessorKey: "visiting_country",
+        accessorKey: "physical_bill_number",
         header: () => (
           <div className="tw-flex tw-gap-2">
             {/* <Flag size={16} className="mx-2" /> */}
             <RiFlagFill size={16} />
-            <span>Amount</span>
+            <span>Physical Bill Number</span>
           </div>
         ),
         cell: (info) => {
           return (
             <div className="text-center tw-flex tw-flex-start">
-              {info.getValue<string>() ? (
-                info.getValue<string>()
-              ) : (
-                <Tag>NA</Tag>
-              )}
+              {info.getValue<string>()}
             </div>
           );
         },
       },
       {
-        accessorKey: "agent",
+        accessorKey: "amount",
+        header: () => (
+          <div className="tw-flex tw-gap-2">
+            {/* <Flag size={16} className="mx-2" /> */}
+            <BsPersonFillCheck size={18} />
+            <span>Amount</span>
+          </div>
+        ),
+        cell: (info) => {
+          return <div>{info.getValue<string>()}</div>;
+        },
+      },
+      // {
+      //   accessorKey: "payment_receipt_files",
+      //   header: () => (
+      //     <div className="tw-flex tw-gap-2">
+      //       {/* <Flag size={16} className="mx-2" /> */}
+      //       <BsPersonFillCheck size={18} />
+      //       <span>Payment Receipt Files</span>
+      //     </div>
+      //   ),
+      //   cell: (info) => {
+      //     return <div>{info.getValue<string>()}</div>;
+      //   },
+      // },
+      {
+        accessorKey: "remarks",
         header: () => (
           <div className="tw-flex tw-gap-2">
             {/* <Flag size={16} className="mx-2" /> */}
@@ -139,56 +137,52 @@ const TransactionList = () => {
           </div>
         ),
         cell: (info) => {
-          return (
-            <div>
-              {info.getValue<Partial<IAgentResponse>>() ? (
-                <div>
-                  <span>
-                    {" "}
-                    {info.getValue<Partial<IAgentResponse>>()?.first_name}
-                  </span>
-                  <span>
-                    {" "}
-                    {info.getValue<Partial<IAgentResponse>>()?.last_name}
-                  </span>
-                </div>
-              ) : (
-                <Tag>NA</Tag>
-              )}
-            </div>
-          );
+          return <div>{info.getValue<string>()}</div>;
         },
       },
       {
-        accessorKey: "agent",
+        accessorKey: "transaction_type_id",
         header: () => (
           <div className="tw-flex tw-gap-2">
             {/* <Flag size={16} className="mx-2" /> */}
             <BsPersonFillCheck size={18} />
-            <span>Transaction Type</span>
+            <span>Transaction Type Id</span>
           </div>
         ),
         cell: (info) => {
-          return (
-            <div>
-              {info.getValue<Partial<IAgentResponse>>() ? (
-                <div>
-                  <span>
-                    {" "}
-                    {info.getValue<Partial<IAgentResponse>>()?.first_name}
-                  </span>
-                  <span>
-                    {" "}
-                    {info.getValue<Partial<IAgentResponse>>()?.last_name}
-                  </span>
-                </div>
-              ) : (
-                <Tag>NA</Tag>
-              )}
-            </div>
-          );
+          return <div>{info.getValue<string>()}</div>;
         },
       },
+      // {
+      //   accessorKey: "custom_field_values",
+      //   header: () => (
+      //     <div className="tw-flex tw-gap-2">
+      //       {/* <Flag size={16} className="mx-2" /> */}
+      //       <BsPersonFillCheck size={18} />
+      //       <span>Custom Field Values</span>
+      //     </div>
+      //   ),
+      //   cell: (info) => {
+      //     return (
+      //       <div>
+      //         {info.getValue<Partial<IAgentResponse>>() ? (
+      //           <div>
+      //             <span>
+      //               {" "}
+      //               {info.getValue<Partial<IAgentResponse>>()?.first_name}
+      //             </span>
+      //             <span>
+      //               {" "}
+      //               {info.getValue<Partial<IAgentResponse>>()?.last_name}
+      //             </span>
+      //           </div>
+      //         ) : (
+      //           <Tag>NA</Tag>
+      //         )}
+      //       </div>
+      //     );
+      //   },
+      // },
 
       {
         accessorKey: "action",
@@ -246,19 +240,19 @@ const TransactionList = () => {
         <div className="card">
           <div className="card-header">
             <h3 className="card-title">Transaction's List</h3>
-            <div className="card-toolbar">
+            {/* <div className="card-toolbar">
               <Link
-                to={`add`}
+                to={`../add`}
                 className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover tw-text-white hover:tw-text-white tw-font-bold btn-sm"
               >
                 <span className="mx-2">Add Transaction</span>
               </Link>
-            </div>
+            </div> */}
           </div>
           <div className="card-body">
             <SearchPaginationList
               searchParamsArray={searchFilter}
-              baseUrl={API_ROUTE.CM_VISITORS}
+              baseUrl={API_ROUTE.TRANSACTION}
               columns={tableColumns}
             />
             {/* <input type="text" /> */}

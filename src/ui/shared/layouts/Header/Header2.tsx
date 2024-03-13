@@ -20,14 +20,13 @@ const Header2 = () => {
   };
 
   const logoutFn = () => {
-    const rememberMeFromLocal = localStorage.getItem("rememberMe");
-    if (rememberMeFromLocal) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("rememberMe");
-    } else {
-      sessionStorage.removeItem("token");
-    }
-    navigate(APP_SETTING.LOGIN_URL);
+    // const rememberMeFromLocal = localStorage.getItem("rememberMe");
+    // if (rememberMeFromLocal) {
+    //   localStorage.removeItem("token");
+    //   localStorage.removeItem("rememberMe");
+    // } else {
+    //   sessionStorage.removeItem("token");
+    // }
     dispatch({ type: "LOGOUT" });
   };
 

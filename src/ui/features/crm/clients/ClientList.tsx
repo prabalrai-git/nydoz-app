@@ -12,7 +12,7 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { GoEye, GoPersonFill } from "react-icons/go";
 import { FaEdit, FaPhoneAlt } from "react-icons/fa";
-import { RiFlagFill } from "react-icons/ri";
+import { RiFlagFill, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BsPersonFillCheck } from "react-icons/bs";
 import { Tag } from "antd";
 
@@ -187,6 +187,17 @@ const ClientList = () => {
               className="btn btn-sm btn-icon tw-bg-appBlue hover:tw-bg-appBlueHover mx-3"
             >
               <FaEdit color="white" size={15} />
+            </button>
+            <button
+              title="Add Transaction"
+              onClick={() => {
+                navigate(
+                  `../transactions/add?client_id=${info?.row?.original?.id}`
+                );
+              }}
+              className="btn btn-sm btn-icon tw-bg-appBrown hover:tw-bg-appBrownHover mx-3"
+            >
+              <RiMoneyDollarCircleLine color="white" size={22} />
             </button>
           </div>
         ),

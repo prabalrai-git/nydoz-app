@@ -3,7 +3,7 @@ import useRemoveSubdomain from "../../../hooks/useRemoveSubdomain";
 import CompanyListCard from "../../shared/components/company/CompanyList";
 // import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
 import UserCompanyAndProducts from "../../shared/layouts/Header/navbar/products/UserCompanyAndProducts";
-import useSubdomainRemoval from "../../../hooks/useSubdomainRemoval";
+import useAuthContext from "../../../context/auth/useAuthContext";
 
 const Dashboard = () => {
   const shouldRender = useRemoveSubdomain();
@@ -11,6 +11,10 @@ const Dashboard = () => {
   if (!shouldRender) {
     return <Spinner size="sm" animation="border" role="status"></Spinner>; // or any other fallback UI
   }
+
+  const { ...auth } = useAuthContext();
+
+  console.log(auth, "auth useAyth");
 
   return (
     <div className=" h-100vh py-3">

@@ -72,6 +72,8 @@ const API_ROUTE = {
   USER: "/api/v1/users",
   GET_CURRENCY: "/api/v1/currencies",
   CM_CLIENTS: "/api/v1/client-management/clients",
+
+  //  payment methods
   PAYMENT_METHODS: "/api/v1/payment-methods",
 
   //transaction types
@@ -95,6 +97,11 @@ const API_ROUTE = {
   POST_STATUSES: "/api/v1/statuses",
   UPDATE_STATUSES: "/api/v1/statuses",
   DELETE_STATUSES: "/api/v1/statuses",
+
+  // Client-management CM transtations
+  TRANSACTION: "/api/v1/client-management/clients/transactions",
+  GET_TRANSACTION: "/api/v1/client-management/clients",
+  POST_TRANSACTION: "/api/v1/client-management/clients",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

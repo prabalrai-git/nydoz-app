@@ -6,12 +6,11 @@ import MyProducts from "./MyProducts";
 import { useOnClickOutside } from "usehooks-ts";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
-import { BoxArrowRight, BuildingAdd, GearWide } from "react-bootstrap-icons";
+import { BuildingAdd } from "react-bootstrap-icons";
 import UserCompanyAndProducts from "./products/UserCompanyAndProducts";
 import Images from "../../../../../constants/Images";
 import AllPublicProductsDropdown from "./products/AllPublicProductsDropdown";
 import { RiLockPasswordFill, RiLogoutBoxRLine } from "react-icons/ri";
-import { FaBuildingCircleCheck } from "react-icons/fa6";
 import { BsBuildingAdd } from "react-icons/bs";
 import APP_SETTING from "../../../../../config/AppSetting";
 
@@ -23,16 +22,8 @@ const Navbar = () => {
   const [showProducts, setShowProducts] = useState<boolean>(false);
 
   const logoutFn = () => {
-    const rememberMeFromLocal = localStorage.getItem("rememberMe");
-    if (rememberMeFromLocal) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("rememberMe");
-    } else {
-      sessionStorage.removeItem("token");
-    }
-    // return console.log(APP_SETTING.LOGIN_URL);
-    window.location.replace(APP_SETTING.LOGIN_URL);
     dispatch({ type: "LOGOUT" });
+    window.location.replace(APP_SETTING.LOGIN_URL);
   };
 
   return (

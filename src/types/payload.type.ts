@@ -140,7 +140,7 @@ export interface ICurrencysResponse {
   symbol: string;
 }
 
-interface ICustomFields {
+export interface ICustomFields {
   name: string;
   type: string;
   options: string;

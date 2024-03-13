@@ -36,7 +36,7 @@ const CrmLayout = () => {
     {
       id: 4,
       title: "Transactions",
-      link: "transactions",
+      link: "transactions/list",
       icon: <FaMoneyBill1 size={20} />,
     },
     {

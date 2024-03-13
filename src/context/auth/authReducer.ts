@@ -1,3 +1,4 @@
+import APP_SETTING from "../../config/AppSetting";
 import { TAction, IState } from "./types";
 
 const authReducer = (state: IState, action: TAction): IState => {
@@ -14,6 +15,7 @@ const authReducer = (state: IState, action: TAction): IState => {
         token: action.payload.token,
         isLoggedIn: true,
       };
+
     case "SET_USER_INFO":
       return {
         ...state,
@@ -42,6 +44,7 @@ const authReducer = (state: IState, action: TAction): IState => {
       };
     case "LOGOUT":
       handleLogout();
+
       return {
         ...state,
         isLoggedIn: false,

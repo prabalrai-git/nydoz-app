@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 // import { AuthContext } from "../../../context/AuthContext";
 import { ILoginResponse } from "../../../types/auth.type";
 import AuthContext from "../../../context/auth/AuthContext";
-import useRemoveSubdomain from "../../../hooks/useRemoveSubdomain";
 // import useSubdomain from "../../../hooks/useSubdomain";
 // import APP_SETTING from "../../../config/AppSetting";
 interface FormData {
@@ -23,6 +22,7 @@ interface FormData {
 
 const LoginPage = () => {
   const { dispatch } = useContext(AuthContext);
+
   // const subdomain = useSubdomain();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const rememberMe = true;
@@ -33,8 +33,6 @@ const LoginPage = () => {
     false
   );
 
-  // useRemoveSubdomain();
-
   const {
     register,
     handleSubmit,
@@ -43,7 +41,6 @@ const LoginPage = () => {
     resolver: yupResolver(LoginSchema),
   });
 
-  // useRemoveSubdomain();
   useEffect(() => {
     if (error) toast.error(error);
   }, [error]);
@@ -67,14 +64,16 @@ const LoginPage = () => {
         token: token,
       };
       // loginFn(payload, rememberMe);
+
       dispatch({
         type: "LOGIN",
         payload: { userInfo: payload.user, token: payload.token },
       });
-
       navigate("/", { replace: true });
     }
   });
+
+  // const onFormSubmit = () => {};
 
   return (
     <div className="container pt-4" id="kt_app_root ">

@@ -11,6 +11,8 @@ export default {
         appBlue: "#1778ff",
         appBlueHover: "#1266db",
         appRed: "#fc0f03",
+        appBrown: "#977254",
+        appBrownHover: "#673E0F",
       },
     },
   },
