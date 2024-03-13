@@ -18,7 +18,6 @@ type PostDataResponse<T> = {
     id: string,
     payload: P
   ) => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
-
   update: (
     url: string,
     payload?: P

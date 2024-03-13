@@ -41,7 +41,7 @@ interface IUseMeData {
 }
 
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
-  const subdomainMain = getSubdomain();
+  // const subdomainMain = getSubdomain();
   const tokenFromLocal =
     localStorage.getItem("token") || sessionStorage.getItem("token") || null;
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);

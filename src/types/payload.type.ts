@@ -187,11 +187,11 @@ export interface IDynamicForm {
 export interface IStatusPayload {
   title: string;
   code: string;
-  background_color_class: string | undefined;
-  text_color_class: string | undefined;
-  action_api_url: string | undefined;
+  background_color_class?: string;
+  text_color_class?: string;
+  action_api_url?: string;
   group_code: string;
-  is_group_default: boolean;
+  is_group_default?: boolean;
 }
 
 export interface IStatusResponse extends IStatusPayload {

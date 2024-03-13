@@ -1,4 +1,3 @@
-import APP_SETTING from "../../config/AppSetting";
 import { TAction, IState } from "./types";
 
 const authReducer = (state: IState, action: TAction): IState => {

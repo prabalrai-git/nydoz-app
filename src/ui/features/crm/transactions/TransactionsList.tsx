@@ -1,12 +1,8 @@
 import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
-import {
-  IVisitorResponse,
-  IAgentResponse,
-} from "../../../../types/products.types";
+import { IVisitorResponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { AirplaneFill } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
@@ -14,8 +10,6 @@ import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { GoPersonFill } from "react-icons/go";
 import { FaEdit, FaPhoneAlt } from "react-icons/fa";
 import { BsPersonFillCheck } from "react-icons/bs";
-
-import { Tag } from "antd";
 
 const TransactionList = () => {
   const navigate = useNavigate();

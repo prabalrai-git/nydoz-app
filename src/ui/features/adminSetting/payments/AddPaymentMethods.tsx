@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { IDynamicForm } from "../../../../types/payload.type";
+import { ICustomFields } from "../../../../types/payload.type";
 import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useValidationError from "../../../../hooks/useValidationError";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
+
+type DynamicFormPayload = {
+  name: string;
+  is_account_required: boolean;
+  custom_fields: ICustomFields[];
+};
 
 const DynamicForm = () => {
   const [isAccountRequired, setIsAccountRequired] = useState(false);
@@ -18,7 +24,7 @@ const DynamicForm = () => {
   const handleCheckboxChange = () => {
     setIsAccountRequired(!isAccountRequired);
   };
-  const defaultValues: IDynamicForm = {
+  const defaultValues: DynamicFormPayload = {
     name: "",
     is_account_required: false,
     custom_fields: [
@@ -46,7 +52,7 @@ const DynamicForm = () => {
     name: "custom_fields",
   });
 
-  const onSubmit = async (data: IDynamicForm) => {
+  const onSubmit = async (data: DynamicFormPayload) => {
     const payload = data.custom_fields.map((field) => {
       const optionArry = field.options.split(",");
 
