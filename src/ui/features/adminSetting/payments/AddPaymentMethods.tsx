@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { ICustomFields } from "../../../../types/payload.type";
+import { DynamicFormPayload } from "../../../../types/payload.type";
 import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useValidationError from "../../../../hooks/useValidationError";
 import useHandleShowError from "../../../../hooks/useHandleShowError";
-
-type DynamicFormPayload = {
-  name: string;
-  is_account_required: boolean;
-  custom_fields: ICustomFields[];
-};
 
 const DynamicForm = () => {
   const [isAccountRequired, setIsAccountRequired] = useState(false);
@@ -55,13 +49,16 @@ const DynamicForm = () => {
   const onSubmit = async (data: DynamicFormPayload) => {
     const payload = data.custom_fields.map((field) => {
       const optionArry = field.options.split(",");
-
       return {
         name: field.name,
         type: field.type,
         options: optionArry,
         is_required: field.is_required,
-        multiple_value: field.multiple_value,
+        multiple_value:
+          field.type.toLowerCase() === "select" ||
+          field.type.toLowerCase() === "checkbox"
+            ? true
+            : false,
       };
     });
 
@@ -100,7 +97,7 @@ const DynamicForm = () => {
                 placeholder="Name"
               />
             </div>
-            <div className="mb-6">
+            <div className="my-6">
               <label className="form-label mx-3">Is Account Required</label>
               {/* <input
                 className="form-check-input"
@@ -121,8 +118,13 @@ const DynamicForm = () => {
               {fields.map((field, index) => {
                 const indexValue = index;
                 return (
-                  <div className="my-6 shadow shadow-sm p-6" key={field.id}>
-                    <h5 className="text-info my-3">SN : {index + 1}</h5>
+                  <div
+                    className="my-6  p-6 tw-rounded-lg tw-shadow-lg"
+                    key={field.id}
+                  >
+                    <h5 className="text-info my-5 tw-font-bold">
+                      Custom Field Number: {index + 1}
+                    </h5>
                     <div className="mb-3">
                       <label className="form-label">Input Field Name</label>
                       <input
@@ -161,7 +163,7 @@ const DynamicForm = () => {
                           Is Input Field Required
                         </label>
                         <input
-                          className="form-check-input"
+                          className="form-check-input tw-p-1"
                           type="checkbox"
                           {...register(
                             `custom_fields.${indexValue}.is_required`
@@ -169,7 +171,7 @@ const DynamicForm = () => {
                         />
                       </div>
                       <button
-                        className="btn btn-light-danger btn-sm "
+                        className=" tw-bg-appRed hover:tw-bg-appRedHover  tw-text-white tw-h-12 tw-px-3 tw-font-bold tw-rounded-lg "
                         onClick={() => remove(index)}
                       >
                         Delete Input field
@@ -182,14 +184,14 @@ const DynamicForm = () => {
               <div className="d-flex ">
                 <button
                   type="button"
-                  className="btn btn-primary btn-sm btn-info"
+                  className="btn  btn-sm tw-bg-appBlue hover:tw-bg-appBlueHover tw-text-white hover:tw-text-white"
                   onClick={() =>
                     append({
                       name: "",
                       type: "text",
                       options: "",
                       is_required: true,
-                      multiple_value: true,
+                      multiple_value: false,
                     })
                   }
                 >

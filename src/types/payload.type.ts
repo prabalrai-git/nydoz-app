@@ -7,6 +7,12 @@ export interface IProductResponse {
   is_for_self_use: boolean;
 }
 
+export type DynamicFormPayload = {
+  name: string;
+  is_account_required: boolean;
+  custom_fields: ICustomFields[];
+};
+
 export interface IRolePayload {
   name: string;
   description: string;
