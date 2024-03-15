@@ -52,7 +52,9 @@ const Layout = () => {
   ];
   return (
     <div>
-      <NavPills navpills={navpills} />
+      <div className="tw-bg-white  tw-pl-4  tw-rounded-lg   ">
+        <NavPills navpills={navpills} />
+      </div>
       {/* <BreadcrumbAndBack /> */}
       <Outlet />
     </div>

@@ -3,8 +3,6 @@ import useWebSetting from "../../../../context/useWebSetting";
 import { ISidebarMenu } from "../../../../types/app.types";
 import { useOnClickOutside, useWindowSize } from "usehooks-ts";
 import { useRef, useState } from "react";
-import { MdArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
-import { IoMdExit } from "react-icons/io";
 
 interface IProps {
   sidebarMenuList: ISidebarMenu[];
@@ -87,7 +85,7 @@ const SideMenu = (props: IProps) => {
           <ul className="nav" role="tablist">
             {sidebarMenuList.map((item: ISidebarMenu) => {
               return (
-                <li key={item.id} className="nav-item py-1" role="presentation">
+                <li key={item.id} className="nav-item py-2" role="presentation">
                   <NavLink
                     data-bs-toggle="tab"
                     to={item.link}

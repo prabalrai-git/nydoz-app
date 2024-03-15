@@ -104,7 +104,7 @@ const CompanyLayout = () => {
     {
       id: 5,
       title: "Settings",
-      link: "settings",
+      link: "settings/dashboard",
       icon: <Gear size={20} />,
     },
   ];
