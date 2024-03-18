@@ -44,13 +44,10 @@ function useSubdomainRemoval(targetPath = "/") {
       const currentUrl = window.location.host;
       const hasSubdomain = currentUrl.split(".").length >= 2;
 
-      console.log(hasSubdomain, currentUrl);
-
       if (hasSubdomain) {
         const protocol = currentUrl.split(":")[0];
         const hostname = currentUrl.split("/")[2];
         const newUrl = `${protocol}://${hostname}${targetPath}`;
-        console.log(newUrl, "protocol", protocol, hostname);
         window.location.replace(newUrl);
         setIsRedirected(true); // Mark as redirected to avoid loop
       }

@@ -21,8 +21,6 @@ const ProtectedUserLayout: React.FC = () => {
     fetchDataById(API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS);
   }, [fetchDataById]);
 
-  // console.log(isLoggedIn, token, "hey ohhh");
-
   return (
     <div>
       <div className="main-container ">

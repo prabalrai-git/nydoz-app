@@ -85,8 +85,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
           permissions: userResponseObj?.permissions,
         } as IUseMeData;
 
-        // console.log(userInfo, "userinof");
-
         dispatch({
           type: "SET_USER_INFO",
           payload: {
@@ -129,7 +127,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (tokenFromLocal) {
-      // console.log("ran.......");
       handleAuthenticationFn();
       handleUserCompanyAndItsProducts();
     } else {

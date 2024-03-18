@@ -8,7 +8,6 @@ type Props = {
 
 const Protected: React.FC<Props> = ({ children }) => {
   const { isLoggedIn, token } = useAuthContext();
-  console.log(isLoggedIn, token, "hi yo guys");
   const location = useLocation().pathname;
   return isLoggedIn && token ? (
     children

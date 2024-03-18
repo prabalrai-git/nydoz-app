@@ -13,6 +13,25 @@ export type DynamicFormPayload = {
   custom_fields: ICustomFields[];
 };
 
+export type financialAccoutnResponse = {
+  id: number;
+  institute_name: string;
+  institute_site: string;
+  account_name: string;
+  account_number: string;
+  swift_code: string;
+  branch_name: string;
+  branch_address: string;
+  company_id: number;
+};
+export type transactionType = {
+  id: number;
+  name: string;
+  description: string;
+  company_id: string;
+  product_id: string;
+};
+
 export interface IRolePayload {
   name: string;
   description: string;

@@ -45,8 +45,6 @@ function AsyncSelect<T>(props: IProps<T>) {
     fetchDataById(baseUrl);
   }, [baseUrl, fetchDataById]);
 
-  //   console.log(data, "here is data");
-
   useEffect(() => {
     if (selectValue) {
       const temp: IOption = {
@@ -93,15 +91,12 @@ function AsyncSelect<T>(props: IProps<T>) {
               setMultipleValues(idsArray);
 
               // data?.find((item) =>
-              //   console.log(item["id"], selectedOption[0]["value"], "hihihihi")
               // );
               // const temp = data?.find(
               //   (item: T) => item[dataId] === selectedOption.value
               // );
-              // console.log("yo", temp, selectedOption);
               // if (temp) {
               //   setMultipleValues((prev) =>
-              //     console.log(prev, "yo this is prev")
               //   );
               // }
             }

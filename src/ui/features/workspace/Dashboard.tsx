@@ -14,8 +14,6 @@ const Dashboard = () => {
 
   const { ...auth } = useAuthContext();
 
-  console.log(auth, "auth useAyth");
-
   return (
     <div className=" h-100vh py-3">
       <div className="container">
