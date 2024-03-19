@@ -108,6 +108,38 @@ export interface IVisitorResponse {
   visiting_country: string;
 }
 
+export interface ITransactionResponse {
+  id: string;
+  payment_method_id: string;
+  payment_method: {
+    id: string;
+    name: string;
+  };
+  financial_account_id: string;
+  financial_account: {
+    id: string;
+    institute_name: string;
+    account_name: string;
+    account_number: string;
+    branch_name: string;
+  };
+  bill_number: string;
+  physical_bill_number: string;
+  amount: number; // number
+  payment_receipt_files: string[];
+  status_id: string;
+  created_by_id: string;
+  last_status_by_id: string;
+  remarks: string;
+  transaction_type_id: string;
+  transaction_type: {
+    id: string;
+    name: string;
+  };
+  balance: number; // number
+  custom_field_values: Record<string, string>;
+}
+
 export interface IEnrollmentOpeningsPayload {
   institute_id: string;
   enroll_start_date: string;

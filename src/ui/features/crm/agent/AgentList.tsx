@@ -222,13 +222,13 @@ const DocumentList = () => {
           </div>
           {data && (
             // <PaginationTable
-            //     pagination={pagination}
-            //     setFetchAgain={setFetchAgain}
-            //     columns={tableColumns as ColumnDef<unknown>[]}
-            //     data={data}
-            //     isLoading={isloading}
-            //     baseUrl={baseUrl}
-            //     setFetchUrl={setFetchUrl}
+            //   pagination={pagination}
+            //   setFetchAgain={setFetchAgain}
+            //   columns={tableColumns as ColumnDef<unknown>[]}
+            //   data={data}
+            //   isLoading={isloading}
+            //   baseUrl={baseUrl}
+            //   setFetchUrl={setFetchUrl}
             // />
             <SearchPaginationTable
               pagination={pagination}

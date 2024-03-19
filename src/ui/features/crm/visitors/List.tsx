@@ -7,14 +7,13 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { AirplaneFill, Flag, People } from "react-bootstrap-icons";
+import { AirplaneFill } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { GoPersonFill } from "react-icons/go";
 import { FaPhoneAlt, FaRegEdit } from "react-icons/fa";
 import { BsPersonFillCheck } from "react-icons/bs";
-
 import { Tag } from "antd";
 
 const VisitorList = () => {

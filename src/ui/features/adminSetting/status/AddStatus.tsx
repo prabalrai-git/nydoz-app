@@ -17,11 +17,11 @@ import useHandleShowError from "../../../../hooks/useHandleShowError";
 interface IAddStatusForm {
   title: string;
   code: string;
-  background_color_class?: string;
-  text_color_class?: string;
-  action_api_url?: string;
+  background_color_class: string;
+  text_color_class: string;
+  action_api_url: string;
   group_code: string;
-  is_group_default?: boolean;
+  is_group_default: boolean;
 }
 
 const AddCompany = () => {

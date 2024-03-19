@@ -267,10 +267,19 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
               </select>
             </div>
             <div className="flex-1">
-              <h6 className="bg-light text-info py-2 tw-p-6 tw-px-12 tw-rounded-md tw-shadow-sm">
-                <span> Showing : {pagination?.from ?? "N/A"}</span>
-                <span className="mx-3">to {pagination?.to ?? "N/A"}</span>
-                <span>of total : {pagination?.total} entries.</span>
+              <h6 className=" tw-text-appBlue py-2 tw-p-6 tw-px-12 tw-rounded-full tw-border-gray-300 tw-border-[2px]">
+                <span className="tw-text-black"> Showing :</span>
+                <span className="mx-3 tw-font-semibold">
+                  {" "}
+                  {pagination?.from ?? "N/A"} to {pagination?.to ?? "N/A"}
+                </span>
+                <span className="tw-font-semibold">
+                  {" "}
+                  <span className="tw-text-black tw-font-normal">
+                    of total :{" "}
+                  </span>
+                  {pagination?.total} entries.
+                </span>
               </h6>
             </div>
             <ul className="pagination ">
@@ -291,7 +300,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
               </li>
               {Array.from(Array(noOfPages).keys()).map(
                 (_item: unknown, index: number) => (
-                  <li key={index + 1} className="page-item">
+                  <li key={index + 1} className="page-item ">
                     <button
                       onClick={() => handleChangePage(index + 1)}
                       className={

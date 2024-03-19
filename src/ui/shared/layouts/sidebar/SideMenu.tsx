@@ -3,6 +3,7 @@ import useWebSetting from "../../../../context/useWebSetting";
 import { ISidebarMenu } from "../../../../types/app.types";
 import { useOnClickOutside, useWindowSize } from "usehooks-ts";
 import { useRef, useState } from "react";
+import { IoChevronBack } from "react-icons/io5";
 
 interface IProps {
   sidebarMenuList: ISidebarMenu[];
@@ -35,7 +36,7 @@ const SideMenu = (props: IProps) => {
   return (
     <div
       ref={menuRef}
-      style={{ width: opened ? 150 : 100 }}
+      style={{ width: opened ? 155 : 100 }}
       className={`${
         width > 768 ? "docs-aside" : "docs-aside-sm"
       } ${sidebarClassName} tw-w-1/12 tw-h-full tw-overflow-auto tw-transition tw-ease-in-out tw-delay-150 tw-duration-300  `}
@@ -105,16 +106,15 @@ const SideMenu = (props: IProps) => {
             })}
           </ul>
           <Link to={backPath ?? "/"} className="">
-            <div className="app-sidebar-footer  tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover  border-0 mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-center tw-px-4 tw-py-3 tw-rounded-lg  ">
+            <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-center tw-py-2 tw-rounded-full tw-text-btnPrimary tw-gap-3 hover:tw-shadow-md ">
               {/* <i className="bi bi-arrow-left-square fs-2x  "></i>
               <IoMdExit
                 className="tw-transform -tw-scale-x-100"
                 size={20}
                 color="white"
               /> */}
-              <p className="   tw-text-white tw-font-bold tw-text-lg">
-                {opened && "Back"}
-              </p>
+              <IoChevronBack size={20} />
+              <p className="    tw-font-bold tw-text-lg">{opened && "Back"}</p>
             </div>
           </Link>
         </div>

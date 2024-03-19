@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
-import { IVisitorResponse } from "../../../../types/products.types";
+import { ITransactionResponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { useNavigate } from "react-router-dom";
 import { AirplaneFill } from "react-bootstrap-icons";
@@ -16,7 +16,7 @@ const TransactionList = () => {
   const searchFilter: string[] = ["first_name", "last_name", "email", "mobile"];
 
   const handleEditData = useCallback(
-    (item: IVisitorResponse) => {
+    (item: ITransactionResponse) => {
       navigate("edit", {
         state: { data: item },
       });
@@ -24,7 +24,7 @@ const TransactionList = () => {
     [navigate]
   );
 
-  const tableColumns: ColumnDef<IVisitorResponse>[] = useMemo(
+  const tableColumns: ColumnDef<ITransactionResponse>[] = useMemo(
     () => [
       {
         accessorKey: "sn",
@@ -32,34 +32,34 @@ const TransactionList = () => {
         cell: (info) => info.row.index + 1,
       },
       {
-        accessorKey: "payment_method_id",
+        accessorKey: "payment_method",
         header: () => (
           <div className="tw-flex tw-gap-2">
             <GoPersonFill size={16} />
-            <p>Payment Method Id</p>
+            <p>Payment Method</p>
           </div>
         ),
         cell: (info) => {
           return (
             <div className="d-flex align-items-center ">
-              {info.getValue<string>()}
+              {info.getValue<Record<string, string>>().name}
             </div>
           );
         },
       },
 
       {
-        accessorKey: "financial_account_id",
+        accessorKey: "financial_account",
         header: () => (
           <div className="tw-flex tw-gap-2">
             <AirplaneFill size={14} />
-            <p>Financial Account Id</p>
+            <p>Financial Account</p>
           </div>
         ),
         cell: (info) => {
           return (
             <div className="text-center tw-flex tw-justify-start">
-              {info.getValue<string>()}
+              {info.getValue<Record<string, string>>().institute_name}
             </div>
           );
         },
@@ -135,16 +135,16 @@ const TransactionList = () => {
         },
       },
       {
-        accessorKey: "transaction_type_id",
+        accessorKey: "transaction_type",
         header: () => (
           <div className="tw-flex tw-gap-2">
             {/* <Flag size={16} className="mx-2" /> */}
             <BsPersonFillCheck size={18} />
-            <span>Transaction Type Id</span>
+            <span>Transaction Type</span>
           </div>
         ),
         cell: (info) => {
-          return <div>{info.getValue<string>()}</div>;
+          return <div>{info.getValue<Record<string, string>>().name}</div>;
         },
       },
       // {

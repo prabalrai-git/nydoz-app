@@ -119,9 +119,11 @@ export const userToCompanySchema = yup.object().shape({
 export const statusSchema = yup.object().shape({
   title: yup.string().required("Title is required."),
   code: yup.string().required("Code is required."),
-  background_color_class: yup.string(),
-  text_color_class: yup.string(),
-  action_api_url: yup.string(),
+  background_color_class: yup
+    .string()
+    .required("background color is required."),
+  text_color_class: yup.string().required("text color is required."),
+  action_api_url: yup.string().required("action api is required."),
   group_code: yup.string().required("Group Code is required."),
-  is_group_default: yup.boolean(),
+  is_group_default: yup.boolean().required("group default is required."),
 });

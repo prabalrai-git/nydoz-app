@@ -9,11 +9,12 @@ import useHandleShowError from "../../../hooks/useHandleShowError";
 import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
-import { Boxes, Gear, PersonBadge } from "react-bootstrap-icons";
+import { Boxes, Gear } from "react-bootstrap-icons";
 import { useWindowSize } from "usehooks-ts";
 import useWebSetting from "../../../context/useWebSetting";
 import { MdSpaceDashboard } from "react-icons/md";
 import { RiFolderSettingsFill } from "react-icons/ri";
+import { FaCircleUser } from "react-icons/fa6";
 
 const CompanyLayout = () => {
   const { dispatch, companyInfo, userInfo } = useAuthContext();
@@ -99,7 +100,8 @@ const CompanyLayout = () => {
       id: 4,
       title: "Profile",
       link: `profile/${companyInfo?.id}`,
-      icon: <PersonBadge size={20} />,
+      // icon: <PersonBadge size={20} />,
+      icon: <FaCircleUser size={22} />,
     },
     {
       id: 5,

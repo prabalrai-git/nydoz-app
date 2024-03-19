@@ -68,3 +68,12 @@
 }
 
 /* nydoz_logo 1 */
+
+.text-active-primary.active {
+  transition: color 0.2s ease;
+  color: white !important;
+  background-color: gray !important;
+  padding-left: 18px;
+  padding-right: 18px;
+  border-radius: 20px;
+}

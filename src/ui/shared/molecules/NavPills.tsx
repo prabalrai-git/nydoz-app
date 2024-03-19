@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { INavPill } from "../../../types/app.types";
+
 interface IProps {
   navpills: INavPill[];
 }
@@ -8,22 +9,33 @@ const NavPills = (props: IProps) => {
   const { navpills } = props;
 
   const length = navpills.length - 1;
+
   return (
-    <ul className="nav nav-stretch nav-line-tabs nav-line-tabs-2x  fs-5 fw-bold mt-3 tw-mb-10 tw-flex tw-justify-start tw-overflow-x-visible ">
+    <ul className=" fw-bold  tw-flex tw-justify-start tw-overflow-x-visible tw-gap-2   ">
       {navpills.map((navpill: INavPill, index) => {
         return (
-          <div className="tw-flex tw-gap-5">
-            <li key={navpill.id} className="nav-item tw-mr-5    ">
+          <div className="tw-flex  tw-h-[55px] tw-items-center ">
+            <li key={navpill.id} className="nav-item tw-mr-2  tw-px-[17px]   ">
               <NavLink
-                className="nav-link  text-active-primary  py-4  tw-flex tw-justify-center "
+                className=" text-active-primary  tw-py-3  tw-flex tw-justify-center tw-text-sm tw-items-center"
                 to={navpill.link}
+                style={(isActive) => ({
+                  color: isActive ? "gray" : "black",
+                  backgroundColor: isActive ? "white" : "green",
+                })}
               >
-                {navpill.title}
+                {navpill.icon}
+                {/* <TbLayoutDashboard
+                  size={18}
+                  className="tw-mr-2 tw-self-center"
+                /> */}
+                <p className="tw-self-end">{navpill.title}</p>
               </NavLink>
             </li>
 
             {length > index && (
-              <div className="tw-bg-gray-300 tw-h-[28px] tw-w-[1px] tw-self-center tw-mr-4"></div>
+              // <LiaGreaterThanSolid size={20} className="tw-self-center" />
+              <div className="tw-bg-gray-300 tw-h-[28px] tw-w-[1px] tw-self-center tw-mr-2"></div>
             )}
           </div>
         );
