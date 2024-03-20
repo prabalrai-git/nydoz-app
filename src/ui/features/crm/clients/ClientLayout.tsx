@@ -12,7 +12,7 @@ const ClientLayout = () => {
   ];
   return (
     <div>
-      <MenubarUp menubarList={menubarList} />
+      {/* <MenubarUp menubarList={menubarList} /> */}
       <Outlet />
     </div>
   );

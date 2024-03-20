@@ -1,8 +1,8 @@
 import { useMemo, useCallback } from "react";
 import API_ROUTE from "../../../../service/api";
 import {
-  IVisitorResponse,
   IAgentResponse,
+  IClientResponse,
 } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ const ClientList = () => {
   const searchFilter: string[] = ["first_name", "last_name"];
 
   const handleEditData = useCallback(
-    (item: IVisitorResponse) => {
+    (item: IClientResponse) => {
       navigate("edit", {
         state: { data: item },
       });
@@ -31,12 +31,14 @@ const ClientList = () => {
 
   const handleView = useCallback(
     (id: string) => {
-      navigate(`./${id}`);
+      navigate(`./${id}`, {
+        state: { clientId: id },
+      });
     },
     [navigate]
   );
 
-  const tableColumns: ColumnDef<IVisitorResponse>[] = useMemo(
+  const tableColumns: ColumnDef<IClientResponse>[] = useMemo(
     () => [
       {
         accessorKey: "sn",

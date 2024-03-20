@@ -117,7 +117,7 @@ const TransactionTypesList = () => {
     <div className="my-6 px-3">
       <div className="card">
         <div className="card-header">
-          <h3 className="card-title">Transaction Types's List</h3>
+          <h3 className="card-title">All Transaction Types</h3>
           <div className="card-toolbar">
             <Link
               to={"../add"}
@@ -127,11 +127,13 @@ const TransactionTypesList = () => {
             </Link>
           </div>
         </div>
-        <SearchPaginationList
-          searchParamsArray={searchFilter}
-          baseUrl={API_ROUTE.TRANSACTION_TYPE}
-          columns={tableColumns}
-        />
+        <div className="tw-p-6 tw-px-8">
+          <SearchPaginationList
+            searchParamsArray={searchFilter}
+            baseUrl={API_ROUTE.TRANSACTION_TYPE}
+            columns={tableColumns}
+          />
+        </div>
       </div>
     </div>
   );

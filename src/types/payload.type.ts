@@ -51,11 +51,11 @@ export interface IVisaTypeResponse extends IVisaTypePayload {
 }
 
 export interface IDocumentResponse {
-  id: 0;
+  id: string;
   title: string;
   file_link: string;
-  uploaded_by: 0;
-  is_restricted: true;
+  uploaded_by: string;
+  is_restricted: boolean;
   visible_to?: string[];
 }
 

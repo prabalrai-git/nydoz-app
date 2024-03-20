@@ -127,7 +127,7 @@ const UserList = () => {
       <section>
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">User's List</h3>
+            <h3 className="card-title">All Users</h3>
             <div className="card-toolbar">
               <Link
                 to={`../add`}
@@ -137,11 +137,13 @@ const UserList = () => {
               </Link>
             </div>
           </div>
-          <SearchPaginationList
-            searchParamsArray={searchFilter}
-            baseUrl={API_ROUTE.USER}
-            columns={tableColumns}
-          />
+          <div className="tw-p-6 tw-px-8">
+            <SearchPaginationList
+              searchParamsArray={searchFilter}
+              baseUrl={API_ROUTE.USER}
+              columns={tableColumns}
+            />
+          </div>
         </div>
       </section>
     </div>

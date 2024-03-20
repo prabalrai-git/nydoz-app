@@ -211,7 +211,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
   return (
     <div className="search-table-container">
       {data && data?.length > 0 && (
-        <div className="min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden p-6 tw-mx-2">
+        <div className="min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden ">
           <div
             className={
               searchParamsArray.length > 1

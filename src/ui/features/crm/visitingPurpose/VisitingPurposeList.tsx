@@ -161,7 +161,7 @@ const VisaTypeList = () => {
       <section>
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Visiting Purpose List</h3>
+            <h3 className="card-title">Visiting Purposes</h3>
             <div className="card-toolbar">
               <button
                 onClick={handleOpenNewModal}
@@ -172,7 +172,11 @@ const VisaTypeList = () => {
             </div>
           </div>
 
-          {data && <TanStackTable columns={tableColumns} data={data} />}
+          {data && (
+            <div className="tw-p-6 tw-px-10">
+              <TanStackTable columns={tableColumns} data={data} />
+            </div>
+          )}
         </div>
       </section>
 

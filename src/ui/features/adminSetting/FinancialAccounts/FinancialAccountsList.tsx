@@ -168,7 +168,7 @@ const FinancialAccountsList = () => {
     <div className="my-6 px-3">
       <div className="card">
         <div className="card-header">
-          <h3 className="card-title">Financial Account's List</h3>
+          <h3 className="card-title">All Financial Accounts</h3>
           <div className="card-toolbar">
             <Link
               to={"../add"}
@@ -178,11 +178,13 @@ const FinancialAccountsList = () => {
             </Link>
           </div>
         </div>
-        <SearchPaginationList
-          searchParamsArray={searchFilter}
-          baseUrl={API_ROUTE.FINANCIAL_ACCOUNT}
-          columns={tableColumns}
-        />
+        <div className="tw-p-6 tw-px-8">
+          <SearchPaginationList
+            searchParamsArray={searchFilter}
+            baseUrl={API_ROUTE.FINANCIAL_ACCOUNT}
+            columns={tableColumns}
+          />
+        </div>
       </div>
     </div>
   );

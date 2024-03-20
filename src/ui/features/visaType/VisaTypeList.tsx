@@ -171,7 +171,7 @@ const VisaTypeList = () => {
       <section>
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Visa Type 's List</h3>
+            <h3 className="card-title">Visa Types</h3>
             <div className="card-toolbar">
               <button
                 onClick={handleOpenNewModal}
@@ -182,15 +182,17 @@ const VisaTypeList = () => {
             </div>
           </div>
           {data && (
-            <PaginationTable
-              pagination={pagination}
-              baseUrl={basUrl}
-              columns={tableColumns}
-              data={data}
-              isLoading={isloading}
-              setFetchAgain={setFetchAgain}
-              setFetchUrl={setFetchUrl}
-            />
+            <div className="tw-p-6 tw-px-8">
+              <PaginationTable
+                pagination={pagination}
+                baseUrl={basUrl}
+                columns={tableColumns}
+                data={data}
+                isLoading={isloading}
+                setFetchAgain={setFetchAgain}
+                setFetchUrl={setFetchUrl}
+              />
+            </div>
           )}
         </div>
       </section>

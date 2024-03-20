@@ -149,11 +149,13 @@ const AgentList2 = () => {
               </Link>
             </div>
           </div>
-          <SearchPaginationList
-            searchParamsArray={searchFilter}
-            baseUrl={API_ROUTE.CM_AGENTS}
-            columns={tableColumns}
-          />
+          <div className="tw-p-6 tw-px-8">
+            <SearchPaginationList
+              searchParamsArray={searchFilter}
+              baseUrl={API_ROUTE.CM_AGENTS}
+              columns={tableColumns}
+            />
+          </div>
         </div>
       </section>
     </div>

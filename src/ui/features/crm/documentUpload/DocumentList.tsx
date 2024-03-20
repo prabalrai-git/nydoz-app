@@ -197,7 +197,7 @@ const DocumentList = () => {
         </button>
       </div>
       <section>
-        <div className="card">
+        <div className="card ">
           {data && data?.length === 0 ? (
             <div>
               <NotFound title="Documents Not Available " />

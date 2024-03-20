@@ -11,6 +11,7 @@ import AgentList2 from "../ui/features/crm/agent/AgentList2";
 import ClientLayout from "../ui/features/crm/clients/ClientLayout";
 import TransactionList from "../ui/features/crm/transactions/TransactionsList";
 import AddTransaction from "../ui/features/crm/transactions/AddTransaction";
+import ClientDetails from "../ui/features/crm/clients/ClientDetails";
 
 // Agents Routes
 const AgentLayout = loadable(
@@ -82,13 +83,13 @@ const CrmRoutes: RouteObject[] = [
       },
       {
         path: ":clientId",
-        element: <ClientLayout />,
-        children: [
-          {
-            path: "openings",
-            element: <Outlet />,
-          },
-        ],
+        element: <ClientDetails />,
+        // children: [
+        //   {
+        //     path: "details",
+        //     element: <ClientDetails />,
+        //   },
+        // ],
       },
     ],
   },

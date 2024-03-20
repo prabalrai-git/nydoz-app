@@ -113,7 +113,7 @@ const PaymentList = () => {
     <div className="my-6 px-3">
       <div className="card">
         <div className="card-header">
-          <h3 className="card-title">Payment Method's List</h3>
+          <h3 className="card-title">All Payment Methods</h3>
           <div className="card-toolbar">
             <Link
               to={"../add"}
@@ -123,11 +123,13 @@ const PaymentList = () => {
             </Link>
           </div>
         </div>
-        <SearchPaginationList
-          searchParamsArray={searchFilter}
-          baseUrl={API_ROUTE.PAYMENT_METHODS}
-          columns={tableColumns}
-        />
+        <div className="tw-p-6 tw-px-8">
+          <SearchPaginationList
+            searchParamsArray={searchFilter}
+            baseUrl={API_ROUTE.PAYMENT_METHODS}
+            columns={tableColumns}
+          />
+        </div>
       </div>
     </div>
   );

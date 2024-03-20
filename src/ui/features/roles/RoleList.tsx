@@ -159,18 +159,22 @@ const RoleList = () => {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-6">
-        <h4>Roles List</h4>
-        <button
-          onClick={handleOpenNewModal}
-          className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
-        >
-          <span className="mx-2 tw-text-white">Add Roles</span>
-        </button>
-      </div>
       <section>
         <div className="card">
-          {data && <TanStackTable columns={tableColumns} data={data} />}
+          <div className="d-flex card-header  justify-content-between align-items-center mb-6">
+            <h3 className="card-title">All Roles</h3>
+            <button
+              onClick={handleOpenNewModal}
+              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+            >
+              <span className="mx-2 tw-text-white">Add Roles</span>
+            </button>
+          </div>
+          {data && (
+            <div className="tw-p-6 tw-px-8">
+              <TanStackTable columns={tableColumns} data={data} />{" "}
+            </div>
+          )}
         </div>
       </section>
       <Modal2

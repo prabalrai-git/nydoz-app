@@ -16,17 +16,17 @@ function TanStackTable<T>(props: ITableProps<T>) {
   });
 
   return (
-    <div className="tw-px-4 ">
+    <div className="">
       {data && data?.length > 0 && (
-        <div className="min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden px-6">
+        <div className="min-h-30vh  ">
           <div className="row align-items-center">
-            <div className="col-12 col-md-6">
-              <h6 className=" text-info py-2">
-                <span className="tw-font-semibold tw-text-lg">
-                  Total : {data?.length}
+            {/* <div className="col-12 col-md-6">
+              <h6 className=" tw-text-appBlue py-2">
+                <span className="tw-font-semibold tw-text-lg  ">
+                  Total Documents : {data?.length}
                 </span>
               </h6>
-            </div>
+            </div> */}
             {/* <div className='col-12 col-md-6'>
                             <div className='input-group my-3'>
                                 <input
@@ -44,7 +44,7 @@ function TanStackTable<T>(props: ITableProps<T>) {
                             </div>
                         </div> */}
           </div>
-          <table className="table align-middle table-row-dashed fs-6 gy-5 dataTable  ">
+          <table className="table table-md align-middle table-row-dashed  dataTable   ">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
@@ -72,6 +72,7 @@ function TanStackTable<T>(props: ITableProps<T>) {
                 </tr>
               ))}
             </thead>
+
             <tbody className="fw-semibold text-gray-600 min-h-50vh">
               {table.getRowModel().rows.map((row) => {
                 return (

@@ -100,16 +100,16 @@ function PaginatedTanStackTable<T>(props: IPaginatedTableProps<T>) {
   });
 
   return (
-    <div className="border ">
+    <div className=" ">
       {data && data?.length > 0 && (
         <div className="min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden p-6">
-          <div className="d-flex justify-content-between ">
+          <div className="d-flex justify-content-between tw-mb-2 ">
             <div className="flex-1 ">
-              <h6 className="tw-bg-gray-200 text-info  tw-py-3 -tw-ml-2 tw-px-8 tw-rounded-lg">
+              {/* <h6 className="tw-bg-gray-200 text-info  tw-py-3 -tw-ml-2 tw-px-8 tw-rounded-lg">
                 <span>From {pagination?.from ?? "N/A"}</span>
                 <span className="mx-3">to {pagination?.to ?? "N/A"}</span>
                 <span>Total : {pagination?.total}</span>
-              </h6>
+              </h6> */}
             </div>
             <ul className="pagination ">
               <li

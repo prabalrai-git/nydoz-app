@@ -13,6 +13,17 @@ import AddDocuments from "./AddDocuments";
 import Images from "../../../constants/Images";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import NotFound from "../../shared/molecules/NotFound";
+import { Image, Space, Tag } from "antd";
+import { GrView } from "react-icons/gr";
+import {
+  DownloadOutlined,
+  RotateLeftOutlined,
+  RotateRightOutlined,
+  SwapOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
+} from "@ant-design/icons";
+import APP_SETTING from "../../../config/AppSetting";
 
 const DocumentList = () => {
   const { companyInfo } = useAuthContext();
@@ -53,6 +64,21 @@ const DocumentList = () => {
     handleAddDocumentOpen();
   };
 
+  const onDownload = (src: string) => {
+    fetch(src)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "image.png";
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(url);
+        link.remove();
+      });
+  };
+
   const tableColumns: ColumnDef<IDocumentResponse>[] = [
     {
       accessorKey: "sn",
@@ -60,17 +86,62 @@ const DocumentList = () => {
       cell: (info) => info.row.index + 1,
     },
     {
-      accessorKey: "File",
+      accessorKey: "file_link",
       header: () => (
         <div>
           <i className="bi bi-folder me-2"></i>
           <span> File</span>
         </div>
       ),
-      cell: () => {
+      cell: (info) => {
         return (
-          <div className="symbol symbol-label ">
-            <img className="img-fluid" src={Images.Folder} alt="Logo" />
+          <div className="symbol symbol-label tw-flex tw-py-2  ">
+            {/* <img className="img-fluid" src={Images.Folder} alt="Logo" /> */}
+            <Image
+              className="tw-object-cover tw-rounded-lg"
+              width={40}
+              height={40}
+              preview={{
+                mask: <GrView />,
+                toolbarRender: (
+                  _,
+                  {
+                    transform: { scale },
+                    actions: {
+                      onFlipY,
+                      onFlipX,
+                      onRotateLeft,
+                      onRotateRight,
+                      onZoomOut,
+                      onZoomIn,
+                    },
+                  }
+                ) => (
+                  <Space size={12} className="toolbar-wrapper">
+                    <DownloadOutlined
+                      onClick={() =>
+                        onDownload(
+                          APP_SETTING.API_BASE_URL + info.getValue<string>()
+                        )
+                      }
+                    />
+                    <SwapOutlined rotate={90} onClick={onFlipY} />
+                    <SwapOutlined onClick={onFlipX} />
+                    <RotateLeftOutlined onClick={onRotateLeft} />
+                    <RotateRightOutlined onClick={onRotateRight} />
+                    <ZoomOutOutlined
+                      disabled={scale === 1}
+                      onClick={onZoomOut}
+                    />
+                    <ZoomInOutlined
+                      disabled={scale === 50}
+                      onClick={onZoomIn}
+                    />
+                  </Space>
+                ),
+              }}
+              src={APP_SETTING.API_BASE_URL + info.getValue<string>()}
+            />
           </div>
         );
       },
@@ -99,9 +170,9 @@ const DocumentList = () => {
         return (
           <div>
             {info?.row?.original?.is_restricted ? (
-              <span className="badge text-bg-primary">Not Restricted</span>
+              <Tag color="green">Not Restricted</Tag>
             ) : (
-              <span className="badge text-bg-danger">Restricted</span>
+              <Tag color="red">Restricted</Tag>
             )}
           </div>
         );
@@ -184,29 +255,32 @@ const DocumentList = () => {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-6">
-        <h4>Documents List</h4>
-        <button
-          onClick={() => {
-            setSelectedData(undefined);
-            handleAddDocumentOpen();
-          }}
-          className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
-        >
-          <span className="mx-2 tw-text-white">Add Documents</span>
-        </button>
-      </div>
       <section>
-        <div className="card">
+        <div className="card ">
+          <div className="d-flex card-header justify-content-between align-items-center mb-6">
+            <h3 className="card-title">All Documents</h3>
+            <button
+              onClick={() => {
+                setSelectedData(undefined);
+                handleAddDocumentOpen();
+              }}
+              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+            >
+              <span className="mx-2 tw-text-white">Add Documents</span>
+            </button>
+          </div>
           {data && data?.length === 0 ? (
             <div>
               <NotFound title="Documents Not Available " />
             </div>
           ) : (
-            <TanStackTable columns={tableColumns} data={data ?? []} />
+            <div className="tw-px-10">
+              <TanStackTable columns={tableColumns} data={data ?? []} />
+            </div>
           )}
         </div>
       </section>
+
       <Modal2
         title="Are you sure you want to delete this documents?"
         showChildren={true}

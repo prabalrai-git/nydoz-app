@@ -78,7 +78,7 @@ const DocumentList = () => {
         </div>
       ),
       cell: (info) => (
-        <div>
+        <div className="tw-flex tw-items-center ">
           <span>{info.getValue<string>()}</span>
           <CopyToClipboard text={info.getValue<string>()} />
         </div>
@@ -163,18 +163,22 @@ const DocumentList = () => {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-6">
-        <h4>Social Links / Social Media List</h4>
-        <button
-          onClick={handleOpenNewModal}
-          className="btn  btn-sm tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover"
-        >
-          <span className="mx-2 tw-text-white">Add Social Links</span>
-        </button>
-      </div>
       <section>
         <div className="card">
-          {data && <TanStackTable columns={tableColumns} data={data} />}
+          <div className="d-flex card-header justify-content-between align-items-center mb-6">
+            <h3 className="card-title">All Social Links</h3>
+            <button
+              onClick={handleOpenNewModal}
+              className="btn  btn-sm tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover"
+            >
+              <span className="mx-2 tw-text-white">Add Social Links</span>
+            </button>
+          </div>
+          {data && (
+            <div className="tw-p-6 tw-px-8">
+              <TanStackTable columns={tableColumns} data={data} />
+            </div>
+          )}
         </div>
       </section>
       <Modal2
