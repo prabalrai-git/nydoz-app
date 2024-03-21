@@ -28,8 +28,8 @@ const Navbar = () => {
 
   return (
     <nav className=" navbar navbar-expand-lg bg-body-tertiary navbar-wrapper bg-white fixed-top ">
-      <div className="tw-w-11/12  tw-mx-auto">
-        <div className="inner-container">
+      <div className="md:tw-w-11/12 lg:tw-w-11/12 xl:tw-w-9/12 sm:tw-w-11/12 xsm:tw-w-11/12  tw-mx-auto">
+        <div className="inner-container  ">
           <div className="left-container">
             <NavLink className="navbar-brand" to="/">
               <img
@@ -39,7 +39,7 @@ const Navbar = () => {
               />
             </NavLink>
             <div ref={productRef} className="p-relative">
-              <div className="nav-item ">
+              <div className="nav-item xsm:tw-hidden sm:tw-block ">
                 <div
                   className="d-flex align-items-center  btn btn-light-primary  btn-sm "
                   onClick={() => setShowProducts(() => !showProducts)}
@@ -62,7 +62,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="right-container">
+          <div className="right-container tw-absolute tw-right-3">
             {isLoggedIn ? (
               <>
                 <LinkContainer className="cursor-pointer me-2" to="/">
@@ -76,10 +76,7 @@ const Navbar = () => {
 
                 <NavDropdown title="My Account" id="nav-dropdown">
                   <NavDropdown.Item>
-                    <LinkContainer
-                      className="btn btn-light-primary btn-sm"
-                      to="create-company"
-                    >
+                    <LinkContainer className="btn  btn-sm" to="create-company">
                       {/* <div className="tw-w-[200px] tw-flex tw-flex-row tw-items-center tw-justify-center">
                         <p className="me-3">
                           <BuildingAdd size={16} color="#1ed63d" />
@@ -103,7 +100,7 @@ const Navbar = () => {
                   </NavDropdown.Item>
                   <NavDropdown.Item>
                     <LinkContainer
-                      className="btn btn-light-primary btn-sm w-100"
+                      className="btn  btn-sm w-100"
                       to="change-password"
                     >
                       <div className="tw-flex gap-3">
@@ -117,7 +114,7 @@ const Navbar = () => {
                   <NavDropdown.Item>
                     <div className="text-center">
                       <div
-                        className="btn btn-light-primary btn-sm w-100 tw-flex gap-3"
+                        className="btn  btn-sm w-100 tw-flex gap-3"
                         onClick={() => logoutFn()}
                       >
                         {/* <BoxArrowRight  /> */}

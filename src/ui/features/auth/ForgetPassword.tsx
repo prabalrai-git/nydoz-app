@@ -43,7 +43,7 @@ const ChangePassword = () => {
   });
 
   return (
-    <div className="bg-light h-100vh ">
+    <div className="bg-light min-h-40vh ">
       <div className="container ">
         <div className="row ">
           <div className="col-md-6 offset-md-3">
@@ -51,27 +51,29 @@ const ChangePassword = () => {
               <div className="card mt-4">
                 <div className="card-body ">
                   <div>
-                    <div className="text-center  ">
+                    <div className="d-flex float-end tw-mb-5 ">
+                      <BackButton />
+                    </div>
+                    <div className="text-left tw-my-8  ">
                       <img
                         src={Images.CompanyLogo}
                         height="48"
                         className="mb-4"
                       />
-                      <h5>Change Password</h5>
+                      <h5 className="tw-text-xl tw-font-bold">
+                        Change Password
+                      </h5>
                       <p className="text-muted mt-1">
                         Enter your registered email below to recieve password
                         reset instruction.
                       </p>
                     </div>
-                    <div className="d-flex float-end ">
-                      <BackButton />
-                    </div>
                   </div>
                   <form onSubmit={onFormSubmit}>
-                    <div className="form-group mb-3">
-                      <label className="required mb-2" htmlFor="email">
+                    <div className="form-group mb-10">
+                      {/* <label className="required " htmlFor="email">
                         Email
-                      </label>
+                      </label> */}
                       <input
                         className="form-control"
                         type="text"

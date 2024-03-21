@@ -79,7 +79,7 @@ const CompanyLayout = () => {
       title: "Dashboard",
       link: "dashboard",
       // icon: <House size={20} />,
-      icon: <MdSpaceDashboard size={24} />,
+      icon: <MdSpaceDashboard size={18} />,
     },
 
     {
@@ -87,27 +87,27 @@ const CompanyLayout = () => {
       title: "Products",
       link: "products/dashboard",
       // icon: <i className="ki-outline ki-abstract-26 fs-2x"></i>,
-      icon: <Boxes size={20} />,
+      icon: <Boxes size={18} />,
     },
     {
       id: 3,
       title: "Products Settings",
       link: "product-settings/view",
       // icon: <Boxes size={20} />,
-      icon: <RiFolderSettingsFill size={22} />,
+      icon: <RiFolderSettingsFill size={18} />,
     },
     {
       id: 4,
       title: "Profile",
       link: `profile/${companyInfo?.id}`,
       // icon: <PersonBadge size={20} />,
-      icon: <FaCircleUser size={22} />,
+      icon: <FaCircleUser size={18} />,
     },
     {
       id: 5,
       title: "Settings",
       link: "settings/dashboard",
-      icon: <Gear size={20} />,
+      icon: <Gear size={18} />,
     },
   ];
 
@@ -116,7 +116,7 @@ const CompanyLayout = () => {
       {showSplashScreen ? (
         <CompanyLoader />
       ) : (
-        <div className="d-flex">
+        <div className="d-flex ">
           {/* <NavPills navpills={navpills} /> */}
           <ProductSideMenu
             title={companyInfo?.subdomain || companySubdomian || ""}
@@ -127,6 +127,8 @@ const CompanyLayout = () => {
             className={width > 768 ? "doc-content" : "doc-content-sm "}
             style={{
               marginTop: "0px",
+              marginLeft: "220px",
+              marginRight: "15px",
             }}
           >
             <div className="ps-2">

@@ -5,9 +5,6 @@ import { ICompanyResponse } from "../../../../types/payload.type";
 import ImageAtom from "../../atoms/ImageAtom";
 import { Link } from "react-router-dom";
 import DynamicLink from "../../molecules/DynamicLink";
-import { PiArrowRightBold } from "react-icons/pi";
-import { SlArrowRight } from "react-icons/sl";
-import { FaArrowRightToBracket } from "react-icons/fa6";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const CompanyListCard = () => {
@@ -29,7 +26,7 @@ const CompanyListCard = () => {
           <span className="card-label fw-bold text-dark">Company Details</span>
 
           <span className="text-muted mt-2 fw-semibold fs-7 tw-capitalize">
-            {data?.length > 0
+            {data && data.length > 0
               ? `${data?.length} companies in total`
               : "0 company in total"}
           </span>
@@ -55,7 +52,7 @@ const CompanyListCard = () => {
               <div className="symbol symbol-40px me-4">
                 <ImageAtom
                   src={item.logo}
-                  className="h-50px w-50px"
+                  className="h-40px w-40px"
                   alt={item.name}
                 />
               </div>
@@ -67,7 +64,7 @@ const CompanyListCard = () => {
                       ? item.name.slice(0, 15) + "..."
                       : item.name}
                   </a>
-                  <a
+                  {/* <a
                     href={item.website}
                     target="_blank"
                     className="  hover:tw-text-btnPrimary tw-text-gray-500  tw-pb-3 "
@@ -75,10 +72,10 @@ const CompanyListCard = () => {
                     {item.website.length > 35
                       ? item.website.slice(0, 35) + "..."
                       : item.website}
-                  </a>
+                  </a> */}
                 </div>
 
-                <div className="btn btn-sm btn-icon  w-40px h-40px tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover">
+                <div className="btn btn-sm btn-icon  w-30px h-30px tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover">
                   <MdKeyboardDoubleArrowRight color="white" size={20} />
                 </div>
               </div>

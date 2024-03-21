@@ -15,15 +15,15 @@ const Dashboard = () => {
   const { ...auth } = useAuthContext();
 
   return (
-    <div className=" h-100vh py-3">
-      <div className="container">
+    <div className=" tw-min-h-[60vh] py-3 xl:tw-w-9/12 tw-mx-auto lg:tw-w-11/12 md:tw-px-[20px] xsm:tw-w-11/12">
+      <div className="">
         <div className="row">
-          <div className="col-12 col-md-4 mb-6">
+          <div className="col-12 col-md-5 mb-6">
             <div className="border border-light rounded shadow shadow-sm">
               <CompanyListCard />
             </div>
           </div>
-          <div className="col-12 col-md-8 mb-6  bg-white p-6 tw-rounded-xl ">
+          <div className="col-12 col-md-7 mb-6  bg-white p-6 tw-rounded-xl ">
             {/* <AuthCompanyProduct /> */}
             <UserCompanyAndProducts />
           </div>

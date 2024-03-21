@@ -61,15 +61,17 @@ const ResetPassword = () => {
           <div className="col-md-6 offset-md-3">
             <div className="card mt-4">
               <div className="card-body">
-                <div className="text-center mb-3">
+                <div className="text-left mb-3">
                   <img src={Images.CompanyLogo} height="48" className="mb-4" />
-                  <h5>Reset Password</h5>
+                  <h5 className="tw-my-4 tw-text-xl tw-font-bold">
+                    Reset Password
+                  </h5>
                 </div>
 
                 <form onSubmit={onFormSubmit}>
                   <div className="form-group mb-3">
-                    <label className="mb-2" htmlFor="password">
-                      New Password<span>*</span>
+                    <label className="mb-4" htmlFor="password">
+                      New Password<span className="tw-text-red-500">*</span>
                     </label>
                     <div className="position-relative">
                       <input
@@ -94,9 +96,9 @@ const ResetPassword = () => {
                     </p>
                   </div>
 
-                  <div className="form-group mb-3">
+                  <div className="form-group mb-3 ">
                     <label className="mb-2" htmlFor="password">
-                      Confirm Password<span>*</span>
+                      Confirm Password<span className="tw-text-red-500">*</span>
                     </label>
                     <div className="position-relative">
                       <input
@@ -123,7 +125,7 @@ const ResetPassword = () => {
                   <div className="form-group mb-3">
                     <button
                       type="submit"
-                      className="btn btn-primary btn-block w-100"
+                      className="btn btn-primary btn-block w-100 tw-mt-10"
                     >
                       {isLoading ? (
                         <>

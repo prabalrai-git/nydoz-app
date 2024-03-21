@@ -76,11 +76,11 @@ const LoginPage = () => {
   // const onFormSubmit = () => {};
 
   return (
-    <div className="container pt-4" id="kt_app_root ">
+    <div className="container pt-4 " id="kt_app_root ">
       <div className="row ">
         <div className="col-12  col-md-8 col-lg-6  offset-0 offset-md-2 offset-lg-3 ">
-          <div className="card shadow shadow-sm p-3 mt-4">
-            <div className="card-body">
+          <div className="card shadow shadow-sm  mt-4">
+            <div className="card-body ">
               <div className="row mb-3">
                 <div className="col-12 text-center mb-6">
                   <Link to={"/"}>
@@ -92,7 +92,7 @@ const LoginPage = () => {
                   </Link>
                 </div>
                 <div className="col-12">
-                  <h5 className="text-dark fw-bolder">
+                  <h5 className="text-dark tw-text-xl fw-bolder">
                     Welcome to Nydoz Invest Family
                   </h5>
                   <p className="tw-my-3">
@@ -176,12 +176,12 @@ const LoginPage = () => {
                   </Button>
                 </div>
 
-                <div className="col-12 col-md-12 ">
-                  <div className="my-2 float-end ">
+                <div className="col-12 col-md-12  ">
+                  <div className="mt-8 float-end  ">
                     <span> Don't have an account?</span>
                     <Link
                       to="/auth/signup"
-                      className="ms-1 link-primary text-decoration-none tw-font-semibold"
+                      className="ms-1 link-primary  tw-font-semibold tw-underline"
                     >
                       Sign Up
                     </Link>

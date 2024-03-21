@@ -75,7 +75,7 @@ const Layout = () => {
   ];
   return (
     <div>
-      <div className="tw-bg-white tw-border-[1px] tw-border-gray-200   tw-pl-4  tw-rounded-full tw-mb-10  ">
+      <div className="tw-bg-white tw-border-[1px] tw-border-gray-200   tw-pl-4  tw-rounded-lg tw-mb-10  ">
         <NavPills navpills={navpills} />
       </div>
       {/* <BreadcrumbAndBack /> */}

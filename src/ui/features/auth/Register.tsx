@@ -67,13 +67,13 @@ const Register = () => {
 
   return (
     <div
-      className="container pt-4 d-flex  align-items-center justify-content-center w-100 h-100 flex-column flex-root p-4"
+      className="container  d-flex  align-items-center justify-content-center h-100 flex-column flex-root ]"
       id="kt_app_root"
     >
       <div className="d-flex flex-column flex-lg-row flex-column-fluid ">
         <div className=" d-flex flex-column flex-lg-row-fluid w-lg-50 p-6 order-2 order-lg-1 ">
           <div className="d-flex flex-center flex-column flex-lg-row-fluid">
-            <div className="card shadow shadow-sm p-6">
+            <div className="card shadow shadow-sm p-3">
               <form
                 onSubmit={onFormSubmit}
                 className="form w-100 p-4"
@@ -83,7 +83,7 @@ const Register = () => {
               >
                 <div className="row mb-6">
                   <div className="col-12 col-md-12">
-                    <h2 className="text-dark fw-bolder">
+                    <h2 className="text-dark fw-bolder tw-text-2xl">
                       Create Your Account First
                     </h2>
                     <p className="text-muted tw-mt-3 ">
@@ -283,7 +283,7 @@ const Register = () => {
                       Already have an Account ?&nbsp;
                       <Link
                         to="/auth/login"
-                        className="tw-text-btnPrimary tw-font-semibold "
+                        className="tw-text-btnPrimary tw-font-semibold tw-underline "
                       >
                         Login
                       </Link>

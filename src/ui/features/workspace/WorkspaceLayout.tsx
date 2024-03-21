@@ -7,6 +7,7 @@ import useFetch from "../../../hooks/useFetch";
 
 import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
 import { IUserCompanyProductsResponse } from "../../../types/payload.type";
+import FooterLayout from "../../shared/layouts/Footer/Footer";
 
 const ProtectedUserLayout: React.FC = () => {
   const { isLoggedIn, token } = useAuthContext();
@@ -32,6 +33,9 @@ const ProtectedUserLayout: React.FC = () => {
         ) : (
           <Navigate to={"/auth/login"} state={{ from: location }} replace />
         )}
+      </div>
+      <div className="tw-ml-[10%] ">
+        <FooterLayout />
       </div>
     </div>
   );

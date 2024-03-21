@@ -14,6 +14,10 @@ export default {
         appRedHover: "#db0f04",
         appBrown: "#977254",
         appBrownHover: "#673E0F",
+        appSideBar: "#1d273b",
+      },
+      screens: {
+        xsm: "10px",
       },
     },
   },

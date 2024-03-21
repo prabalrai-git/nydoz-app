@@ -36,10 +36,10 @@ const SideMenu = (props: IProps) => {
   return (
     <div
       ref={menuRef}
-      style={{ width: opened ? 155 : 100 }}
+      style={{ width: opened ? 190 : 100 }}
       className={`${
         width > 768 ? "docs-aside" : "docs-aside-sm"
-      } ${sidebarClassName} tw-w-1/12 tw-h-full tw-overflow-auto tw-transition tw-ease-in-out tw-delay-150 tw-duration-300  `}
+      } ${sidebarClassName} tw-w-1/12 tw-min-h-screen tw-overflow-auto tw-bg-appSideBar tw-fixed tw-top-0 tw-bottom-0 `}
     >
       {/* <div
         onClick={handleToggleSidebar}
@@ -55,7 +55,7 @@ const SideMenu = (props: IProps) => {
           <ArrowBarRight size={20} />
         )}
       </div> */}
-      <div className="app-sidebar-primary h-100vh tw-pb-[150px] ">
+      <div className="app-sidebar-primary tw-bg-appSideBar h-100vh tw-pb-[150px] ">
         {/* <div
           onClick={() => setOpened((prev) => !prev)}
           className="tw-absolute tw-bottom-[70px] tw-w-full tw-z-50 tw-h-[55px] tw-bg-btnPrimary tw-flex tw-justify-center tw-items-center"
@@ -67,15 +67,15 @@ const SideMenu = (props: IProps) => {
           )}
         </div> */}
         <div
-          className="d-flex flex-column flex-center fs-12 fw-bolder px-2 mb-3 mt-6"
+          className="flex-column flex-center fs-12 fw-bolder  mb-3 mt-2 "
           id="kt_app_sidebar_primary_header"
         >
-          <span className="text-uppercase tw-text-sm tw-text-center tw-font-mono">
+          <span className="text-uppercase tw-text-md tw-text-center tw-font-mono tw-text-white tw-mb-4 tw-bg-gray-500 tw-w-full tw-py-6 tw-rounded-lg ">
             {title}
           </span>
         </div>
         <div
-          className="app-sidebar-nav flex-grow-1 hover-scroll-overlay-y px-5 pt-2 "
+          className="app-sidebar-nav flex-grow-1 hover-scroll-overlay-y   "
           id="kt_app_sidebar_primary_nav"
           data-kt-scroll="true"
           data-kt-scroll-height="auto"
@@ -86,27 +86,27 @@ const SideMenu = (props: IProps) => {
           <ul className="nav" role="tablist">
             {sidebarMenuList.map((item: ISidebarMenu) => {
               return (
-                <li key={item.id} className="nav-item py-2" role="presentation">
+                <li key={item.id} className=" py-2 " role="presentation">
                   <NavLink
                     data-bs-toggle="tab"
                     to={item.link}
-                    className="nav-link py-4 px-1 btn"
+                    className="nav-link -tw-ml-12 py-4  btn  "
                     aria-selected="false"
                     role="tab"
                   >
-                    <span>{item.icon}</span>
-                    {showProductSidebar && opened && (
-                      <span className="pt-2 fs-9 fs-lg-7 fw-bold">
-                        {item.title}
-                      </span>
-                    )}
+                    <div className="tw-w-[90px] tw-flex  tw-flex-row  tw-items-center tw-gap-4 ">
+                      <span className="tw-self-center">{item.icon}</span>
+                      {showProductSidebar && opened && (
+                        <span className=" fw-bold">{item.title}</span>
+                      )}
+                    </div>
                   </NavLink>
                 </li>
               );
             })}
           </ul>
           <Link to={backPath ?? "/"} className="">
-            <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-center tw-py-2 tw-rounded-full tw-text-btnPrimary tw-gap-3 hover:tw-shadow-md ">
+            <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-evenly tw-py-2 tw-rounded-full tw-text-btnPrimary tw-gap-5 hover:tw-shadow-md ">
               {/* <i className="bi bi-arrow-left-square fs-2x  "></i>
               <IoMdExit
                 className="tw-transform -tw-scale-x-100"

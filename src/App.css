@@ -72,8 +72,25 @@
 .text-active-primary.active {
   transition: color 0.2s ease;
   color: white !important;
-  background-color: gray !important;
+  background-color: #1d273b !important;
   padding-left: 18px;
   padding-right: 18px;
-  border-radius: 20px;
+  border-radius: 5px;
+}
+
+.app-sidebar-primary .app-sidebar-nav {
+  border-right: 0 !important;
+}
+
+/* .app-sidebar-primary .app-sidebar-nav .nav .nav-link.btn.active {
+  color: white;
+  background-color: gray !important;
+  border-radius: 0px;
+} */
+.btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(
+    .border-active
+  ):not(.btn-flush):not(.btn-icon) {
+  border: 0;
+  padding: calc(0.775rem + 1px) calc(1.5rem + 1px);
+  border-radius: 3px;
 }
