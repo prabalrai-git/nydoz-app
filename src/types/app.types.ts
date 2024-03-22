@@ -5,6 +5,7 @@ export interface INavPill {
   title: string;
   link: string;
   icon?: ReactElement;
+  children?: ReactElement;
 }
 
 export interface ISidebarMenu {

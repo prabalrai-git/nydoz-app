@@ -8,6 +8,16 @@ import { MdAccountBalance, MdOutlineAdminPanelSettings } from "react-icons/md";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import { GrMoney } from "react-icons/gr";
+import { Tabs } from "antd";
+import UserList from "./user/UserList";
+import Dashboard from "./Dashboard";
+import DocumentList from "../documents/DocumentsList";
+import RoleList from "../roles/RoleList";
+import StatusList from "./status/StatusList";
+import FinancialAccountsList from "./FinancialAccounts/FinancialAccountsList";
+import TransactionTypesList from "./transactionTypes/TransactionTypesList";
+import SocialLinkList from "../socialLinks/SocialLinkList";
+import PaymentMethodsList from "./payments/PaymentMethodsList";
 
 const Layout = () => {
   const navpills: INavPill[] = [
@@ -16,18 +26,21 @@ const Layout = () => {
       title: "Dashboard",
       link: "dashboard",
       icon: <TbLayoutDashboard size={18} className="tw-mr-2 tw-self-center" />,
+      children: <Dashboard />,
     },
     {
       id: 2,
       title: "Users",
       link: "users/list",
       icon: <FaUsersLine size={18} className="tw-mr-2 tw-self-center" />,
+      children: <UserList />,
     },
     {
       id: 3,
       title: "Documents",
       link: "documents",
       icon: <SiGoogledocs size={18} className="tw-mr-2 tw-self-center" />,
+      children: <DocumentList />,
     },
     {
       id: 4,
@@ -39,18 +52,21 @@ const Layout = () => {
           className="tw-mr-2 tw-self-center"
         />
       ),
+      children: <RoleList />,
     },
     {
       id: 5,
       title: "Social Links",
       link: "social-links",
       icon: <IoShareSocialSharp size={18} className="tw-mr-2 tw-self-center" />,
+      children: <SocialLinkList />,
     },
     {
       id: 6,
       title: "Status",
       link: "statuses/list",
       icon: <TbStatusChange size={18} className="tw-mr-2 tw-self-center" />,
+      children: <StatusList />,
     },
     {
       id: 7,
@@ -59,27 +75,42 @@ const Layout = () => {
       icon: (
         <RiSecurePaymentFill size={18} className="tw-mr-2 tw-self-center" />
       ),
+      children: <PaymentMethodsList />,
     },
     {
       id: 8,
       title: "Financial Accounts",
       link: "financialAccounts/list",
       icon: <MdAccountBalance size={18} className="tw-mr-2 tw-self-center" />,
+      children: <FinancialAccountsList />,
     },
     {
       id: 9,
       title: "Transaction Types",
       link: "transactionTypes/list",
       icon: <GrMoney size={18} className="tw-mr-2 tw-self-center" />,
+      children: <TransactionTypesList />,
     },
   ];
   return (
     <div>
       <div className="tw-bg-white tw-border-[1px] tw-border-gray-200   tw-pl-4  tw-rounded-lg tw-mb-10  ">
-        <NavPills navpills={navpills} />
+        <Tabs
+          type="card"
+          defaultActiveKey="2"
+          items={navpills.map((item) => {
+            return {
+              key: item.id,
+              label: item.title,
+              children: item.children,
+              icon: item.icon,
+            };
+          })}
+        />
+        {/* <NavPills navpills={navpills} /> */}
       </div>
       {/* <BreadcrumbAndBack /> */}
-      <Outlet />
+      {/* <Outlet /> */}
     </div>
   );
 };

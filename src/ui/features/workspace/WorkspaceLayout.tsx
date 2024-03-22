@@ -24,18 +24,14 @@ const ProtectedUserLayout: React.FC = () => {
 
   return (
     <div>
-      <div className="main-container ">
+      <div>
         {isLoggedIn && token ? (
           <>
-            <WorkSpaceNavbar />
             <Outlet />
           </>
         ) : (
           <Navigate to={"/auth/login"} state={{ from: location }} replace />
         )}
-      </div>
-      <div className="tw-ml-[10%] ">
-        <FooterLayout />
       </div>
     </div>
   );

@@ -95,8 +95,7 @@ const DocumentList = () => {
       ),
       cell: (info) => {
         return (
-          <div className="symbol symbol-label tw-flex tw-py-2  ">
-            {/* <img className="img-fluid" src={Images.Folder} alt="Logo" /> */}
+          <div className="symbol symbol-label tw-flex tw-py-2 tw-z-50  ">
             <Image
               className="tw-object-cover tw-rounded-lg"
               width={40}

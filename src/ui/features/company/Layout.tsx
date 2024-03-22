@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
@@ -9,13 +9,28 @@ import useHandleShowError from "../../../hooks/useHandleShowError";
 import { ISidebarMenu } from "../../../types/app.types";
 import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
-import { Boxes, Gear } from "react-bootstrap-icons";
-import { useWindowSize } from "usehooks-ts";
+import {
+  Boxes,
+  Buildings,
+  Gear,
+  PersonCheck,
+  PersonLock,
+} from "react-bootstrap-icons";
 import useWebSetting from "../../../context/useWebSetting";
 import { MdSpaceDashboard } from "react-icons/md";
 import { RiFolderSettingsFill } from "react-icons/ri";
-import { FaCircleUser } from "react-icons/fa6";
+import { FaCircleUser, FaMoneyBill1 } from "react-icons/fa6";
 
+//
+import { Layout, Menu } from "antd";
+
+import FooterLayout from "../../shared/layouts/Footer/Footer";
+import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
+import { BsPersonVcard } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { IoChevronBack } from "react-icons/io5";
+
+const { Header, Content, Sider } = Layout;
 const CompanyLayout = () => {
   const { dispatch, companyInfo, userInfo } = useAuthContext();
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
@@ -23,13 +38,15 @@ const CompanyLayout = () => {
 
   const { url } = useWebSetting();
 
+  const navigate = useNavigate();
+
   const companySubdomian = url.split(".")[0].split("//")[1];
 
   const { fetchDataById, error } = useFetch<ICompanyResponse>(
     API_ROUTE.GET_COMPANY_BY_SUBDOMAIN,
     true
   );
-  const { width } = useWindowSize();
+
   useHandleShowError(error);
 
   const fetchCompanyInfo = useCallback(async () => {
@@ -111,34 +128,148 @@ const CompanyLayout = () => {
     },
   ];
 
+  const clientManagementSideBar: ISidebarMenu[] = [
+    {
+      id: 1,
+      title: "Dashboard",
+      link: "/company/products/client-management/dashboard",
+      // icon: <House size={20} />,
+      icon: <MdSpaceDashboard size={18} />,
+    },
+    {
+      id: 2,
+      title: "Visitors",
+      link: "/company/products/client-management/visitors",
+      icon: <BsPersonVcard size={18} />,
+      // icon: <PersonBadge size={20} />,
+    },
+    {
+      id: 3,
+      title: "Clients",
+      link: "/company/products/client-management/clients",
+      icon: <PersonCheck size={18} />,
+    },
+    {
+      id: 4,
+      title: "Transactions",
+      link: "/company/products/client-management/transactions/list",
+      icon: <FaMoneyBill1 size={18} />,
+    },
+    {
+      id: 5,
+      title: "Agents",
+      link: "/company/products/client-management/agents",
+      icon: <PersonLock size={18} />,
+    },
+    {
+      id: 6,
+      title: "Institutions",
+      link: "/company/products/client-management/enrolled-institutes/list",
+      icon: <Buildings size={18} />,
+    },
+    {
+      id: 7,
+      title: "Settings",
+      link: "/company/products/client-management/settings/visiting-purposes",
+      icon: <Gear size={18} />,
+    },
+  ];
+  const items = window.location.href.includes("client-management")
+    ? clientManagementSideBar.map((item) => ({
+        key: item.id,
+        icon: item.icon,
+        label: item.title,
+        onClick: () => navigate(item.link),
+      }))
+    : sidebarMenu.map((item) => ({
+        key: item.id,
+        icon: item.icon,
+        label: item.title,
+        onClick: () => navigate(item.link),
+      }));
+
   return (
-    <div>
-      {showSplashScreen ? (
-        <CompanyLoader />
-      ) : (
-        <div className="d-flex ">
-          {/* <NavPills navpills={navpills} /> */}
-          <ProductSideMenu
-            title={companyInfo?.subdomain || companySubdomian || ""}
-            backPath="/"
-            sidebarMenuList={sidebarMenu}
-          />
-          <div
-            className={width > 768 ? "doc-content" : "doc-content-sm "}
-            style={{
-              marginTop: "0px",
-              marginLeft: "220px",
-              marginRight: "15px",
-            }}
-          >
-            <div className="ps-2">
-              <Outlet />
-            </div>
-          </div>
+    <Layout hasSider>
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        onBreakpoint={(broken) => {
+          console.log(broken);
+        }}
+        onCollapse={(collapsed, type) => {
+          console.log(collapsed, type);
+        }}
+        className="tw-min-h-[100vh] tw-z-[10000] "
+      >
+        <div className="flex-column flex-center fs-12 fw-bolder  mb-3 mt-2 tw-w-11/12 tw-mx-auto ">
+          <span className="text-uppercase tw-text-md tw-text-center tw-font-mono tw-text-white tw-mb-4 tw-bg-gray-500 tw-w-full tw-py-5 tw-rounded-lg ">
+            {companyInfo?.subdomain || companySubdomian || ""}
+          </span>
         </div>
-      )}
-    </div>
+
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          // className="tw-absolute tw-top-0"
+          items={items}
+        />
+        <Link
+          to={
+            window.location.href.includes("client-management")
+              ? "/company/products/dashboard"
+              : "/"
+          }
+          className=""
+        >
+          <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-evenly tw-py-2 tw-rounded-full tw-text-btnPrimary tw-gap-5 hover:tw-shadow-md tw-w-10/12 tw-mx-auto">
+            <IoChevronBack size={20} />
+            <p className="    tw-font-bold tw-text-lg">{"Back"}</p>
+          </div>
+        </Link>
+      </Sider>
+      <Layout>
+        <Header>
+          <WorkSpaceNavbar />
+        </Header>
+
+        <Content style={{ margin: "25px 16px 0" }}>
+          {showSplashScreen ? <CompanyLoader /> : <Outlet />}
+        </Content>
+
+        <FooterLayout />
+      </Layout>
+    </Layout>
   );
+
+  // return (
+  //   <div>
+  //     {showSplashScreen ? (
+  //       <CompanyLoader />
+  //     ) : (
+  //       <div className="d-flex ">
+  //         {/* <NavPills navpills={navpills} /> */}
+  //         <ProductSideMenu
+  //           title={companyInfo?.subdomain || companySubdomian || ""}
+  //           backPath="/"
+  //           sidebarMenuList={sidebarMenu}
+  //         />
+  //         <div
+  //           className={width > 768 ? "doc-content" : "doc-content-sm "}
+  //           style={{
+  //             marginTop: "0px",
+  //             marginLeft: "220px",
+  //             marginRight: "15px",
+  //           }}
+  //         >
+  //           <div className="ps-2">
+  //             <Outlet />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     )}
+  //   </div>
+  // );
 };
 
 export default CompanyLayout;
