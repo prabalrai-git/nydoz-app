@@ -12,7 +12,7 @@ function App() {
         <Outlet />
       </div>
 
-      <ToastContainer position="bottom-left" />
+      <ToastContainer position="top-right" />
     </div>
   );
 }

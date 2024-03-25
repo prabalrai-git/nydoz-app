@@ -21,13 +21,13 @@ import PaymentMethodsList from "./payments/PaymentMethodsList";
 
 const Layout = () => {
   const navpills: INavPill[] = [
-    {
-      id: 1,
-      title: "Dashboard",
-      link: "dashboard",
-      icon: <TbLayoutDashboard size={18} className="tw-mr-2 tw-self-center" />,
-      children: <Dashboard />,
-    },
+    // {
+    //   id: 1,
+    //   title: "Dashboard",
+    //   link: "dashboard",
+    //   icon: <TbLayoutDashboard size={18} className="tw-mr-2 tw-self-center" />,
+    //   children: <Dashboard />,
+    // },
     {
       id: 2,
       title: "Users",
@@ -95,8 +95,11 @@ const Layout = () => {
   return (
     <div>
       <div className="tw-bg-white tw-border-[1px] tw-border-gray-200   tw-pl-4  tw-rounded-lg tw-mb-10  ">
+        {/* <NavPills navpills={navpills} /> */}
+
         <Tabs
           type="card"
+          className="tw-py-10"
           defaultActiveKey="2"
           items={navpills.map((item) => {
             return {
@@ -107,7 +110,6 @@ const Layout = () => {
             };
           })}
         />
-        {/* <NavPills navpills={navpills} /> */}
       </div>
       {/* <BreadcrumbAndBack /> */}
       {/* <Outlet /> */}

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
 import { IStatusReponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -6,12 +6,45 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { Tag } from "antd";
+import { IStatusResponse } from "../../../../types/payload.type";
+import useAuthContext from "../../../../context/auth/useAuthContext";
+import useFetch from "../../../../hooks/useFetch";
+import TanStackTable from "../../../shared/molecules/TanStackTable";
+import AddStatus from "./AddStatus";
 
 const StatusList = () => {
   const navigate = useNavigate();
+
+  const { companyInfo } = useAuthContext();
+
+  const companyId = companyInfo?.id;
+
+  const [selectedData, setSelectedData] = useState<
+    IStatusResponse | undefined
+  >();
+  const [show, setShow] = useState<boolean>(false);
+  const [openAddDocument, setOpenAddDocument] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState<boolean>(false);
+
+  const getListUrl = API_ROUTE.STATUSES;
+
+  const { data, fetchData } = useFetch<IStatusResponse[]>(getListUrl, true);
+
+  useEffect(() => {
+    fetchData();
+    setFetchAgain(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (fetchAgain) {
+      fetchData();
+      setFetchAgain(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchAgain]);
+
   const searchFilter: string[] = ["first_name", "email", "mobile"];
 
   const handleEditData = useCallback(
@@ -158,6 +191,16 @@ const StatusList = () => {
     [handleEditData]
   );
 
+  const handleOpenNewModal = () => {
+    setSelectedData(undefined);
+    handleAddDocumentOpen();
+  };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleAddDocumentClose = () => setOpenAddDocument(false);
+  const handleAddDocumentOpen = () => setOpenAddDocument(true);
+
   return (
     <div className="my-6 px-3">
       <section>
@@ -165,21 +208,27 @@ const StatusList = () => {
           <div className="card-header">
             <h3 className="card-title">All Statuses</h3>
             <div className="card-toolbar">
-              <Link
-                to={`../add`}
+              <button
+                onClick={handleOpenNewModal}
                 className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
               >
                 <span className="mx-2 tw-text-white">Add Status</span>
-              </Link>
+              </button>
             </div>
           </div>
-          <div className="tw-p-6 tw-px-8">
-            <SearchPaginationList
-              searchParamsArray={searchFilter}
-              baseUrl={API_ROUTE.STATUSES}
-              columns={tableColumns}
-            />
-          </div>
+          {data && (
+            <div className="tw-p-6 tw-px-8">
+              <TanStackTable columns={tableColumns} data={data} />
+            </div>
+          )}
+          <AddStatus
+            setFetchAgain={setFetchAgain}
+            companyId={companyId || ""}
+            handleClose={handleAddDocumentClose}
+            show={openAddDocument}
+            selectedData={selectedData}
+            setSelectedData={setSelectedData}
+          />
         </div>
       </section>
     </div>

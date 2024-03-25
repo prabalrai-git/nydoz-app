@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
 import { IAgentResponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -7,9 +7,29 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
+import useFetch from "../../../../hooks/useFetch";
+import { IFinancialAccountFields } from "../../../../types/payload.type";
+import useAuthContext from "../../../../context/auth/useAuthContext";
+import TanStackTable from "../../../shared/molecules/TanStackTable";
+import AddFinancialAccount from "./AddFinancialAccount";
+
+export interface IFinancialAccountReponse extends IFinancialAccountFields {
+  id: string;
+}
 
 const FinancialAccountsList = () => {
   const navigate = useNavigate();
+
+  const { companyInfo } = useAuthContext();
+
+  const [selectedData, setSelectedData] = useState<
+    IFinancialAccountReponse | undefined
+  >();
+  const [show, setShow] = useState<boolean>(false);
+  const [openAddDocument, setOpenAddDocument] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState<boolean>(false);
+
+  const companyId = companyInfo?.id;
   const searchFilter: string[] = [
     "institute_name",
     "account_name",
@@ -17,8 +37,29 @@ const FinancialAccountsList = () => {
     "swift_code",
   ];
 
+  const getListUrl = API_ROUTE.FINANCIAL_ACCOUNT;
+
+  const { data, fetchData } = useFetch<IFinancialAccountReponse[]>(
+    getListUrl,
+    true
+  );
+
+  useEffect(() => {
+    fetchData();
+    setFetchAgain(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (fetchAgain) {
+      fetchData();
+      setFetchAgain(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchAgain]);
+
   const handleEditData = useCallback(
-    (item: IAgentResponse) => {
+    (item: IFinancialAccountReponse) => {
       navigate("edit", {
         state: { data: item },
       });
@@ -26,7 +67,7 @@ const FinancialAccountsList = () => {
     [navigate]
   );
 
-  const tableColumns: ColumnDef<IAgentResponse>[] = useMemo(
+  const tableColumns: ColumnDef<IFinancialAccountReponse>[] = useMemo(
     () => [
       {
         accessorKey: "sn",
@@ -164,27 +205,55 @@ const FinancialAccountsList = () => {
     [handleEditData]
   );
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleAddDocumentClose = () => setOpenAddDocument(false);
+  const handleAddDocumentOpen = () => setOpenAddDocument(true);
+
+  const handleOpenNewModal = () => {
+    setSelectedData(undefined);
+    handleAddDocumentOpen();
+  };
+
   return (
     <div className="my-6 px-3">
       <div className="card">
         <div className="card-header">
           <h3 className="card-title">All Financial Accounts</h3>
           <div className="card-toolbar">
-            <Link
+            {/* <Link
               to={"../add"}
               className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
             >
+                </Link> */}
+            <button
+              onClick={handleOpenNewModal}
+              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+            >
               <span className="mx-2 tw-text-white">Add Financial Account </span>
-            </Link>
+            </button>
           </div>
         </div>
-        <div className="tw-p-6 tw-px-8">
+        {data && (
+          <div className="tw-p-6 tw-px-8">
+            <TanStackTable columns={tableColumns} data={data} />
+          </div>
+        )}
+        {/* <div className="tw-p-6 tw-px-8">
           <SearchPaginationList
             searchParamsArray={searchFilter}
             baseUrl={API_ROUTE.FINANCIAL_ACCOUNT}
             columns={tableColumns}
           />
-        </div>
+        </div> */}
+        <AddFinancialAccount
+          setFetchAgain={setFetchAgain}
+          companyId={companyId || ""}
+          handleClose={handleAddDocumentClose}
+          show={openAddDocument}
+          selectedData={selectedData}
+          setSelectedData={setSelectedData}
+        />
       </div>
     </div>
   );

@@ -34,10 +34,10 @@ const AdminRoutes: RouteObject[] = [
         path: "list",
         element: <UserList />,
       },
-      {
-        path: "add",
-        element: <AddUser />,
-      },
+      // {
+      //   path: "add",
+      //   element: <AddUser />,
+      // },
     ],
   },
   // {
@@ -68,10 +68,10 @@ const AdminRoutes: RouteObject[] = [
         path: "list",
         element: <StatusList />,
       },
-      {
-        path: "add",
-        element: <AddStatus />,
-      },
+      // {
+      //   path: "add",
+      //   element: <AddStatus />,
+      // },
     ],
   },
   {

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
 import { IAgentResponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -8,13 +8,53 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { Tag } from "antd";
+import useAuthContext from "../../../../context/auth/useAuthContext";
+import { ITransactionTypeFields } from "../../../../types/payload.type";
+import useFetch from "../../../../hooks/useFetch";
+import TanStackTable from "../../../shared/molecules/TanStackTable";
+import AddTransactionTypes from "./AddTransactionTypes";
+
+export interface ITransactionTypeResponse extends ITransactionTypeFields {
+  id: string;
+}
 
 const TransactionTypesList = () => {
   const navigate = useNavigate();
   const searchFilter: string[] = ["name", "description", "transaction_effect"];
+  const { companyInfo } = useAuthContext();
+
+  const companyId = companyInfo?.id;
+
+  const [selectedData, setSelectedData] = useState<
+    ITransactionTypeResponse | undefined
+  >();
+  const [show, setShow] = useState<boolean>(false);
+  const [openAddDocument, setOpenAddDocument] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState<boolean>(false);
+
+  const getListUrl = API_ROUTE.TRANSACTION_TYPE;
+
+  const { data, fetchData } = useFetch<ITransactionTypeResponse[]>(
+    getListUrl,
+    true
+  );
+
+  useEffect(() => {
+    fetchData();
+    setFetchAgain(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (fetchAgain) {
+      fetchData();
+      setFetchAgain(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchAgain]);
 
   const handleEditData = useCallback(
-    (item: IAgentResponse) => {
+    (item: ITransactionTypeResponse) => {
       navigate("edit", {
         state: { data: item },
       });
@@ -22,7 +62,7 @@ const TransactionTypesList = () => {
     [navigate]
   );
 
-  const tableColumns: ColumnDef<IAgentResponse>[] = useMemo(
+  const tableColumns: ColumnDef<ITransactionTypeResponse>[] = useMemo(
     () => [
       {
         accessorKey: "sn",
@@ -113,27 +153,50 @@ const TransactionTypesList = () => {
     [handleEditData]
   );
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleAddDocumentClose = () => setOpenAddDocument(false);
+  const handleAddDocumentOpen = () => setOpenAddDocument(true);
+
+  const handleOpenNewModal = () => {
+    setSelectedData(undefined);
+    handleAddDocumentOpen();
+  };
+
   return (
     <div className="my-6 px-3">
       <div className="card">
         <div className="card-header">
           <h3 className="card-title">All Transaction Types</h3>
           <div className="card-toolbar">
-            <Link
-              to={"../add"}
+            <button
+              onClick={handleOpenNewModal}
               className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
             >
               <span className="mx-2 tw-text-white">Add Transaction Type</span>
-            </Link>
+            </button>
           </div>
         </div>
-        <div className="tw-p-6 tw-px-8">
+        {data && (
+          <div className="tw-p-6 tw-px-8">
+            <TanStackTable columns={tableColumns} data={data} />
+          </div>
+        )}
+        {/* <div className="tw-p-6 tw-px-8">
           <SearchPaginationList
             searchParamsArray={searchFilter}
             baseUrl={API_ROUTE.TRANSACTION_TYPE}
             columns={tableColumns}
           />
-        </div>
+        </div> */}
+        <AddTransactionTypes
+          setFetchAgain={setFetchAgain}
+          companyId={companyId || ""}
+          handleClose={handleAddDocumentClose}
+          show={openAddDocument}
+          selectedData={selectedData}
+          setSelectedData={setSelectedData}
+        />
       </div>
     </div>
   );
