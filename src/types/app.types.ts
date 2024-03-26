@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 export interface INavPill {
   id: number;
   title: string;
-  link: string;
+  link?: string;
   icon?: ReactElement;
   children?: ReactElement;
 }

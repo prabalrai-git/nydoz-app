@@ -92,7 +92,7 @@
   ):not(.btn-flush):not(.btn-icon) {
   border: 0;
   padding: calc(0.775rem + 1px) calc(1.5rem + 1px);
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 :where(.css-dev-only-do-not-override-1k979oh).ant-tabs .ant-tabs-tab-btn {

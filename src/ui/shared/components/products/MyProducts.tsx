@@ -40,7 +40,7 @@ const MyProductList = (props: IProps) => {
       <section className="card ">
         {isloading && <LoadingPage />}
         {data && data.length > 0 && (
-          <div className=" tw-grid xsm:tw-grid-cols-1 tw-gap-8 xl:tw-grid-cols-5 md:tw-grid-cols-3 sm:grid-cols-2  xsm:tw-mx-auto sm:tw-mx-0">
+          <div className=" tw-grid xsm:tw-grid-cols-1 tw-gap-8 xl:tw-grid-cols-6 md:tw-grid-cols-3 sm:grid-cols-2  xsm:tw-mx-auto sm:tw-mx-0">
             {data.map((product, index) => (
               <Link
                 to={`${partialPath}${product.slug}/dashboard`}

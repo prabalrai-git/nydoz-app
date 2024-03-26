@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import AddVisaType from "./AddVisaType";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import PaginationTable from "../../shared/components/PaginationTable";
+import TanStackTable from "../../shared/molecules/TanStackTable";
 
 const VisaTypeList = () => {
   const { companyInfo } = useAuthContext();
@@ -182,16 +183,19 @@ const VisaTypeList = () => {
             </div>
           </div>
           {data && (
-            <div className="tw-p-6 tw-px-8">
-              <PaginationTable
-                pagination={pagination}
-                baseUrl={basUrl}
-                columns={tableColumns}
-                data={data}
-                isLoading={isloading}
-                setFetchAgain={setFetchAgain}
-                setFetchUrl={setFetchUrl}
-              />
+            // <div className="tw-p-6 tw-px-8">
+            //   <PaginationTable
+            //     pagination={pagination}
+            //     baseUrl={basUrl}
+            //     columns={tableColumns}
+            //     data={data}
+            //     isLoading={isloading}
+            //     setFetchAgain={setFetchAgain}
+            //     setFetchUrl={setFetchUrl}
+            //   />
+            // </div>
+            <div className="tw-p-6 tw-px-10">
+              <TanStackTable columns={tableColumns} data={data} />
             </div>
           )}
         </div>

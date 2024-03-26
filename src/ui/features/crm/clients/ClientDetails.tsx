@@ -6,7 +6,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import TanStackTable from "../../../shared/molecules/TanStackTable";
 import { dummyDocumets } from "../../../../constants/dummdata";
-import { Image, Space, Statistic, Tag } from "antd";
+import { Image, Space, Statistic, Tabs, Tag } from "antd";
 import APP_SETTING from "../../../../config/AppSetting";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import API_ROUTE from "../../../../service/api";
@@ -30,8 +30,10 @@ import {
   ZoomOutOutlined,
 } from "@ant-design/icons";
 import useFetch from "../../../../hooks/useFetch";
-import { GrView } from "react-icons/gr";
+import { GrMoney, GrView } from "react-icons/gr";
 import { Spinner } from "react-bootstrap";
+import { INavPill } from "../../../../types/app.types";
+import { SiGoogledocs } from "react-icons/si";
 
 type TClientBasicInfo = {
   agent: string;
@@ -484,6 +486,69 @@ const ClientDetails = () => {
     ],
     [handleEditData]
   );
+
+  const ClientTransaction = () => {
+    return (
+      <section className="tw-mt-10">
+        <div className="card">
+          <div className="card-header">
+            <h3 className="card-title"> Transactions</h3>
+          </div>
+          <div className="card-body  ">
+            {" "}
+            <SearchPaginationList
+              searchParamsArray={searchFilter}
+              baseUrl={API_ROUTE.TRANSACTION}
+              columns={tableColumnsTransactions}
+            />
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  const ClientDoucments = () => {
+    return (
+      <section className="tw-mt-10">
+        <div className="card">
+          <div className="card-header">
+            <h3 className="card-title">Documents</h3>
+          </div>
+          <div className="card-body  ">
+            <div className="card">
+              {dummyDocumets && dummyDocumets?.length === 0 ? (
+                <div>
+                  <NotFound title="Documents Not Available " />
+                </div>
+              ) : (
+                <div className="-tw-mt-5">
+                  <TanStackTable
+                    columns={tableColumns}
+                    data={dummyDocumets ?? []}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  const navpills: INavPill[] = [
+    {
+      id: 2,
+      title: "Clients Douments",
+      icon: <SiGoogledocs size={18} className="tw-mr-2 tw-self-center" />,
+      children: <ClientDoucments />,
+    },
+    {
+      id: 1,
+      title: "Clients Transactions",
+      icon: <GrMoney size={18} className="tw-mr-2 tw-self-center" />,
+      children: <ClientTransaction />,
+    },
+  ];
   return (
     <>
       {data ? (
@@ -499,7 +564,7 @@ const ClientDetails = () => {
                 <div className="card-header">
                   <h3 className="card-title">Basic Information</h3>
                 </div>
-                <div className="card-body tw-grid xl:tw-grid-cols-5 sm:tw-grid-cols-1 md:tw-grid-cols-3 lg:tw-grid-cols-4 tw-gap-9  ">
+                <div className="card-body tw-grid xl:tw-grid-cols-5 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 tw-gap-9  ">
                   {clientBasicInfo &&
                     Object.entries(clientBasicInfo).map(
                       ([key, value], index) => (
@@ -520,44 +585,20 @@ const ClientDetails = () => {
                 </div>
               </div>
             </section>
-            <section className="tw-mt-10">
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">Documents</h3>
-                </div>
-                <div className="card-body  ">
-                  <div className="card">
-                    {dummyDocumets && dummyDocumets?.length === 0 ? (
-                      <div>
-                        <NotFound title="Documents Not Available " />
-                      </div>
-                    ) : (
-                      <div className="-tw-mt-5">
-                        <TanStackTable
-                          columns={tableColumns}
-                          data={dummyDocumets ?? []}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </section>
-            <section className="tw-mt-10">
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title"> Transactions</h3>
-                </div>
-                <div className="card-body  ">
-                  {" "}
-                  <SearchPaginationList
-                    searchParamsArray={searchFilter}
-                    baseUrl={API_ROUTE.TRANSACTION}
-                    columns={tableColumnsTransactions}
-                  />
-                </div>
-              </div>
-            </section>
+
+            <Tabs
+              // type="card"
+              className="tw-py-10 "
+              defaultActiveKey="2"
+              items={navpills.map((item) => {
+                return {
+                  key: item.id,
+                  label: item.title,
+                  children: item.children,
+                  icon: item.icon,
+                };
+              })}
+            />
           </div>
         </>
       ) : (

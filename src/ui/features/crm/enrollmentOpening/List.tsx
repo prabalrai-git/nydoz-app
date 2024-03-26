@@ -14,6 +14,7 @@ import useMutation from "../../../../hooks/useMutation";
 import { GoEye } from "react-icons/go";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const List = () => {
   const navigate = useNavigate();
@@ -125,7 +126,7 @@ const List = () => {
       {
         accessorKey: "visa_type",
         header: () => (
-          <div>
+          <div className="tw-flex">
             <Flag size={16} className="mx-2" />
             <span>Visa Type</span>
           </div>
@@ -144,29 +145,49 @@ const List = () => {
         ),
         cell: (info) => (
           <div className="d-flex justify-content-center">
-            <div
-              title="view"
-              className="menu-link cursor-pointer bg-primary p-2 px-3 tw-rounded-lg tw-flex tw-items-center"
+            <DropdownButton
+              variant="secondary"
+              size="sm"
+              id="dropdown-basic-button"
+              title="Action"
             >
-              {/* <i className="bi bi-box-arrow-up-right text-white"></i> */}
-              <GoEye color="white" size={18} />
-            </div>
-            <div
-              title="Edit"
-              onClick={() => handleEditData(info?.row?.original)}
-              className="menu-link cursor-pointer bg-info p-2 px-3 mx-3 tw-rounded-lg"
-            >
-              {/* <i className="bi bi-pencil-square text-white"></i> */}
-              <FaEdit color="white" size={16} />
-            </div>
-            <div
-              title="Delete"
-              onClick={() => handleDeleteModal(info?.row?.original)}
-              className="menu-link cursor-pointer bg-danger p-2 px-3 tw-rounded-lg"
-            >
-              {/* <i className="bi bi-trash text-white"></i> */}
-              <RiDeleteBin5Line color="white" size={17} />
-            </div>
+              <Dropdown.Item onClick={() => {}}>
+                <div
+                  title="view"
+                  className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
+                >
+                  <GoEye color={"green"} size={18} />
+                  <p>View</p>
+                </div>
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => handleEditData(info?.row?.original)}
+              >
+                <div
+                  title="Edit"
+                  className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
+                >
+                  <FaEdit color="blue" size={16} />
+                  <p>Edit</p>{" "}
+                </div>
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  navigate(
+                    `../transactions/add?client_id=${info?.row?.original?.id}`
+                  );
+                }}
+              >
+                <div
+                  title="Delete"
+                  onClick={() => handleDeleteModal(info?.row?.original)}
+                  className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
+                >
+                  <RiDeleteBin5Line color="red" size={17} />
+                  <p>Add Transaction</p>
+                </div>
+              </Dropdown.Item>
+            </DropdownButton>
           </div>
         ),
         footer: (info) => info.column.id,

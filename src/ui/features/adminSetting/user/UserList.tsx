@@ -160,7 +160,7 @@ const UserList = () => {
   };
 
   return (
-    <div className="my-6 px-3">
+    <div className=" px-3">
       <section>
         <div className="card">
           <div className="card-header">

@@ -11,8 +11,9 @@ import { toast } from "react-toastify";
 import AddVisaType from "./AddInformationChannel";
 import useAuthContext from "../../../../context/auth/useAuthContext";
 import PaginationTable from "../../../shared/components/PaginationTable";
+import TanStackTable from "../../../shared/molecules/TanStackTable";
 
-const VisaTypeList = () => {
+const InformationChannelList = () => {
   const { companyInfo } = useAuthContext();
   const companyId = companyInfo?.id;
 
@@ -175,16 +176,19 @@ const VisaTypeList = () => {
             </div>
           </div>
           {data && (
-            <div className="tw-p-6 tw-px-8">
-              <PaginationTable
-                pagination={pagination}
-                baseUrl={basUrl}
-                columns={tableColumns}
-                data={data}
-                isLoading={isloading}
-                setFetchAgain={setFetchAgain}
-                setFetchUrl={setFetchUrl}
-              />
+            // <div className="tw-p-6 tw-px-8">
+            //   <PaginationTable
+            //     pagination={pagination}
+            //     baseUrl={basUrl}
+            //     columns={tableColumns}
+            //     data={data}
+            //     isLoading={isloading}
+            //     setFetchAgain={setFetchAgain}
+            //     setFetchUrl={setFetchUrl}
+            //   />
+            // </div>
+            <div className="tw-p-6 tw-px-10">
+              <TanStackTable columns={tableColumns} data={data} />
             </div>
           )}
         </div>
@@ -214,4 +218,4 @@ const VisaTypeList = () => {
   );
 };
 
-export default VisaTypeList;
+export default InformationChannelList;

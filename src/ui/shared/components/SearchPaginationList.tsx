@@ -211,7 +211,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
   return (
     <div className="search-table-container">
       {data && data?.length > 0 && (
-        <div className="min-h-50vh block max-w-full overflow-x-scroll overflow-y-hidden ">
+        <div className="min-h-50vh  ">
           <div
             className={
               searchParamsArray.length > 1
@@ -254,20 +254,9 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
               </span>
             </div>
           </div>
-          <div className="d-flex justify-content-between tw-my-7 ">
-            <div className="flex-2">
-              <select
-                value={pagination.per_page}
-                className="form-select form-select-sm"
-                onChange={(e) => handlePageSizeChange(e)}
-              >
-                <option value="5">15</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-              </select>
-            </div>
+          <div className="tw-flex tw-justify-between tw-my-12 xsm:tw-flex-col tw-gap-8 sm:tw-flex-row ">
             <div className="flex-1">
-              <h6 className=" tw-text-appBlue py-2 tw-p-6 tw-px-12 tw-rounded-full tw-border-gray-300 tw-border-[2px]">
+              <h6 className=" tw-text-appBlue py-2 md:tw-p-6 xsm:tw-p-2 tw-text-center tw-px-12 tw-rounded-full tw-border-gray-300 tw-border-[2px] tw-text-sm">
                 <span className="tw-text-black"> Showing :</span>
                 <span className="mx-3 tw-font-semibold">
                   {" "}
@@ -282,112 +271,131 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                 </span>
               </h6>
             </div>
-            <ul className="pagination ">
-              <li
-                className={
-                  pagination.current_page === 1
-                    ? "page-item previous disabled"
-                    : "page-item previous"
-                }
-              >
-                <button
-                  onClick={() => handlePrevious(pagination.current_page)}
-                  className="page-link"
-                >
-                  <i className="previous"></i>
-                  <span className="mx-2">prev</span>
-                </button>
-              </li>
-              {Array.from(Array(noOfPages).keys()).map(
-                (_item: unknown, index: number) => (
-                  <li key={index + 1} className="page-item ">
-                    <button
-                      onClick={() => handleChangePage(index + 1)}
-                      className={
-                        pagination.current_page === index + 1
-                          ? "page-link active "
-                          : "page-link "
-                      }
-                    >
-                      {index + 1}
-                    </button>
-                  </li>
-                )
-              )}
-              <li
-                className={
-                  pagination.per_page * pagination.current_page >=
-                  pagination.total
-                    ? "page-item next disabled"
-                    : "page-item next"
-                }
-              >
-                <button
-                  onClick={() => handleNext(pagination.current_page)}
-                  className="page-link"
-                >
-                  <span className="mx-2">next</span>
-                  <i className="next"></i>
-                </button>
-              </li>
-            </ul>
-          </div>
 
-          <table className="table align-middle table-row-dashed fs-6 gy-5 dataTable  ">
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr
-                  className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"
-                  key={headerGroup.id}
+            <div className="tw-flex tw-gap-5 tw-self-end">
+              <ul className="pagination  ">
+                <li
+                  className={
+                    pagination.current_page === 1
+                      ? "page-item previous disabled"
+                      : "page-item previous"
+                  }
                 >
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <th key={header.id} colSpan={header.colSpan}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                        {header.column.getCanResize() && (
-                          <div
-                            onMouseDown={header.getResizeHandler()}
-                            onTouchStart={header.getResizeHandler()}
-                          ></div>
-                        )}
-                      </th>
-                    );
-                  })}
-                </tr>
-              ))}
-            </thead>
-            <tbody className="fw-semibold text-gray-600 min-h-50vh search-table-body">
-              {isloading ? (
-                <span className="d-flex h-75vh flex-center w-100">
-                  <Spinner />
-                </span>
-              ) : (
-                <>
-                  {table.getRowModel().rows.map((row) => {
-                    return (
-                      <tr key={row.id}>
-                        {row.getVisibleCells().map((cell) => {
-                          return (
-                            <td key={cell.id}>
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
+                  <button
+                    onClick={() => handlePrevious(pagination.current_page)}
+                    className="page-link"
+                  >
+                    <i className="previous"></i>
+                    <span className="mx-2">prev</span>
+                  </button>
+                </li>
+                {Array.from(Array(noOfPages).keys()).map(
+                  (_item: unknown, index: number) => (
+                    <li key={index + 1} className="page-item ">
+                      <button
+                        onClick={() => handleChangePage(index + 1)}
+                        className={
+                          pagination.current_page === index + 1
+                            ? "page-link active "
+                            : "page-link "
+                        }
+                      >
+                        {index + 1}
+                      </button>
+                    </li>
+                  )
+                )}
+                <li
+                  className={
+                    pagination.per_page * pagination.current_page >=
+                    pagination.total
+                      ? "page-item next disabled"
+                      : "page-item next"
+                  }
+                >
+                  <button
+                    onClick={() => handleNext(pagination.current_page)}
+                    className="page-link"
+                  >
+                    <span className="mx-2">next</span>
+                    <i className="next"></i>
+                  </button>
+                </li>
+              </ul>
+              <div className="flex-2  ">
+                <select
+                  value={pagination.per_page}
+                  className="form-select form-select-sm"
+                  onChange={(e) => handlePageSizeChange(e)}
+                >
+                  <option value="5">15</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="table-responsive tw-min-h-[40vh]">
+            <table className="table  table-bordered table-hover align-middle table-row-dashed fs-6 gy-5 dataTable  ">
+              <thead className="thead-light">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr
+                    className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0 "
+                    key={headerGroup.id}
+                  >
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <th
+                          className="xsm:tw-min-w-[250px] md:tw-min-w-[180px] lg:tw-min-w-[180px] xl:tw-min-w-[90px]"
+                          key={header.id}
+                          colSpan={header.colSpan}
+                        >
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
                               )}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    );
-                  })}
-                </>
-              )}
-            </tbody>
-          </table>
+                          {header.column.getCanResize() && (
+                            <div
+                              onMouseDown={header.getResizeHandler()}
+                              onTouchStart={header.getResizeHandler()}
+                            ></div>
+                          )}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </thead>
+              <tbody className="fw-semibold text-gray-600 min-h-50vh search-table-body">
+                {isloading ? (
+                  <span className="d-flex h-75vh flex-center w-100">
+                    <Spinner />
+                  </span>
+                ) : (
+                  <>
+                    {table.getRowModel().rows.map((row) => {
+                      return (
+                        <tr key={row.id}>
+                          {row.getVisibleCells().map((cell) => {
+                            return (
+                              <td key={cell.id}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
       {data?.length === 0 && isloading === false && (

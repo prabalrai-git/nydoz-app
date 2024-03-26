@@ -7,7 +7,6 @@ import CompanyLoader from "../../shared/components/company/CompanyLoader";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import useHandleShowError from "../../../hooks/useHandleShowError";
 import { ISidebarMenu } from "../../../types/app.types";
-import ProductSideMenu from "../../shared/layouts/sidebar/SideMenu";
 
 import {
   Boxes,
@@ -19,16 +18,17 @@ import {
 import useWebSetting from "../../../context/useWebSetting";
 import { MdSpaceDashboard } from "react-icons/md";
 import { RiFolderSettingsFill } from "react-icons/ri";
-import { FaCircleUser, FaMoneyBill1 } from "react-icons/fa6";
+import { FaCircleUser } from "react-icons/fa6";
 
 //
 import { Layout, Menu } from "antd";
 
 import FooterLayout from "../../shared/layouts/Footer/Footer";
 import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
-import { BsPersonVcard } from "react-icons/bs";
+import { BsFillFileEarmarkPersonFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
+import { TbReportMoney } from "react-icons/tb";
 
 const { Header, Content, Sider } = Layout;
 const CompanyLayout = () => {
@@ -95,7 +95,6 @@ const CompanyLayout = () => {
       id: 1,
       title: "Dashboard",
       link: "dashboard",
-      // icon: <House size={20} />,
       icon: <MdSpaceDashboard size={18} />,
     },
 
@@ -133,33 +132,31 @@ const CompanyLayout = () => {
       id: 1,
       title: "Dashboard",
       link: "/company/products/client-management/dashboard",
-      // icon: <House size={20} />,
-      icon: <MdSpaceDashboard size={18} />,
+      icon: <MdSpaceDashboard size={20} />,
     },
     {
       id: 2,
       title: "Visitors",
       link: "/company/products/client-management/visitors",
-      icon: <BsPersonVcard size={18} />,
-      // icon: <PersonBadge size={20} />,
+      icon: <BsFillFileEarmarkPersonFill size={19} />,
     },
     {
       id: 3,
       title: "Clients",
       link: "/company/products/client-management/clients",
-      icon: <PersonCheck size={18} />,
+      icon: <PersonCheck size={20} />,
     },
     {
       id: 4,
       title: "Transactions",
       link: "/company/products/client-management/transactions/list",
-      icon: <FaMoneyBill1 size={18} />,
+      icon: <TbReportMoney size={20} />,
     },
     {
       id: 5,
       title: "Agents",
       link: "/company/products/client-management/agents",
-      icon: <PersonLock size={18} />,
+      icon: <PersonLock size={20} />,
     },
     {
       id: 6,
@@ -229,15 +226,17 @@ const CompanyLayout = () => {
         </Link>
       </Sider>
       <Layout>
-        <Header>
-          <WorkSpaceNavbar />
-        </Header>
+        <div>
+          <Header>
+            <WorkSpaceNavbar />
+          </Header>
 
-        <Content style={{ margin: "25px 16px 0" }}>
-          {showSplashScreen ? <CompanyLoader /> : <Outlet />}
-        </Content>
+          <Content style={{ margin: "25px 16px 0" }}>
+            {showSplashScreen ? <CompanyLoader /> : <Outlet />}
+          </Content>
 
-        <FooterLayout />
+          <FooterLayout />
+        </div>
       </Layout>
     </Layout>
   );

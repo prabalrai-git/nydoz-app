@@ -10,6 +10,7 @@ import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { GoPersonFill } from "react-icons/go";
 import { FaEdit, FaPhoneAlt } from "react-icons/fa";
 import { BsPersonFillCheck } from "react-icons/bs";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const TransactionList = () => {
   const navigate = useNavigate();
@@ -187,35 +188,37 @@ const TransactionList = () => {
         ),
         cell: (info) => (
           <div className="tw-flex tw-justify-center">
-            <div className="d-flex justify-content-center">
-              {/* <button
-                            title='view'
-                            onClick={() => handleView(info?.row?.original?.id)}
-                            className='btn btn-sm btn-icon btn-primary mx-3'>
-                            <i className='bi bi-box-arrow-up-right '></i>
-                        </button> */}
-              <button
-                title="Edit"
+            <DropdownButton
+              variant="secondary"
+              size="sm"
+              id="dropdown-basic-button"
+              title="Action"
+            >
+              <Dropdown.Item
                 onClick={() => handleEditData(info?.row?.original)}
-                className="btn tw-bg-appBlue hover:tw-bg-appBlueHover btn-sm  btn-icon  mx-3"
               >
-                <FaEdit color="white" size={15} />
-              </button>
-            </div>
-            <div className="d-flex justify-content-center">
-              {/* <button
-                            title='view'
-                            onClick={() => handleView(info?.row?.original?.id)}
-                            className='btn btn-sm btn-icon btn-primary mx-3'>
-                            <i className='bi bi-box-arrow-up-right '></i>
-                        </button> */}
-              <button
-                onClick={() => window.alert("will delete later")}
-                className="btn btn-sm btn-icon  tw-bg-red-500 hover:tw-bg-red-700"
-              >
-                <RiDeleteBin5Line color="white" size={15} />
-              </button>
-            </div>
+                {/* <button
+                  title="Edit"
+                  onClick={() => handleEditData(info?.row?.original)}
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                >
+                  <FaRegEdit color="blue" size={15} />
+                </button> */}
+                <button
+                  title="Edit"
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                >
+                  <FaEdit color="blue" size={15} />
+                  <p>Edit</p>
+                </button>
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => window.alert("will delete later")}>
+                <button className="tw-flex tw-justify-between tw-gap-2 tw-font-bold">
+                  <RiDeleteBin5Line color="red" size={15} />
+                  <p>Delete</p>
+                </button>
+              </Dropdown.Item>
+            </DropdownButton>
           </div>
         ),
         footer: (info) => info.column.id,

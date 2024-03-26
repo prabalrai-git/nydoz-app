@@ -11,6 +11,7 @@ import useMutation from "../../../hooks/useMutation";
 import { toast } from "react-toastify";
 import { Spinner } from "react-bootstrap";
 import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
+import { Tag } from "antd";
 
 const BuyProduct = () => {
   const { companyInfo } = useAuthContext();
@@ -134,7 +135,7 @@ const BuyProduct = () => {
       />
 
       {isloading && <LoadingPage />}
-      <section className="p-6 bg-white my-6">
+      <section className="p-6 bg-white my-6 tw-rounded-lg">
         <table className="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer border-bottom  ">
           <thead>
             <tr className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
@@ -183,7 +184,7 @@ const BuyProduct = () => {
                       </div>
                     </td>
                     <td>
-                      <div className="badge badge-light-success">Automated</div>
+                      <Tag color="green">Automated</Tag>
                     </td>
                     <td className="text-end">
                       {companyProductData?.some(
@@ -252,7 +253,7 @@ const BuyProduct = () => {
             <button
               onClick={handleProductBuy}
               disabled={isLoadingBuyProduct}
-              className="btn btn-success btn-block my-6"
+              className="btn tw-bg-btnPrimary tw-text-white hover:tw-bg-btnPrimaryHover hover:tw-text-white btn-block my-6"
             >
               {isLoadingBuyProduct ? (
                 <>

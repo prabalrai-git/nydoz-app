@@ -12,7 +12,7 @@ import AddVisaType from "./AddVisitingPurpose";
 import useAuthContext from "../../../../context/auth/useAuthContext";
 import TanStackTable from "../../../shared/molecules/TanStackTable";
 
-const VisaTypeList = () => {
+const VisitingPurposeList = () => {
   const { companyInfo } = useAuthContext();
   const companyId = companyInfo?.id;
 
@@ -181,7 +181,7 @@ const VisaTypeList = () => {
       </section>
 
       <Modal2
-        title="Are you sure you want to delete this vist type?"
+        title="Are you sure you want to delete this visit type?"
         showChildren={true}
         cancelText="Cancel"
         confirmText="Delete"
@@ -205,4 +205,4 @@ const VisaTypeList = () => {
   );
 };
 
-export default VisaTypeList;
+export default VisitingPurposeList;

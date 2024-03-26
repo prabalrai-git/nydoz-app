@@ -1,12 +1,10 @@
 import { useMemo, useCallback, useState, useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
-import { IAgentResponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import useFetch from "../../../../hooks/useFetch";
 import { IFinancialAccountFields } from "../../../../types/payload.type";
 import useAuthContext from "../../../../context/auth/useAuthContext";

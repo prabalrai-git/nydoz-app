@@ -217,7 +217,7 @@ const StatusList = () => {
             </div>
           </div>
           {data && (
-            <div className="tw-p-6 tw-px-8">
+            <div className="tw-px-8">
               <TanStackTable columns={tableColumns} data={data} />
             </div>
           )}

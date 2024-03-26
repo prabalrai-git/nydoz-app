@@ -7,7 +7,6 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { AirplaneFill } from "react-bootstrap-icons";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { GoEye, GoPersonFill } from "react-icons/go";
@@ -15,6 +14,7 @@ import { FaEdit, FaPhoneAlt } from "react-icons/fa";
 import { RiFlagFill, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BsPersonFillCheck } from "react-icons/bs";
 import { Tag } from "antd";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const ClientList = () => {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ const ClientList = () => {
                   {info?.row?.original?.last_name}
                 </a>
                 <span className="text-muted fw-semibold d-block fs-7">
-                  {info?.row?.original?.email}
+                  {info?.row?.original?.email.toString()}
                 </span>
               </div>
             </div>
@@ -73,28 +73,28 @@ const ClientList = () => {
         },
       },
 
-      {
-        accessorKey: "going_to_foreign",
-        header: () => (
-          <div className="tw-flex tw-gap-2">
-            <AirplaneFill size={14} />
-            <p>Going Aboard</p>
-          </div>
-        ),
-        cell: (info) => {
-          return (
-            <div className="text-center tw-flex tw-justify-start">
-              {info.getValue<string>() ? (
-                // <span className="badge badge-success">YES</span>
-                <Tag color="green">Yes</Tag>
-              ) : (
-                <Tag color="red">No</Tag>
-                // <span className="badge badge-danger px-3">NO</span>
-              )}
-            </div>
-          );
-        },
-      },
+      // {
+      //   accessorKey: "going_to_foreign",
+      //   header: () => (
+      //     <div className="tw-flex tw-gap-2">
+      //       <AirplaneFill size={14} />
+      //       <p>Going Aboard</p>
+      //     </div>
+      //   ),
+      //   cell: (info) => {
+      //     return (
+      //       <div className="text-center tw-flex tw-justify-start">
+      //         {info.getValue<string>() ? (
+      //           // <span className="badge badge-success">YES</span>
+      //           <Tag color="green">Yes</Tag>
+      //         ) : (
+      //           <Tag color="red">No</Tag>
+      //           // <span className="badge badge-danger px-3">NO</span>
+      //         )}
+      //       </div>
+      //     );
+      //   },
+      // },
       {
         accessorKey: "phone_nos",
         header: () => (
@@ -175,32 +175,51 @@ const ClientList = () => {
           </div>
         ),
         cell: (info) => (
-          <div className="d-flex justify-content-center">
-            <button
-              title="view"
-              onClick={() => handleView(info?.row?.original?.id)}
-              className="btn btn-sm btn-icon btn-primary mx-3 hover:tw-bg-btnPrimaryHover"
+          <div className="d-flex justify-content-center  tw-h-9">
+            <DropdownButton
+              variant="secondary"
+              size="sm"
+              id="dropdown-basic-button"
+              title="Action"
             >
-              <GoEye color={"white"} size={18} />
-            </button>
-            <button
-              title="Edit"
-              onClick={() => handleEditData(info?.row?.original)}
-              className="btn btn-sm btn-icon tw-bg-appBlue hover:tw-bg-appBlueHover mx-3"
-            >
-              <FaEdit color="white" size={15} />
-            </button>
-            <button
-              title="Add Transaction"
-              onClick={() => {
-                navigate(
-                  `../transactions/add?client_id=${info?.row?.original?.id}`
-                );
-              }}
-              className="btn btn-sm btn-icon tw-bg-appBrown hover:tw-bg-appBrownHover mx-3"
-            >
-              <RiMoneyDollarCircleLine color="white" size={22} />
-            </button>
+              <Dropdown.Item
+                onClick={() => handleView(info?.row?.original?.id)}
+              >
+                <button
+                  title="view"
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                >
+                  <GoEye color={"green"} size={18} />
+                  <p>View</p>
+                </button>
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => handleEditData(info?.row?.original)}
+              >
+                <button
+                  title="Edit"
+                  className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
+                >
+                  <FaEdit color="blue" size={16} />
+                  <p>Edit</p>
+                </button>
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  navigate(
+                    `../transactions/add?client_id=${info?.row?.original?.id}`
+                  );
+                }}
+              >
+                <button
+                  title="Add Transaction"
+                  className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
+                >
+                  <RiMoneyDollarCircleLine color="brown" size={18} />
+                  <p>Add Transaction</p>
+                </button>
+              </Dropdown.Item>
+            </DropdownButton>
           </div>
         ),
         footer: (info) => info.column.id,

@@ -1,12 +1,10 @@
 import { useMemo, useCallback, useState, useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
-import { IAgentResponse } from "../../../../types/products.types";
 import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { Tag } from "antd";
 import useAuthContext from "../../../../context/auth/useAuthContext";
 import { ITransactionTypeFields } from "../../../../types/payload.type";
@@ -20,17 +18,16 @@ export interface ITransactionTypeResponse extends ITransactionTypeFields {
 
 const TransactionTypesList = () => {
   const navigate = useNavigate();
-  const searchFilter: string[] = ["name", "description", "transaction_effect"];
   const { companyInfo } = useAuthContext();
-
   const companyId = companyInfo?.id;
-
   const [selectedData, setSelectedData] = useState<
     ITransactionTypeResponse | undefined
   >();
+
   const [show, setShow] = useState<boolean>(false);
   const [openAddDocument, setOpenAddDocument] = useState(false);
   const [fetchAgain, setFetchAgain] = useState<boolean>(false);
+  const searchFilter: string[] = ["name", "description", "transaction_effect"];
 
   const getListUrl = API_ROUTE.TRANSACTION_TYPE;
 

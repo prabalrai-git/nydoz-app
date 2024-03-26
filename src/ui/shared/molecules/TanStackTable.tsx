@@ -18,7 +18,7 @@ function TanStackTable<T>(props: ITableProps<T>) {
   return (
     <div className="">
       {data && data?.length > 0 && (
-        <div className="min-h-30vh  ">
+        <div className="min-h-30vh block max-w-full overflow-x-scroll overflow-y-hidden  ">
           <div className="row align-items-center">
             {/* <div className="col-12 col-md-6">
               <h6 className=" tw-text-appBlue py-2">

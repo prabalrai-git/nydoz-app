@@ -24,7 +24,7 @@ export interface IFormResponse extends IFormData {
   id: string;
 }
 
-interface IModalProps {
+export interface IModalProps {
   show: boolean;
   handleClose: () => void;
   companyId: string;

@@ -2,35 +2,38 @@ import { useForm } from "react-hook-form";
 import { ITransactionTypeFields } from "../../../../types/payload.type";
 import API_ROUTE from "../../../../service/api";
 import useMutation from "../../../../hooks/useMutation";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { IModalProps } from "../user/AddUser";
 import { useEffect } from "react";
 import { Button, Modal, Spinner } from "react-bootstrap";
+import { ITransactionTypeResponse } from "./TransactionTypesList";
+
+export interface IModalProps {
+  show: boolean;
+  handleClose: () => void;
+  companyId: string;
+  setFetchAgain: (value: boolean) => void;
+  selectedData?: ITransactionTypeResponse;
+  setSelectedData?: (value: ITransactionTypeResponse) => void;
+}
 
 const AddTransactionTypes = (props: IModalProps) => {
-  const navigate = useNavigate();
   const { show, handleClose, setFetchAgain, selectedData } = props;
   const { postData, updateData, errList, error, isLoading } = useMutation(
     API_ROUTE.POST_TRANSACTION_TYPE,
     true
   );
-
   const defaultValues: ITransactionTypeFields = {
     name: "",
     description: "",
     transaction_effect: "",
   };
-
   const {
-    watch,
     handleSubmit,
-    control,
     register,
     setError,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<ITransactionTypeFields>({
     defaultValues: defaultValues,
   });
 
@@ -74,7 +77,7 @@ const AddTransactionTypes = (props: IModalProps) => {
         data as ITransactionTypeFields
       );
       if (response?.status === 200) {
-        toast.success("User updated successfully");
+        toast.success("Trascation type updated successfully");
         reset({
           name: "",
           description: "",
@@ -84,9 +87,11 @@ const AddTransactionTypes = (props: IModalProps) => {
         handleClose();
       }
     } else {
+      // return console.log(data, "hello world");
+
       const response = await postData(data as ITransactionTypeFields);
       if (response?.status === 201) {
-        toast.success("User Added successfully");
+        toast.success("Transaction type added successfully");
         reset({
           name: "",
           description: "",
@@ -97,6 +102,14 @@ const AddTransactionTypes = (props: IModalProps) => {
       }
     }
   });
+  const handleModalClose = () => {
+    reset({
+      name: "",
+      description: "",
+      transaction_effect: "",
+    });
+    handleClose();
+  };
 
   // const onSubmit = async (data: ITransactionTypeFields) => {
   //   try {
@@ -143,11 +156,11 @@ const AddTransactionTypes = (props: IModalProps) => {
 
           <div className="mb-3">
             <label className="form-label">Transaction Effect</label>
-            <input
-              className="form-control"
-              {...register("transaction_effect")}
-              placeholder="Transaction Effect"
-            />
+
+            <select {...register("transaction_effect")} className="form-select">
+              <option value="debit">Debit</option>
+              <option value="credit">Credit</option>
+            </select>
           </div>
 
           {/* <pre>{JSON.stringify(typeValues, null, 2)}</pre> */}
@@ -159,7 +172,7 @@ const AddTransactionTypes = (props: IModalProps) => {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <Button size="sm" variant="secondary" onClick={onFormSubmit}>
+        <Button size="sm" variant="secondary" onClick={handleModalClose}>
           Cancel
         </Button>
         <Button

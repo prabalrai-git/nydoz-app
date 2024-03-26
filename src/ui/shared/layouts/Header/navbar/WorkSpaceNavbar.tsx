@@ -62,7 +62,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="right-container tw-absolute tw-right-3">
+          <div className="right-container tw-absolute tw-right-3 -tw-bottom-2 ">
             {isLoggedIn ? (
               <>
                 <LinkContainer className="cursor-pointer me-2" to="/">

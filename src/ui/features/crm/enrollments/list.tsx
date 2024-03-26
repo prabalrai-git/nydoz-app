@@ -11,6 +11,8 @@ import SearchPaginationList from "../../../shared/components/SearchPaginationLis
 import { RiFlagFill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import { BiSolidAddToQueue } from "react-icons/bi";
 
 const List = () => {
   const navigate = useNavigate();
@@ -126,29 +128,64 @@ const List = () => {
         ),
         cell: (info) => (
           <div className="d-flex justify-content-center tw-flex tw-gap-2">
-            <button
-              title="view"
-              onClick={() => handleOpening(info?.row?.original?.id)}
-              className="btn btn-sm  btn-bg-secondary"
+            <DropdownButton
+              variant="secondary"
+              size="sm"
+              id="dropdown-basic-button"
+              title="Action"
             >
-              Add Openings
-            </button>
-            <button
-              title="view"
-              onClick={() => handleView(info?.row?.original?.id)}
-              className="btn btn-sm btn-icon btn-primary hover:tw-bg-btnPrimaryHover "
-            >
-              {/* <i className="bi bi-box-arrow-up-right "></i> */}
-              <GoEye color={"white"} size={18} />
-            </button>
-            <button
-              title="Edit"
-              onClick={() => handleEditData(info?.row?.original)}
-              className="btn btn-sm btn-icon tw-bg-appBlue hover:tw-bg-appBlueHover "
-            >
-              {/* <i className="bi bi-pencil-square "></i> */}
-              <FaEdit size={18} color="white" />
-            </button>
+              <Dropdown.Item
+                onClick={() => handleView(info?.row?.original?.id)}
+              >
+                {/* <button
+                  title="Edit"
+                  onClick={() => handleEditData(info?.row?.original)}
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                >
+                  <FaRegEdit color="blue" size={15} />
+                </button> */}
+
+                <button
+                  title="view"
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                >
+                  {/* <i className="bi bi-box-arrow-up-right "></i> */}
+                  <GoEye color={"green"} size={18} />
+                  <p>View</p>
+                </button>
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => handleEditData(info?.row?.original)}
+              >
+                <button
+                  title="Edit"
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold"
+                >
+                  {/* <i className="bi bi-pencil-square "></i> */}
+                  <FaEdit size={16} color="blue" />
+                  <p>Edit</p>
+                </button>
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => handleOpening(info?.row?.original?.id)}
+              >
+                {/* <button
+                  title="Edit"
+                  onClick={() => handleEditData(info?.row?.original)}
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                >
+                  <FaRegEdit color="blue" size={15} />
+                </button> */}
+                <button
+                  title="view"
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                >
+                  <BiSolidAddToQueue color={"#3da7eb"} size={18} />
+
+                  <p> Add Openings</p>
+                </button>
+              </Dropdown.Item>
+            </DropdownButton>
           </div>
         ),
         footer: (info) => info.column.id,
@@ -177,7 +214,7 @@ const List = () => {
               </Link>
             </div>
           </div>
-          <div className="card-body">
+          <div className="card-body ">
             <SearchPaginationList
               searchParamsArray={searchFilter}
               baseUrl={API_ROUTE.CM_ENROLLMENT}

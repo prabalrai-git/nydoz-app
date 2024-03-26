@@ -32,14 +32,14 @@ const Layout = () => {
       id: 2,
       title: "Users",
       link: "users/list",
-      icon: <FaUsersLine size={18} className="tw-mr-2 tw-self-center" />,
+      icon: <FaUsersLine size={18} className=" tw-self-center" />,
       children: <UserList />,
     },
     {
       id: 3,
       title: "Documents",
       link: "documents",
-      icon: <SiGoogledocs size={18} className="tw-mr-2 tw-self-center" />,
+      icon: <SiGoogledocs size={18} className=" tw-self-center" />,
       children: <DocumentList />,
     },
     {
@@ -47,10 +47,7 @@ const Layout = () => {
       title: "Roles",
       link: "roles",
       icon: (
-        <MdOutlineAdminPanelSettings
-          size={18}
-          className="tw-mr-2 tw-self-center"
-        />
+        <MdOutlineAdminPanelSettings size={18} className=" tw-self-center" />
       ),
       children: <RoleList />,
     },
@@ -58,48 +55,46 @@ const Layout = () => {
       id: 5,
       title: "Social Links",
       link: "social-links",
-      icon: <IoShareSocialSharp size={18} className="tw-mr-2 tw-self-center" />,
+      icon: <IoShareSocialSharp size={18} className=" tw-self-center" />,
       children: <SocialLinkList />,
     },
     {
       id: 6,
       title: "Status",
       link: "statuses/list",
-      icon: <TbStatusChange size={18} className="tw-mr-2 tw-self-center" />,
+      icon: <TbStatusChange size={18} className=" tw-self-center" />,
       children: <StatusList />,
     },
     {
       id: 7,
       title: "Payment Methods",
       link: "payments/list",
-      icon: (
-        <RiSecurePaymentFill size={18} className="tw-mr-2 tw-self-center" />
-      ),
+      icon: <RiSecurePaymentFill size={18} className=" tw-self-center" />,
       children: <PaymentMethodsList />,
     },
     {
       id: 8,
       title: "Financial Accounts",
       link: "financialAccounts/list",
-      icon: <MdAccountBalance size={18} className="tw-mr-2 tw-self-center" />,
+      icon: <MdAccountBalance size={18} className=" tw-self-center" />,
       children: <FinancialAccountsList />,
     },
     {
       id: 9,
       title: "Transaction Types",
       link: "transactionTypes/list",
-      icon: <GrMoney size={18} className="tw-mr-2 tw-self-center" />,
+      icon: <GrMoney size={18} className=" tw-self-center" />,
       children: <TransactionTypesList />,
     },
   ];
   return (
-    <div>
-      <div className="tw-bg-white tw-border-[1px] tw-border-gray-200   tw-pl-4  tw-rounded-lg tw-mb-10  ">
+    <div className="tw-mt-10">
+      <div className="tw-bg-white tw-border-[1px] tw-border-gray-200   tw-pl-4  tw-rounded-lg tw-mb-2  ">
         {/* <NavPills navpills={navpills} /> */}
 
         <Tabs
-          type="card"
-          className="tw-py-10"
+          // type="card"
+          className="tw-py-2"
           defaultActiveKey="2"
           items={navpills.map((item) => {
             return {

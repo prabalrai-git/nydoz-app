@@ -17,6 +17,7 @@ import FILE_UPLOAD_TYPE from "../../../../constants/FileUpload";
 import { DOCUMENT_UPLOAD_LIMIT } from "../../../../constants/AppSetting";
 import Select from "react-select";
 import { ISelectProps } from "../../../../types/react-select.type";
+import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 
 type DynamicFormResponse = DynamicFormPayload & {
   id: string;
@@ -137,9 +138,12 @@ const AddTransaction = () => {
 
   return (
     <div className="card p-6 row">
-      <div className="col-12 mb-6">
-        <h3>Add Transaction</h3>
-      </div>
+      <CompanyBreadcrumb
+        title="Add Transaction"
+        btnText="Back"
+        showBreadcrumb={true}
+      />
+
       <div className="col-12">
         <div className="">
           <form
