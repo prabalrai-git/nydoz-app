@@ -100,3 +100,15 @@
   transition: all 0.3s;
   display: flex;
 }
+.ant-statistic-content-value-int {
+  font-size: 16px;
+}
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-statistic
+  .ant-statistic-content {
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 9px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}

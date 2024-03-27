@@ -15,6 +15,8 @@ export default {
         appBrown: "#977254",
         appBrownHover: "#673E0F",
         appSideBar: "#1d273b",
+        appLightGreen: "#ebf7ee",
+        appLightRed: "#FBEDED",
       },
       screens: {
         xsm: "10px",

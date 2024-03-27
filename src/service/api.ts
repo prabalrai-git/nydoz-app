@@ -102,6 +102,9 @@ const API_ROUTE = {
   TRANSACTION: "/api/v1/client-management/clients/transactions",
   GET_TRANSACTION: "/api/v1/client-management/clients",
   POST_TRANSACTION: "/api/v1/client-management/clients",
+
+  // Clients Documents
+  CLIENT_DOCUMENTS: "/api/v1/client-management/clients",
 };
 
 // export default API_ROUTE as { [key in keyof typeof API_ROUTE]: string };

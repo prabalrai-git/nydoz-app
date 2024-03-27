@@ -129,13 +129,13 @@ const CompanyLayout = () => {
 
   const clientManagementSideBar: ISidebarMenu[] = [
     {
-      id: 1,
+      id: 2,
       title: "Dashboard",
       link: "/company/products/client-management/dashboard",
       icon: <MdSpaceDashboard size={20} />,
     },
     {
-      id: 2,
+      id: 1,
       title: "Visitors",
       link: "/company/products/client-management/visitors",
       icon: <BsFillFileEarmarkPersonFill size={19} />,

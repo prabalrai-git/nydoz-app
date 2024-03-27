@@ -10,7 +10,6 @@ import useMutation from "../../../hooks/useMutation";
 import Modal2 from "../../shared/components/Modal2";
 import { toast } from "react-toastify";
 import AddDocuments from "./AddDocuments";
-import Images from "../../../constants/Images";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import NotFound from "../../shared/molecules/NotFound";
 import { Image, Space, Tag } from "antd";
@@ -265,7 +264,7 @@ const DocumentList = () => {
               }}
               className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
             >
-              <span className="mx-2 tw-text-white">Add Documents</span>
+              <span className="mx-2 tw-text-white">Add Documents </span>
             </button>
           </div>
           {data && data?.length === 0 ? (

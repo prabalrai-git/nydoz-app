@@ -54,7 +54,7 @@ export interface IDocumentResponse {
   id: string;
   title: string;
   file_link: string;
-  uploaded_by: string;
+  uploaded_by?: string;
   is_restricted: boolean;
   visible_to?: string[];
 }

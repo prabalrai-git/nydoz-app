@@ -1,13 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
-import NotFound from "../../../shared/molecules/NotFound";
-import { IDocumentResponse } from "../../../../types/payload.type";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import TanStackTable from "../../../shared/molecules/TanStackTable";
-import { dummyDocumets } from "../../../../constants/dummdata";
-import { Image, Space, Statistic, Tabs, Tag } from "antd";
-import APP_SETTING from "../../../../config/AppSetting";
+import { Tabs, Tag } from "antd";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import API_ROUTE from "../../../../service/api";
 import {
@@ -18,22 +11,16 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { GoPersonFill } from "react-icons/go";
 import { AirplaneFill } from "react-bootstrap-icons";
 import { FaEdit, FaPhoneAlt } from "react-icons/fa";
-import { RiDeleteBin5Line, RiFlagFill, RiH1 } from "react-icons/ri";
+import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { BsPersonFillCheck } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  DownloadOutlined,
-  RotateLeftOutlined,
-  RotateRightOutlined,
-  SwapOutlined,
-  ZoomInOutlined,
-  ZoomOutOutlined,
-} from "@ant-design/icons";
+
 import useFetch from "../../../../hooks/useFetch";
-import { GrMoney, GrView } from "react-icons/gr";
+import { GrMoney } from "react-icons/gr";
 import { Spinner } from "react-bootstrap";
 import { INavPill } from "../../../../types/app.types";
 import { SiGoogledocs } from "react-icons/si";
+import ClientsDocuments from "./ClientsDocuments";
 
 type TClientBasicInfo = {
   agent: string;
@@ -80,6 +67,7 @@ const ClientDetails = () => {
       `${API_ROUTE.GET_TRANSACTION}/${clientId}`,
       true
     );
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -112,171 +100,17 @@ const ClientDetails = () => {
     }
   }, [data]);
 
-  // console.log(
-  //   data,
-  //   "this is the aclient data",
-  //   `${API_ROUTE.GET_TRANSACTION}/${location?.state?.clientId}`
-  // );
-
   const searchFilter: string[] = [
     "payment_method",
     "physical_bill_number",
     "financial_account",
     "transaction_type",
   ];
-  const onDownload = (src: string) => {
-    fetch(src)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "image.png";
-        document.body.appendChild(link);
-        link.click();
-        URL.revokeObjectURL(url);
-        link.remove();
-      });
-  };
 
   function numberWithCommas(x: string) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  const tableColumns: ColumnDef<IDocumentResponse>[] = [
-    {
-      accessorKey: "sn",
-      header: () => <div>S.N</div>,
-      cell: (info) => info.row.index + 1,
-    },
-    {
-      accessorKey: "file_link",
-      header: () => (
-        <div>
-          <i className="bi bi-folder me-2"></i>
-          <span> File</span>
-        </div>
-      ),
-      cell: (info) => {
-        return (
-          <div className="symbol symbol-label tw-flex tw-py-2  ">
-            <Image
-              className="tw-object-cover tw-rounded-lg"
-              width={40}
-              height={40}
-              preview={{
-                mask: <GrView />,
-                toolbarRender: (
-                  _,
-                  {
-                    transform: { scale },
-                    actions: {
-                      onFlipY,
-                      onFlipX,
-                      onRotateLeft,
-                      onRotateRight,
-                      onZoomOut,
-                      onZoomIn,
-                    },
-                  }
-                ) => (
-                  <Space size={12} className="toolbar-wrapper">
-                    <DownloadOutlined
-                      onClick={() =>
-                        onDownload(
-                          APP_SETTING.API_BASE_URL + info.getValue<string>()
-                        )
-                      }
-                    />
-                    <SwapOutlined rotate={90} onClick={onFlipY} />
-                    <SwapOutlined onClick={onFlipX} />
-                    <RotateLeftOutlined onClick={onRotateLeft} />
-                    <RotateRightOutlined onClick={onRotateRight} />
-                    <ZoomOutOutlined
-                      disabled={scale === 1}
-                      onClick={onZoomOut}
-                    />
-                    <ZoomInOutlined
-                      disabled={scale === 50}
-                      onClick={onZoomIn}
-                    />
-                  </Space>
-                ),
-              }}
-              src={APP_SETTING.API_BASE_URL + info.getValue<string>()}
-            />
-          </div>
-        );
-      },
-    },
-
-    {
-      accessorKey: "title",
-      header: () => (
-        <div>
-          <span>File Name</span>
-        </div>
-      ),
-      cell: (info) => {
-        return <div>{info.getValue<string>()}</div>;
-      },
-    },
-
-    {
-      accessorKey: "is_restricted",
-      header: () => (
-        <div>
-          <span>Type</span>
-        </div>
-      ),
-      cell: (info) => {
-        return (
-          <div className="tw-">
-            {info?.row?.original?.is_restricted ? (
-              <Tag color="green">Not Restricted</Tag>
-            ) : (
-              <Tag color="red">Restricted</Tag>
-            )}
-          </div>
-        );
-      },
-    },
-
-    {
-      accessorKey: "action",
-      header: () => <div className="text-center">Actions</div>,
-      cell: () => (
-        <div className="text-center">
-          <DropdownButton
-            variant="secondary"
-            size="sm"
-            id="dropdown-basic-button"
-            title="Action"
-          >
-            {/* <Dropdown.Item>
-                                <div className='menu-link'>
-                                    <span className='mx-2'>View</span>
-                                    <i className='bi bi-box-arrow-up-right text-primary '></i>
-                                </div>
-                            </Dropdown.Item> */}
-            <Dropdown.Item>
-              <div onClick={() => {}} className="menu-link">
-                <span className="mx-2">Edit</span>
-                <i className="bi bi-pencil-square text-info"></i>
-              </div>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <div onClick={() => {}} className="menu-link">
-                <span className="mx-2">Delete</span>
-                <i className="bi bi-trash text-danger"></i>
-              </div>
-            </Dropdown.Item>
-          </DropdownButton>
-        </div>
-      ),
-      footer: (info) => info.column.id,
-    },
-  ];
   const navigate = useNavigate();
   const handleEditData = useCallback(
     (item: ITransactionResponse) => {
@@ -495,40 +329,11 @@ const ClientDetails = () => {
             <h3 className="card-title"> Transactions</h3>
           </div>
           <div className="card-body  ">
-            {" "}
             <SearchPaginationList
               searchParamsArray={searchFilter}
-              baseUrl={API_ROUTE.TRANSACTION}
+              baseUrl={`${API_ROUTE.GET_TRANSACTION}/${clientId}/transactions`}
               columns={tableColumnsTransactions}
             />
-          </div>
-        </div>
-      </section>
-    );
-  };
-
-  const ClientDoucments = () => {
-    return (
-      <section className="tw-mt-10">
-        <div className="card">
-          <div className="card-header">
-            <h3 className="card-title">Documents</h3>
-          </div>
-          <div className="card-body  ">
-            <div className="card">
-              {dummyDocumets && dummyDocumets?.length === 0 ? (
-                <div>
-                  <NotFound title="Documents Not Available " />
-                </div>
-              ) : (
-                <div className="-tw-mt-5">
-                  <TanStackTable
-                    columns={tableColumns}
-                    data={dummyDocumets ?? []}
-                  />
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </section>
@@ -540,7 +345,7 @@ const ClientDetails = () => {
       id: 2,
       title: "Clients Douments",
       icon: <SiGoogledocs size={18} className="tw-mr-2 tw-self-center" />,
-      children: <ClientDoucments />,
+      children: <ClientsDocuments />,
     },
     {
       id: 1,
