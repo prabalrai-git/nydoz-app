@@ -41,7 +41,6 @@ const AddUsers = (props: IModalProps) => {
     API_ROUTE.USER,
     true
   );
-
   const {
     register,
     reset,
@@ -83,7 +82,7 @@ const AddUsers = (props: IModalProps) => {
 
   useEffect(() => {
     if (errList) {
-      Object.keys(selectedData).forEach((field) => {
+      Object.keys(errList).forEach((field) => {
         const fieldName = field as keyof IFormData;
         if (errList?.[fieldName]) {
           errors[fieldName] = {
@@ -96,6 +95,7 @@ const AddUsers = (props: IModalProps) => {
   }, [errList, setError]);
 
   const onFormSubmit = handleSubmit(async (data: IFormData) => {
+    // return console.log(data, "user data", selectedData);
     if (selectedData) {
       const response = await updateData(selectedData.id, data as IFormResponse);
       if (response?.status === 200) {

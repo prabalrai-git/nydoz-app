@@ -162,10 +162,10 @@ const DocumentList = () => {
   };
 
   return (
-    <div>
+    <>
       <section>
         <div className="card">
-          <div className="d-flex card-header justify-content-between align-items-center mb-6">
+          <div className="d-flex card-header justify-content-between align-items-center ">
             <h3 className="card-title">All Social Links</h3>
             <button
               onClick={handleOpenNewModal}
@@ -203,7 +203,7 @@ const DocumentList = () => {
         selectedData={selectedData}
         setSelectedData={setSelectedData}
       />
-    </div>
+    </>
   );
 };
 

@@ -94,7 +94,9 @@ const Layout = () => {
 
         <Tabs
           // type="card"
-          className="tw-py-2"
+
+          className="tw-py-2 "
+          tabPosition="top"
           defaultActiveKey="2"
           items={navpills.map((item) => {
             return {

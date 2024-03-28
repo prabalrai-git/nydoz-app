@@ -33,7 +33,9 @@ const productRoutes: RouteObject[] = [
       {
         path: "dashboard",
         element: (
-          <h1 className="tw-text-3xl">K herya? yesko Kaam bhako chaina!!!</h1>
+          <h1 className="tw-text-3xl tw-text-center">
+            K herya? yesko Kaam bhako chaina!!!
+          </h1>
         ),
       },
     ],

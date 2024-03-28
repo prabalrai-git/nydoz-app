@@ -17,7 +17,6 @@ import {
 } from "react-bootstrap-icons";
 import useWebSetting from "../../../context/useWebSetting";
 import { MdSpaceDashboard } from "react-icons/md";
-import { RiFolderSettingsFill } from "react-icons/ri";
 import { FaCircleUser } from "react-icons/fa6";
 
 //
@@ -29,11 +28,13 @@ import { BsFillFileEarmarkPersonFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
 import { TbReportMoney } from "react-icons/tb";
+import { GoSidebarCollapse } from "react-icons/go";
 
 const { Header, Content, Sider } = Layout;
 const CompanyLayout = () => {
   const { dispatch, companyInfo, userInfo } = useAuthContext();
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
+  const [collapsed, setCollapsed] = useState<boolean>(false);
   // const { companySubdomian } = useParams<string>();
 
   const { url } = useWebSetting();
@@ -105,13 +106,13 @@ const CompanyLayout = () => {
       // icon: <i className="ki-outline ki-abstract-26 fs-2x"></i>,
       icon: <Boxes size={18} />,
     },
-    {
-      id: 3,
-      title: "Products Settings",
-      link: "product-settings/view",
-      // icon: <Boxes size={20} />,
-      icon: <RiFolderSettingsFill size={18} />,
-    },
+    // {
+    //   id: 3,
+    //   title: "Products Settings",
+    //   link: "product-settings/view",
+    //   // icon: <Boxes size={20} />,
+    //   icon: <RiFolderSettingsFill size={18} />,
+    // },
     {
       id: 4,
       title: "Profile",
@@ -186,59 +187,92 @@ const CompanyLayout = () => {
       }));
 
   return (
-    <Layout hasSider>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-        className="tw-min-h-[100vh] tw-z-[10000] "
-      >
-        <div className="flex-column flex-center fs-12 fw-bolder  mb-3 mt-2 tw-w-11/12 tw-mx-auto ">
-          <span className="text-uppercase tw-text-md tw-text-center tw-font-mono tw-text-white tw-mb-4 tw-bg-gray-500 tw-w-full tw-py-5 tw-rounded-lg ">
-            {companyInfo?.subdomain || companySubdomian || ""}
-          </span>
-        </div>
-
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          // className="tw-absolute tw-top-0"
-          items={items}
-        />
-        <Link
-          to={
-            window.location.href.includes("client-management")
-              ? "/company/products/dashboard"
-              : "/"
-          }
-          className=""
+    <div className="tw-relative">
+      <Layout hasSider>
+        <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
+          onBreakpoint={(broken) => {
+            console.log(broken, "broken");
+          }}
+          onCollapse={(collapsed, type) => {
+            console.log(collapsed, type);
+            setCollapsed(collapsed);
+          }}
+          collapsed={collapsed}
+          style={{
+            overflow: "auto",
+            // height: "100vh",
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+          }}
+          className="tw-min-h-[100vh] tw-z-[10000]  "
         >
-          <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-evenly tw-py-2 tw-rounded-full tw-text-btnPrimary tw-gap-5 hover:tw-shadow-md tw-w-10/12 tw-mx-auto">
-            <IoChevronBack size={20} />
-            <p className="    tw-font-bold tw-text-lg">{"Back"}</p>
+          <div className="flex-column flex-center fs-12 fw-bolder  mb-3 mt-2 tw-w-11/12 tw-mx-auto ">
+            <span className="text-uppercase tw-text-md tw-text-center tw-font-mono tw-text-white tw-mb-4 tw-bg-gray-500 tw-w-full tw-py-5 tw-rounded-lg ">
+              {companyInfo?.subdomain || companySubdomian || ""}
+            </span>
           </div>
-        </Link>
-      </Sider>
-      <Layout>
-        <div>
-          <Header>
-            <WorkSpaceNavbar />
-          </Header>
 
-          <Content style={{ margin: "25px 16px 0" }}>
-            {showSplashScreen ? <CompanyLoader /> : <Outlet />}
-          </Content>
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            // className="tw-absolute tw-top-0"
+            items={items}
+          />
+          <Link
+            to={
+              window.location.href.includes("client-management")
+                ? "/company/products/dashboard"
+                : "/"
+            }
+            className=""
+          >
+            <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-evenly tw-py-2 tw-rounded-lg tw-text-btnPrimary tw-gap-5 hover:tw-shadow-md tw-w-11/12 tw-mx-auto">
+              <IoChevronBack size={20} />
+              <p className="    tw-font-bold tw-text-lg">{"Back"}</p>
+            </div>
+          </Link>
+        </Sider>
+        <Layout>
+          {true && (
+            <div
+              onClick={() => setCollapsed((prev) => !prev)}
+              className="tw-bg-appSideBar tw-fixed  tw-w-[40px] tw-h-[40px] tw-top-[7%]   tw-z-[999999] tw-flex tw-justify-center tw-items-center tw-rounded-tr-lg tw-rounded-br-lg"
+              style={{
+                left: collapsed ? 0 : 200,
+                transition: "left 0.2s ease",
+              }}
+            >
+              <GoSidebarCollapse size={30} color="white" />
+            </div>
+          )}
+          <div>
+            <Header>
+              <WorkSpaceNavbar />
+            </Header>
 
-          <FooterLayout />
-        </div>
+            <Content
+              style={{
+                marginTop: "35px",
+                // marginLeft: !collapsed ? 200 : 0,
+                marginRight: "20px",
+              }}
+              className={`${
+                collapsed ? "xsm:tw-ml-[20px]" : "mmd:tw-ml-[220px]"
+              } tw-min-h-[100vh]`}
+            >
+              {showSplashScreen ? <CompanyLoader /> : <Outlet />}
+            </Content>
+
+            <FooterLayout />
+          </div>
+        </Layout>
       </Layout>
-    </Layout>
+    </div>
   );
 
   // return (

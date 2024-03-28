@@ -20,7 +20,7 @@ const PaymentList = () => {
   const { companyInfo } = useAuthContext();
 
   const [selectedData, setSelectedData] = useState<
-    DynamicFormPayload | undefined
+    DynamicFormResponse | undefined
   >();
   const [show, setShow] = useState<boolean>(false);
   const [openAddDocument, setOpenAddDocument] = useState(false);
@@ -48,15 +48,10 @@ const PaymentList = () => {
 
   const searchFilter: string[] = ["first_name", "email", "mobile"];
 
-  const handleEditData = useCallback(
-    (item: DynamicFormResponse) => {
-      navigate("edit", {
-        state: { data: item },
-      });
-    },
-    [navigate]
-  );
-
+  const handleEditData = (item: DynamicFormResponse) => {
+    setSelectedData(item);
+    handleAddDocumentOpen();
+  };
   const tableColumns: ColumnDef<DynamicFormResponse>[] = useMemo(
     () => [
       {
@@ -110,7 +105,7 @@ const PaymentList = () => {
               id="dropdown-basic-button"
               title="Action"
             >
-              <Dropdown.Item>
+              {/* <Dropdown.Item>
                 <Link
                   to={`../view/${info?.row?.original?.id}`}
                   className="menu-link"
@@ -118,7 +113,7 @@ const PaymentList = () => {
                   <span className="mx-2">View</span>
                   <i className="bi bi-box-arrow-up-right text-primary "></i>
                 </Link>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <Dropdown.Item>
                 <div
                   onClick={() => handleEditData(info?.row?.original)}
@@ -148,25 +143,24 @@ const PaymentList = () => {
   };
 
   return (
-    <div className="my-6 px-3">
-      <div className="card">
-        <div className="card-header">
-          <h3 className="card-title">All Payment Methods</h3>
-          <div className="card-toolbar">
-            {/* <Link
+    <div className="card">
+      <div className="card-header">
+        <h3 className="card-title">All Payment Methods</h3>
+        <div className="card-toolbar">
+          {/* <Link
               to={"../add"}
               className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
             >
             </Link> */}
-            <button
-              onClick={handleOpenNewModal}
-              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
-            >
-              <span className="mx-2 tw-text-white">Add Payment Method</span>
-            </button>
-          </div>
+          <button
+            onClick={handleOpenNewModal}
+            className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+          >
+            <span className="mx-2 tw-text-white">Add Payment Method</span>
+          </button>
         </div>
-        {/* <div className="tw-p-6 tw-px-8">
+      </div>
+      {/* <div className="tw-p-6 tw-px-8">
           <SearchPaginationList
             searchParamsArray={searchFilter}
             baseUrl={API_ROUTE.PAYMENT_METHODS}
@@ -174,20 +168,19 @@ const PaymentList = () => {
           />
           
         </div> */}
-        {data && (
-          <div className="tw-p-6 tw-px-8">
-            <TanStackTable columns={tableColumns} data={data} />
-          </div>
-        )}
-        <DynamicForm
-          setFetchAgain={setFetchAgain}
-          companyId={companyId || ""}
-          handleClose={handleAddDocumentClose}
-          show={openAddDocument}
-          selectedData={selectedData}
-          setSelectedData={setSelectedData}
-        />
-      </div>
+      {data && (
+        <div className="tw-p-6 tw-px-8">
+          <TanStackTable columns={tableColumns} data={data} />
+        </div>
+      )}
+      <DynamicForm
+        setFetchAgain={setFetchAgain}
+        companyId={companyId || ""}
+        handleClose={handleAddDocumentClose}
+        show={openAddDocument}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
     </div>
   );
 };

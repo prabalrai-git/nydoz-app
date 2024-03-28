@@ -13,8 +13,8 @@ interface IModalProps {
   handleClose: () => void;
   companyId: string;
   setFetchAgain: (value: boolean) => void;
-  selectedData?: DynamicFormPayload;
-  setSelectedData?: (value: DynamicFormPayload) => void;
+  selectedData?: DynamicFormResponse;
+  setSelectedData?: (value: DynamicFormResponse) => void;
 }
 
 export interface DynamicFormResponse extends DynamicFormPayload {
@@ -89,7 +89,7 @@ const DynamicForm = (props: IModalProps) => {
 
   useEffect(() => {
     if (errList) {
-      Object.keys(selectedData).forEach((field) => {
+      Object.keys(errList).forEach((field) => {
         const fieldName = field as keyof DynamicFormPayload;
         if (errList?.[fieldName]) {
           errors[fieldName] = {
@@ -106,34 +106,47 @@ const DynamicForm = (props: IModalProps) => {
     name: "custom_fields",
   });
 
-  const onSubmit = async (data: DynamicFormPayload) => {
-    const payload = data.custom_fields.map((field) => {
-      const optionArry = field.options.split(",");
-      return {
-        name: field.name,
-        type: field.type,
-        options: optionArry,
-        is_required: field.is_required,
-        multiple_value:
-          field.type.toLowerCase() === "select" ||
-          field.type.toLowerCase() === "checkbox"
-            ? true
-            : false,
-      };
-    });
-
-    try {
-      const response = await postData({
-        ...data,
-        isAccountRequired: isAccountRequired,
-        custom_fields: payload,
-      });
-      if (response?.status === 201) {
-        toast.success("Payment Method Added Successfully");
-        navigate(-1);
+  const onSubmit = handleSubmit(async (data: DynamicFormPayload) => {
+    if (selectedData) {
+      const response = await updateData(
+        selectedData.id,
+        data as DynamicFormResponse
+      );
+      if (response?.status === 200) {
+        toast.success("User updated successfully");
+        reset();
+        setFetchAgain(true);
+        handleClose();
       }
-    } catch (error) {}
-  };
+    } else {
+      const payload = data.custom_fields.map((field) => {
+        const optionArry = field.options.split(",");
+        return {
+          name: field.name,
+          type: field.type,
+          options: optionArry,
+          is_required: field.is_required,
+          multiple_value:
+            field.type.toLowerCase() === "select" ||
+            field.type.toLowerCase() === "checkbox"
+              ? true
+              : false,
+        };
+      });
+
+      try {
+        const response = await postData({
+          ...data,
+          isAccountRequired: isAccountRequired,
+          custom_fields: payload,
+        });
+        if (response?.status === 201) {
+          toast.success("Payment Method Added Successfully");
+          navigate(-1);
+        }
+      } catch (error) {}
+    }
+  });
 
   const typeValues = watch(`custom_fields`);
   // const formName = watch(`name`);
@@ -158,52 +171,52 @@ const DynamicForm = (props: IModalProps) => {
     handleClose();
   };
 
-  const onFormSubmit = handleSubmit(async (data: DynamicFormPayload) => {
-    if (selectedData) {
-      const response = await updateData(
-        selectedData?.id,
-        data as DynamicFormResponse
-      );
-      if (response?.status === 200) {
-        toast.success("Payment Method updated successfully");
-        reset({
-          name: "",
-          is_account_required: false,
-          custom_fields: [
-            {
-              name: "",
-              type: "text",
-              options: "",
-              is_required: true,
-              multiple_value: false,
-            },
-          ],
-        });
-        setFetchAgain(true);
-        handleClose();
-      }
-    } else {
-      const response = await postData(data as DynamicFormResponse);
-      if (response?.status === 201) {
-        toast.success("Payment Method Added successfully");
-        reset({
-          name: "",
-          is_account_required: false,
-          custom_fields: [
-            {
-              name: "",
-              type: "text",
-              options: "",
-              is_required: true,
-              multiple_value: false,
-            },
-          ],
-        });
-        setFetchAgain(true);
-        handleClose();
-      }
-    }
-  });
+  // const onFormSubmit = handleSubmit(async (data: DynamicFormPayload) => {
+  //   if (selectedData) {
+  //     const response = await updateData(
+  //       selectedData?.id,
+  //       data as DynamicFormResponse
+  //     );
+  //     if (response?.status === 200) {
+  //       toast.success("Payment Method updated successfully");
+  //       reset({
+  //         name: "",
+  //         is_account_required: false,
+  //         custom_fields: [
+  //           {
+  //             name: "",
+  //             type: "text",
+  //             options: "",
+  //             is_required: true,
+  //             multiple_value: false,
+  //           },
+  //         ],
+  //       });
+  //       setFetchAgain(true);
+  //       handleClose();
+  //     }
+  //   } else {
+  //     const response = await postData(data as DynamicFormResponse);
+  //     if (response?.status === 201) {
+  //       toast.success("Payment Method Added successfully");
+  //       reset({
+  //         name: "",
+  //         is_account_required: false,
+  //         custom_fields: [
+  //           {
+  //             name: "",
+  //             type: "text",
+  //             options: "",
+  //             is_required: true,
+  //             multiple_value: false,
+  //           },
+  //         ],
+  //       });
+  //       setFetchAgain(true);
+  //       handleClose();
+  //     }
+  //   }
+  // });
 
   return (
     <Modal size="lg" show={show} onHide={handleClose}>
@@ -215,7 +228,7 @@ const DynamicForm = (props: IModalProps) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className="mb-3">
             <label className="form-label">Name</label>
             <input
@@ -271,7 +284,7 @@ const DynamicForm = (props: IModalProps) => {
                       <option value="select">Select</option>
                       <option value="checkbox">Checkbox</option>
                       <option value="radio">Radio</option>
-                      <option value="textarea">Textarea</option>
+                      {/* <option value="textarea">Textarea</option> */}
                     </select>
                   </div>
 
@@ -341,7 +354,7 @@ const DynamicForm = (props: IModalProps) => {
           size="sm"
           variant="primary"
           className="fw-bold"
-          onClick={onFormSubmit}
+          onClick={onSubmit}
           type="submit"
         >
           {isLoading ? (

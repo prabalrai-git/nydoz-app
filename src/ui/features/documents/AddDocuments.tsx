@@ -11,6 +11,7 @@ import FILE_UPLOAD_TYPE from "../../../constants/FileUpload";
 import { DOCUMENT_UPLOAD_LIMIT } from "../../../constants/AppSetting";
 import API_ROUTE from "../../../service/api";
 import useMutation from "../../../hooks/useMutation";
+import { Tag } from "antd";
 
 interface IUploadPayload {
   title: string;
@@ -146,11 +147,9 @@ const AddDocuments = (props: IModalProps) => {
                     </div>
                     <div>
                       {selectedData?.is_restricted ? (
-                        <span className="badge text-bg-primary">
-                          Not Restricted
-                        </span>
+                        <Tag color="green">Not Restricted</Tag>
                       ) : (
-                        <span className="badge text-bg-danger">Restricted</span>
+                        <Tag color="red">Restricted</Tag>
                       )}
                     </div>
                   </div>

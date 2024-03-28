@@ -203,7 +203,7 @@ const VisitorList = () => {
     [handleEditData]
   );
   return (
-    <div className="my-6 px-0">
+    <div className=" px-3">
       <CompanyBreadcrumb
         title="Visitor List"
         btnText="Back"

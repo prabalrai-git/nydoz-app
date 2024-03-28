@@ -256,7 +256,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
           </div>
           <div className="tw-flex tw-justify-between tw-my-12 xsm:tw-flex-col tw-gap-8 sm:tw-flex-row ">
             <div className="flex-1">
-              <h6 className=" tw-text-appBlue py-2 md:tw-p-6 xsm:tw-p-2 tw-text-center tw-px-12 tw-rounded-full tw-border-gray-300 tw-border-[2px] tw-text-sm">
+              <h6 className=" tw-text-appBlue py-2 md:tw-p-6 xsm:tw-p-2 tw-text-center tw-px-12 tw-rounded-md tw-border-gray-300 tw-border-[2px] tw-text-sm">
                 <span className="tw-text-black"> Showing :</span>
                 <span className="mx-3 tw-font-semibold">
                   {" "}
@@ -336,7 +336,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
             </div>
           </div>
           <div className="table-responsive tw-min-h-[40vh]">
-            <table className="table  table-bordered table-hover align-middle table-row-dashed fs-6 gy-5 dataTable  ">
+            <table className="table  table-bordered table-hover align-middle table-row-dashed fs-6  dataTable table-striped ">
               <thead className="thead-light">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr
@@ -346,7 +346,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                     {headerGroup.headers.map((header) => {
                       return (
                         <th
-                          className="xsm:tw-min-w-[250px] md:tw-min-w-[180px] lg:tw-min-w-[180px] xl:tw-min-w-[90px]"
+                          className="xsm:tw-min-w-[250px] md:tw-min-w-[180px] lg:tw-min-w-[180px] xl:tw-min-w-[90px] gy-5"
                           key={header.id}
                           colSpan={header.colSpan}
                         >

@@ -195,7 +195,7 @@ const List = () => {
   );
 
   return (
-    <div>
+    <div className=" px-3">
       <CompanyBreadcrumb
         title="Institute List"
         btnText="Back"

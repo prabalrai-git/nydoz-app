@@ -20,6 +20,7 @@ export default {
       },
       screens: {
         xsm: "10px",
+        mmd: "990px",
       },
     },
   },

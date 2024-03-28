@@ -148,36 +148,6 @@ const TransactionList = () => {
           return <div>{info.getValue<Record<string, string>>().name}</div>;
         },
       },
-      // {
-      //   accessorKey: "custom_field_values",
-      //   header: () => (
-      //     <div className="tw-flex tw-gap-2">
-      //       {/* <Flag size={16} className="mx-2" /> */}
-      //       <BsPersonFillCheck size={18} />
-      //       <span>Custom Field Values</span>
-      //     </div>
-      //   ),
-      //   cell: (info) => {
-      //     return (
-      //       <div>
-      //         {info.getValue<Partial<IAgentResponse>>() ? (
-      //           <div>
-      //             <span>
-      //               {" "}
-      //               {info.getValue<Partial<IAgentResponse>>()?.first_name}
-      //             </span>
-      //             <span>
-      //               {" "}
-      //               {info.getValue<Partial<IAgentResponse>>()?.last_name}
-      //             </span>
-      //           </div>
-      //         ) : (
-      //           <Tag>NA</Tag>
-      //         )}
-      //       </div>
-      //     );
-      //   },
-      // },
 
       {
         accessorKey: "action",
@@ -227,7 +197,7 @@ const TransactionList = () => {
     [handleEditData]
   );
   return (
-    <div className="my-6 px-3">
+    <div className="px-3">
       <CompanyBreadcrumb
         title="Transactions List"
         btnText="Back"

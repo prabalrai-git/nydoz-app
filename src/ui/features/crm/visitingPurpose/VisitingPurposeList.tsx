@@ -157,7 +157,7 @@ const VisitingPurposeList = () => {
   };
 
   return (
-    <div className="mt-6">
+    <div>
       <section>
         <div className="card">
           <div className="card-header">

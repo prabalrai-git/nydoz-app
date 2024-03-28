@@ -56,14 +56,10 @@ const FinancialAccountsList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchAgain]);
 
-  const handleEditData = useCallback(
-    (item: IFinancialAccountReponse) => {
-      navigate("edit", {
-        state: { data: item },
-      });
-    },
-    [navigate]
-  );
+  const handleEditData = (item: IFinancialAccountReponse) => {
+    setSelectedData(item);
+    handleAddDocumentOpen();
+  };
 
   const tableColumns: ColumnDef<IFinancialAccountReponse>[] = useMemo(
     () => [
@@ -149,17 +145,6 @@ const FinancialAccountsList = () => {
           return <div>{info.getValue<string>()}</div>;
         },
       },
-      {
-        accessorKey: "payment_method_ids",
-        header: () => (
-          <div>
-            <span>Payment Methods</span>
-          </div>
-        ),
-        cell: (info) => {
-          return <div>{info.getValue<string>()}</div>;
-        },
-      },
 
       {
         accessorKey: "action",
@@ -176,7 +161,7 @@ const FinancialAccountsList = () => {
               id="dropdown-basic-button"
               title="Action"
             >
-              <Dropdown.Item>
+              {/* <Dropdown.Item>
                 <Link
                   to={`../view/${info?.row?.original?.id}`}
                   className="menu-link"
@@ -184,7 +169,7 @@ const FinancialAccountsList = () => {
                   <span className="mx-2">View</span>
                   <i className="bi bi-box-arrow-up-right text-primary "></i>
                 </Link>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <Dropdown.Item>
                 <div
                   onClick={() => handleEditData(info?.row?.original)}
@@ -214,45 +199,43 @@ const FinancialAccountsList = () => {
   };
 
   return (
-    <div className="my-6 px-3">
-      <div className="card">
-        <div className="card-header">
-          <h3 className="card-title">All Financial Accounts</h3>
-          <div className="card-toolbar">
-            {/* <Link
+    <div className="card">
+      <div className="card-header">
+        <h3 className="card-title">All Financial Accounts</h3>
+        <div className="card-toolbar">
+          {/* <Link
               to={"../add"}
               className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
             >
                 </Link> */}
-            <button
-              onClick={handleOpenNewModal}
-              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
-            >
-              <span className="mx-2 tw-text-white">Add Financial Account </span>
-            </button>
-          </div>
+          <button
+            onClick={handleOpenNewModal}
+            className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+          >
+            <span className="mx-2 tw-text-white">Add Financial Account </span>
+          </button>
         </div>
-        {data && (
-          <div className="tw-p-6 tw-px-8">
-            <TanStackTable columns={tableColumns} data={data} />
-          </div>
-        )}
-        {/* <div className="tw-p-6 tw-px-8">
+      </div>
+      {data && (
+        <div className="tw-p-6 tw-px-8">
+          <TanStackTable columns={tableColumns} data={data} />
+        </div>
+      )}
+      {/* <div className="tw-p-6 tw-px-8">
           <SearchPaginationList
             searchParamsArray={searchFilter}
             baseUrl={API_ROUTE.FINANCIAL_ACCOUNT}
             columns={tableColumns}
           />
         </div> */}
-        <AddFinancialAccount
-          setFetchAgain={setFetchAgain}
-          companyId={companyId || ""}
-          handleClose={handleAddDocumentClose}
-          show={openAddDocument}
-          selectedData={selectedData}
-          setSelectedData={setSelectedData}
-        />
-      </div>
+      <AddFinancialAccount
+        setFetchAgain={setFetchAgain}
+        companyId={companyId || ""}
+        handleClose={handleAddDocumentClose}
+        show={openAddDocument}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
     </div>
   );
 };

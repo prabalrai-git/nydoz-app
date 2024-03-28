@@ -86,10 +86,10 @@ const AdminRoutes: RouteObject[] = [
         path: "list",
         element: <PaymentMethodsList />,
       },
-      {
-        path: "add",
-        element: <AddPaymentMethods />,
-      },
+      // {
+      //   path: "add",
+      //   element: <AddPaymentMethods />,
+      // },
       {
         path: "view/:id",
         element: <ViewPaymentMethod />,
@@ -101,7 +101,7 @@ const AdminRoutes: RouteObject[] = [
     element: <Outlet />,
     children: [
       { path: "list", element: <FinancialAccountsList /> },
-      { path: "add", element: <AddFinancialAccount /> },
+      // { path: "add", element: <AddFinancialAccount /> },
     ],
   },
   {
@@ -109,7 +109,7 @@ const AdminRoutes: RouteObject[] = [
     element: <Outlet />,
     children: [
       { path: "list", element: <TransactionTypesList /> },
-      { path: "add", element: <AddTransactionTypes /> },
+      // { path: "add", element: <AddTransactionTypes /> },
       { path: "view/:id", element: <h1>View transaction by id</h1> },
     ],
   },

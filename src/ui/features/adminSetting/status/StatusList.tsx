@@ -29,7 +29,10 @@ const StatusList = () => {
 
   const getListUrl = API_ROUTE.STATUSES;
 
-  const { data, fetchData } = useFetch<IStatusResponse[]>(getListUrl, true);
+  const { data, fetchData } = useFetch<IStatusResponse[]>(
+    getListUrl + "?page=2",
+    true
+  );
 
   useEffect(() => {
     fetchData();
@@ -47,14 +50,10 @@ const StatusList = () => {
 
   const searchFilter: string[] = ["first_name", "email", "mobile"];
 
-  const handleEditData = useCallback(
-    (item: IStatusReponse) => {
-      navigate("edit", {
-        state: { data: item },
-      });
-    },
-    [navigate]
-  );
+  const handleEditData = (item: IStatusReponse) => {
+    setSelectedData(item);
+    handleAddDocumentOpen();
+  };
 
   const tableColumns: ColumnDef<IStatusReponse>[] = useMemo(
     () => [
@@ -107,17 +106,17 @@ const StatusList = () => {
           return <div>{info.getValue<string>()}</div>;
         },
       },
-      {
-        accessorKey: "action_api_url",
-        header: () => (
-          <div>
-            <span>Action Api URL</span>
-          </div>
-        ),
-        cell: (info) => {
-          return <div>{info.getValue<string>()}</div>;
-        },
-      },
+      // {
+      //   accessorKey: "action_api_url",
+      //   header: () => (
+      //     <div>
+      //       <span>Action Api URL</span>
+      //     </div>
+      //   ),
+      //   cell: (info) => {
+      //     return <div>{info.getValue<string>()}</div>;
+      //   },
+      // },
       {
         accessorKey: "group_code",
         header: () => (
@@ -202,36 +201,34 @@ const StatusList = () => {
   const handleAddDocumentOpen = () => setOpenAddDocument(true);
 
   return (
-    <div className="my-6 px-3">
-      <section>
-        <div className="card">
-          <div className="card-header">
-            <h3 className="card-title">All Statuses</h3>
-            <div className="card-toolbar">
-              <button
-                onClick={handleOpenNewModal}
-                className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
-              >
-                <span className="mx-2 tw-text-white">Add Status</span>
-              </button>
-            </div>
+    <section>
+      <div className="card">
+        <div className="card-header">
+          <h3 className="card-title">All Statuses</h3>
+          <div className="card-toolbar">
+            <button
+              onClick={handleOpenNewModal}
+              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+            >
+              <span className="mx-2 tw-text-white">Add Status</span>
+            </button>
           </div>
-          {data && (
-            <div className="tw-px-8">
-              <TanStackTable columns={tableColumns} data={data} />
-            </div>
-          )}
-          <AddStatus
-            setFetchAgain={setFetchAgain}
-            companyId={companyId || ""}
-            handleClose={handleAddDocumentClose}
-            show={openAddDocument}
-            selectedData={selectedData}
-            setSelectedData={setSelectedData}
-          />
         </div>
-      </section>
-    </div>
+        {data && (
+          <div className="tw-p-6 tw-px-8">
+            <TanStackTable columns={tableColumns} data={data} />
+          </div>
+        )}
+        <AddStatus
+          setFetchAgain={setFetchAgain}
+          companyId={companyId || ""}
+          handleClose={handleAddDocumentClose}
+          show={openAddDocument}
+          selectedData={selectedData}
+          setSelectedData={setSelectedData}
+        />
+      </div>
+    </section>
   );
 };
 

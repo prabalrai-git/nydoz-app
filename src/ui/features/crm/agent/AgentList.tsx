@@ -205,7 +205,7 @@ const DocumentList = () => {
   const handleShow = () => setShow(true);
 
   return (
-    <div className="my-6 px-3">
+    <div className="px-3">
       <CompanyBreadcrumb title="Agents" btnText="Back" showBreadcrumb={true} />
       <section>
         <div className="card">

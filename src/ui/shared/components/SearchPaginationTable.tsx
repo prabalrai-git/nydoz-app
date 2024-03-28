@@ -305,7 +305,7 @@ function PaginatedTanStackTable<T>(props: ISearchPaginatedTableProps<T>) {
             </ul>
           </div>
 
-          <table className="table align-middle table-row-dashed fs-6 gy-5 dataTable  ">
+          <table className="table align-middle table-row-dashed fs-6  dataTable  ">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr

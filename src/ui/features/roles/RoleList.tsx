@@ -161,7 +161,7 @@ const RoleList = () => {
     <div>
       <section>
         <div className="card">
-          <div className="d-flex card-header  justify-content-between align-items-center mb-6">
+          <div className="d-flex card-header  justify-content-between align-items-center ">
             <h3 className="card-title">All Roles</h3>
             <button
               onClick={handleOpenNewModal}

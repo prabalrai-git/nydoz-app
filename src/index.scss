@@ -478,3 +478,8 @@ $pimary-color: #70b541;
   border-radius: 0.4rem;
   box-shadow: 0 0 0.875rem rgb(0 0 0 / 10%);
 }
+
+.ant-tabs-nav-list {
+  transform: translate(30px, 0px) !important;
+  padding-top: 15px;
+}

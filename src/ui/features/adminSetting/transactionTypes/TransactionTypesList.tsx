@@ -49,15 +49,10 @@ const TransactionTypesList = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchAgain]);
-
-  const handleEditData = useCallback(
-    (item: ITransactionTypeResponse) => {
-      navigate("edit", {
-        state: { data: item },
-      });
-    },
-    [navigate]
-  );
+  const handleEditData = (item: ITransactionTypeResponse) => {
+    setSelectedData(item);
+    handleAddDocumentOpen();
+  };
 
   const tableColumns: ColumnDef<ITransactionTypeResponse>[] = useMemo(
     () => [
@@ -123,7 +118,7 @@ const TransactionTypesList = () => {
               id="dropdown-basic-button"
               title="Action"
             >
-              <Dropdown.Item>
+              {/* <Dropdown.Item>
                 <Link
                   to={`../view/${info?.row?.original?.id}`}
                   className="menu-link"
@@ -131,7 +126,7 @@ const TransactionTypesList = () => {
                   <span className="mx-2">View</span>
                   <i className="bi bi-box-arrow-up-right text-primary "></i>
                 </Link>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <Dropdown.Item>
                 <div
                   onClick={() => handleEditData(info?.row?.original)}
@@ -161,40 +156,38 @@ const TransactionTypesList = () => {
   };
 
   return (
-    <div className="my-6 px-3">
-      <div className="card">
-        <div className="card-header">
-          <h3 className="card-title">All Transaction Types</h3>
-          <div className="card-toolbar">
-            <button
-              onClick={handleOpenNewModal}
-              className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
-            >
-              <span className="mx-2 tw-text-white">Add Transaction Type</span>
-            </button>
-          </div>
+    <div className="card">
+      <div className="card-header">
+        <h3 className="card-title">All Transaction Types</h3>
+        <div className="card-toolbar">
+          <button
+            onClick={handleOpenNewModal}
+            className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm"
+          >
+            <span className="mx-2 tw-text-white">Add Transaction Type</span>
+          </button>
         </div>
-        {data && (
-          <div className="tw-p-6 tw-px-8">
-            <TanStackTable columns={tableColumns} data={data} />
-          </div>
-        )}
-        {/* <div className="tw-p-6 tw-px-8">
+      </div>
+      {data && (
+        <div className="tw-p-6 tw-px-8">
+          <TanStackTable columns={tableColumns} data={data} />
+        </div>
+      )}
+      {/* <div className="tw-p-6 tw-px-8">
           <SearchPaginationList
             searchParamsArray={searchFilter}
             baseUrl={API_ROUTE.TRANSACTION_TYPE}
             columns={tableColumns}
           />
         </div> */}
-        <AddTransactionTypes
-          setFetchAgain={setFetchAgain}
-          companyId={companyId || ""}
-          handleClose={handleAddDocumentClose}
-          show={openAddDocument}
-          selectedData={selectedData}
-          setSelectedData={setSelectedData}
-        />
-      </div>
+      <AddTransactionTypes
+        setFetchAgain={setFetchAgain}
+        companyId={companyId || ""}
+        handleClose={handleAddDocumentClose}
+        show={openAddDocument}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+      />
     </div>
   );
 };

@@ -5,12 +5,12 @@ import { ColumnDef } from "@tanstack/react-table";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 import AddUsers, { IFormData } from "./AddUser";
 import useAuthContext from "../../../../context/auth/useAuthContext";
 import useFetch from "../../../../hooks/useFetch";
 import TanStackTable from "../../../shared/molecules/TanStackTable";
+import { Tag } from "antd";
 
 const UserList = () => {
   const navigate = useNavigate();
@@ -25,7 +25,10 @@ const UserList = () => {
 
   const getListUrl = API_ROUTE.USER;
 
-  const { data, fetchData } = useFetch<IFormResponse[]>(getListUrl, true);
+  const { data, fetchData } = useFetch<IFormResponse[]>(
+    getListUrl + "?page=1",
+    true
+  );
 
   useEffect(() => {
     fetchData();
@@ -45,14 +48,10 @@ const UserList = () => {
     id: string;
   }
 
-  const handleEditData = useCallback(
-    (item: IFormResponse) => {
-      navigate("edit", {
-        state: { data: item },
-      });
-    },
-    [navigate]
-  );
+  const handleEditData = (item: IFormResponse) => {
+    setSelectedData(item);
+    handleAddDocumentOpen();
+  };
 
   const tableColumns: ColumnDef<IFormResponse>[] = useMemo(
     () => [
@@ -74,7 +73,7 @@ const UserList = () => {
               <div className="d-flex justify-content-start flex-column">
                 <a
                   href="#"
-                  className="text-dark fw-bold text-hover-primary mb-1 fs-6"
+                  className="text-dark fw-bold text-hover-primary mb-1 fs-6 tw-capitalize"
                 >
                   {info?.row?.original?.first_name}{" "}
                   {info?.row?.original?.last_name}
@@ -106,6 +105,27 @@ const UserList = () => {
           return <div>{info.getValue<string>()}</div>;
         },
       },
+      {
+        accessorKey: "status",
+        header: () => (
+          <div>
+            <span>Status</span>
+          </div>
+        ),
+        cell: (info) => {
+          if (info.getValue<Record<string, string>>()?.title) {
+            return info
+              .getValue<Record<string, string>>()
+              .title?.toLowerCase() === "inactive" ? (
+              <Tag color="red">Inactive</Tag>
+            ) : (
+              <Tag color="green">Active</Tag>
+            );
+          } else {
+            return <Tag>N/A</Tag>;
+          }
+        },
+      },
 
       {
         accessorKey: "action",
@@ -122,7 +142,7 @@ const UserList = () => {
               id="dropdown-basic-button"
               title="Action"
             >
-              <Dropdown.Item>
+              {/* <Dropdown.Item>
                 <Link
                   to={`../view/${info?.row?.original?.id}`}
                   className="menu-link"
@@ -130,7 +150,7 @@ const UserList = () => {
                   <span className="mx-2">View</span>
                   <i className="bi bi-box-arrow-up-right text-primary "></i>
                 </Link>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <Dropdown.Item>
                 <div
                   onClick={() => handleEditData(info?.row?.original)}
@@ -160,7 +180,7 @@ const UserList = () => {
   };
 
   return (
-    <div className=" px-3">
+    <div>
       <section>
         <div className="card">
           <div className="card-header">

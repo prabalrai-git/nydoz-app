@@ -85,7 +85,7 @@ const AddStatus = (props: IModalProps) => {
 
   useEffect(() => {
     if (errList) {
-      Object.keys(selectedData).forEach((field) => {
+      Object.keys(errList).forEach((field) => {
         const fieldName = field as keyof IAddStatusForm;
         if (errList?.[fieldName]) {
           errors[fieldName] = {
@@ -105,6 +105,7 @@ const AddStatus = (props: IModalProps) => {
 
   const onFormSubmit = handleSubmit(async (data: IAddStatusForm) => {
     if (selectedData) {
+      // return console.log(selectedData);
       const response = await updateData(
         selectedData.id,
         data as IStatusResponse

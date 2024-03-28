@@ -4,6 +4,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { ITableProps } from "../../../types/axios.type";
+import { Pagination } from "antd";
+import type { PaginationProps } from "antd";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 // import { Search } from "react-bootstrap-icons";
 
 function TanStackTable<T>(props: ITableProps<T>) {
@@ -15,10 +18,57 @@ function TanStackTable<T>(props: ITableProps<T>) {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const itemRender: PaginationProps["itemRender"] = (
+    _,
+    type,
+    originalElement
+  ) => {
+    if (type === "prev") {
+      return (
+        <a className="tw-flex tw-items-center tw-mr-4 tw-font-medium tw-text-gray-400">
+          <GrFormPrevious size={22} />
+          <p> prev</p>
+        </a>
+      );
+    }
+    if (type === "next") {
+      return (
+        <a className="tw-flex tw-items-center tw-mx-2 tw-font-medium tw-text-gray-400">
+          <p> prev</p>
+          <GrFormNext size={22} />
+        </a>
+      );
+    }
+    return originalElement;
+  };
+
   return (
     <div className="">
+      <div className="tw-flex xsm:tw-flex-col md:tw-flex-row xsm:tw-justify-between tw-pb-10 tw-pt-4 tw-gap-8">
+        <div>
+          <h6 className=" tw-text-appBlue py-2 md:tw-p-6 xsm:tw-p-2 tw-text-center tw-px-12 tw-rounded-md tw-border-gray-300 tw-border-[2px] tw-text-sm">
+            <span className="tw-text-black"> Showing :</span>
+            <span className="mx-3 tw-font-semibold">
+              {1 ?? "N/A"} to {15 ?? "N/A"}
+            </span>
+            <span className="tw-font-semibold">
+              <span className="tw-text-black tw-font-normal">of total : </span>
+              15 entries.
+            </span>
+          </h6>
+        </div>
+        <div className="  ">
+          <Pagination
+            size="small"
+            defaultPageSize={10}
+            defaultCurrent={1}
+            total={70}
+            itemRender={itemRender}
+          />
+        </div>
+      </div>
       {data && data?.length > 0 && (
-        <div className="min-h-30vh block max-w-full overflow-x-scroll overflow-y-hidden  ">
+        <div className="tw-min-h-[35vh] block max-w-full overflow-x-scroll overflow-y-hidden  ">
           <div className="row align-items-center">
             {/* <div className="col-12 col-md-6">
               <h6 className=" tw-text-appBlue py-2">
@@ -44,7 +94,7 @@ function TanStackTable<T>(props: ITableProps<T>) {
                             </div>
                         </div> */}
           </div>
-          <table className="table table-md align-middle table-row-dashed  dataTable   ">
+          <table className="table table-md align-middle table-row-dashed   dataTable   ">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr

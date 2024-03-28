@@ -59,7 +59,7 @@ const ClientList = () => {
               <div className="d-flex justify-content-start flex-column">
                 <a
                   href="#"
-                  className="text-dark fw-bold text-hover-primary mb-1 fs-6"
+                  className="text-dark fw-bold text-hover-primary mb-1 fs-6 tw-capitalize"
                 >
                   {info?.row?.original?.first_name}{" "}
                   {info?.row?.original?.last_name}
@@ -229,7 +229,7 @@ const ClientList = () => {
   );
 
   return (
-    <div className="my-6 px-3">
+    <div className=" px-3">
       <CompanyBreadcrumb
         title="Client List"
         btnText="Back"

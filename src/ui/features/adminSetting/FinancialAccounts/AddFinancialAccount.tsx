@@ -90,7 +90,7 @@ const AddFinancialAccount = (props: IModalProps) => {
 
   useEffect(() => {
     if (errList) {
-      Object.keys(selectedData).forEach((field) => {
+      Object.keys(errList).forEach((field) => {
         const fieldName = field as keyof IFinancialAccountFields;
         if (errList?.[fieldName]) {
           errors[fieldName] = {
@@ -102,18 +102,18 @@ const AddFinancialAccount = (props: IModalProps) => {
     }
   }, [errList, setError]);
 
-  const onSubmit = async (data: IFinancialAccountFields) => {
-    try {
-      const response = await postData({
-        ...data,
-        payment_method_ids: payementMethodIds,
-      });
-      if (response?.status === 201) {
-        toast.success("Financial Account Added Successfully");
-        navigate(-1);
-      }
-    } catch (error) {}
-  };
+  // const onSubmit = async (data: IFinancialAccountFields) => {
+  //   try {
+  //     const response = await postData({
+  //       ...data,
+  //       payment_method_ids: payementMethodIds,
+  //     });
+  //     if (response?.status === 201) {
+  //       toast.success("Financial Account Added Successfully");
+  //       navigate(-1);
+  //     }
+  //   } catch (error) {}
+  // };
 
   const onFormSubmit = handleSubmit(async (data: IFinancialAccountFields) => {
     if (selectedData) {
@@ -185,7 +185,7 @@ const AddFinancialAccount = (props: IModalProps) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onFormSubmit}>
           <div className="mb-3">
             <label className="form-label">Institute Name</label>
             <input
