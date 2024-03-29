@@ -35,6 +35,7 @@ function useFetch<T>(
   const [data, setData] = useState<T | undefined>();
   const [isloading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
   const fetchData = async () => {
     setIsLoading(true);
     setError(null);
