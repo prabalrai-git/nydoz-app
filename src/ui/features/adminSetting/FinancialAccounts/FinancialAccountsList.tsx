@@ -37,10 +37,9 @@ const FinancialAccountsList = () => {
 
   const getListUrl = API_ROUTE.FINANCIAL_ACCOUNT;
 
-  const { data, fetchData } = useFetch<IFinancialAccountReponse[]>(
-    getListUrl,
-    true
-  );
+  const { data, fetchData, setPage, setPageSize, pagination } = useFetch<
+    IFinancialAccountReponse[]
+  >(getListUrl, true);
 
   useEffect(() => {
     fetchData();
@@ -218,7 +217,14 @@ const FinancialAccountsList = () => {
       </div>
       {data && (
         <div className="tw-p-6 tw-px-8">
-          <TanStackTable columns={tableColumns} data={data} />
+          <TanStackTable
+            columns={tableColumns}
+            data={data}
+            setPage={setPage}
+            setPageSize={setPageSize}
+            setFetchAgain={setFetchAgain}
+            pagination={pagination}
+          />
         </div>
       )}
       {/* <div className="tw-p-6 tw-px-8">

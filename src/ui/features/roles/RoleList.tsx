@@ -23,7 +23,9 @@ const RoleList = () => {
 
   const getListUrl = API_ROUTE.GET_ROLES;
 
-  const { data, fetchData } = useFetch<IRoleResponse[]>(getListUrl, true);
+  const { data, fetchData, setPage, setPageSize, pagination } = useFetch<
+    IRoleResponse[]
+  >(getListUrl, true);
 
   const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -172,7 +174,14 @@ const RoleList = () => {
           </div>
           {data && (
             <div className="tw-p-6 tw-px-8">
-              <TanStackTable columns={tableColumns} data={data} />{" "}
+              <TanStackTable
+                columns={tableColumns}
+                data={data}
+                setPage={setPage}
+                setPageSize={setPageSize}
+                setFetchAgain={setFetchAgain}
+                pagination={pagination}
+              />
             </div>
           )}
         </div>

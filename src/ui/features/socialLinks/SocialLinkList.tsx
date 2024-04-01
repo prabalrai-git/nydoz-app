@@ -25,10 +25,9 @@ const DocumentList = () => {
   const [fetchAgain, setFetchAgain] = useState<boolean>(false);
   const getListUrl = API_ROUTE.GET_SOCIAL_LINKS_BY_COMPANYID;
 
-  const { data, fetchData } = useFetch<ISocialLinksResponse[]>(
-    `${getListUrl}/${companyId}/social-links`,
-    true
-  );
+  const { data, fetchData, setPage, setPageSize, pagination } = useFetch<
+    ISocialLinksResponse[]
+  >(`${getListUrl}/${companyId}/social-links`, true);
 
   const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -176,7 +175,14 @@ const DocumentList = () => {
           </div>
           {data && (
             <div className="tw-p-6 tw-px-8">
-              <TanStackTable columns={tableColumns} data={data} />
+              <TanStackTable
+                columns={tableColumns}
+                data={data}
+                setPage={setPage}
+                setPageSize={setPageSize}
+                setFetchAgain={setFetchAgain}
+                pagination={pagination}
+              />
             </div>
           )}
         </div>

@@ -37,10 +37,9 @@ const DocumentList = () => {
 
   const getDocumentUrl = `${API_ROUTE.GET_DOCUMENTS_BY_COMPANY_ID}/${companyId}/documents`;
 
-  const { data, fetchData } = useFetch<IDocumentResponse[]>(
-    getDocumentUrl,
-    true
-  );
+  const { data, fetchData, setPage, setPageSize, pagination } = useFetch<
+    IDocumentResponse[]
+  >(getDocumentUrl, true);
 
   const { deleteData } = useMutation(API_ROUTE.DELETE_COMPANY_BY_ID, true);
 
@@ -273,7 +272,14 @@ const DocumentList = () => {
             </div>
           ) : (
             <div className="tw-px-10">
-              <TanStackTable columns={tableColumns} data={data ?? []} />
+              <TanStackTable
+                columns={tableColumns}
+                data={data ?? []}
+                setPage={setPage}
+                setPageSize={setPageSize}
+                setFetchAgain={setFetchAgain}
+                pagination={pagination}
+              />
             </div>
           )}
         </div>

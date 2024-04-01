@@ -13,6 +13,16 @@ import { FaEdit } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { BiSolidAddToQueue } from "react-icons/bi";
+import { Image, Space } from "antd";
+import { GrView } from "react-icons/gr";
+import {
+  DownloadOutlined,
+  RotateLeftOutlined,
+  RotateRightOutlined,
+  SwapOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
+} from "@ant-design/icons";
 
 const List = () => {
   const navigate = useNavigate();
@@ -41,6 +51,21 @@ const List = () => {
     [navigate]
   );
 
+  const onDownload = (src: string) => {
+    fetch(src)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "image.png";
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(url);
+        link.remove();
+      });
+  };
+
   const tableColumns: ColumnDef<IEnrollmentResponse>[] = useMemo(
     () => [
       {
@@ -61,7 +86,46 @@ const List = () => {
           return (
             <div className="d-flex align-items-center">
               <div className="symbol symbol-40px me-3">
-                <img src={url} className="" alt="Logo" />
+                <Image
+                  className="tw-object-cover tw-rounded-lg"
+                  width={40}
+                  height={40}
+                  preview={{
+                    mask: <GrView />,
+                    toolbarRender: (
+                      _,
+                      {
+                        transform: { scale },
+                        actions: {
+                          onFlipY,
+                          onFlipX,
+                          onRotateLeft,
+                          onRotateRight,
+                          onZoomOut,
+                          onZoomIn,
+                        },
+                      }
+                    ) => (
+                      <Space size={12} className="toolbar-wrapper">
+                        <DownloadOutlined onClick={() => onDownload(url)} />
+                        <SwapOutlined rotate={90} onClick={onFlipY} />
+                        <SwapOutlined onClick={onFlipX} />
+                        <RotateLeftOutlined onClick={onRotateLeft} />
+                        <RotateRightOutlined onClick={onRotateRight} />
+                        <ZoomOutOutlined
+                          disabled={scale === 1}
+                          onClick={onZoomOut}
+                        />
+                        <ZoomInOutlined
+                          disabled={scale === 50}
+                          onClick={onZoomIn}
+                        />
+                      </Space>
+                    ),
+                  }}
+                  src={url}
+                />
+                {/* <img src={url} className="" alt="Logo" /> */}
               </div>
               <div className="d-flex justify-content-start flex-column">
                 <div className="text-dark fw-bold text-hover-primary mb-1 fs-7">

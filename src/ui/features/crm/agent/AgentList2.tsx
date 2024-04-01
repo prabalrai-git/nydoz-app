@@ -12,6 +12,16 @@ import SearchPaginationList from "../../../shared/components/SearchPaginationLis
 import { GoPersonFill } from "react-icons/go";
 import { FaPhoneAlt } from "react-icons/fa";
 import { RiFlagFill } from "react-icons/ri";
+import { Image, Space } from "antd";
+import { GrView } from "react-icons/gr";
+import {
+  DownloadOutlined,
+  RotateLeftOutlined,
+  RotateRightOutlined,
+  SwapOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
+} from "@ant-design/icons";
 
 const AgentList2 = () => {
   const navigate = useNavigate();
@@ -25,6 +35,20 @@ const AgentList2 = () => {
     },
     [navigate]
   );
+  const onDownload = (src: string) => {
+    fetch(src)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "image.png";
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(url);
+        link.remove();
+      });
+  };
 
   const tableColumns: ColumnDef<IAgentResponse>[] = useMemo(
     () => [
@@ -46,7 +70,46 @@ const AgentList2 = () => {
           return (
             <div className="d-flex align-items-center">
               <div className="symbol symbol-40px me-3">
-                <img src={url} className="" alt="profile picture" />
+                <Image
+                  className="tw-object-cover tw-rounded-lg"
+                  width={40}
+                  height={40}
+                  preview={{
+                    mask: <GrView />,
+                    toolbarRender: (
+                      _,
+                      {
+                        transform: { scale },
+                        actions: {
+                          onFlipY,
+                          onFlipX,
+                          onRotateLeft,
+                          onRotateRight,
+                          onZoomOut,
+                          onZoomIn,
+                        },
+                      }
+                    ) => (
+                      <Space size={12} className="toolbar-wrapper">
+                        <DownloadOutlined onClick={() => onDownload(url)} />
+                        <SwapOutlined rotate={90} onClick={onFlipY} />
+                        <SwapOutlined onClick={onFlipX} />
+                        <RotateLeftOutlined onClick={onRotateLeft} />
+                        <RotateRightOutlined onClick={onRotateRight} />
+                        <ZoomOutOutlined
+                          disabled={scale === 1}
+                          onClick={onZoomOut}
+                        />
+                        <ZoomInOutlined
+                          disabled={scale === 50}
+                          onClick={onZoomIn}
+                        />
+                      </Space>
+                    ),
+                  }}
+                  src={url}
+                />
+                {/* <img src={url} className="" alt="profile picture" /> */}
               </div>
               <div className="d-flex justify-content-start flex-column">
                 <a

@@ -31,10 +31,9 @@ const TransactionTypesList = () => {
 
   const getListUrl = API_ROUTE.TRANSACTION_TYPE;
 
-  const { data, fetchData } = useFetch<ITransactionTypeResponse[]>(
-    getListUrl,
-    true
-  );
+  const { data, fetchData, setPage, setPageSize, pagination } = useFetch<
+    ITransactionTypeResponse[]
+  >(getListUrl, true);
 
   useEffect(() => {
     fetchData();
@@ -170,7 +169,14 @@ const TransactionTypesList = () => {
       </div>
       {data && (
         <div className="tw-p-6 tw-px-8">
-          <TanStackTable columns={tableColumns} data={data} />
+          <TanStackTable
+            columns={tableColumns}
+            data={data}
+            setPage={setPage}
+            setPageSize={setPageSize}
+            setFetchAgain={setFetchAgain}
+            pagination={pagination}
+          />
         </div>
       )}
       {/* <div className="tw-p-6 tw-px-8">

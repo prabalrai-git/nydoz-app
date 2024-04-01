@@ -29,10 +29,9 @@ const StatusList = () => {
 
   const getListUrl = API_ROUTE.STATUSES;
 
-  const { data, fetchData } = useFetch<IStatusResponse[]>(
-    getListUrl + "?page=2",
-    true
-  );
+  const { data, fetchData, setPage, setPageSize, pagination } = useFetch<
+    IStatusResponse[]
+  >(getListUrl, true);
 
   useEffect(() => {
     fetchData();
@@ -216,7 +215,14 @@ const StatusList = () => {
         </div>
         {data && (
           <div className="tw-p-6 tw-px-8">
-            <TanStackTable columns={tableColumns} data={data} />
+            <TanStackTable
+              columns={tableColumns}
+              data={data}
+              setPage={setPage}
+              setPageSize={setPageSize}
+              setFetchAgain={setFetchAgain}
+              pagination={pagination}
+            />
           </div>
         )}
         <AddStatus

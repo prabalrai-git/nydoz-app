@@ -10,7 +10,8 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 // import { Search } from "react-bootstrap-icons";
 
 function TanStackTable<T>(props: ITableProps<T>) {
-  const { columns, data } = props;
+  const { columns, data, setPage, setPageSize, setFetchAgain, pagination } =
+    props;
 
   const table = useReactTable({
     data,
@@ -49,20 +50,32 @@ function TanStackTable<T>(props: ITableProps<T>) {
           <h6 className=" tw-text-appBlue py-2 md:tw-p-6 xsm:tw-p-2 tw-text-center tw-px-12 tw-rounded-md tw-border-gray-300 tw-border-[2px] tw-text-sm">
             <span className="tw-text-black"> Showing :</span>
             <span className="mx-3 tw-font-semibold">
-              {1 ?? "N/A"} to {15 ?? "N/A"}
+              {pagination?.from ?? "N/A"} to {pagination?.to ?? "N/A"}
             </span>
             <span className="tw-font-semibold">
               <span className="tw-text-black tw-font-normal">of total : </span>
-              15 entries.
+              {pagination?.to && pagination?.from
+                ? pagination?.to - pagination?.from + 1
+                : 0}{" "}
+              entries.
             </span>
           </h6>
         </div>
         <div className="  ">
           <Pagination
             size="small"
-            defaultPageSize={10}
-            defaultCurrent={1}
-            total={70}
+            // defaultPageSize={10}
+            // defaultCurrent={1}
+            pageSize={pagination?.per_page}
+            current={pagination?.current_page}
+            pageSizeOptions={[5, 10, 20, 50, 100, 200]}
+            showSizeChanger={true}
+            total={pagination?.total}
+            onChange={(page, pageSize) => {
+              setPageSize(pageSize);
+              setPage(page);
+              setFetchAgain(true);
+            }}
             itemRender={itemRender}
           />
         </div>

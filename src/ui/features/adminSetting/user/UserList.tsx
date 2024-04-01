@@ -25,10 +25,9 @@ const UserList = () => {
 
   const getListUrl = API_ROUTE.USER;
 
-  const { data, fetchData } = useFetch<IFormResponse[]>(
-    getListUrl + "?page=1",
-    true
-  );
+  const { data, fetchData, setPage, setPageSize, pagination } = useFetch<
+    IFormResponse[]
+  >(getListUrl, true);
 
   useEffect(() => {
     fetchData();
@@ -196,7 +195,14 @@ const UserList = () => {
           </div>
           {data && (
             <div className="tw-p-6 tw-px-8">
-              <TanStackTable columns={tableColumns} data={data} />
+              <TanStackTable
+                columns={tableColumns}
+                data={data}
+                setPage={setPage}
+                setPageSize={setPageSize}
+                setFetchAgain={setFetchAgain}
+                pagination={pagination}
+              />
             </div>
           )}
           {/* <div className="tw-p-6 tw-px-8">

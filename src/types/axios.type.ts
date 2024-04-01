@@ -1,4 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { Dispatch, SetStateAction } from "react";
 
 export interface IResponse<T> {
   message: string;
@@ -37,7 +38,11 @@ export interface IPagination {
 
 export interface ITableProps<T> {
   columns: ColumnDef<T>[];
-  data: T[];
+  data: T[] | undefined;
+  setPage: Dispatch<SetStateAction<number>>;
+  setPageSize: Dispatch<SetStateAction<number>>;
+  setFetchAgain: Dispatch<SetStateAction<boolean>>;
+  pagination?: IPagination;
 }
 
 export interface IPaginatedTableProps<T> {

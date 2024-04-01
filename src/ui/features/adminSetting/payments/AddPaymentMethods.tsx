@@ -142,7 +142,6 @@ const DynamicForm = (props: IModalProps) => {
         });
         if (response?.status === 201) {
           toast.success("Payment Method Added Successfully");
-          navigate(-1);
         }
       } catch (error) {}
     }

@@ -10,6 +10,9 @@ import { Spinner } from "react-bootstrap";
 import { capitalizeText } from "../../../functions/TextMuatations";
 import useFetch from "../../../hooks/useFetch";
 import { IoSearch } from "react-icons/io5";
+import { Pagination } from "antd";
+import { PaginationProps } from "antd/lib";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 interface SearchState {
   [key: string]: string;
@@ -20,10 +23,9 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
   const { columns, baseUrl, searchParamsArray } = props;
   const [fetchUrl, setFetchUrl] = useState(baseUrl);
   const [tableData, setTableData] = useState<T[] | []>([]);
-  const { fetchDataById, isloading, data, pagination } = useFetch<T[]>(
-    fetchUrl,
-    true
-  );
+  const { isloading, data, pagination, fetchData, setPage, setPageSize } =
+    useFetch<T[]>(fetchUrl, true);
+
   const [fetchAgain, setFetchAgain] = useState(false);
 
   const handleRefresh = () => {
@@ -32,10 +34,10 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
 
   useEffect(() => {
     if (fetchAgain) {
-      fetchDataById(fetchUrl);
+      fetchData();
       setFetchAgain(false);
     }
-  }, [fetchAgain, fetchDataById, fetchUrl]);
+  }, [fetchAgain, fetchData, fetchUrl]);
 
   useEffect(() => {
     if (data !== undefined && data.length > 0) {
@@ -50,14 +52,14 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
   });
   const [searchState, setSearchState] = useState<SearchState>({});
 
-  const getQueryParams = () => {
-    const query = new URLSearchParams(window.location.search);
-    const queryObject: SearchState = {};
-    query.forEach((value, key) => {
-      queryObject[key as string] = value;
-    });
-    return queryObject;
-  };
+  // const getQueryParams = () => {
+  //   const query = new URLSearchParams(window.location.search);
+  //   const queryObject: SearchState = {};
+  //   query.forEach((value, key) => {
+  //     queryObject[key as string] = value;
+  //   });
+  //   return queryObject;
+  // };
 
   const setQueryParams = (queryParams: SearchState) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -73,91 +75,84 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
   };
 
   useEffect(() => {
-    const query = getQueryParams();
-    if (Object.keys(query).length === 0) {
-      setSearchState({
-        page: pagination.current_page.toString(),
-        page_size: pagination.per_page.toString(),
-      });
-      window.history.replaceState(
-        null,
-        "",
-        `${
-          window.location.pathname
-        }?page=${pagination.current_page.toString()}&page_size=${pagination.per_page.toString()} `
-      );
-      setFetchUrl(
-        `${baseUrl}?page=${pagination.current_page.toString()}&page_size=${pagination.per_page.toString()}`
-      );
-      setFetchAgain(true);
-    } else {
-      setSearchState(getQueryParams());
-      const newUrl = `${baseUrl}${window.location.search}`;
-      setFetchUrl(newUrl);
-      setFetchAgain(true);
-    }
+    // const query = getQueryParams();
+    // if (Object.keys(query).length === 0) {
+    //   setSearchState({
+    //     page: pagination.current_page.toString(),
+    //     page_size: pagination.per_page.toString(),
+    //   });
+    //   window.history.replaceState(null, "", `${window.location.pathname} `);
+    //   setFetchUrl(`${baseUrl}`);
+    //   setFetchAgain(true);
+    // } else {
+    //   setSearchState(getQueryParams());
+    //   const newUrl = `${baseUrl}${window.location.search}`;
+    //   setFetchUrl(newUrl);
+    //   setFetchAgain(true);
+    // }
+    fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const noOfPages = useMemo(() => {
-    if (pagination?.total === undefined || pagination?.total === 0) return 0;
-    return Math.ceil(pagination.total / pagination.per_page);
-  }, [pagination.total, pagination.per_page]);
+  // const noOfPages = useMemo(() => {
+  //   if (pagination?.total === undefined || pagination?.total === 0) return 0;
+  //   return Math.ceil(pagination.total / pagination.per_page);
+  // }, [pagination.total, pagination.per_page]);
 
-  const handlePrevious = (currentPage: number) => {
-    if (currentPage === 1) return;
+  // const handlePrevious = (currentPage: number) => {
+  //   if (currentPage === 1) return;
 
-    setSearchState((prevState) => ({
-      ...prevState,
-      page: (currentPage - 1).toString(),
-    }));
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     page: (currentPage - 1).toString(),
+  //   }));
 
-    const queryParams = {
-      ...searchState,
-      page: (currentPage - 1).toString(),
-    };
+  //   const queryParams = {
+  //     ...searchState,
+  //     page: (currentPage - 1).toString(),
+  //   };
 
-    const searchParams = setQueryParams(queryParams);
-    const newUrl = `${baseUrl}?${searchParams.toString()}`;
+  //   const searchParams = setQueryParams(queryParams);
+  //   const newUrl = `${baseUrl}?${searchParams.toString()}`;
 
-    setFetchUrl(newUrl);
-    setFetchAgain(true);
-  };
+  //   setFetchUrl(newUrl);
+  //   setFetchAgain(true);
+  // };
 
-  const handleNext = (currentPage: number) => {
-    if (currentPage === pagination?.last_page) return;
+  // const handleNext = (currentPage: number) => {
+  //   if (currentPage === pagination?.last_page) return;
 
-    setSearchState((prevState) => ({
-      ...prevState,
-      page: (currentPage + 1).toString(),
-    }));
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     page: (currentPage + 1).toString(),
+  //   }));
 
-    const queryParams = {
-      ...searchState,
-      page: (currentPage + 1).toString(),
-    };
+  //   const queryParams = {
+  //     ...searchState,
+  //     page: (currentPage + 1).toString(),
+  //   };
 
-    const searchParams = setQueryParams(queryParams);
-    const newUrl = `${baseUrl}?${searchParams.toString()}`;
+  //   const searchParams = setQueryParams(queryParams);
+  //   const newUrl = `${baseUrl}?${searchParams.toString()}`;
 
-    setFetchUrl(newUrl);
-    setFetchAgain(true);
-  };
+  //   setFetchUrl(newUrl);
+  //   setFetchAgain(true);
+  // };
 
-  const handleChangePage = (pageNumber: number) => {
-    if (pageNumber === pagination?.current_page) return;
-    setSearchState((prevState) => ({
-      ...prevState,
-      page: pageNumber.toString(),
-    }));
+  // const handleChangePage = (pageNumber: number) => {
+  //   if (pageNumber === pagination?.current_page) return;
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     page: pageNumber.toString(),
+  //   }));
 
-    const queryParams = { ...searchState, page: pageNumber.toString() };
-    const searchParams = setQueryParams(queryParams);
-    const newUrl = `${baseUrl}?${searchParams.toString()}`;
-    setFetchUrl(newUrl);
-    setFetchAgain(true);
-  };
+  //   const queryParams = { ...searchState, page: pageNumber.toString() };
+  //   const searchParams = setQueryParams(queryParams);
+  //   const newUrl = `${baseUrl}?${searchParams.toString()}`;
+  //   setFetchUrl(newUrl);
+  //   setFetchAgain(true);
+  // };
 
   const handleSearch = () => {
     const searchParams = setQueryParams({
@@ -193,19 +188,42 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
     setFetchAgain(true);
   };
 
-  const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchState((prevState) => ({
-      ...prevState,
-      page_size: e.target.value,
-    }));
-    const queryParams = {
-      ...searchState,
-      page_size: e.target.value,
-    };
-    const searchParams = setQueryParams(queryParams);
-    const newUrl = `${baseUrl}?${searchParams.toString()}`;
-    setFetchUrl(newUrl);
-    setFetchAgain(true);
+  // const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     page_size: e.target.value,
+  //   }));
+  //   const queryParams = {
+  //     ...searchState,
+  //     page_size: e.target.value,
+  //   };
+  //   const searchParams = setQueryParams(queryParams);
+  //   const newUrl = `${baseUrl}?${searchParams.toString()}`;
+  //   setFetchUrl(newUrl);
+  //   setFetchAgain(true);
+  // };
+  const itemRender: PaginationProps["itemRender"] = (
+    _,
+    type,
+    originalElement
+  ) => {
+    if (type === "prev") {
+      return (
+        <a className="tw-flex tw-items-center tw-mr-4 tw-font-medium tw-text-gray-400">
+          <GrFormPrevious size={22} />
+          <p> prev</p>
+        </a>
+      );
+    }
+    if (type === "next") {
+      return (
+        <a className="tw-flex tw-items-center tw-mx-2 tw-font-medium tw-text-gray-400">
+          <p> prev</p>
+          <GrFormNext size={22} />
+        </a>
+      );
+    }
+    return originalElement;
   };
 
   return (
@@ -259,20 +277,36 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
               <h6 className=" tw-text-appBlue py-2 md:tw-p-6 xsm:tw-p-2 tw-text-center tw-px-12 tw-rounded-md tw-border-gray-300 tw-border-[2px] tw-text-sm">
                 <span className="tw-text-black"> Showing :</span>
                 <span className="mx-3 tw-font-semibold">
-                  {" "}
                   {pagination?.from ?? "N/A"} to {pagination?.to ?? "N/A"}
                 </span>
                 <span className="tw-font-semibold">
-                  {" "}
                   <span className="tw-text-black tw-font-normal">
                     of total :{" "}
                   </span>
-                  {pagination?.total} entries.
+                  {pagination?.to && pagination?.from
+                    ? pagination?.to - pagination?.from + 1
+                    : 0}{" "}
+                  entries.
                 </span>
               </h6>
             </div>
-
-            <div className="tw-flex tw-gap-5 tw-self-end">
+            <Pagination
+              size="small"
+              // defaultPageSize={10}
+              // defaultCurrent={1}
+              pageSize={pagination?.per_page}
+              current={pagination?.current_page}
+              pageSizeOptions={[1, 5, 10, 20, 50, 100, 200]}
+              showSizeChanger={true}
+              total={pagination?.total}
+              onChange={(page, pageSize) => {
+                setPageSize(pageSize);
+                setPage(page);
+                setFetchAgain(true);
+              }}
+              itemRender={itemRender}
+            />
+            {/* <div className="tw-flex tw-gap-5 tw-self-end">
               <ul className="pagination  ">
                 <li
                   className={
@@ -333,7 +367,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                   <option value="20">20</option>
                 </select>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="table-responsive tw-min-h-[40vh]">
             <table className="table  table-bordered table-hover align-middle table-row-dashed fs-6  dataTable table-striped ">

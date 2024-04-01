@@ -1,4 +1,10 @@
-import { useCallback, useState, useMemo } from "react";
+import {
+  useCallback,
+  useState,
+  useMemo,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { PublicAxios, PrivateAxios } from "../service/AxiosInstance";
 import { IData, IErrorData, IPagination } from "../types/axios.type";
@@ -13,6 +19,8 @@ type FetchDataResponse<T> = {
   fetchDataById: (
     url: string
   ) => Promise<AxiosResponse<IData<T>, unknown> | undefined>;
+  setPage: Dispatch<SetStateAction<number>>;
+  setPageSize: Dispatch<SetStateAction<number>>;
 };
 
 // Define the hook
@@ -35,6 +43,8 @@ function useFetch<T>(
   const [data, setData] = useState<T | undefined>();
   const [isloading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -42,7 +52,9 @@ function useFetch<T>(
     let response: AxiosResponse<IData<T>>;
     try {
       if (isRequestPrivate === true) {
-        response = await PrivateAxios.get(url);
+        response = await PrivateAxios.get(
+          url + `?page=${page}&page_size=${pageSize}`
+        );
       } else {
         response = await PublicAxios.get(url);
       }
@@ -103,7 +115,16 @@ function useFetch<T>(
     [isRequestPrivate, paginationConst]
   );
 
-  return { fetchData, data, isloading, error, pagination, fetchDataById };
+  return {
+    fetchData,
+    data,
+    isloading,
+    error,
+    pagination,
+    fetchDataById,
+    setPage,
+    setPageSize,
+  };
 }
 
 export default useFetch;

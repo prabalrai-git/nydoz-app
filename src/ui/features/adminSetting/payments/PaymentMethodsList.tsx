@@ -16,6 +16,9 @@ import { Tag } from "antd";
 
 const PaymentList = () => {
   const navigate = useNavigate();
+  const [tableData, setTableData] = useState<DynamicFormPayload[] | undefined>(
+    undefined
+  );
 
   const { companyInfo } = useAuthContext();
 
@@ -30,7 +33,22 @@ const PaymentList = () => {
 
   const companyId = companyInfo?.id;
 
-  const { data, fetchData } = useFetch<DynamicFormPayload[]>(getListUrl, true);
+  const { data, fetchData, setPage, setPageSize, pagination } = useFetch<
+    DynamicFormPayload[]
+  >(getListUrl, true);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     if (tableData?.length > 0) {
+  //       setTableData((prev) => {
+  //         [...prev, ...data];
+  //       });
+  //     } else {
+  //       setTableData(data);
+  //     }
+  //     console.log(data, "new data", tableData);
+  //   }
+  // }, [data, tableData]);
 
   useEffect(() => {
     fetchData();
@@ -170,7 +188,14 @@ const PaymentList = () => {
         </div> */}
       {data && (
         <div className="tw-p-6 tw-px-8">
-          <TanStackTable columns={tableColumns} data={data} />
+          <TanStackTable
+            columns={tableColumns}
+            data={data}
+            setPage={setPage}
+            setPageSize={setPageSize}
+            setFetchAgain={setFetchAgain}
+            pagination={pagination}
+          />
         </div>
       )}
       <DynamicForm
