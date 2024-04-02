@@ -1,11 +1,6 @@
 import { TAction, IState } from "./types";
 
 const authReducer = (state: IState, action: TAction): IState => {
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("rememberMe");
-  };
-
   switch (action.type) {
     case "LOGIN":
       return {
@@ -42,16 +37,14 @@ const authReducer = (state: IState, action: TAction): IState => {
         isCompanyOwner: action.payload.isCompanyOwner,
       };
     case "LOGOUT":
-      handleLogout();
-
       return {
         ...state,
         isLoggedIn: false,
         userInfo: undefined,
+        companyInfo: undefined,
         token: null,
         isAdmin: false,
         isCompanyOwner: false,
-        companyInfo: undefined,
         subdomain: undefined,
         userCompanyAndItsProducts: undefined,
       };

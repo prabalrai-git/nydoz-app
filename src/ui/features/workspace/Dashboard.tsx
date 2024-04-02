@@ -3,18 +3,15 @@ import useRemoveSubdomain from "../../../hooks/useRemoveSubdomain";
 import CompanyListCard from "../../shared/components/company/CompanyList";
 // import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
 import UserCompanyAndProducts from "../../shared/layouts/Header/navbar/products/UserCompanyAndProducts";
-import useAuthContext from "../../../context/auth/useAuthContext";
 import FooterLayout from "../../shared/layouts/Footer/Footer";
 import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
 
 const Dashboard = () => {
-  const shouldRender = useRemoveSubdomain();
+  // const shouldRender = useRemoveSubdomain();
 
-  if (!shouldRender) {
-    return <Spinner size="sm" animation="border" role="status"></Spinner>; // or any other fallback UI
-  }
-
-  const { ...auth } = useAuthContext();
+  // if (!shouldRender) {
+  //   return <Spinner size="sm" animation="border" role="status"></Spinner>; // or any other fallback UI
+  // }
 
   return (
     <>

@@ -127,32 +127,42 @@ const CrmRoutes: RouteObject[] = [
         path: "edit",
         element: <AddEnrollment />,
       },
+
       {
         path: "view/:institueId",
-        element: <View />,
+        element: <Outlet />,
         children: [
           {
-            path: "openings",
-            element: <Outlet />,
-            children: [
-              {
-                path: "view",
-                element: <EnrollmentOpeningsList />,
-              },
-              {
-                path: "list",
-                element: <EnrollmentOpeningsList />,
-              },
-              {
-                path: "add",
-                element: <AddEnrollmentOpenings />,
-              },
-              {
-                path: "edit",
-                element: <AddEnrollmentOpenings />,
-              },
-            ],
+            path: "add-enrollments-openings",
+            element: <AddEnrollmentOpenings />,
           },
+          {
+            path: "details",
+            element: <View />,
+          },
+          // {
+          //   path: "openings",
+          //   element: <Outlet />,
+          //   children: [
+          //     {
+          //       path: "view",
+          //       element: <EnrollmentOpeningsList />,
+          //     },
+
+          //     {
+          //       path: "list",
+          //       element: <EnrollmentOpeningsList />,
+          //     },
+          //     {
+          //       path: "add",
+          //       element: <AddEnrollmentOpenings />,
+          //     },
+          //     {
+          //       path: "edit",
+          //       element: <AddEnrollmentOpenings />,
+          //     },
+          //   ],
+          // },
         ],
       },
     ],

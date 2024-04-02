@@ -47,6 +47,7 @@ const LoginPage = () => {
 
   const onFormSubmit = handleSubmit(async (data: FormData) => {
     const response = await postData(data);
+    console.log(response);
     if (response?.data?.status === "ok") {
       const user = response?.data?.payload?.user;
       const token = response?.data?.payload?.token;
@@ -85,7 +86,7 @@ const LoginPage = () => {
                 <div className="col-12 text-center mb-6">
                   <Link to={"/"}>
                     <img
-                      className="mb-2"
+                      className="mb-2 -tw-ml-1 "
                       src={CompanyLogo}
                       alt="Company Logo"
                     />

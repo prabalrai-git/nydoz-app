@@ -12,18 +12,18 @@ import Images from "../../../../../constants/Images";
 import AllPublicProductsDropdown from "./products/AllPublicProductsDropdown";
 import { RiLockPasswordFill, RiLogoutBoxRLine } from "react-icons/ri";
 import { BsBuildingAdd } from "react-icons/bs";
-import APP_SETTING from "../../../../../config/AppSetting";
 
 const Navbar = () => {
   const productRef = useRef(null);
   const { isLoggedIn, dispatch } = useAuthContext();
-  const navigate = useNavigate();
+
   useOnClickOutside(productRef, () => setShowProducts(false));
   const [showProducts, setShowProducts] = useState<boolean>(false);
 
   const logoutFn = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("rememberMe");
     dispatch({ type: "LOGOUT" });
-    window.location.replace(APP_SETTING.LOGIN_URL);
   };
 
   return (

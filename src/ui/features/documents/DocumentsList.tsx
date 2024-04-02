@@ -250,6 +250,8 @@ const DocumentList = () => {
     setOpenAddDocument(true);
   };
 
+  console.log(pagination, "pagination");
+
   return (
     <div>
       <section>

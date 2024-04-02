@@ -4,10 +4,7 @@ import { Navigate, useLocation, Outlet } from "react-router-dom";
 import API_ROUTE from "../../../service/api";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import useFetch from "../../../hooks/useFetch";
-
-import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
 import { IUserCompanyProductsResponse } from "../../../types/payload.type";
-import FooterLayout from "../../shared/layouts/Footer/Footer";
 
 const ProtectedUserLayout: React.FC = () => {
   const { isLoggedIn, token } = useAuthContext();

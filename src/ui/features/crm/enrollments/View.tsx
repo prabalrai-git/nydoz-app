@@ -61,6 +61,7 @@ const View = () => {
         showBreadcrumb={true}
         btnText="Back"
       />
+
       <section>
         {!data ? (
           <div className="flex-center w-100">

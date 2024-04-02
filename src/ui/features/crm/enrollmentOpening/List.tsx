@@ -203,7 +203,7 @@ const List = () => {
           <h3 className="card-title">Institution's Openings List</h3>
           <div className="card-toolbar">
             <Link
-              to="../add"
+              to="../add-enrollments-openings"
               className="btn tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover btn-sm "
             >
               <span className="mx-2 tw-text-white">Add Openings</span>

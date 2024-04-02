@@ -113,7 +113,7 @@ const DynamicForm = (props: IModalProps) => {
         data as DynamicFormResponse
       );
       if (response?.status === 200) {
-        toast.success("User updated successfully");
+        toast.success("Payment Method updated successfully");
         reset();
         setFetchAgain(true);
         handleClose();
@@ -142,6 +142,8 @@ const DynamicForm = (props: IModalProps) => {
         });
         if (response?.status === 201) {
           toast.success("Payment Method Added Successfully");
+          setFetchAgain(true);
+          handleClose();
         }
       } catch (error) {}
     }

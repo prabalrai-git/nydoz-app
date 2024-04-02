@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
-import useFetch from "../../../../hooks/useFetch";
 import { ICompanyResponse } from "../../../../types/payload.type";
 import ImageAtom from "../../atoms/ImageAtom";
 import { Link } from "react-router-dom";
 import DynamicLink from "../../molecules/DynamicLink";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import useFetchWithoutPagination from "../../../../hooks/useFetchWithoutPagination";
 
 const CompanyListCard = () => {
-  const { data, fetchData, isloading } = useFetch<ICompanyResponse[]>(
-    API_ROUTE.GET_COMPANIES,
-    true
-  );
+  const { data, fetchData, isloading } = useFetchWithoutPagination<
+    ICompanyResponse[]
+  >(API_ROUTE.GET_COMPANIES, true);
 
   useEffect(() => {
     fetchData();
@@ -47,32 +46,28 @@ const CompanyListCard = () => {
               subdomain={item.subdomain}
               pathName={`company/dashboard`}
               // pathName={`dashboard`}
-              className="d-flex flex-stack mb-3 cursor-pointer tw-bg-gray-100 tw-py-4 tw-px-4  hover:tw-shadow-md"
+              className="d-flex flex-stack mb-3 cursor-pointer tw-bg-gray-100 tw-py-4 tw-px-4  hover:tw-shadow-md tw-rounded-lg"
             >
               <div className="symbol symbol-40px me-4">
                 <ImageAtom
                   src={item.logo}
-                  className="h-40px w-40px"
+                  className="h-50px w-50px"
                   alt={item.name}
                 />
               </div>
 
               <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                <div className="flex-grow-1 me-2 tw-flex tw-flex-col">
-                  <a className="text-gray-800 text-hover-primary fs-6 fw-bold tw-uppercase">
+                <div className="flex-grow-1 me-2 tw-flex tw-flex-col ">
+                  <a className="text-gray-800   fw-bold tw-uppercase ">
                     {item.name.length > 15
                       ? item.name.slice(0, 15) + "..."
                       : item.name}
                   </a>
-                  {/* <a
-                    href={item.website}
-                    target="_blank"
-                    className="  hover:tw-text-btnPrimary tw-text-gray-500  tw-pb-3 "
-                  >
+                  <p className="  tw-text-gray-500  ">
                     {item.website.length > 35
                       ? item.website.slice(0, 35) + "..."
                       : item.website}
-                  </a> */}
+                  </p>
                 </div>
 
                 <div className="btn btn-sm btn-icon  w-30px h-30px tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover">

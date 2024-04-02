@@ -39,14 +39,14 @@ const List = () => {
 
   const handleView = useCallback(
     (id: string) => {
-      navigate(`../view/${id}`);
+      navigate(`../view/${id}/details`);
     },
     [navigate]
   );
 
   const handleOpening = useCallback(
     (id: string) => {
-      navigate(`../view/${id}/openings/add`);
+      navigate(`../view/${id}/add-enrollments-openings`);
     },
     [navigate]
   );

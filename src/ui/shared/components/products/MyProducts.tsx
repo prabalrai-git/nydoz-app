@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import useFetch from "../../../../hooks/useFetch";
 import API_ROUTE from "../../../../service/api";
 import { IProductResponse } from "../../../../types/payload.type";
 import { toast } from "react-toastify";
@@ -9,6 +8,7 @@ import LoadingPage from "../../../features/utils/LoadingPage";
 import ClientMgmtImage from "../../../../assets/products/clienthub.png";
 import InvestMgmtImage from "../../../../assets/products/investmentmanagement.png";
 import { Badge } from "antd";
+import useFetchWithoutPagination from "../../../../hooks/useFetchWithoutPagination";
 
 interface IProps {
   partialPath: string;
@@ -21,10 +21,9 @@ const MyProductList = (props: IProps) => {
   const companyId = companyInfo?.id;
   const proudctListUrl = `${API_ROUTE.GET_COMPANIES}/${companyId}/products`;
 
-  const { data, fetchData, isloading } = useFetch<IProductResponse[]>(
-    proudctListUrl,
-    true
-  );
+  const { data, fetchData, isloading } = useFetchWithoutPagination<
+    IProductResponse[]
+  >(proudctListUrl, true);
 
   useEffect(() => {
     if (companyId) {
