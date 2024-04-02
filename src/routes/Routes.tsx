@@ -9,14 +9,14 @@ import AuthRoutes from "./auth";
 import PageNotFound from "../ui/features/utils/PageNotFound";
 import WorkspaceLayout from "../ui/features/workspace/WorkspaceLayout";
 import WorkspaceRoutes from "./workspace.route";
-import loadable from "@loadable/component";
+// import loadable from "@loadable/component";
 // company
 // import CompanyLayout from "../ui/features/company/Layout";
 // import CompanyRoutes from "./Company";
 
-const WorkSpaceDashboard = loadable(
-  () => import("../ui/features/workspace/Dashboard")
-);
+// const WorkSpaceDashboard = loadable(
+//   () => import("../ui/features/workspace/Dashboard")
+// );
 
 const MainRouter = createBrowserRouter([
   {

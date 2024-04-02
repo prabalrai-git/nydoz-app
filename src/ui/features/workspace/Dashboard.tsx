@@ -1,5 +1,5 @@
-import { Spinner } from "react-bootstrap";
-import useRemoveSubdomain from "../../../hooks/useRemoveSubdomain";
+// import { Spinner } from "react-bootstrap";
+// import useRemoveSubdomain from "../../../hooks/useRemoveSubdomain";
 import CompanyListCard from "../../shared/components/company/CompanyList";
 // import AuthCompanyProduct from "../../shared/components/user/AuthCompanyProduct";
 import UserCompanyAndProducts from "../../shared/layouts/Header/navbar/products/UserCompanyAndProducts";

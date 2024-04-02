@@ -24,6 +24,8 @@ const CompanyLayout = (props: IProps) => {
   );
   useHandleShowError(error);
 
+  console.log(userInfo, "userInfo");
+
   const fetchCompanyInfo = useCallback(async () => {
     try {
       setShowSplashScreen(true);
