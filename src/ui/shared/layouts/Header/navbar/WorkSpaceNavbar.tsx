@@ -12,6 +12,7 @@ import Images from "../../../../../constants/Images";
 import AllPublicProductsDropdown from "./products/AllPublicProductsDropdown";
 import { RiLockPasswordFill, RiLogoutBoxRLine } from "react-icons/ri";
 import { BsBuildingAdd } from "react-icons/bs";
+import APP_SETTING from "../../../../../config/AppSetting";
 
 const Navbar = () => {
   const productRef = useRef(null);
@@ -65,14 +66,17 @@ const Navbar = () => {
           <div className="right-container tw-absolute tw-right-3 -tw-bottom-2 ">
             {isLoggedIn ? (
               <>
-                <LinkContainer className="cursor-pointer me-2" to="/">
+                <a
+                  className="cursor-pointer me-2"
+                  href={APP_SETTING.APP_BASE_URL}
+                >
                   <div className="tw-flex tw-flex-row tw-items-center  ">
                     <p className="me-3">
                       <BuildingAdd size={16} color="#1e40d6" />
                     </p>
                     <p className="tw-self-end">Workspace</p>
                   </div>
-                </LinkContainer>
+                </a>
 
                 <NavDropdown title="My Account" id="nav-dropdown">
                   <NavDropdown.Item>
