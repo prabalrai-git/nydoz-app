@@ -85,7 +85,7 @@ export interface IVisitorPayloadNoForeign {
 export interface IVisitorResponse {
   id: string;
   registration_date: string;
-  information_channel: string;
+  information_channel?: string;
   first_name: string;
   last_name: string;
   country: string;

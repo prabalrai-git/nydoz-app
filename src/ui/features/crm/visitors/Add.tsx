@@ -34,6 +34,7 @@ import {
   IVisitingPurposeResponse,
   IAgentResponse,
 } from "../../../../types/products.types";
+import { Switch } from "antd";
 
 interface IFormData {
   registration_date: string;
@@ -83,6 +84,46 @@ const AddVisitor = () => {
     true
   );
 
+  //   {
+  //     "registration_date": "2024-04-03 00:00:00",
+  //     "information_channel": "Information Channel 1",
+  //     "visiting_purpose": "Business",
+  //     "first_name": "New",
+  //     "last_name": "Client",
+  //     "country": "Nepal",
+  //     "state": "Bagmati",
+  //     "street_address": "Kathmandu, Nepal",
+  //     "phone_nos": [
+  //         "98342342342"
+  //     ],
+  //     "email": [
+  //         "prabalrai19@gmail.com"
+  //     ],
+  //     "agent_id": "9bb57d76-6cbc-4015-bdf1-c487fbc84e45",
+  //     "going_to_foreign": false,
+  //     "remarks": "Description"
+  // }
+
+  // {
+  //   "registration_date": "2024-04-03 00:00:00",
+  //   "information_channel": "Information Channel 1",
+  //   "visiting_purpose": "Information Channel 1",
+  //   "first_name": "Vistor",
+  //   "last_name": "1",
+  //   "country": "Nepal",
+  //   "state": "Bagmati",
+  //   "street_address": "Kathmandu, Nepal",
+  //   "phone_nos": [
+  //       " 9834234234d"
+  //   ],
+  //   "email": [
+  //       "visitor@gmail.com"
+  //   ],
+  //   "agent_id": "9bb7fddf-2ece-4bc9-b930-d3a4d09a102c",
+  //   "going_to_foreign": false,
+  //   "remarks": "Test"
+  // }
+
   const {
     register,
     reset,
@@ -103,6 +144,8 @@ const AddVisitor = () => {
       goingForeign ? visitorsGoingOutSchema : visitorsNotGoingOutSchema
     ),
   });
+
+  // console.log(selectInformationChannel, "selectInformtion Channel");
 
   useEffect(() => {
     if (selectCommonVisitingPurpose) {
@@ -140,6 +183,9 @@ const AddVisitor = () => {
 
   const handleResetForm = useCallback(() => {
     const dataDetails: IVisitorResponse = location?.state?.data;
+
+    setGoingForeign(dataDetails.going_to_foreign);
+
     const country = getSelectPropsFromCountry(dataDetails?.country);
     const visitingCountry = getSelectPropsFromCountry(
       dataDetails?.visiting_country
@@ -154,12 +200,22 @@ const AddVisitor = () => {
     setSelectedCountry(country);
     setSelectedVisitingCountry(visitingCountry);
     setSelectedVisaType(dataDetails?.visa_type_id);
+    setSelectedAgent(dataDetails?.agent);
     reset({
       ...dataDetails,
       registration_date: registrationDateObj,
       expected_take_off_date: expectedTakeUpDateObj,
       visiting_purpose: dataDetails?.visiting_purpose,
     });
+    // console.log(
+    //   {
+    //     ...dataDetails,
+    //     registration_date: registrationDateObj,
+    //     expected_take_off_date: expectedTakeUpDateObj,
+    //     visiting_purpose: dataDetails?.visiting_purpose,
+    //   },
+    //   "world hello"
+    // );
   }, [location?.state?.data, reset]);
 
   useEffect(() => {
@@ -178,7 +234,7 @@ const AddVisitor = () => {
       toast.error("Please select country");
       return;
     }
-
+    // return console.log(data, "this is tahe data");
     // if (!selectInformationChannel) {
     //     toast.error("Please select information channel");
     //     return;
@@ -214,13 +270,24 @@ const AddVisitor = () => {
           going_to_foreign: goingForeign,
           visiting_country: selectedVisitingCountry?.value ?? "",
           agent_id: selectedAgent?.id ?? "",
+          information_channel: selectInformationChannel
+            ? selectInformationChannel.description
+            : location?.state?.data?.information_channel,
+          visiting_purpose: selectInformationChannel
+            ? selectInformationChannel.description
+            : location?.state?.data?.visiting_purpose,
         };
       } else {
         updatePayload = {
           registration_date: moment(data.registration_date).format(
             "YYYY-MM-DD HH:mm:ss"
           ),
-          information_channel: data.information_channel,
+          information_channel: selectInformationChannel
+            ? selectInformationChannel.description
+            : location?.state?.data?.information_channel,
+          visiting_purpose: selectInformationChannel
+            ? selectInformationChannel.description
+            : location?.state?.data?.visiting_purpose,
           first_name: data.first_name,
           last_name: data.last_name,
           country: selectedCountry?.value ?? "",
@@ -234,6 +301,12 @@ const AddVisitor = () => {
           remarks: data.remarks,
         };
       }
+
+      // return console.log(
+      //   updatePayload,
+      //   selectedAgent,
+      //   "this is updated payload"
+      // );
 
       response = await updateData(location?.state?.data?.id, updatePayload);
       if (response?.data?.status === "ok") {
@@ -258,18 +331,21 @@ const AddVisitor = () => {
           going_to_foreign: goingForeign,
           visiting_country: selectedVisitingCountry?.value ?? "",
           agent_id: selectedAgent?.id ?? "",
+          information_channel: selectInformationChannel?.description,
+          visiting_purpose: selectInformationChannel?.description,
         };
       } else {
         payload = {
           registration_date: moment(data.registration_date).format(
             "YYYY-MM-DD HH:mm:ss"
           ),
-          information_channel: data.information_channel,
+          information_channel: selectInformationChannel?.description,
+          visiting_purpose: selectInformationChannel?.description,
           first_name: data.first_name,
           last_name: data.last_name,
           country: selectedCountry?.value ?? "",
           state: data.state,
-          visiting_purpose: data.visiting_purpose,
+          // visiting_purpose: data.visiting_purpose,
           street_address: data.street_address,
           phone_nos: data.phone_nos,
           email: data.email,
@@ -319,15 +395,27 @@ const AddVisitor = () => {
                   <div className="col-12 col-md-6 gap-5 gap-md-7 mb-6 d-flex align-items-center ">
                     <div className="fv-row flex-row-fluid fv-plugins-icon-container ">
                       <div className="form-check form-switch form-check-custom form-check-solid ">
-                        <input
-                          value="true"
+                        {/* <input
+                          value={goingForeign}
                           onChange={(e) => {
+                            console.log(e.target);
                             setGoingForeign(e.target.checked);
                           }}
                           type="checkbox"
                           className="form-check-input cursor-pointer"
+                        /> */}
+                        {/* <Switch
+                          checked={goingForeign}
+                          onChange={(e) => setGoingForeign(e)}
+                        /> */}
+                        <Switch
+                          style={{
+                            backgroundColor: goingForeign ? "#1778ff" : "gray",
+                          }}
+                          value={goingForeign}
+                          onChange={(e) => setGoingForeign(e)}
                         />
-                        <label className="form-check-label">
+                        <label className="form-check-label tw-text-black tw-font-semibold">
                           Going for Foreign
                         </label>
                       </div>
@@ -349,7 +437,7 @@ const AddVisitor = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-6 gap-5 gap-md-7 mb-6">
+                  {/* <div className="col-6 gap-5 gap-md-7 mb-6">
                     <div className="fv-row flex-row-fluid fv-plugins-icon-container">
                       <label className="required form-label">
                         Information Channel:
@@ -357,13 +445,14 @@ const AddVisitor = () => {
                       <input
                         className="form-control"
                         placeholder="Enter your visiting purpose."
+                        // value={location?.state?.data?.id?location?.state?.data?.info}
                         {...register("information_channel")}
                       />
                       <div className="fv-plugins-message-container invalid-feedback">
                         {errors.information_channel?.message}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-6 gap-5 gap-md-7 mb-6">
                     <div className="fv-row flex-row-fluid fv-plugins-icon-container">
                       <label className="required form-label">
@@ -373,7 +462,16 @@ const AddVisitor = () => {
                         placeholder="Search.."
                         baseUrl={API_ROUTE.CM_INFORMATION_CHANNEL}
                         setSelectValue={setSelectInformationChannel}
-                        selectValue={selectInformationChannel}
+                        selectValue={
+                          location?.state?.data
+                            ? {
+                                id: "",
+                                description:
+                                  location?.state?.data?.information_channel,
+                                company_id: "",
+                              }
+                            : selectInformationChannel
+                        }
                         dataId={"id" as never}
                         showDataLabel={"description" as never}
                       />
@@ -388,7 +486,12 @@ const AddVisitor = () => {
                         placeholder="Search.."
                         baseUrl={API_ROUTE.CM_AGENTS}
                         setSelectValue={setSelectedAgent}
-                        selectValue={selectedAgent}
+                        // selectValue={selectedAgent}
+                        selectValue={
+                          location?.state?.data
+                            ? location?.state?.data.agent
+                            : selectedAgent
+                        }
                         dataId={"id" as never}
                         showDataLabel={"first_name" as never}
                       />
@@ -558,7 +661,7 @@ const AddVisitor = () => {
                       />
                     </div>
                   </div>
-                  <div className="col-6 gap-5 gap-md-7 mb-6">
+                  {/* <div className="col-6 gap-5 gap-md-7 mb-6">
                     <div className="fv-row flex-row-fluid fv-plugins-icon-container">
                       <label className="required form-label">
                         Visiting Purpose
@@ -572,18 +675,28 @@ const AddVisitor = () => {
                         {errors.visiting_purpose?.message}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-6 gap-5 gap-md-7 mb-6">
                     <div className="fv-row flex-row-fluid fv-plugins-icon-container">
                       <label className="required form-label">
-                        Common Visiting Purpose:
+                        Visiting Purpose:
                       </label>
                       <AsyncReactSelect
                         placeholder="Search.."
                         baseUrl={API_ROUTE.CM_VISITING_PURPOSES}
                         setSelectValue={setSelectCommonVisitingPurpose}
-                        selectValue={selectCommonVisitingPurpose}
-                        dataId="id"
+                        // selectValue={selectCommonVisitingPurpose}
+                        selectValue={
+                          location?.state?.data
+                            ? {
+                                id: "",
+                                description:
+                                  location?.state?.data?.visiting_purpose,
+                                company_id: "",
+                              }
+                            : selectCommonVisitingPurpose
+                        }
+                        Id="id"
                         showDataLabel="description"
                       />
                     </div>

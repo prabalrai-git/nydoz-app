@@ -247,21 +247,19 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
                 Reset
               </span>
               {searchParamsArray.map((item: string, index: number) => (
-                <>
-                  <input
-                    key={index}
-                    onChange={(e) =>
-                      setSearchState({
-                        ...searchState,
-                        [item]: e.target.value,
-                      })
-                    }
-                    value={searchState[item] ?? ""}
-                    type="text"
-                    className="form-control form-control-sm  "
-                    placeholder={capitalizeText(item.replace(/_/g, " "))}
-                  />
-                </>
+                <input
+                  key={index}
+                  onChange={(e) =>
+                    setSearchState({
+                      ...searchState,
+                      [item]: e.target.value,
+                    })
+                  }
+                  value={searchState[item] ?? ""}
+                  type="text"
+                  className="form-control form-control-sm  "
+                  placeholder={capitalizeText(item.replace(/_/g, " "))}
+                />
               ))}
               <span
                 onClick={handleSearch}
