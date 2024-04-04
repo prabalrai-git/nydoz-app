@@ -58,13 +58,13 @@ const Layout = () => {
       icon: <IoShareSocialSharp size={18} className=" tw-self-center" />,
       children: <SocialLinkList />,
     },
-    {
-      id: 6,
-      title: "Status",
-      link: "statuses/list",
-      icon: <TbStatusChange size={18} className=" tw-self-center" />,
-      children: <StatusList />,
-    },
+    // {
+    //   id: 6,
+    //   title: "Status",
+    //   link: "statuses/list",
+    //   icon: <TbStatusChange size={18} className=" tw-self-center" />,
+    //   children: <StatusList />,
+    // },
     {
       id: 7,
       title: "Payment Methods",

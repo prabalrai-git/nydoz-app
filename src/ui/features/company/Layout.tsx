@@ -187,7 +187,7 @@ const CompanyLayout = () => {
       }));
 
   return (
-    <div className="tw-relative">
+    <div className=" tw-relative">
       <Layout hasSider>
         <Sider
           breakpoint="lg"
@@ -249,7 +249,7 @@ const CompanyLayout = () => {
               <GoSidebarCollapse size={30} color="white" />
             </div>
           )}
-          <div>
+          <div className="tw-bg-gradient-to-r tw-to-appSideBar tw-from-white tw-px-0">
             <Header>
               <WorkSpaceNavbar />
             </Header>

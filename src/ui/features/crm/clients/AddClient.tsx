@@ -106,6 +106,8 @@ const AddClient = () => {
     resolver: yupResolver(clientSchema),
   });
 
+  console.log(selectedVistor, "selectedVisitor");
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "phone_nos" as never,
@@ -128,28 +130,32 @@ const AddClient = () => {
     const visitingCountry = getSelectPropsFromCountry(
       dataDetails?.visiting_country
     );
-    const registrationDateObj = moment(
-      dataDetails.registration_date,
-      "YYYY-MM-DD HH:mm:ss"
-    );
-    const expectedTakeUpDateObj = moment(
-      dataDetails.expected_take_off_date,
-      "YYYY-MM-DD HH:mm:ss"
-    );
+    // const salaryCurrency = getSelectPropsFromCountry(
+    //   dataDetails?.salary_currency_code
+    // );
+
+    const registrationDateObj = moment(dataDetails.registration_date)
+      .format()
+      .split("T")[0];
+    const expectedTakeUpDateObj = moment(dataDetails.expected_take_off_date)
+      .format()
+      .split("T")[0];
 
     setSelectedCountry(country);
     setSelectedVisitingCountry(visitingCountry);
-    setSelectedVisaType(dataDetails?.visa_type_id);
-    setSelectedAgent(dataDetails?.agent_id);
+    // setSelectedVisaType(dataDetails?.visa_type_id);
+    setSelectedVisaType(dataDetails?.visa_type);
+
+    setSelectedAgent(dataDetails?.agent);
     setSelectedVistor(dataDetails?.visitor_id);
     // setSelectCurrencyCode(dataDetails?.salary_currency_code);
-    setSelectEnrollmentInstitute(dataDetails?.enrollment_institute_id);
-    setSelectEnrollmentOpening(dataDetails?.enrollment_opening_id);
+    setSelectEnrollmentInstitute(dataDetails?.enrollment_institute);
+    setSelectEnrollmentOpening(dataDetails?.enrollment_opening);
 
     reset({
       ...dataDetails,
-      registration_date: registrationDateObj.toDate(),
-      expected_take_off_date: expectedTakeUpDateObj.toDate(),
+      registration_date: registrationDateObj,
+      expected_take_off_date: expectedTakeUpDateObj,
     });
   }, [location?.state?.data, reset]);
 
@@ -165,6 +171,7 @@ const AddClient = () => {
   };
 
   const onFormSubmit = handleSubmit(async (data: IFormData) => {
+    // return console.log(data, "hey data");
     if (!selectedCountry) {
       toast.error("Please select country");
       return;
@@ -285,6 +292,11 @@ const AddClient = () => {
                         baseUrl={API_ROUTE.CM_VISITORS}
                         setSelectValue={setSelectedVistor}
                         selectValue={selectedVistor}
+                        selectValue={
+                          location?.state?.data
+                            ? location?.state?.data.visitor_id
+                            : selectedVistor
+                        }
                         dataId={"id" as never}
                         showDataLabel={firstName as never}
                       />
@@ -299,7 +311,12 @@ const AddClient = () => {
                         placeholder="Search.."
                         baseUrl={API_ROUTE.CM_AGENTS}
                         setSelectValue={setSelectedAgent}
-                        selectValue={selectedAgent}
+                        // selectValue={selectedAgent}
+                        selectValue={
+                          location?.state?.data
+                            ? location?.state?.data.agent
+                            : selectedAgent
+                        }
                         dataId={"id" as never}
                         showDataLabel={firstName as never}
                       />
@@ -482,9 +499,14 @@ const AddClient = () => {
                         placeholder="Search for visa type."
                         baseUrl={API_ROUTE.GET_VISA_TYPES}
                         setSelectValue={setSelectedVisaType}
-                        selectValue={selectedVisaType}
+                        // selectValue={selectedVisaType}
+                        selectValue={
+                          location?.state?.data
+                            ? location?.state?.data.visa_type
+                            : selectedVisaType
+                        }
                         dataId="id"
-                        showDataLabel="description"
+                        showDataLabel="name"
                       />
                     </div>
                   </div>
@@ -606,7 +628,12 @@ const AddClient = () => {
                         placeholder="Search.."
                         baseUrl={API_ROUTE.CM_ENROLLMENT}
                         setSelectValue={setSelectEnrollmentInstitute}
-                        selectValue={selectedEnrollmentInstitute}
+                        // selectValue={selectedEnrollmentInstitute}
+                        selectValue={
+                          location?.state?.data
+                            ? location?.state?.data.enrollment_institute
+                            : selectedEnrollmentInstitute
+                        }
                         dataId={"id" as never}
                         showDataLabel={"name" as never}
                       />
@@ -644,7 +671,12 @@ const AddClient = () => {
                           placeholder="Search.."
                           baseUrl={`${API_ROUTE.CM_ENROLLMENT_OPENINGS}?enroll_institute_id=${selectedEnrollmentInstitute}`}
                           setSelectValue={setSelectEnrollmentOpening}
-                          selectValue={selectedEnrollmentOpening}
+                          // selectValue={selectedEnrollmentOpening}
+                          selectValue={
+                            location?.state?.data
+                              ? location?.state?.data.enrollment_opening
+                              : selectedEnrollmentOpening
+                          }
                           dataId={"id" as never}
                           showDataLabel={"position" as never}
                         />

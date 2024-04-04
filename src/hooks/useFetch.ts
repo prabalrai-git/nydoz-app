@@ -52,9 +52,14 @@ function useFetch<T>(
     let response: AxiosResponse<IData<T>>;
     try {
       if (isRequestPrivate === true) {
-        response = await PrivateAxios.get(
-          url + `?page=${page}&page_size=${pageSize}`
-        );
+        if (url.includes("?")) {
+          response = await PrivateAxios.get(url);
+          console.log("hit alone");
+        } else {
+          response = await PrivateAxios.get(
+            url + `?page=${page}&page_size=${pageSize}`
+          );
+        }
       } else {
         response = await PublicAxios.get(url);
       }

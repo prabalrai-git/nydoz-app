@@ -99,10 +99,10 @@ const Add = () => {
         description: data?.description ?? "",
       };
 
-      if (oldThumbnil) {
-        tempPostData.logo = oldThumbnil;
-      } else {
+      if (thumbnilImg) {
         tempPostData.logo = thumbnilImg?.[0] ?? "";
+      } else if (oldThumbnil) {
+        tempPostData.logo = oldThumbnil;
       }
 
       response = await updateData(location?.state?.data?.id, tempPostData);

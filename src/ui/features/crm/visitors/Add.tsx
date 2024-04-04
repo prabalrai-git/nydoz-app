@@ -199,8 +199,10 @@ const AddVisitor = () => {
 
     setSelectedCountry(country);
     setSelectedVisitingCountry(visitingCountry);
-    setSelectedVisaType(dataDetails?.visa_type_id);
+    // setSelectedVisaType(dataDetails?.visa_type_id);
     setSelectedAgent(dataDetails?.agent);
+    setSelectedVisaType(dataDetails?.visa_type);
+
     reset({
       ...dataDetails,
       registration_date: registrationDateObj,
@@ -304,7 +306,7 @@ const AddVisitor = () => {
 
       // return console.log(
       //   updatePayload,
-      //   selectedAgent,
+      //   // selectedAgent,
       //   "this is updated payload"
       // );
 
@@ -332,7 +334,7 @@ const AddVisitor = () => {
           visiting_country: selectedVisitingCountry?.value ?? "",
           agent_id: selectedAgent?.id ?? "",
           information_channel: selectInformationChannel?.description,
-          visiting_purpose: selectInformationChannel?.description,
+          visiting_purpose: selectCommonVisitingPurpose?.description,
         };
       } else {
         payload = {
@@ -340,7 +342,7 @@ const AddVisitor = () => {
             "YYYY-MM-DD HH:mm:ss"
           ),
           information_channel: selectInformationChannel?.description,
-          visiting_purpose: selectInformationChannel?.description,
+          visiting_purpose: selectCommonVisitingPurpose?.description,
           first_name: data.first_name,
           last_name: data.last_name,
           country: selectedCountry?.value ?? "",
@@ -354,6 +356,7 @@ const AddVisitor = () => {
           remarks: data.remarks,
         };
       }
+
       response = await postData(payload);
       if (response?.data?.status === "ok") {
         toast.success("Visitor Added  Successfully");
@@ -745,9 +748,18 @@ const AddVisitor = () => {
                           placeholder="Search.."
                           baseUrl={API_ROUTE.GET_VISA_TYPES}
                           setSelectValue={setSelectedVisaType}
-                          selectValue={selectedVisaType}
+                          // selectValue={{
+                          //   id: "9bb58211-cf13-4ddc-82f2-9bf6ca277ae0",
+                          //   description: "",
+                          //   name: "Travel",
+                          // }}
+                          selectValue={
+                            location?.state?.data
+                              ? location?.state?.data.visa_type
+                              : selectedVisaType
+                          }
                           dataId="id"
-                          showDataLabel="description"
+                          showDataLabel="name"
                         />
                       </div>
                     </div>

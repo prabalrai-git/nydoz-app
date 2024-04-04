@@ -63,6 +63,7 @@ const AddCompany = () => {
       setOldThumbnil(location?.state?.data?.profile_picture);
 
       const country = getSelectPropsFromCountry(location?.state?.data?.country);
+
       setSelectedCountry(country);
     }
   }, [location?.state?.data, reset]);
@@ -81,16 +82,15 @@ const AddCompany = () => {
         country: selectedCountry?.value ?? "",
         profile_picture: "",
       };
-
-      if (oldThumbnil) {
-        tempPostData.profile_picture = oldThumbnil;
-      } else {
+      if (thumbnilImg) {
         tempPostData.profile_picture = thumbnilImg?.[0] ?? "";
+      } else if (oldThumbnil) {
+        tempPostData.profile_picture = oldThumbnil;
       }
 
       response = await updateData(location?.state?.data?.id, tempPostData);
       if (response?.data?.status === "ok") {
-        toast.success("Company updated Successfully");
+        toast.success("Agent updated Successfully");
         navigate("home");
       }
     } else {

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useEffect } from "react";
 import API_ROUTE from "../../../../service/api";
 import {
   IVisitorResponse,
@@ -29,6 +29,19 @@ const VisitorList = () => {
     },
     [navigate]
   );
+
+  // useEffect(() => {
+  //   fetch(
+  //     "http://newcompany.localhost/api/v1/client-management/visitors?page=1&page_size=10&last_name=2",
+  //     {
+  //       headers: {
+  //         Authorization: "Bearer 44|IBXyCrnvhbMhk3gMH9vxsoMGtmXj8Tk9YZXFS3aF",
+  //       },
+  //     }
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data, "this is the data form the response"));
+  // }, []);
 
   const tableColumns: ColumnDef<IVisitorResponse>[] = useMemo(
     () => [

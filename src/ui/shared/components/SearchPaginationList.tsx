@@ -160,6 +160,7 @@ function SearchPaginationList<T>(props: ISearchPaginationListProps<T>) {
       page: (1).toString(),
     });
     const newUrl = `${baseUrl}?${searchParams.toString()}`;
+    // return console.log(newUrl, "newUrl");
     setFetchUrl(newUrl);
     setFetchAgain(true);
   };

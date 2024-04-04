@@ -25,7 +25,7 @@ const CompanyBreadcrumb = (props: IBreadcrumbProps) => {
                 <li key={index} className="breadcrumb-item text-muted">
                   <div
                     // to={`/${path}`}
-                    className="text-muted text-hover-primary"
+                    className="tw-text-gray-600 text-hover-primary"
                   >
                     {capitalizeText(path)}
                   </div>
