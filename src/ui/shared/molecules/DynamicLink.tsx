@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import APP_SETTING from "../../../config/AppSetting";
 import { Link } from "react-router-dom";
 import useWebSetting from "../../../context/useWebSetting";
+import useAuthContext from "../../../context/auth/useAuthContext";
 
 interface Iprops {
   subdomain: string;
@@ -16,6 +17,14 @@ const DynamicLink = (props: Iprops) => {
   const { hasSubdomain, domainBase, protocol } = useWebSetting();
 
   // const clientManagement = `http://localhost:5173/workspace/mozilla/products/client-management/dashboard`;
+
+  const { isLoggedIn, token } = useAuthContext();
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("token", token);
+    }
+  }, [token]);
 
   return (
     <>

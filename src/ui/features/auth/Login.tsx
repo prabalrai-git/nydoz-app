@@ -172,7 +172,7 @@ const LoginPage = () => {
                         ></Spinner>
                       </>
                     ) : (
-                      <span>Submit</span>
+                      <span>Login</span>
                     )}
                   </Button>
                 </div>

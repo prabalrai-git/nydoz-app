@@ -249,7 +249,7 @@ const CompanyLayout = () => {
               <GoSidebarCollapse size={30} color="white" />
             </div>
           )}
-          <div className="tw-bg-gradient-to-r tw-to-appSideBar tw-from-white tw-px-0">
+          <div>
             <Header>
               <WorkSpaceNavbar />
             </Header>

@@ -5,8 +5,24 @@ import CompanyListCard from "../../shared/components/company/CompanyList";
 import UserCompanyAndProducts from "../../shared/layouts/Header/navbar/products/UserCompanyAndProducts";
 import FooterLayout from "../../shared/layouts/Footer/Footer";
 import WorkSpaceNavbar from "../../shared/layouts/Header/navbar/WorkSpaceNavbar";
+import { CrossStorageHub, CrossStorageClient } from "cross-storage";
+import { useEffect } from "react";
 
 const Dashboard = () => {
+  const sudomainArrays = [
+    "http://hello.localhost:5173/",
+    "http://subdomain.localhost:5173/",
+  ];
+
+  useEffect(() => {
+    CrossStorageHub.init([
+      { origin: /\.example.com$/, allow: ["get"] },
+      { origin: /:\/\/(www\.)?example.com$/, allow: ["get", "set", "del"] },
+    ]);
+    sudomainArrays.forEach((item) => {
+      return new CrossStorageClient(item);
+    });
+  }, []);
   // const shouldRender = useRemoveSubdomain();
 
   // if (!shouldRender) {

@@ -274,7 +274,7 @@ const Register = () => {
                           ></Spinner>
                         </>
                       ) : (
-                        <span>Submit</span>
+                        <span>Sign Up</span>
                       )}
                     </Button>
                   </div>
