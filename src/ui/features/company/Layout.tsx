@@ -29,6 +29,7 @@ import { Link } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
 import { TbReportMoney } from "react-icons/tb";
 import { GoSidebarCollapse } from "react-icons/go";
+import { CrossStorageClient } from "cross-storage";
 
 const { Header, Content, Sider } = Layout;
 const CompanyLayout = () => {

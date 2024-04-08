@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 const CompanyDashboard = () => {
   const { companyInfo, isCompanyOwner } = useAuthContext();
 
+  // const sudomainArrays = ["http://localhost:5174/"];
+
   return (
     <div>
       <CompanyBreadcrumb
