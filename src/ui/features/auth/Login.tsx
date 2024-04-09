@@ -47,7 +47,6 @@ const LoginPage = () => {
 
   const onFormSubmit = handleSubmit(async (data: FormData) => {
     const response = await postData(data);
-    console.log(response);
     if (response?.data?.status === "ok") {
       const user = response?.data?.payload?.user;
       const token = response?.data?.payload?.token;
@@ -57,6 +56,10 @@ const LoginPage = () => {
       localStorage.setItem("rememberMe", rememberMe.toString());
       if (rememberMe) {
         localStorage.setItem("token", token);
+
+        // setTimeout(() => {
+        //   window.close();
+        // }, 100);
       } else {
         sessionStorage.setItem("token", token);
       }
@@ -73,7 +76,6 @@ const LoginPage = () => {
       navigate("/", { replace: true });
     }
   });
-
   // const onFormSubmit = () => {};
 
   return (

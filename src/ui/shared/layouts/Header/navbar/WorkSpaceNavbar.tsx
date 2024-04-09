@@ -24,6 +24,7 @@ const Navbar = () => {
   const logoutFn = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("rememberMe");
+    localStorage.removeItem("sharedLocalStorage");
     dispatch({ type: "LOGOUT" });
   };
 

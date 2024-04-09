@@ -32,11 +32,7 @@ const productRoutes: RouteObject[] = [
     children: [
       {
         path: "dashboard",
-        element: (
-          <h1 className="tw-text-3xl tw-text-center">
-            K herya? yesko Kaam bhako chaina!!!
-          </h1>
-        ),
+        element: <h1 className="tw-text-3xl tw-text-center">WIP </h1>,
       },
     ],
   },
