@@ -47,20 +47,25 @@ const Dashboard = () => {
 
   const { token, companyInfo } = useAuthContext();
 
-  console.log(localStorage.getItem("sharedLocalStorage"));
-
   useEffect(() => {
     if (token && companySubdomains) {
-      companySubdomains.forEach((item) => {
-        const newWindow = window.open(
-          `http://${item}.localhost:5174/setToken.html?token=${token}`
-        );
+      // setTimeout(() => {
+      //   window.close();
+      // }, 500);
+
+      // setTimeout(() => {
+      //   window.open(
+      //     `http://newcompany.localhost:5174/setToken.html?token=${token}`
+      //   );
+      // }, 1000);
+      companySubdomains.forEach((subdomain) => {
+        setTimeout(() => {
+          window.open(
+            `http://${subdomain}.localhost:5174/setToken.html?token=${token}`
+          );
+        }, 500);
 
         // newWindow?.close();
-
-        setTimeout(function () {
-          newWindow.close();
-        }, 50);
       });
       localStorage.setItem("sharedLocalStorage", "true");
     }

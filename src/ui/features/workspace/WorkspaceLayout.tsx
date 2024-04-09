@@ -20,6 +20,11 @@ const ProtectedUserLayout: React.FC = () => {
     fetchDataById(API_ROUTE.GET_USER_COMPANY_AND_PRODUCTS);
   }, [fetchDataById]);
 
+  // console.log(
+  //   document.getElementById("storageIframe")?.contentDocument?.getStorage(),
+  //   "new log"
+  // );
+
   return (
     <div>
       <div>
