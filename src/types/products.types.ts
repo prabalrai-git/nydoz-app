@@ -204,6 +204,7 @@ export interface IClientResponse {
   phone_nos: string[];
   email: string[];
   visitor_id: IVisitorResponse | undefined;
+  visitor: IVisitorResponse | undefined;
   remarks: string;
   street_address: string | undefined;
   state: string;

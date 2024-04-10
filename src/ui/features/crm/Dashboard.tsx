@@ -115,7 +115,7 @@ const Dashboard = () => {
   );
   const ClientTransaction = () => {
     return (
-      <section className="tw-mt-10">
+      <section className="tw-mt-2">
         <div className="card">
           <div className="card-header">
             <h3 className="card-title"> Recent Transactions</h3>
@@ -162,14 +162,14 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="card card-custom">
+          <div className="card card-custom ">
             {/* <div className="card-header">
             <h3 className="card-title">Dashboard</h3>
             <div className="card-toolbar"></div>
           </div> */}
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4  -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appBlue tw-flex tw-justify-center tw-items-center tw-px-4 tw-rounded-lg ">
-                <MdAttachMoney size={25} color="white" />
+                <MdAttachMoney size={20} color="white" />
               </div>
               <Statistic title="Total Earnings" value={112893} />
             </div>
@@ -179,9 +179,9 @@ const Dashboard = () => {
             <h3 className="card-title">Dashboard</h3>
             <div className="card-toolbar"></div>
           </div> */}
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appBrown tw-flex tw-justify-center tw-items-center tw-px-4 tw-rounded-lg ">
-                <HiOutlineReceiptRefund size={25} color="white" />
+                <HiOutlineReceiptRefund size={20} color="white" />
               </div>
               <Statistic title="Total Refunds" value={112893} />
             </div>
@@ -191,43 +191,43 @@ const Dashboard = () => {
             <h3 className="card-title">Dashboard</h3>
             <div className="card-toolbar"></div>
           </div> */}
-            <div className="card-body card-body tw-flex tw-gap-4">
+            <div className="card-body card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appRed tw-flex tw-justify-center tw-items-center tw-px-4 tw-rounded-lg ">
-                <MdOutlinePayments size={25} color="white" />
+                <MdOutlinePayments size={20} color="white" />
               </div>
               <Statistic title="Total Payable Amount" value={112893} />
             </div>
           </div>
         </div>
-        <div className="tw-grid tw-grid-cols-4 tw-gap-7 xsm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
+        <div className="tw-grid tw-grid-cols-4 tw-gap-8 tw-mt-2 xsm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
           <div className="card card-custom">
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appLightGreen tw-flex tw-justify-center tw-items-center tw-px-5 tw-rounded-lg tw-text-btnPrimary ">
-                <GoArrowUp size={25} />
+                <GoArrowUp size={20} />
               </div>
               <Statistic title="Total Sales" value={112893} />
             </div>
           </div>
           <div className="card card-custom">
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appLightGreen tw-flex tw-justify-center tw-items-center tw-px-5 tw-rounded-lg tw-text-btnPrimary ">
-                <GoArrowUp size={25} />
+                <GoArrowUp size={20} />
               </div>
               <Statistic title="Total Sales" value={112893} />
             </div>
           </div>
           <div className="card card-custom">
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appLightGreen tw-flex tw-justify-center tw-items-center tw-px-5 tw-rounded-lg tw-text-btnPrimary ">
-                <GoArrowUp size={25} />
+                <GoArrowUp size={20} />
               </div>
               <Statistic title="Total Sales" value={112893} />
             </div>
           </div>
           <div className="card card-custom">
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appLightGreen tw-flex tw-justify-center tw-items-center tw-px-5 tw-rounded-lg tw-text-btnPrimary ">
-                <GoArrowUp size={25} />
+                <GoArrowUp size={20} />
               </div>
               <Statistic title="Total Sales" value={112893} />
             </div>
@@ -235,39 +235,39 @@ const Dashboard = () => {
         </div>
         <div className="tw-grid tw-grid-cols-4 tw-gap-7 xsm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
           <div className="card card-custom">
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appLightRed tw-flex tw-justify-center tw-items-center tw-px-5 tw-rounded-lg tw-text-appRed ">
-                <GoArrowDown size={25} />
+                <GoArrowDown size={20} />
               </div>
               <Statistic title="Total Sales" value={112893} />
             </div>
           </div>
           <div className="card card-custom">
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appLightRed tw-flex tw-justify-center tw-items-center tw-px-5 tw-rounded-lg tw-text-appRed ">
-                <GoArrowDown size={25} />
+                <GoArrowDown size={20} />
               </div>
               <Statistic title="Total Sales" value={112893} />
             </div>
           </div>
           <div className="card card-custom">
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appLightRed tw-flex tw-justify-center tw-items-center tw-px-5 tw-rounded-lg tw-text-appRed ">
-                <GoArrowDown size={25} />
+                <GoArrowDown size={20} />
               </div>
               <Statistic title="Total Sales" value={112893} />
             </div>
           </div>
           <div className="card card-custom">
-            <div className="card-body tw-flex tw-gap-4">
+            <div className="card-body tw-flex tw-gap-4 -tw-mt-4 -tw-mb-4 ">
               <div className="tw-bg-appLightRed tw-flex tw-justify-center tw-items-center tw-px-5 tw-rounded-lg tw-text-appRed ">
-                <GoArrowDown size={25} />
+                <GoArrowDown size={20} />
               </div>
               <Statistic title="Total Sales" value={112893} />
             </div>
           </div>
         </div>
-        <div className="card card-custom">
+        <div className="card card-custom tw-mt-3">
           <ClientTransaction />
         </div>
       </section>

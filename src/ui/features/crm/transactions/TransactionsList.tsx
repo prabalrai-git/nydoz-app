@@ -18,7 +18,7 @@ const TransactionList = () => {
 
   const handleEditData = useCallback(
     (item: ITransactionResponse) => {
-      navigate("edit", {
+      navigate("../edit", {
         state: { data: item },
       });
     },

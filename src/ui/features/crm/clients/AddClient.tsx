@@ -147,7 +147,7 @@ const AddClient = () => {
     setSelectedVisaType(dataDetails?.visa_type);
 
     setSelectedAgent(dataDetails?.agent);
-    setSelectedVistor(dataDetails?.visitor_id);
+    setSelectedVistor(dataDetails?.visitor);
     // setSelectCurrencyCode(dataDetails?.salary_currency_code);
     setSelectEnrollmentInstitute(dataDetails?.enrollment_institute);
     setSelectEnrollmentOpening(dataDetails?.enrollment_opening);
@@ -294,7 +294,7 @@ const AddClient = () => {
                         selectValue={selectedVistor}
                         selectValue={
                           location?.state?.data
-                            ? location?.state?.data.visitor_id
+                            ? location?.state?.data.visitor
                             : selectedVistor
                         }
                         dataId={"id" as never}

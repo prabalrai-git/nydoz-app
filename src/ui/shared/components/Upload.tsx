@@ -43,7 +43,10 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
     isRoutePrivate
   );
 
+  // console.log(fileInfo, "this is file info");
+
   useEffect(() => {
+    // setFileInfo(fileInfo);
     if (error) {
       toast.error(error);
       setFileInfo(undefined);
@@ -125,6 +128,7 @@ const UploadFile: React.FC<IUploadProps> = (props: IUploadProps) => {
           type="file"
           id="formFile"
         />
+
         <InputGroup.Text id="basic-addon2">
           {isLoading && (
             <Spinner

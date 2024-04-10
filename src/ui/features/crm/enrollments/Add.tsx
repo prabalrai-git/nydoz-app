@@ -104,7 +104,7 @@ const Add = () => {
       } else if (oldThumbnil) {
         tempPostData.logo = oldThumbnil;
       }
-
+      // return console.log(tempPostData);
       response = await updateData(location?.state?.data?.id, tempPostData);
       if (response?.data?.status === "ok") {
         toast.success("Institute updated Successfully");

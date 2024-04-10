@@ -177,6 +177,7 @@ const CrmRoutes: RouteObject[] = [
         element: <h1>view single transaction</h1>,
       },
       { path: "add", element: <AddTransaction /> },
+      { path: "edit", element: <AddTransaction /> },
     ],
   },
   {

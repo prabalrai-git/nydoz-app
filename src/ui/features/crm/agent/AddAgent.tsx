@@ -82,7 +82,7 @@ const AddCompany = () => {
         country: selectedCountry?.value ?? "",
         profile_picture: "",
       };
-      if (thumbnilImg) {
+      if (thumbnilImg?.[0]) {
         tempPostData.profile_picture = thumbnilImg?.[0] ?? "";
       } else if (oldThumbnil) {
         tempPostData.profile_picture = oldThumbnil;
@@ -91,7 +91,7 @@ const AddCompany = () => {
       response = await updateData(location?.state?.data?.id, tempPostData);
       if (response?.data?.status === "ok") {
         toast.success("Agent updated Successfully");
-        navigate("home");
+        navigate(-1);
       }
     } else {
       // if (thumbnilImg?.length === 0) {
@@ -160,8 +160,8 @@ const AddCompany = () => {
                                         alt='Company"s logo'
                                       />
                                     ) : (
-                                      <p className="text center text-muted">
-                                        No Company logo found.
+                                      <p className="text center text-muted tw-text-base tw-text-center tw-mt-6">
+                                        Profile image not found!
                                       </p>
                                     )}
                                   </div>
