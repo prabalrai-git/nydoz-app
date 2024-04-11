@@ -295,7 +295,7 @@ const AddClient = () => {
                         placeholder="Search.."
                         baseUrl={API_ROUTE.CM_VISITORS}
                         setSelectValue={setSelectedVistor}
-                        selectValue={selectedVistor}
+                        // selectValue={selectedVistor}
                         selectValue={
                           location?.state?.data
                             ? location?.state?.data.visitor
