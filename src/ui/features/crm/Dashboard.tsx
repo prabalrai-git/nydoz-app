@@ -118,7 +118,7 @@ const Dashboard = () => {
       <section className="tw-mt-2">
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title"> Recent Transactions</h3>
+            <h3 className="card-title">Recent Transactions</h3>
           </div>
           <div className="card-body  ">
             {data && (
@@ -132,7 +132,7 @@ const Dashboard = () => {
     );
   };
   return (
-    <div>
+    <div className="tw-mx-3">
       <CompanyBreadcrumb
         title="Client Management Dashboard"
         // btnText="Back"
@@ -156,8 +156,11 @@ const Dashboard = () => {
                     clicking the button below.
                   </p> */}
                 </div>
-                <button className="tw-self-start tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover tw-text-white tw-p-4 tw-px-8 tw-font-semibold tw-rounded-lg">
-                  Create client
+                <button
+                  onClick={() => navigate("../clients/add")}
+                  className="tw-self-start tw-bg-btnPrimary hover:tw-bg-btnPrimaryHover tw-text-white tw-p-4 tw-px-8 tw-font-semibold tw-rounded-lg"
+                >
+                  Create A New Client
                 </button>
               </div>
             </div>

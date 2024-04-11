@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
-import { GoPersonFill } from "react-icons/go";
-import { FaPhoneAlt } from "react-icons/fa";
+import { GoEye, GoPersonFill } from "react-icons/go";
+import { FaPhoneAlt, FaRegEdit } from "react-icons/fa";
 import { RiFlagFill } from "react-icons/ri";
 import { Image, Space } from "antd";
 import { GrView } from "react-icons/gr";
@@ -173,18 +173,18 @@ const AgentList2 = () => {
               title="Action"
             >
               <Dropdown.Item>
-                <div className="menu-link">
-                  <span className="mx-2">View</span>
-                  <i className="bi bi-box-arrow-up-right text-primary "></i>
+                <div className="tw-flex tw-gap-2 tw-font-bold tw-items-center ">
+                  <GoEye color={"green"} size={15} />
+                  <p>View</p>
                 </div>
               </Dropdown.Item>
               <Dropdown.Item>
                 <div
                   onClick={() => handleEditData(info?.row?.original)}
-                  className="menu-link"
+                  className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
                 >
-                  <span className="mx-2">Edit</span>
-                  <i className="bi bi-pencil-square text-info"></i>
+                  <FaRegEdit color="blue" size={15} />
+                  <p>Edit</p>
                 </div>
               </Dropdown.Item>
             </DropdownButton>

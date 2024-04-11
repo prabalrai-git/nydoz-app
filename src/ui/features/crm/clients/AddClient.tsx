@@ -6,7 +6,6 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Spinner } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-
 import { clientSchema } from "../../../../validations/crm.validators";
 import CountryCode from "../../../shared/atoms/CountryCode";
 import { ISelectProps } from "../../../../types/react-select.type";
@@ -32,6 +31,7 @@ import {
   IEnrollmentResponse,
 } from "../../../../types/products.types";
 import AsyncReactSelect from "../../../shared/molecules/AsyncReactSelect";
+import { currency_code } from "../../../../constants/CurrencyCode";
 
 interface IFormData {
   registration_date: Date;
@@ -106,8 +106,6 @@ const AddClient = () => {
     resolver: yupResolver(clientSchema),
   });
 
-  console.log(selectedVistor, "selectedVisitor");
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: "phone_nos" as never,
@@ -157,6 +155,13 @@ const AddClient = () => {
       registration_date: registrationDateObj,
       expected_take_off_date: expectedTakeUpDateObj,
     });
+    const salary_currency_code = currency_code?.filter((item) => {
+      return item.code === location?.state?.data?.salary_currency_code;
+    });
+
+    if (salary_currency_code) {
+      setSelectCurrencyCode(salary_currency_code[0]);
+    }
   }, [location?.state?.data, reset]);
 
   useEffect(() => {
@@ -236,7 +241,6 @@ const AddClient = () => {
       }
     }
   });
-
   return (
     <div>
       <CompanyBreadcrumb

@@ -8,7 +8,7 @@ import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { GoPersonFill } from "react-icons/go";
-import { FaEdit, FaPhoneAlt } from "react-icons/fa";
+import { FaEdit, FaPhoneAlt, FaRegEdit } from "react-icons/fa";
 import { BsPersonFillCheck } from "react-icons/bs";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
@@ -178,7 +178,8 @@ const TransactionList = () => {
                   title="Edit"
                   className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
                 >
-                  <FaEdit color="blue" size={15} />
+                  <FaRegEdit color="blue" size={15} />
+
                   <p>Edit</p>
                 </button>
               </Dropdown.Item>

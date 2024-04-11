@@ -137,6 +137,10 @@ const CrmRoutes: RouteObject[] = [
             element: <AddEnrollmentOpenings />,
           },
           {
+            path: "edit-enrollments-openings",
+            element: <AddEnrollmentOpenings />,
+          },
+          {
             path: "details",
             element: <View />,
           },

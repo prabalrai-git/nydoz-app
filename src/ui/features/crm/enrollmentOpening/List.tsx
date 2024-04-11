@@ -12,8 +12,7 @@ import moment from "moment";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import useMutation from "../../../../hooks/useMutation";
 import { GoEye } from "react-icons/go";
-import { FaEdit } from "react-icons/fa";
-import { RiDeleteBin5Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const List = () => {
@@ -27,7 +26,7 @@ const List = () => {
   const { deleteData } = useMutation(API_ROUTE.CM_ENROLLMENT_OPENINGS, true);
   const handleEditData = useCallback(
     (item: IEnrollmentOpeningsResponse) => {
-      navigate("../edit", {
+      navigate("../edit-enrollments-openings", {
         state: { data: item },
       });
     },
@@ -156,7 +155,7 @@ const List = () => {
                   title="view"
                   className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
                 >
-                  <GoEye color={"green"} size={18} />
+                  <GoEye color={"green"} size={15} />
                   <p>View</p>
                 </div>
               </Dropdown.Item>
@@ -167,11 +166,11 @@ const List = () => {
                   title="Edit"
                   className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
                 >
-                  <FaEdit color="blue" size={16} />
+                  <FaRegEdit color="blue" size={15} />
                   <p>Edit</p>{" "}
                 </div>
               </Dropdown.Item>
-              <Dropdown.Item
+              {/* <Dropdown.Item
                 onClick={() => {
                   navigate(
                     `../transactions/add?client_id=${info?.row?.original?.id}`
@@ -186,7 +185,7 @@ const List = () => {
                   <RiDeleteBin5Line color="red" size={17} />
                   <p>Add Transaction</p>
                 </div>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
             </DropdownButton>
           </div>
         ),

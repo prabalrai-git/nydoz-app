@@ -5,6 +5,8 @@ import AdminLayout from "../ui/features/adminSetting/Layout";
 import productSettingRoutes from "./productSetting";
 import ProfileLayout from "../ui/features/company/ProfileLayout";
 import AdminRoutes from "./AdminSetting";
+import AddCompany from "../ui/features/company/AddCompany";
+import EditProfile from "../ui/features/company/EditProfile";
 
 // routes
 
@@ -24,6 +26,10 @@ const CompanyRoutes: RouteObject[] = [
   {
     path: "profile/:id",
     element: <ProfileLayout />,
+  },
+  {
+    path: "edit-profile/:id",
+    element: <EditProfile />,
   },
   {
     path: "products",

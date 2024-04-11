@@ -8,11 +8,11 @@ import BASE_URL from "../../../../constants/AppSetting";
 
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
-import { RiFlagFill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
+import { RiAddBoxLine, RiFlagFill } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import { BiSolidAddToQueue } from "react-icons/bi";
+
 import { Image, Space } from "antd";
 import { GrView } from "react-icons/gr";
 import {
@@ -23,6 +23,7 @@ import {
   ZoomInOutlined,
   ZoomOutOutlined,
 } from "@ant-design/icons";
+import { MdOutlineAddToPhotos } from "react-icons/md";
 
 const List = () => {
   const navigate = useNavigate();
@@ -214,7 +215,7 @@ const List = () => {
                   className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
                 >
                   {/* <i className="bi bi-box-arrow-up-right "></i> */}
-                  <GoEye color={"green"} size={18} />
+                  <GoEye color={"green"} size={15} />
                   <p>View</p>
                 </button>
               </Dropdown.Item>
@@ -226,7 +227,7 @@ const List = () => {
                   className="tw-flex tw-justify-between tw-gap-2 tw-font-bold"
                 >
                   {/* <i className="bi bi-pencil-square "></i> */}
-                  <FaEdit size={16} color="blue" />
+                  <FaRegEdit color="blue" size={15} />
                   <p>Edit</p>
                 </button>
               </Dropdown.Item>
@@ -242,9 +243,9 @@ const List = () => {
                 </button> */}
                 <button
                   title="view"
-                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold tw-items-center "
                 >
-                  <BiSolidAddToQueue color={"#3da7eb"} size={18} />
+                  <MdOutlineAddToPhotos color={"#3da7eb"} size={15} />
 
                   <p> Add Openings</p>
                 </button>

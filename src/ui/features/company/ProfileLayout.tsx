@@ -30,7 +30,7 @@ const ProfileLayout = () => {
   }, []);
 
   const handleEditCompany = () => {
-    navigate(`/company/edit`, { state: { data } });
+    navigate(`../edit-profile/${data?.id}`, { state: { data } });
   };
 
   return (

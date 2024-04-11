@@ -10,11 +10,12 @@ import { Link } from "react-router-dom";
 import CompanyBreadcrumb from "../../../shared/molecules/CompanyBreadcrumb";
 import SearchPaginationList from "../../../shared/components/SearchPaginationList";
 import { GoEye, GoPersonFill } from "react-icons/go";
-import { FaEdit, FaPhoneAlt } from "react-icons/fa";
+import { FaEdit, FaPhoneAlt, FaRegEdit } from "react-icons/fa";
 import { RiFlagFill, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BsPersonFillCheck } from "react-icons/bs";
 import { Tag } from "antd";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import { GrTransaction } from "react-icons/gr";
 
 const ClientList = () => {
   const navigate = useNavigate();
@@ -189,7 +190,7 @@ const ClientList = () => {
                   title="view"
                   className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
                 >
-                  <GoEye color={"green"} size={18} />
+                  <GoEye color={"green"} size={15} />
                   <p>View</p>
                 </button>
               </Dropdown.Item>
@@ -200,7 +201,7 @@ const ClientList = () => {
                   title="Edit"
                   className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
                 >
-                  <FaEdit color="blue" size={16} />
+                  <FaRegEdit color="blue" size={15} />
                   <p>Edit</p>
                 </button>
               </Dropdown.Item>
@@ -215,7 +216,8 @@ const ClientList = () => {
                   title="Add Transaction"
                   className="tw-flex tw-gap-2 tw-items-center tw-font-bold"
                 >
-                  <RiMoneyDollarCircleLine color="brown" size={18} />
+                  {/* <RiMoneyDollarCircleLine  /> */}
+                  <GrTransaction color="brown" size={15} />
                   <p>Add Transaction</p>
                 </button>
               </Dropdown.Item>

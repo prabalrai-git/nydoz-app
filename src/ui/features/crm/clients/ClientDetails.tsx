@@ -10,14 +10,14 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { GoPersonFill } from "react-icons/go";
 import { AirplaneFill } from "react-bootstrap-icons";
-import { FaEdit, FaPhoneAlt } from "react-icons/fa";
+import { FaEdit, FaPhoneAlt, FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line, RiFlagFill } from "react-icons/ri";
 import { BsPersonFillCheck } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
 
 import useFetch from "../../../../hooks/useFetch";
 import { GrMoney } from "react-icons/gr";
-import { Spinner } from "react-bootstrap";
+import { Dropdown, DropdownButton, Spinner } from "react-bootstrap";
 import { INavPill } from "../../../../types/app.types";
 import { SiGoogledocs } from "react-icons/si";
 import ClientsDocuments from "./ClientsDocuments";
@@ -114,7 +114,7 @@ const ClientDetails = () => {
   const navigate = useNavigate();
   const handleEditData = useCallback(
     (item: ITransactionResponse) => {
-      navigate("edit", {
+      navigate("../../transactions/edit", {
         state: { data: item },
       });
     },
@@ -282,37 +282,40 @@ const ClientDetails = () => {
             <span>Actions</span>
           </div>
         ),
-        cell: () => (
+        cell: (info) => (
           <div className="tw-flex tw-justify-center">
-            <div className="d-flex justify-content-center">
-              {/* <button
-                            title='view'
-                            onClick={() => handleView(info?.row?.original?.id)}
-                            className='btn btn-sm btn-icon btn-primary mx-3'>
-                            <i className='bi bi-box-arrow-up-right '></i>
-                        </button> */}
-              <button
+            <DropdownButton
+              variant="secondary"
+              size="sm"
+              id="dropdown-basic-button"
+              title="Action"
+            >
+              <Dropdown.Item
+                onClick={() => handleEditData(info?.row?.original)}
+              >
+                {/* <button
                 title="Edit"
-                onClick={() => {}}
-                className="btn tw-bg-appBlue hover:tw-bg-appBlueHover btn-sm  btn-icon  mx-3"
+                onClick={() => handleEditData(info?.row?.original)}
+                className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
               >
-                <FaEdit color="white" size={15} />
-              </button>
-            </div>
-            <div className="d-flex justify-content-center">
-              {/* <button
-                            title='view'
-                            onClick={() => handleView(info?.row?.original?.id)}
-                            className='btn btn-sm btn-icon btn-primary mx-3'>
-                            <i className='bi bi-box-arrow-up-right '></i>
-                        </button> */}
-              <button
-                onClick={() => window.alert("will delete later")}
-                className="btn btn-sm btn-icon  tw-bg-red-500 hover:tw-bg-red-700"
-              >
-                <RiDeleteBin5Line color="white" size={15} />
-              </button>
-            </div>
+                <FaRegEdit color="blue" size={15} />
+              </button> */}
+                <button
+                  title="Edit"
+                  className="tw-flex tw-justify-between tw-gap-2 tw-font-bold "
+                >
+                  <FaRegEdit color="blue" size={15} />
+
+                  <p>Edit</p>
+                </button>
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => window.alert("will delete later")}>
+                <button className="tw-flex tw-justify-between tw-gap-2 tw-font-bold">
+                  <RiDeleteBin5Line color="red" size={15} />
+                  <p>Delete</p>
+                </button>
+              </Dropdown.Item>
+            </DropdownButton>
           </div>
         ),
         footer: (info) => info.column.id,

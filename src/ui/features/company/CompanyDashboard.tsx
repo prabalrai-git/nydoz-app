@@ -2,6 +2,7 @@ import MyProductList from "../../shared/components/products/MyProducts";
 import useAuthContext from "../../../context/auth/useAuthContext";
 import CompanyBreadcrumb from "../../shared/molecules/CompanyBreadcrumb";
 import { Link } from "react-router-dom";
+import { HiShoppingBag } from "react-icons/hi";
 
 const CompanyDashboard = () => {
   const { companyInfo, isCompanyOwner } = useAuthContext();
@@ -27,9 +28,10 @@ const CompanyDashboard = () => {
               <Link
                 type="button"
                 to={`/company/product-settings/buy`}
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-primary tw-flex tw-gap-2 tw-items-center"
               >
-                PURCHASE PRODUCTS
+                <HiShoppingBag size={16} />
+                <p className="tw-mt-1">PURCHASE PRODUCTS</p>
               </Link>
             )}
           </div>
