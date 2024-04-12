@@ -36,6 +36,13 @@ const MainRouter = createBrowserRouter([
       {
         path: "auth",
         element: <AuthLayout />,
+        loader: () => {
+          localStorage.clear();
+
+          // location.reload();
+
+          return null;
+        },
         children: AuthRoutes,
       },
       {

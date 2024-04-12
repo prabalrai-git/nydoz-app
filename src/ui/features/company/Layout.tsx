@@ -29,7 +29,6 @@ import { Link } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
 import { TbReportMoney } from "react-icons/tb";
 import { GoSidebarCollapse } from "react-icons/go";
-import { CrossStorageClient } from "cross-storage";
 
 const { Header, Content, Sider } = Layout;
 const CompanyLayout = () => {
@@ -85,12 +84,20 @@ const CompanyLayout = () => {
   }, [companySubdomian, fetchDataById, dispatch, userInfo?.id]);
 
   useEffect(() => {
-    if (companySubdomian !== companyInfo?.subdomain) {
+    if (
+      companySubdomian !== companyInfo?.subdomain &&
+      localStorage.getItem("token")
+    ) {
       fetchCompanyInfo();
     } else {
       setShowSplashScreen(false);
     }
-  }, [fetchCompanyInfo, companySubdomian, companyInfo?.subdomain]);
+  }, [
+    fetchCompanyInfo,
+    companySubdomian,
+    companyInfo?.subdomain,
+    localStorage.getItem("token"),
+  ]);
 
   const sidebarMenu: ISidebarMenu[] = [
     {

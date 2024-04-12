@@ -24,8 +24,8 @@ const Navbar = () => {
   const logoutFn = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("rememberMe");
-    localStorage.removeItem("sharedLocalStorage");
     dispatch({ type: "LOGOUT" });
+    window.location.href = APP_SETTING.APP_BASE_URL + "/auth/login";
   };
 
   return (

@@ -15,7 +15,6 @@ const WorkspaceRoutes: RouteObject[] = [
   {
     id: "1",
     path: "",
-
     element: <WorkSpaceDashboard />,
   },
   {
@@ -38,6 +37,18 @@ const WorkspaceRoutes: RouteObject[] = [
     id: "5",
     path: "company",
     element: <CompanyLayout />,
+    loader: () => {
+      if (!localStorage.getItem("token")) {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        const tokenValue = searchParams.get("token");
+
+        localStorage.setItem("token", tokenValue);
+
+        location.reload();
+      }
+      return null;
+    },
     children: CompanyRoutes,
   },
 ];

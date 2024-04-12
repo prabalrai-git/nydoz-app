@@ -21,14 +21,17 @@ const ProductLayout = loadable(
 const CompanyRoutes: RouteObject[] = [
   {
     path: "dashboard",
-    loader: () => {
-      const searchParams = new URLSearchParams(window.location.search);
+    // loader: () => {
+    //   if (!localStorage.getItem("token")) {
+    //     const searchParams = new URLSearchParams(window.location.search);
 
-      const tokenValue = searchParams.get("token");
+    //     const tokenValue = searchParams.get("token");
 
-      localStorage.setItem("token", tokenValue);
-      return null;
-    },
+    //     localStorage.setItem("token", tokenValue);
+    //     loading = false;
+    //   }
+    //   return null;
+    // },
     element: <CompanyDashboard />,
     // element: <h1>hello</h1>,
   },
