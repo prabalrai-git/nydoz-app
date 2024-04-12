@@ -15,6 +15,7 @@ const WorkspaceRoutes: RouteObject[] = [
   {
     id: "1",
     path: "",
+
     element: <WorkSpaceDashboard />,
   },
   {

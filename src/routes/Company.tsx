@@ -21,7 +21,16 @@ const ProductLayout = loadable(
 const CompanyRoutes: RouteObject[] = [
   {
     path: "dashboard",
+    loader: () => {
+      const searchParams = new URLSearchParams(window.location.search);
+
+      const tokenValue = searchParams.get("token");
+
+      localStorage.setItem("token", tokenValue);
+      return null;
+    },
     element: <CompanyDashboard />,
+    // element: <h1>hello</h1>,
   },
   {
     path: "profile/:id",

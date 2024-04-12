@@ -10,6 +10,7 @@ import useAuthContext from "../../../context/auth/useAuthContext";
 import API_ROUTE from "../../../service/api";
 import { ICompanyResponse } from "../../../types/payload.type";
 import useFetchWithoutPagination from "../../../hooks/useFetchWithoutPagination";
+import { useLoaderData } from "react-router-dom";
 
 const Dashboard = () => {
   // const shouldRender = useRemoveSubdomain();
@@ -18,58 +19,58 @@ const Dashboard = () => {
   //   return <Spinner size="sm" animation="border" role="status"></Spinner>; // or any other fallback UI
   // }
 
-  const [companySubdomains, setCompanySubdomains] = useState<string[]>([]);
-  const [sharedAlready, setSharedAlready] = useState(false);
+  // const [companySubdomains, setCompanySubdomains] = useState<string[]>([]);
+  // const [sharedAlready, setSharedAlready] = useState(false);
 
-  const { data, fetchData, isloading } = useFetchWithoutPagination<
-    ICompanyResponse[]
-  >(API_ROUTE.GET_COMPANIES, true);
+  // const { data, fetchData, isloading } = useFetchWithoutPagination<
+  //   ICompanyResponse[]
+  // >(API_ROUTE.GET_COMPANIES, true);
 
-  useEffect(() => {
-    fetchData();
-    const shared = localStorage.getItem("sharedLocalStorage");
-    setSharedAlready((prev) => {
-      return shared ? !prev : prev;
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    if (data) {
-      const uniqueSubdomains = new Set();
+  // useEffect(() => {
+  //   fetchData();
+  //   const shared = localStorage.getItem("sharedLocalStorage");
+  //   setSharedAlready((prev) => {
+  //     return shared ? !prev : prev;
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+  // useEffect(() => {
+  //   if (data) {
+  //     const uniqueSubdomains = new Set();
 
-      data.forEach((item) => {
-        uniqueSubdomains.add(item.subdomain);
-      });
+  //     data.forEach((item) => {
+  //       uniqueSubdomains.add(item.subdomain);
+  //     });
 
-      setCompanySubdomains([...uniqueSubdomains]); // Update state outside the loop
-    }
-  }, [data]);
+  //     setCompanySubdomains([...uniqueSubdomains]); // Update state outside the loop
+  //   }
+  // }, [data]);
 
-  const { token, companyInfo } = useAuthContext();
+  // const { token, companyInfo } = useAuthContext();
 
-  useEffect(() => {
-    if (token && companySubdomains) {
-      // setTimeout(() => {
-      //   window.close();
-      // }, 500);
+  // useEffect(() => {
+  //   if (token && companySubdomains) {
+  //     // setTimeout(() => {
+  //     //   window.close();
+  //     // }, 500);
 
-      // setTimeout(() => {
-      //   window.open(
-      //     `http://newcompany.localhost:5174/setToken.html?token=${token}`
-      //   );
-      // }, 1000);
-      companySubdomains.forEach((subdomain) => {
-        setTimeout(() => {
-          window.open(
-            `http://${subdomain}.localhost:5174/setToken.html?token=${token}`
-          );
-        }, 500);
+  //     // setTimeout(() => {
+  //     //   window.open(
+  //     //     `http://newcompany.localhost:5174/setToken.html?token=${token}`
+  //     //   );
+  //     // }, 1000);
+  //     companySubdomains.forEach((subdomain) => {
+  //       setTimeout(() => {
+  //         window.open(
+  //           `http://${subdomain}.localhost:5174/setToken.html?token=${token}`
+  //         );
+  //       }, 500);
 
-        // newWindow?.close();
-      });
-      localStorage.setItem("sharedLocalStorage", "true");
-    }
-  }, [token, companySubdomains, sharedAlready]);
+  //       // newWindow?.close();
+  //     });
+  //     localStorage.setItem("sharedLocalStorage", "true");
+  //   }
+  // }, [token, companySubdomains, sharedAlready]);
 
   return (
     <>

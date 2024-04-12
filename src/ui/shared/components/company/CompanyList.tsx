@@ -44,7 +44,9 @@ const CompanyListCard = () => {
             <DynamicLink
               key={item.id}
               subdomain={item.subdomain}
-              pathName={`company/dashboard`}
+              pathName={`company/dashboard?token=${localStorage.getItem(
+                "token"
+              )}`}
               // pathName={`dashboard`}
               className="d-flex flex-stack mb-3 cursor-pointer tw-bg-gray-100 tw-py-4 tw-px-4  hover:tw-shadow-md tw-rounded-lg"
             >
