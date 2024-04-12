@@ -29,6 +29,7 @@ import { Link } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
 import { TbReportMoney } from "react-icons/tb";
 import { GoSidebarCollapse } from "react-icons/go";
+import APP_SETTING from "../../../config/AppSetting";
 
 const { Header, Content, Sider } = Layout;
 const CompanyLayout = () => {
@@ -230,19 +231,21 @@ const CompanyLayout = () => {
             // className="tw-absolute tw-top-0"
             items={items}
           />
-          <Link
-            to={
-              window.location.href.includes("client-management")
-                ? "/company/products/dashboard"
-                : "/"
-            }
-            className=""
-          >
-            <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-evenly tw-py-2 tw-rounded-lg tw-text-btnPrimary tw-gap-5 hover:tw-shadow-md tw-w-11/12 tw-mx-auto">
-              <IoChevronBack size={20} />
-              <p className="    tw-font-bold tw-text-lg">{"Back"}</p>
-            </div>
-          </Link>
+          {window.location.href.includes("client-management") ? (
+            <Link to={"/company/products/dashboard"}>
+              <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-evenly tw-py-2 tw-rounded-lg tw-text-btnPrimary tw-gap-5 hover:tw-shadow-md tw-w-11/12 tw-mx-auto">
+                <IoChevronBack size={20} />
+                <p className="    tw-font-bold tw-text-lg">{"Back"}</p>
+              </div>
+            </Link>
+          ) : (
+            <a href={APP_SETTING.APP_BASE_URL} className="">
+              <div className="  tw-border-btnPrimary tw-border-[3px]   tw-mt-6 tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-justify-evenly tw-py-2 tw-rounded-lg tw-text-btnPrimary tw-gap-5 hover:tw-shadow-md tw-w-11/12 tw-mx-auto">
+                <IoChevronBack size={20} />
+                <p className="    tw-font-bold tw-text-lg">{"Back"}</p>
+              </div>
+            </a>
+          )}
         </Sider>
         <Layout>
           {true && (
