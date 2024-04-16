@@ -71,7 +71,7 @@ PrivateAxios.interceptors.request.use((config) => {
     ? `http://${subdomain}.${baseUrl.split("://")[1]}`
     : currentUrl;
 
-  if (currentUrl.split(".").length >= 2) {
+  if (currentUrl.split(".").length >= 2 && subdomain) {
     config.baseURL = finalUrl;
     return config;
   }
