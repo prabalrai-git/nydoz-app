@@ -58,42 +58,29 @@ PublicAxios.interceptors.request.use((config) => {
 
 PrivateAxios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-  const baseUrl = APP_SETTING.APP_BASE_URL; // Assuming the env variable name
-
-  const currentUrl = window.location.href;
+  const baseUrl = API_BASE_URL; // Assuming API_BASE_URL is the environment variable name
 
   // Extract subdomain from current URL (if any)
-  const currentUrlParts = currentUrl.split("//")[1].split("/");
+  const currentUrlParts = window.location.href.split("//")[1].split("/");
   const subdomain = currentUrlParts.length > 1 ? currentUrlParts[0] : "";
 
   // Construct final URL based on subdomain
   const finalUrl = subdomain
     ? `http://${subdomain}.${baseUrl.split("://")[1]}`
-    : currentUrl;
+    : baseUrl;
 
-  if (currentUrl.split(".").length >= 2 && subdomain) {
-    config.baseURL = finalUrl;
-    return config;
+  // Check if current URL matches base domain (excluding protocol)
+  const isBaseDomain = currentUrlParts[0] === baseUrl.split("://")[1];
+
+  // Set base URL based on conditions
+  if (subdomain && !isBaseDomain) {
+    // Subdomain present and not base domain
+    config.baseURL = baseUrl.replace("api", `${subdomain}.api`);
+  } else {
+    config.baseURL = finalUrl; // Use finalUrl or base URL depending on subdomain
   }
+
   config.headers["Authorization"] = `Bearer ${token}`;
-
-  // Check if current URL matches base domain (ignoring protocol)
-  if (
-    currentUrl.replace(/^https?:\/\/[^/]+/, "") ===
-    `/${baseUrl.replace(/^https?:\/\//, "")}`
-  ) {
-    config.baseURL = baseUrl;
-    return config;
-  }
-
-  // If current URL has subdomain and doesn't match base domain
-  if (subdomain) {
-    const newURL = baseUrl.replace("api", `${subdomain}.api`);
-    config.baseURL = newURL;
-    return config;
-  }
-
-  config.baseURL = baseUrl; // Use default base URL
 
   return config;
 });
