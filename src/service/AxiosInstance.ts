@@ -1,6 +1,6 @@
 import axios from "axios";
 import APP_SETTING from "../config/AppSetting.ts";
-const { API_BASE_URL } = APP_SETTING;
+const { API_BASE_URL, APP_BASE_URL } = APP_SETTING;
 import { getSubdomain } from "../functions/getSubdomain.ts";
 
 const PublicAxios = axios.create({
@@ -93,14 +93,12 @@ PrivateAxios.interceptors.request.use((config) => {
   const currentUrlParts = window.location.href.split("//")[1].split("/");
   const subdomain = currentUrlParts.length > 1 ? currentUrlParts[0] : "";
 
-  // Construct final URL based on subdomain
-  const finalUrl = subdomain
-    ? `http://${subdomain}.${baseUrl.split("://")[1]}`
-    : baseUrl;
+  // Construct base URL based on environment variable
+  const appBaseUrl = APP_BASE_URL;
 
   // Set base URL based on conditions
   config.baseURL = subdomain
-    ? finalUrl.replace("api", `${subdomain}.api`)
+    ? `${appBaseUrl.replace(/\/$/, "")}.${baseUrl}` // Remove trailing slash if present
     : baseUrl;
 
   config.headers["Authorization"] = `Bearer ${token}`;
