@@ -98,7 +98,7 @@ PrivateAxios.interceptors.request.use((config) => {
 
   // Set base URL based on conditions
   config.baseURL = subdomain
-    ? `${appBaseUrl.replace(/\/$/, "")}.${baseUrl}` // Remove trailing slash if present
+    ? `${appBaseUrl.replace(/\/$/, "")}.api.dev.nydoz.com` // Remove trailing slash if present
     : baseUrl;
 
   config.headers["Authorization"] = `Bearer ${token}`;
