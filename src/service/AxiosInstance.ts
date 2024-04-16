@@ -56,9 +56,38 @@ PublicAxios.interceptors.request.use((config) => {
 //   return config;
 // });
 
+// PrivateAxios.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+//   const baseUrl = API_BASE_URL; // Assuming API_BASE_URL is the environment variable name
+
+//   // Extract subdomain from current URL (if any)
+//   const currentUrlParts = window.location.href.split("//")[1].split("/");
+//   const subdomain = currentUrlParts.length > 1 ? currentUrlParts[0] : "";
+
+//   // Construct final URL based on subdomain
+//   const finalUrl = subdomain
+//     ? `http://${subdomain}.${baseUrl.split("://")[1]}`
+//     : baseUrl;
+
+//   // Check if current URL matches base domain (excluding protocol)
+//   const isBaseDomain = currentUrlParts[0] === baseUrl.split("://")[1];
+
+//   // Set base URL based on conditions
+//   if (subdomain && !isBaseDomain) {
+//     // Subdomain present and not base domain
+//     config.baseURL = baseUrl.replace("api", `${subdomain}.api`);
+//   } else {
+//     config.baseURL = finalUrl; // Use finalUrl or base URL depending on subdomain
+//   }
+
+//   config.headers["Authorization"] = `Bearer ${token}`;
+
+//   return config;
+// });
+
 PrivateAxios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-  const baseUrl = API_BASE_URL; // Assuming API_BASE_URL is the environment variable name
+  const baseUrl = API_BASE_URL; // Assuming the env variable name
 
   // Extract subdomain from current URL (if any)
   const currentUrlParts = window.location.href.split("//")[1].split("/");
@@ -69,16 +98,10 @@ PrivateAxios.interceptors.request.use((config) => {
     ? `http://${subdomain}.${baseUrl.split("://")[1]}`
     : baseUrl;
 
-  // Check if current URL matches base domain (excluding protocol)
-  const isBaseDomain = currentUrlParts[0] === baseUrl.split("://")[1];
-
   // Set base URL based on conditions
-  if (subdomain && !isBaseDomain) {
-    // Subdomain present and not base domain
-    config.baseURL = baseUrl.replace("api", `${subdomain}.api`);
-  } else {
-    config.baseURL = finalUrl; // Use finalUrl or base URL depending on subdomain
-  }
+  config.baseURL = subdomain
+    ? finalUrl.replace("api", `${subdomain}.api`)
+    : baseUrl;
 
   config.headers["Authorization"] = `Bearer ${token}`;
 
