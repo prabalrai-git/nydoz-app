@@ -21,38 +21,80 @@ PublicAxios.interceptors.request.use((config) => {
 
   return config;
 });
+// PrivateAxios.interceptors.request.use((config) => {
+//   const subdomainInfo = getSubdomain();
+//   const token = localStorage.getItem("token");
+//   const baseUrl = API_BASE_URL;
+//   const subDomainFromHref = window.location.href.split(".")[0].split("//")[1];
+
+//   const subDomainFromHrefArray = window.location.href.split(".");
+
+//   const finalUrl = `http://${subDomainFromHref}.${baseUrl.split("://")[1]}`;
+
+//   if (subDomainFromHrefArray.length >= 2) {
+//     config.baseURL = finalUrl;
+//     return config;
+//   }
+//   config.headers["Authorization"] = `Bearer ${token}`;
+
+//   config.baseURL = baseUrl;
+
+//   return config;
+
+//   if (subdomainInfo?.subDomain) {
+//     // const newURL = baseUrl.replace("api", subdomainInfo?.subDomain + ".api");
+//     const newURL = baseUrl.replace(
+//       "api.dev",
+//       "api" + "." + subdomainInfo?.subDomain
+//     );
+
+//     config.baseURL = newURL;
+//     return config;
+//   }
+
+//   config.baseURL = finalUrl;
+//   return config;
+// });
+
 PrivateAxios.interceptors.request.use((config) => {
-  const subdomainInfo = getSubdomain();
   const token = localStorage.getItem("token");
-  const baseUrl = API_BASE_URL;
-  const subDomainFromHref = window.location.href.split(".")[0].split("//")[1];
+  const baseUrl = APP_SETTING.APP_BASE_URL; // Assuming the env variable name
 
-  const subDomainFromHrefArray = window.location.href.split(".");
+  const currentUrl = window.location.href;
 
-  const finalUrl = `http://${subDomainFromHref}.${baseUrl.split("://")[1]}`;
+  // Extract subdomain from current URL (if any)
+  const currentUrlParts = currentUrl.split("//")[1].split("/");
+  const subdomain = currentUrlParts.length > 1 ? currentUrlParts[0] : "";
 
-  if (subDomainFromHrefArray.length >= 2) {
+  // Construct final URL based on subdomain
+  const finalUrl = subdomain
+    ? `http://${subdomain}.${baseUrl.split("://")[1]}`
+    : currentUrl;
+
+  if (currentUrl.split(".").length >= 2) {
     config.baseURL = finalUrl;
     return config;
   }
   config.headers["Authorization"] = `Bearer ${token}`;
 
-  config.baseURL = baseUrl;
+  // Check if current URL matches base domain (ignoring protocol)
+  if (
+    currentUrl.replace(/^https?:\/\/[^/]+/, "") ===
+    `/${baseUrl.replace(/^https?:\/\//, "")}`
+  ) {
+    config.baseURL = baseUrl;
+    return config;
+  }
 
-  return config;
-
-  if (subdomainInfo?.subDomain) {
-    // const newURL = baseUrl.replace("api", subdomainInfo?.subDomain + ".api");
-    const newURL = baseUrl.replace(
-      "api.dev",
-      "api" + "." + subdomainInfo?.subDomain
-    );
-
+  // If current URL has subdomain and doesn't match base domain
+  if (subdomain) {
+    const newURL = baseUrl.replace("api", `${subdomain}.api`);
     config.baseURL = newURL;
     return config;
   }
 
-  config.baseURL = finalUrl;
+  config.baseURL = baseUrl; // Use default base URL
+
   return config;
 });
 
