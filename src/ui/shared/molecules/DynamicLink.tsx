@@ -32,7 +32,7 @@ const DynamicLink = (props: Iprops) => {
     subdomain +
     "." +
     APP_SETTING.APP_BASE_URL.split("//")[1] +
-    `/${pathName}`;
+    `${pathName}`;
 
   console.log(appEnvironment, urlforProd, "urlforprod");
 
@@ -45,12 +45,9 @@ const DynamicLink = (props: Iprops) => {
               {children}
             </Link>
           ) : (
-            <a
-              href={`${protocol}//${subdomain}.${domainBase}/${pathName}`}
-              className={className}
-            >
+            <a href={urlforProd} className={className}>
               {children}
-              <h6>{`${protocol}//${subdomain}.${domainBase}/${pathName}`}</h6>
+              <h6>{urlforProd}</h6>
             </a>
           )}
         </>
