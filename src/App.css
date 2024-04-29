@@ -112,3 +112,9 @@
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+:where(.css-1k979oh).ant-tabs .ant-tabs-tab-btn {
+  outline: none;
+  transition: all 0.3s;
+  display: flex;
+}
