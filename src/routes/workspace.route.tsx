@@ -45,6 +45,8 @@ const WorkspaceRoutes: RouteObject[] = [
 
         localStorage.setItem("token", tokenValue);
 
+        console.log("token has been set", "locally to new subdomain");
+
         location.reload();
       }
       return null;
