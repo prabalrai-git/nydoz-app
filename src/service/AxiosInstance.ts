@@ -96,7 +96,10 @@ PrivateAxios.interceptors.request.use((config) => {
 
   const finalUrl = `http://${subDomainFromHref}.${baseUrl.split("://")[1]}`;
 
-  if (subDomainFromHrefArray.length >= 2) {
+  if (
+    subDomainFromHrefArray.length >= 2 &&
+    !window.location.href.includes(subDomainFromHref)
+  ) {
     config.baseURL = finalUrl;
     return config;
   }
