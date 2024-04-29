@@ -26,6 +26,14 @@ const DynamicLink = (props: Iprops) => {
     }
   }, [token]);
 
+  console.log(
+    appEnvironment,
+    `${protocol}://www.${subdomain}.${domainBase}/${pathName}`,
+    "doesnot have subdomain",
+    `http://${subdomain}.localhost:5174/${pathName}`,
+    "local"
+  );
+
   return (
     <>
       {appEnvironment !== "development" ? (
