@@ -26,13 +26,15 @@ const DynamicLink = (props: Iprops) => {
     }
   }, [token]);
 
-  console.log(
-    appEnvironment,
-    `${protocol}://www.${subdomain}.${domainBase}/${pathName}`,
-    "doesnot have subdomain",
-    `http://${subdomain}.localhost:5174/${pathName}`,
-    "local"
-  );
+  const urlforProd =
+    APP_SETTING.APP_BASE_URL.split("//")[0] +
+    "//" +
+    subdomain +
+    "." +
+    APP_SETTING.APP_BASE_URL.split("//")[1] +
+    `/${pathName}`;
+
+  console.log(appEnvironment, urlforProd, "urlforprod");
 
   return (
     <>
@@ -44,13 +46,11 @@ const DynamicLink = (props: Iprops) => {
             </Link>
           ) : (
             <a
-              href={`${protocol}://www.${subdomain}.${domainBase}/${pathName}`}
+              href={`${protocol}//${subdomain}.${domainBase}/${pathName}`}
               className={className}
             >
               {children}
-              <h6>
-                {`${protocol}://www.${subdomain}.${domainBase}/${pathName}`}
-              </h6>
+              <h6>{`${protocol}//${subdomain}.${domainBase}/${pathName}`}</h6>
             </a>
           )}
         </>
