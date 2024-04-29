@@ -91,9 +91,8 @@ PrivateAxios.interceptors.request.use((config) => {
   const baseUrl = API_BASE_URL;
   const subDomainFromHref = window.location.href.split(".")[0].split("//")[1];
 
-  console.log("hello world", subDomainFromHref);
-
   const subDomainFromHrefArray = window.location.href.split(".");
+  console.log("hello world", subDomainFromHref, subDomainFromHrefArray);
 
   const finalUrl = `http://${subDomainFromHref}.${baseUrl.split("://")[1]}`;
 
